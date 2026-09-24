@@ -5,5 +5,4 @@ logs/
 /run.err
 /run.log
 /scripts/
-/postgresql/
 /README.md
