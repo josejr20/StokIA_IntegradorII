@@ -4,18 +4,21 @@ const { Lote, MovimientoInventario, Producto } = require('../models');
 const config = require('../config');
 const logger = require('../utils/logger');
 
-const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', motivo = '', precioUnitario = null, usuarioId = null) => {
+const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', motivo = '', precioUnitario = null, usuarioId = null, transaction = null) => {
   if (!['ingreso', 'salida', 'ajuste'].includes(tipo)) throw new Error('Tipo de movimiento no válido');
 
   const cantidadDec = new Decimal(String(cantidad));
   if (!cantidadDec.isFinite() || cantidadDec.lte(0)) throw new Error('La cantidad debe ser mayor a 0');
 
-  const lote = await Lote.findByPk(loteId);
+  const lote = await Lote.findByPk(loteId, {
+    transaction,
+    lock: transaction ? transaction.LOCK.UPDATE : undefined,
+  });
   if (!lote) throw new Error('Lote no encontrado');
 
-  const producto = await Producto.findByPk(lote.producto_id);
+  const producto = await Producto.findByPk(lote.producto_id, { transaction });
   if (!producto) throw new Error('Producto no encontrado');
-  if (!producto.activo && tipo !== 'salida') throw new Error('No se puede registrar stock para un producto inactivo');
+  if (!producto.activo) throw new Error('No se puede registrar movimientos para un producto inactivo');
   if (tipo !== 'ingreso' && Number(lote.cantidad_actual) < Number(cantidad)) throw new Error('Stock insuficiente para registrar la salida');
 
   const ultimo = await MovimientoInventario.findOne({
@@ -36,14 +39,14 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
     saldoCantidad = saldoCantidadPrevio.plus(cantidadDec);
     saldoValorizado = saldoValorizadoPrevio.plus(precioTotal);
     lote.cantidad_actual = (new Decimal(String(lote.cantidad_actual))).plus(cantidadDec).toNumber();
-    await lote.save({ fields: ['cantidad_actual'] });
+    await lote.save({ fields: ['cantidad_actual'], transaction });
   } else {
     precioUnit = costoPromedioPrevio;
     precioTotal = cantidadDec.times(precioUnit);
     saldoCantidad = saldoCantidadPrevio.minus(cantidadDec);
     saldoValorizado = saldoValorizadoPrevio.minus(precioTotal);
     lote.cantidad_actual = (new Decimal(String(lote.cantidad_actual))).minus(cantidadDec).toNumber();
-    await lote.save({ fields: ['cantidad_actual'] });
+    await lote.save({ fields: ['cantidad_actual'], transaction });
   }
 
   const saldoCostoPromedio = saldoCantidad.gt(0) ? saldoValorizado.dividedBy(saldoCantidad) : new Decimal('0');
@@ -60,7 +63,7 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
     saldo_valorizado: saldoValorizado.toNumber(),
     motivo,
     usuario_id: usuarioId
-  });
+  }, { transaction });
 
   logger.info(`Movimiento registrado: ${tipo}/${origen} - Lote: ${loteId}`);
   return movimiento;

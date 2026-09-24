@@ -168,24 +168,9 @@ const activar = async (req, res, next) => {
 
 const ingreso = async (req, res, next) => {
   try {
-    const producto = await Producto.findByPk(req.params.id);
-    if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
-    if (!producto.activo) return res.status(400).json({ error: 'No se puede ingresar stock a un producto inactivo' });
-
-    const cantidad = parseFloat(req.body.cantidad);
-    const precioUnitario = parseFloat(req.body.precio_unitario);
-    if (!cantidad || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
-    if (precioUnitario < 0) return res.status(400).json({ error: 'Precio inválido' });
-
-    let lote = await Lote.findOne({ where: { producto_id: producto.id, numero_lote: 'GENERAL' } });
-    if (!lote) {
-      lote = await Lote.create({ producto_id: producto.id, numero_lote: 'GENERAL', cantidad_inicial: 0, cantidad_actual: 0, fecha_vencimiento: new Date('2100-01-01') });
-    }
-
-    const { registrarMovimiento } = require('../services/kardexService');
-    const movimiento = await registrarMovimiento(lote.id, 'ingreso', cantidad, 'compra', req.body.motivo || 'Ingreso de stock', precioUnitario, req.user.id);
-    const updatedProducto = await Producto.findByPk(producto.id);
-    res.status(201).json({ producto: ProductoDto.fromModel(updatedProducto), movimiento });
+    return res.status(400).json({
+      error: 'El ingreso de stock debe hacerse creando un lote válido. Usa el flujo de registrar lote.',
+    });
   } catch (error) { next(error); }
 };
 

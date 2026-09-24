@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const { testConnection } = require('./config/database');
 const { setupSwagger } = require('./config/swagger');
+const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
 
 const app = express();
@@ -39,14 +40,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', require('./routes'));
-
-app.use((err, req, res, next) => {
-  logger.error(err.message, { stack: err.stack });
-  res.status(err.status || 500).json({
-    error: err.message || 'Error interno del servidor',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-  });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 const start = async () => {
   const connected = await testConnection();

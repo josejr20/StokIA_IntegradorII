@@ -32,3 +32,10 @@ test('calcula el estado del lote según la fecha de vencimiento', () => {
   assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-09-25' }, hoy), 'POR_VENCER');
   assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-10-30' }, hoy), 'VIGENTE');
 });
+
+test('compara fechas de vencimiento sin desplazar el día por UTC', () => {
+  const fechaHoy = new Date('2026-09-24T00:30:00-05:00');
+
+  assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-09-27' }, fechaHoy), 'POR_VENCER');
+  assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-09-23' }, fechaHoy), 'VENCIDO');
+});

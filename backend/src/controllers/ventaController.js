@@ -28,6 +28,7 @@ const obtener = async (req, res, next) => {
 };
 
 const crear = async (req, res, next) => {
+  let transaction;
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
@@ -40,16 +41,21 @@ const crear = async (req, res, next) => {
 
     const producto = await Producto.findByPk(producto_id);
     if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!producto.activo) return res.status(400).json({ error: 'El producto está inactivo' });
 
+    transaction = await Venta.sequelize.transaction();
     const lotesDisponibles = seleccionarLotesFEFO(
       await Lote.findAll({
         where: { producto_id, cantidad_actual: { [Op.gt]: 0 } },
         order: [['fecha_vencimiento', 'ASC'], ['id', 'ASC']],
+        transaction,
+        lock: transaction.LOCK.UPDATE,
       })
     );
 
     const stockTotal = lotesDisponibles.reduce((sum, lote) => sum + Number(lote.cantidad_actual || 0), 0);
     if (stockTotal < cantidadVenta) {
+      await transaction.rollback();
       return res.status(400).json({ error: 'Stock insuficiente para realizar la venta' });
     }
 
@@ -71,7 +77,7 @@ const crear = async (req, res, next) => {
           fecha_venta: fecha_venta || new Date(),
           origen: 'manual',
           usuario_id: req.user.id,
-        });
+        }, { transaction });
         await registrarMovimiento(
           lote.id,
           'salida',
@@ -80,6 +86,7 @@ const crear = async (req, res, next) => {
           `Venta ${cantidadAsignada}`,
           precioVenta,
           req.user.id,
+          transaction,
         );
         ventasGeneradas.push(venta);
         restante -= cantidadAsignada;
@@ -87,11 +94,16 @@ const crear = async (req, res, next) => {
     }
 
     if (restante > 0) {
+      await transaction.rollback();
       return res.status(400).json({ error: 'Stock insuficiente para realizar la venta' });
     }
 
+    await transaction.commit();
     res.status(201).json({ data: ventasGeneradas.map((venta) => VentaDto.fromModel(venta)) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    if (transaction) await transaction.rollback();
+    next(error);
+  }
 };
 
 const importar = async (req, res, next) => {

@@ -1,9 +1,39 @@
 const DIAS_ALERTA_VENCIMIENTO = 30;
+const TIMEZONE_LIMA = 'America/Lima';
+
+function fechaEnLima(dateLike = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIMEZONE_LIMA,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date(dateLike));
+
+  const map = {};
+  for (const part of parts) {
+    if (part.type !== 'literal') map[part.type] = part.value;
+  }
+
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
+function diffDias(dateA, dateB) {
+  if (!dateA || !dateB) return null;
+  const [yearA, monthA, dayA] = String(dateA).split('-').map(Number);
+  const [yearB, monthB, dayB] = String(dateB).split('-').map(Number);
+  const utcA = Date.UTC(yearA, monthA - 1, dayA);
+  const utcB = Date.UTC(yearB, monthB - 1, dayB);
+  return Math.round((utcA - utcB) / 86400000);
+}
 
 function normalizarFecha(dateLike, horaInicio = false) {
+  if (dateLike === null || dateLike === undefined || dateLike === '') return null;
+  if (typeof dateLike === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateLike.trim())) {
+    return dateLike.trim();
+  }
   const fecha = new Date(dateLike);
   if (Number.isNaN(fecha.getTime())) return null;
-  if (horaInicio) fecha.setHours(0, 0, 0, 0);
+  if (horaInicio) return fechaEnLima(fecha);
   return fecha;
 }
 
@@ -11,7 +41,7 @@ function diasHastaVencimiento(fechaVencimiento, hoy = new Date()) {
   const fecha = normalizarFecha(fechaVencimiento, true);
   const fechaHoy = normalizarFecha(hoy, true);
   if (!fecha || !fechaHoy) return null;
-  return Math.ceil((fecha - fechaHoy) / 86400000);
+  return diffDias(fecha, fechaHoy);
 }
 
 function generarCodigoLote(numero = 1) {
@@ -31,7 +61,7 @@ function validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento } = {}) {
   }
 
   const hoy = normalizarFecha(new Date(), true);
-  if (fecha <= hoy) {
+  if (String(fecha) <= String(hoy)) {
     throw new Error('La fecha de vencimiento debe ser posterior a hoy');
   }
 

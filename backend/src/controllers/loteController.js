@@ -26,6 +26,7 @@ const obtener = async (req, res, next) => {
 };
 
 const crear = async (req, res, next) => {
+  let transaction;
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
@@ -45,9 +46,24 @@ const crear = async (req, res, next) => {
       cantidad_actual: req.body.cantidad_actual !== undefined ? Number(req.body.cantidad_actual) : cantidadInicial,
     });
 
-    const lote = await Lote.create(data);
+    transaction = await Lote.sequelize.transaction();
+    const lote = await Lote.create(data, { transaction });
+    await registrarMovimiento(
+      lote.id,
+      'ingreso',
+      cantidadInicial,
+      'inicial',
+      'Ingreso inicial del lote',
+      null,
+      req.user?.id || null,
+      transaction
+    );
+    await transaction.commit();
     res.status(201).json({ data: LoteDto.fromModel(lote) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    if (transaction) await transaction.rollback();
+    next(error);
+  }
 };
 
 const actualizar = async (req, res, next) => {
@@ -79,6 +95,7 @@ const historial = async (req, res, next) => {
 };
 
 const registrarMovimientoCtrl = async (req, res, next) => {
+  let transaction;
   try {
     const lote = await Lote.findByPk(req.params.id);
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
@@ -88,22 +105,35 @@ const registrarMovimientoCtrl = async (req, res, next) => {
       return res.status(400).json({ error: 'Tipo inválido' });
     }
 
-    const cantidad = parseFloat(Math.abs(req.body.cantidad));
-    if (!cantidad || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
+    const cantidad = parseFloat(req.body.cantidad);
+    if (!Number.isFinite(cantidad) || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
 
     const producto = await Producto.findByPk(lote.producto_id);
     if (!producto || !producto.activo) return res.status(400).json({ error: 'No se pueden registrar movimientos en un producto inactivo' });
 
-    if (['salida', 'ajuste'].includes(tipo) && Number(lote.cantidad_actual) < cantidad) {
+    const transaction = await Lote.sequelize.transaction();
+    const loteBloqueado = await Lote.findByPk(req.params.id, { transaction, lock: transaction.LOCK.UPDATE });
+    if (['salida', 'ajuste'].includes(tipo) && Number(loteBloqueado.cantidad_actual) < cantidad) {
+      await transaction.rollback();
       return res.status(400).json({ error: 'Stock insuficiente' });
     }
 
     const movimiento = await registrarMovimiento(
-      lote.id, tipo, cantidad, req.body.origen || 'otro',
-      req.body.motivo || '', req.body.precio_unitario || null, req.user.id
+      loteBloqueado.id,
+      tipo,
+      cantidad,
+      req.body.origen || 'otro',
+      req.body.motivo || '',
+      req.body.precio_unitario || null,
+      req.user.id,
+      transaction
     );
+    await transaction.commit();
     res.json({ data: movimiento });
-  } catch (error) { next(error); }
+  } catch (error) {
+    if (transaction) await transaction.rollback();
+    next(error);
+  }
 };
 
 module.exports = { listar, obtener, crear, actualizar, eliminar, historial, registrarMovimientoCtrl };
