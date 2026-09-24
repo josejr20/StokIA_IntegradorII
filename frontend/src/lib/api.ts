@@ -1,39 +1,31 @@
 /**
- * Cliente HTTP hacia la API de negocio (Django).
- * Guarda el access/refresh token en localStorage y renueva el access token
- * una sola vez si el backend responde 401, antes de darle el error al que
- * llamó. Ningún componente arma fetch() a mano: todos pasan por acá.
+ * Cliente HTTP hacia la API de negocio (Express + Sequelize + DTO).
+ * Usa cookies HttpOnly para la sesión y renueva el access token una sola vez
+ * si el backend responde 401. Ningún componente arma fetch() a mano.
+ *
+ * Convenciones del backend Express:
+ *  - Login:            POST /api/auth/login  -> { usuario, token, refreshToken }
+ *  - Refresh:          POST /api/auth/refresh -> { token, refreshToken }
+ *  - Listar/obtener:   { data: [...] } o { data: {...} }
+ *  - Crear:            201 con { data: {...} }
+ *  - Errores:          { error: " mensaje " } o { error, details }
  */
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'
 
-const ACCESS_KEY = 'stockia_access'
-const REFRESH_KEY = 'stockia_refresh'
-
-export function getAccessToken() {
-  return localStorage.getItem(ACCESS_KEY)
-}
-
-export function setTokens(access: string, refresh?: string) {
-  localStorage.setItem(ACCESS_KEY, access)
-  if (refresh) localStorage.setItem(REFRESH_KEY, refresh)
-}
-
-export function clearTokens() {
-  localStorage.removeItem(ACCESS_KEY)
-  localStorage.removeItem(REFRESH_KEY)
+export function resolverImagenProducto(imagen: string | null | undefined) {
+  if (!imagen) return null
+  if (/^https?:\/\//i.test(imagen)) return imagen
+  const ruta = imagen.startsWith('/upload/') ? imagen : `/upload/${imagen}`
+  return `${API_URL.replace(/\/api\/?$/, '')}${ruta}`
 }
 
 async function refrescarToken(): Promise<boolean> {
-  const refresh = localStorage.getItem(REFRESH_KEY)
-  if (!refresh) return false
-  const respuesta = await fetch(`${API_URL}/auth/refresh/`, {
+  const respuesta = await fetch(`${API_URL}/auth/refresh`, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refresh }),
   })
-  if (!respuesta.ok) return false
-  const datos = await respuesta.json()
-  setTokens(datos.access)
+  if (! respuesta.ok) return false
   return true
 }
 
@@ -41,9 +33,23 @@ export class ApiError extends Error {
   status: number
   body: unknown
   constructor(status: number, body: unknown) {
-    super(typeof body === 'object' && body && 'detail' in body ? String((body as any).detail) : 'Error de API')
+    super(ApiError.extraer(body))
     this.status = status
     this.body = body
+  }
+
+  // El backend Express devuelve { error: " mensaje " }. Un error de validacion
+  // de campo viene como { error: 'Datos invalidos', details: [...] }.
+  static extraer(body: unknown): string {
+    if (body && typeof body === 'object') {
+      const objeto = body as Record<string, unknown>
+      if (typeof objeto.error === 'string') return objeto.error
+      if (Array.isArray(objeto.details) && objeto.details.length) {
+        const primer = objeto.details[0] as Record<string, unknown>
+        if (primer && typeof primer.msg === 'string') return primer.msg
+      }
+    }
+    return 'Error de API'
   }
 }
 
@@ -52,29 +58,27 @@ export async function apiFetch<T>(
   options: RequestInit = {},
   _reintentado = false,
 ): Promise<T> {
-  const token = getAccessToken()
   const headers = new Headers(options.headers)
-  if (token) headers.set('Authorization', `Bearer ${token}`)
   if (!(options.body instanceof FormData) && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
 
-  const respuesta = await fetch(`${API_URL}${path}`, { ...options, headers })
+  const respuesta = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include' })
 
-  if (respuesta.status === 401 && !_reintentado) {
+  const endpointSinRefresh = ['/auth/me', '/auth/login', '/auth/register', '/auth/registro', '/auth/google', '/auth/forgot-password', '/auth/verify-reset-code', '/auth/reset-password'].includes(path)
+  if ( respuesta.status === 401 && !_reintentado && !endpointSinRefresh) {
     const renovado = await refrescarToken()
     if (renovado) return apiFetch<T>(path, options, true)
-    clearTokens()
-    window.location.href = '/login'
-    throw new ApiError(401, { detail: 'Sesión expirada' })
+    if (path !== '/auth/me') window.location.href = '/login'
+    throw new ApiError(401, { error: 'Sesión expirada' })
   }
 
-  if (!respuesta.ok) {
+  if (! respuesta.ok) {
     const cuerpo = await respuesta.json().catch(() => ({}))
     throw new ApiError(respuesta.status, cuerpo)
   }
 
-  if (respuesta.status === 204) return undefined as T
+  if ( respuesta.status === 204) return undefined as T
   return respuesta.json() as Promise<T>
 }
 
@@ -84,7 +88,10 @@ export const api = {
     apiFetch<T>(path, { method: 'POST', body: body ? JSON.stringify(body) : undefined }),
   patch: <T>(path: string, body?: unknown) =>
     apiFetch<T>(path, { method: 'PATCH', body: body ? JSON.stringify(body) : undefined }),
+  put: <T>(path: string, body?: unknown) =>
+    apiFetch<T>(path, { method: 'PUT', body: body ? JSON.stringify(body) : undefined }),
   del: <T>(path: string) => apiFetch<T>(path, { method: 'DELETE' }),
   postForm: <T>(path: string, form: FormData) => apiFetch<T>(path, { method: 'POST', body: form }),
+  putForm: <T>(path: string, form: FormData) => apiFetch<T>(path, { method: 'PUT', body: form }),
   patchForm: <T>(path: string, form: FormData) => apiFetch<T>(path, { method: 'PATCH', body: form }),
 }

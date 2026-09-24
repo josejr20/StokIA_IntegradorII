@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { BarChart3 } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ApiError } from '@/lib/api'
 import { useAuth } from './AuthContext'
+import { GoogleLoginButton } from './GoogleLoginButton'
 
 // HU12: inicio de sesión
 const esquema = z.object({
@@ -63,13 +64,13 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="email">Correo institucional</Label>
-              <Input id="email" type="email" placeholder="nombre@empresa.com" {...register('email')} />
+              <Input id="email" type="email" autoComplete="email" placeholder="nombre@empresa.com" {...register('email')} />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
 
             <div className="space-y-1.5">
               <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="••••••••" {...register('password')} />
+              <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register('password')} />
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
             </div>
 
@@ -85,8 +86,19 @@ export default function LoginPage() {
             </Button>
           </form>
 
+          <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
+            <span className="h-px flex-1 bg-border" /> o <span className="h-px flex-1 bg-border" />
+          </div>
+          <GoogleLoginButton />
+
           <p className="mt-6 text-center text-xs text-muted-foreground">
             Roles disponibles: Administrador · Encargado de inventario · Encargado de almacén · Jefe de ventas
+          </p>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            ¿Eres nuevo?{' '}
+            <Link to="/registro" className="font-medium text-primary hover:underline">
+              Registrar nuevo usuario
+            </Link>
           </p>
         </div>
       </div>

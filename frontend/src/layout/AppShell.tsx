@@ -10,6 +10,7 @@ const TITULOS: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/productos': 'Productos',
   '/inventario': 'Lotes e inventario',
+  '/kardex': 'Kardex',
   '/ventas': 'Ventas',
   '/prediccion': 'Predicción y riesgo',
   '/modelo-ml': 'Modelo ML',

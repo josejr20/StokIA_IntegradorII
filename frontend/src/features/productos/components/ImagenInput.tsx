@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { ImageIcon, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { resolverImagenProducto } from '@/lib/api'
 
 /** Selector de imagen con vista previa, para el catálogo de productos. */
 export function ImagenInput({
@@ -20,7 +21,7 @@ export function ImagenInput({
     setPrevia(archivo ? URL.createObjectURL(archivo) : null)
   }
 
-  const mostrar = previa ?? imagenActual
+  const mostrar = previa ?? resolverImagenProducto(imagenActual)
 
   return (
     <div className="flex items-center gap-3">

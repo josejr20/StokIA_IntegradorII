@@ -1,28 +1,31 @@
 import { NavLink } from 'react-router'
 import {
   BarChart3, Home, LayoutDashboard, Package, Boxes, ShoppingCart,
-  TrendingUp, Brain, Settings, Users, ScrollText,
+  TrendingUp, Brain, Settings, Users, ScrollText, History,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { useAuth } from '@/auth/AuthContext'
+import { useAuth, type PermisoCodigo } from '@/auth/AuthContext'
 
-// Coincide 1 a 1 con las 11 pantallas del prototipo de Figma (ProyectoHU).
-const NAV = [
-  { to: '/', label: 'Inicio', icon: Home, fin: true },
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/productos', label: 'Productos', icon: Package },
-  { to: '/inventario', label: 'Lotes e inventario', icon: Boxes },
-  { to: '/ventas', label: 'Ventas', icon: ShoppingCart },
-  { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp },
-  { to: '/modelo-ml', label: 'Modelo ML', icon: Brain },
-  { to: '/configuracion', label: 'Configuración', icon: Settings },
-  { to: '/usuarios', label: 'Usuarios', icon: Users },
-  { to: '/auditoria', label: 'Auditoría', icon: ScrollText },
+// Coincide 1 a 1 con las 11 pantallas del prototipo de Figma (ProyectoHU),
+// más Kardex, que no estaba en el prototipo original pero se sumó como
+// pantalla propia a pedido de Alfredo.
+const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permiso?: PermisoCodigo }[] = [
+  { to: '/', label: 'Inicio', icon: Home, fin: true, permiso: 'generar_reportes' },
+  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, permiso: 'ver_kpis' },
+  { to: '/productos', label: 'Productos', icon: Package, permiso: 'gestionar_productos' },
+  { to: '/inventario', label: 'Lotes e inventario', icon: Boxes, permiso: 'gestionar_inventario' },
+  { to: '/kardex', label: 'Kardex', icon: History, permiso: 'gestionar_inventario' },
+  { to: '/ventas', label: 'Ventas', icon: ShoppingCart, permiso: 'gestionar_ventas' },
+  { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+  { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
+  { to: '/configuracion', label: 'Configuración', icon: Settings, permiso: 'configurar_umbrales' },
+  { to: '/usuarios', label: 'Usuarios', icon: Users, permiso: 'gestionar_usuarios' },
+  { to: '/auditoria', label: 'Auditoría', icon: ScrollText, permiso: 'ver_auditoria' },
 ]
 
 export function Sidebar() {
-  const { usuario } = useAuth()
+  const { usuario, tienePermiso } = useAuth()
 
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground">
@@ -34,7 +37,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-0.5 px-3">
-        {NAV.map(({ to, label, icon: Icon, fin }) => (
+        {NAV.filter(({ permiso }) => !permiso || tienePermiso(permiso)).map(({ to, label, icon: Icon, fin }) => (
           <NavLink
             key={to}
             to={to}

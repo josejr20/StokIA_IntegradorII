@@ -1,0 +1,9 @@
+node_modules/
+.env
+logs/
+.DS_Store
+/run.err
+/run.log
+/scripts/
+/postgresql/
+/README.md
