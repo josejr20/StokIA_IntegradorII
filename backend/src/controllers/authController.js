@@ -16,6 +16,7 @@ const { generarToken, generarRefreshToken } = require('../utils/jwt');
 const codigoHash = (codigo) => crypto.createHash('sha256').update(codigo).digest('hex');
 const correoNormalizado = (email) => email.trim().toLowerCase();
 const clienteGoogle = new OAuth2Client(config.GOOGLE_CLIENT_ID || undefined);
+const includeRol = [{ model: Rol, as: 'rol', include: [{ model: Permiso, as: 'permisos', through: { attributes: [] } }] }];
 
 const verificarCredencialGoogle = async (credential) => {
   const ticket = await clienteGoogle.verifyIdToken({ idToken: credential, audience: config.GOOGLE_CLIENT_ID });
@@ -41,7 +42,7 @@ const login = async (req, res) => {
       session: { accessTokenExpiresIn: config.JWT_EXPIRES_IN, refreshTokenExpiresIn: config.JWT_REFRESH_EXPIRES_IN },
     });
   } catch (error) {
-    logger.warn('Login fallido:', error.message);
+    logger.warn(`Login fallido: ${error.message}`);
     return res.status(401).json({ error: 'Correo o contraseña incorrectos.' });
   }
 };
@@ -82,7 +83,7 @@ const registrar = async (req, res) => {
 
     return res.status(201).json({ data: UsuarioDto.fromModel(usuario) });
   } catch (error) {
-    logger.error('Error registrando usuario:', error.message);
+    logger.error(`Error registrando usuario: ${error.message}`);
     return res.status(500).json({ error: 'No se pudo registrar el usuario' });
   }
 };
@@ -131,8 +132,8 @@ const google = async (req, res) => {
     const payload = await verificarCredencialGoogle(req.body.credential);
 
     const email = correoNormalizado(payload.email);
-    let usuario = await Usuario.findOne({ where: { google_id: payload.sub, activo: true } });
-    const usuarioPorEmail = await Usuario.findOne({ where: { email, activo: true } });
+    let usuario = await Usuario.findOne({ where: { google_id: payload.sub, activo: true }, include: includeRol });
+    const usuarioPorEmail = await Usuario.findOne({ where: { email, activo: true }, include: includeRol });
 
     if (usuarioPorEmail && usuario && usuarioPorEmail.id !== usuario.id) {
       return res.status(409).json({
@@ -176,7 +177,7 @@ const google = async (req, res) => {
       session: { accessTokenExpiresIn: config.JWT_EXPIRES_IN, refreshTokenExpiresIn: config.JWT_REFRESH_EXPIRES_IN },
     });
   } catch (error) {
-    logger.warn('Login Google fallido:', error.message);
+    logger.warn(`Login Google fallido: ${error.message}`);
     return res.status(401).json({ error: 'Credencial de Google inválida' });
   }
 };
@@ -225,7 +226,7 @@ const registrarGoogle = async (req, res) => {
         message: 'Ya existe una cuenta registrada con este correo. Inicia sesión.',
       });
     }
-    logger.warn('Registro Google fallido:', error.message);
+    logger.warn(`Registro Google fallido: ${error.message}`);
     return res.status(401).json({ error: 'Credencial de Google inválida' });
   }
 };

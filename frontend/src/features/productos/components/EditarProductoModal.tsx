@@ -65,10 +65,10 @@ export function EditarProductoModal({
     if (producto) {
       reset({
         nombre: producto.nombre,
-        categoria: producto.categoria ? String(producto.categoria) : '',
-        marca: producto.marca ? String(producto.marca) : undefined,
+        categoria: producto.categoria_id ? String(producto.categoria_id) : '',
+        marca: producto.marca_id ? String(producto.marca_id) : undefined,
         contenido_valor: producto.contenido_valor != null ? String(producto.contenido_valor) : '',
-        unidad_medida: producto.unidad_medida ? String(producto.unidad_medida) : '',
+        unidad_medida: producto.unidad_medida_id ? String(producto.unidad_medida_id) : '',
             categoria_paquete: producto.categoria_paquete_id ? String(producto.categoria_paquete_id) : '',
         contenido_paquete_cantidad: producto.contenido_paquete_cantidad != null
           ? String(producto.contenido_paquete_cantidad)

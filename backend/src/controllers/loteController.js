@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
-const { Lote, Producto } = require('../models');
+const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
+const { MovimientoDto } = require('../dtos/movimientoDto');
 const { registrarMovimiento } = require('../services/kardexService');
 const { generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
 const logger = require('../utils/logger');
@@ -9,11 +10,24 @@ const { Op } = require('sequelize');
 const listar = async (req, res, next) => {
   try {
     const { producto, numero_lote } = req.query;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
     if (producto) where.producto_id = producto;
     if (numero_lote) where.numero_lote = { [Op.like]: `%${numero_lote}%` };
-    const lotes = await Lote.findAll({ where, include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }], order: [['fecha_ingreso', 'DESC']] });
-    res.json({ data: lotes.map(l => LoteDto.fromModel(l)) });
+    const resultado = await Lote.findAndCountAll({
+      where,
+      include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],
+      order: [['fecha_ingreso', 'DESC']],
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    res.json({
+      data: resultado.rows.map((lote) => LoteDto.fromModel(lote)),
+      count: resultado.count,
+      previous: page > 1,
+      next: page * pageSize < resultado.count,
+    });
   } catch (error) { next(error); }
 };
 
@@ -36,7 +50,7 @@ const crear = async (req, res, next) => {
     if (!producto.activo) return res.status(400).json({ error: 'No se puede crear un lote para un producto inactivo' });
 
     const cantidadInicial = Number(req.body.cantidad_inicial ?? req.body.cantidad_actual ?? 0);
-    validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento: req.body.fecha_vencimiento });
+    validarLoteParaCreacion({ cantidad_inicial: cantidadInicial, fecha_vencimiento: req.body.fecha_vencimiento });
 
     const siguienteNumero = (await Lote.max('id', { where: { producto_id: req.body.producto_id } }) || 0) + 1;
     const data = LoteDto.fromCreate({
@@ -89,8 +103,15 @@ const historial = async (req, res, next) => {
   try {
     const lote = await Lote.findByPk(req.params.id);
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
-    const movimientos = await lote.getMovimientos({ order: [['fecha', 'DESC']] });
-    res.json({ data: movimientos });
+    const movimientos = await MovimientoInventario.findAll({
+      where: { lote_id: lote.id },
+      include: [
+        { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
+        { model: Usuario, as: 'usuario' },
+      ],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+    });
+    res.json({ data: movimientos.map((movimiento) => MovimientoDto.fromModel(movimiento)) });
   } catch (error) { next(error); }
 };
 
@@ -107,11 +128,15 @@ const registrarMovimientoCtrl = async (req, res, next) => {
 
     const cantidad = parseFloat(req.body.cantidad);
     if (!Number.isFinite(cantidad) || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
+    const motivo = String(req.body.motivo || '').trim();
+    if (['salida', 'ajuste'].includes(tipo) && !motivo) {
+      return res.status(400).json({ error: 'El motivo es obligatorio para salidas y ajustes' });
+    }
 
     const producto = await Producto.findByPk(lote.producto_id);
     if (!producto || !producto.activo) return res.status(400).json({ error: 'No se pueden registrar movimientos en un producto inactivo' });
 
-    const transaction = await Lote.sequelize.transaction();
+    transaction = await Lote.sequelize.transaction();
     const loteBloqueado = await Lote.findByPk(req.params.id, { transaction, lock: transaction.LOCK.UPDATE });
     if (['salida', 'ajuste'].includes(tipo) && Number(loteBloqueado.cantidad_actual) < cantidad) {
       await transaction.rollback();
@@ -123,7 +148,7 @@ const registrarMovimientoCtrl = async (req, res, next) => {
       tipo,
       cantidad,
       req.body.origen || 'otro',
-      req.body.motivo || '',
+      motivo,
       req.body.precio_unitario || null,
       req.user.id,
       transaction

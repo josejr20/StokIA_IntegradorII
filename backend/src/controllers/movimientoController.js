@@ -7,6 +7,8 @@ const { Op } = require('sequelize');
 const listar = async (req, res, next) => {
   try {
     const { producto, tipo, origen, fecha_desde, fecha_hasta, search, lote_id, desde_ultimo_ingreso } = req.query;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
 
     if (lote_id) where.lote_id = Number(lote_id);
@@ -59,8 +61,15 @@ const listar = async (req, res, next) => {
       const texto = `${mov.lote?.producto?.nombre || ''} ${mov.lote?.producto?.codigo || ''} ${mov.lote?.numero_lote || ''}`.toLowerCase();
       return texto.includes(String(search).toLowerCase());
     });
+    const inicio = (page - 1) * pageSize;
+    const pagina = listado.slice(inicio, inicio + pageSize);
 
-    res.json({ data: listado.map((m) => MovimientoDto.fromModel(m)) });
+    res.json({
+      data: pagina.map((movimiento) => MovimientoDto.fromModel(movimiento)),
+      count: listado.length,
+      previous: page > 1,
+      next: inicio + pageSize < listado.length,
+    });
   } catch (error) { next(error); }
 };
 

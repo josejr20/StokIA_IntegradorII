@@ -40,7 +40,7 @@ export default function KardexPage() {
     fecha_hasta: fechaHasta,
     desdeUltimoIngreso: desdeUltimoIngreso && !!productoId,
     pageSize: pageSize === 'todo' ? '500' : pageSize,
-    pagina,
+    page: pagina,
   })
 
   return (

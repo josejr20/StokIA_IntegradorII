@@ -24,7 +24,9 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
   const ultimo = await MovimientoInventario.findOne({
     where: {},
     include: [{ model: Lote, as: 'lote', where: { producto_id: lote.producto_id }, attributes: [] }],
-    order: [['fecha', 'DESC'], ['id', 'DESC']]
+    order: [['fecha', 'DESC'], ['id', 'DESC']],
+    transaction,
+    lock: transaction ? transaction.LOCK.UPDATE : undefined,
   });
 
   const saldoCantidadPrevio = ultimo ? new Decimal(String(ultimo.saldo_cantidad)) : new Decimal('0');

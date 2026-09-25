@@ -4,7 +4,7 @@ class UsuarioDto {
     this.nombre = data.nombre;
     this.email = data.email;
     this.rol_id = data.rol_id;
-    this.rol = typeof data.rol === 'object' ? data.rol.nombre : data.rol;
+    this.rol = data.rol && typeof data.rol === 'object' ? data.rol.nombre : data.rol;
     this.rol_nombre = data.rol_nombre || (data.rol && data.rol.nombre) || (typeof data.rol === 'string' ? data.rol : null);
     this.permisos = data.permisos || (data.rol && Array.isArray(data.rol.permisos)
       ? data.rol.permisos.map((permiso) => permiso.codigo)

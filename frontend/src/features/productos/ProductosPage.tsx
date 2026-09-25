@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Plus, Pencil, Ban, RotateCcw, PackagePlus, Image as IMAGE_ICON } from 'lucide-react'
+import { Search, Plus, Pencil, Ban, RotateCcw, Image as IMAGE_ICON } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,6 @@ import {
 import { NuevoProductoModal } from './components/NuevoProductoModal'
 import { EditarProductoModal } from './components/EditarProductoModal'
 import { DesactivarProductoDialog } from './components/DesactivarProductoDialog'
-import { IngresoProductoDialog } from './components/IngresoProductoDialog'
 import { ConfirmDialog } from './components/ConfirmDialog'
 
 // "AJI-NO-MEN CARNE" + 80 + "GR" -> "AJI-NO-MEN CARNE 80 GR"
@@ -37,7 +36,6 @@ export default function ProductosPage() {
   const [productoEditar, setProductoEditar] = useState<Producto | null>(null)
   const [productoDesactivar, setProductoDesactivar] = useState<Producto | null>(null)
   const [productoActivar, setProductoActivar] = useState<Producto | null>(null)
-  const [productoIngreso, setProductoIngreso] = useState<Producto | null>(null)
 
   const { data: productos, isLoading } = useProductos({
     search: busqueda, categoria: categoriaFiltro, marca: marcaFiltro,
@@ -152,17 +150,6 @@ export default function ProductosPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-1">
-                    {producto.activo && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        title="Ingreso de stock"
-                        className="text-secondary hover:text-secondary"
-                        onClick={() => setProductoIngreso(producto)}
-                      >
-                        <PackagePlus className="size-4" />
-                      </Button>
-                    )}
                     <Button
                       variant="ghost"
                       size="icon"
@@ -201,8 +188,6 @@ export default function ProductosPage() {
       </div>
 
       <NuevoProductoModal open={modalNuevo} onOpenChange={setModalNuevo} />
-
-      <IngresoProductoDialog producto={productoIngreso} onOpenChange={(open) => !open && setProductoIngreso(null)} />
 
       <EditarProductoModal producto={productoEditar} onOpenChange={(open) => !open && setProductoEditar(null)} />
 
