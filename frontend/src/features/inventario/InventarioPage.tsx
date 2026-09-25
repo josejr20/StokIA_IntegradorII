@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import {
-  Search, Plus, ChevronLeft, ChevronRight, Eye, PackagePlus, Trash2,
+  Search, Plus, ChevronLeft, ChevronRight, Eye, PackagePlus,
 } from 'lucide-react'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,14 +12,11 @@ import {
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from '@/components/ui/select'
-import { ApiError } from '@/lib/api'
-
 import { useProductos } from '@/features/productos/api'
-import { useLotes, useEliminarLote, type Lote } from './api'
+import { useLotes, type Lote } from './api'
 import { NuevoLoteModal } from './components/NuevoLoteModal'
 import { LoteDetalleSheet } from './components/LoteDetalleSheet'
 import { RegistrarMovimientoModal } from './components/RegistrarMovimientoModal'
-import { ConfirmDialog } from '@/features/productos/components/ConfirmDialog'
 
 const formatoFecha = new Intl.DateTimeFormat('es-PE', { dateStyle: 'short' })
 
@@ -53,7 +49,6 @@ export default function InventarioPage() {
   const [modalNuevo, setModalNuevo] = useState(false)
   const [loteDetalle, setLoteDetalle] = useState<Lote | null>(null)
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null)
-  const [loteEliminar, setLoteEliminar] = useState<Lote | null>(null)
 
   const { data: productos } = useProductos({})
   const { data, isLoading } = useLotes({
@@ -62,7 +57,6 @@ export default function InventarioPage() {
     page: pagina,
     pageSize,
   })
-  const eliminar = useEliminarLote()
 
   const productoSeleccionado = productos?.results.find(
     (p) => String(p.id) === productoId,
@@ -70,17 +64,6 @@ export default function InventarioPage() {
 
   function codigoDelLote(lote: Lote): string {
     return productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? ''
-  }
-
-  async function confirmarEliminar() {
-    if (!loteEliminar) return
-    try {
-      await eliminar.mutateAsync(loteEliminar.id)
-      toast.success('Lote eliminado')
-      setLoteEliminar(null)
-    } catch (error) {
-      toast.error(error instanceof ApiError ? error.message : 'No se pudo eliminar el lote')
-    }
   }
 
   const lotes = data?.results ?? []
@@ -207,15 +190,6 @@ export default function InventarioPage() {
                         >
                           <PackagePlus className="size-4" />
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          title="Eliminar lote"
-                          className="text-destructive hover:text-destructive"
-                          onClick={() => setLoteEliminar(lote)}
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -281,16 +255,6 @@ export default function InventarioPage() {
         />
       )}
 
-      {/* Eliminar lote */}
-      <ConfirmDialog
-        open={!!loteEliminar}
-        onOpenChange={(open) => !open && setLoteEliminar(null)}
-        titulo="¿Eliminar este lote?"
-        descripcion={`El lote ${loteEliminar?.numero_lote} de ${loteEliminar?.producto_nombre} se eliminará junto con su historial de movimientos. Esta acción no se puede deshacer.`}
-        textoConfirmar="Sí, eliminar"
-        cargando={eliminar.isPending}
-        onConfirmar={confirmarEliminar}
-      />
     </div>
   )
 }

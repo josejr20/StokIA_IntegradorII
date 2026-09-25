@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { Rol } = require('../models');
+const logger = require('../utils/logger');
 
 const seedInicial = async () => {
   const permisos = [
@@ -15,7 +16,7 @@ const seedInicial = async () => {
       'gestionar_productos', 'gestionar_inventario', 'gestionar_ventas',
       'configurar_umbrales', 'gestionar_reabastecimiento', 'ver_alertas'
     ],
-    'Encargado de Almacén': ['gestionar_inventario', 'ver_alertas'],
+    'Encargado de Almacén': ['gestionar_productos', 'gestionar_inventario', 'ver_alertas'],
     'Jefe de Ventas': ['ver_alertas', 'generar_reportes', 'ver_kpis']
   };
 

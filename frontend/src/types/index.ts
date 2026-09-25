@@ -3,6 +3,9 @@
 
 export interface Paginado<T> {
   data: T[]
+  count?: number
+  previous?: boolean
+  next?: boolean
 }
 
 export interface Producto {
@@ -10,14 +13,17 @@ export interface Producto {
   codigo: string
   nombre: string
   categoria: number | null
+  categoria_id: number | null
   categoria_nombre: string | null
   categoria_vida_util_dias: number | null
   unidad_medida: number | null
+  unidad_medida_id: number | null
   unidad_medida_nombre: string | null
   unidad_medida_simbolo: string | null
   presentacion: number | null
   presentacion_nombre: string | null
   marca: number | null
+  marca_id: number | null
   marca_nombre: string | null
   contenido_valor: number | null
   categoria_paquete_id: number | null

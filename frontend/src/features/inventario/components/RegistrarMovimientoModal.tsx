@@ -65,6 +65,8 @@ export function RegistrarMovimientoModal({
   const precioNum = Number(precioWatch || 0)
   const total = (cantidadNum || 0) * (precioNum || 0)
 
+  const motivoError = tipoWatch !== 'ingreso' && !String(watch('motivo') || '').trim()
+
   function cerrar() {
     reset()
     onOpenChange(false)
@@ -72,6 +74,10 @@ export function RegistrarMovimientoModal({
 
   async function onSubmit(valores: FormValues) {
     if (!loteId) return
+    if (!esIngreso && !String(valores.motivo || '').trim()) {
+      toast.error('Ingresa el motivo de la salida o ajuste')
+      return
+    }
     if (!esIngreso && stockActual < cantidadNum) {
       toast.error('Stock insuficiente para esta salida')
       return
@@ -165,8 +171,9 @@ export function RegistrarMovimientoModal({
           )}
 
           <div className="space-y-1.5">
-            <Label>Motivo (opcional)</Label>
+            <Label>Motivo {esIngreso ? '(opcional)' : '(obligatorio)'}</Label>
             <Input placeholder="Ej. Compra a proveedor X" {...register('motivo')} />
+            {motivoError && <p className="text-xs text-destructive">Ingresa el motivo de la salida o ajuste</p>}
           </div>
 
           {esIngreso && cantidadNum > 0 && (

@@ -88,7 +88,12 @@ export function useLotes(filtros: FiltrosLotes = {}) {
     queryKey: ['lotes', filtros],
     queryFn: async () => {
       const respuesta = await api.get<Paginado<Lote>>(`/lotes/${params.toString() ? `?${params.toString()}` : ''}`)
-      return { results: respuesta.data, count: respuesta.data.length, previous: false, next: false }
+      return {
+        results: respuesta.data,
+        count: respuesta.count ?? respuesta.data.length,
+        previous: respuesta.previous ?? false,
+        next: respuesta.next ?? false,
+      }
     },
   })
 }
@@ -120,7 +125,12 @@ export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
     queryKey: ['movimientos-inventario', filtros],
     queryFn: async () => {
       const respuesta = await api.get<Paginado<MovimientoInventario>>(`/movimientos/?${params.toString()}`)
-      return { results: respuesta.data, count: respuesta.data.length, previous: false, next: false }
+      return {
+        results: respuesta.data,
+        count: respuesta.count ?? respuesta.data.length,
+        previous: respuesta.previous ?? false,
+        next: respuesta.next ?? false,
+      }
     },
   })
 }

@@ -35,9 +35,23 @@ class MovimientoDto {
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,
       usuario_nombre: usuario.nombre || null,
-      tipo_display: data.get_tipo_display || null,
-      origen_display: data.get_origen_display || null
+      tipo_display: MovimientoDto.tipoDisplay(data.tipo),
+      origen_display: MovimientoDto.origenDisplay(data.origen)
     });
+  }
+
+  static tipoDisplay(tipo) {
+    return { ingreso: 'Ingreso', salida: 'Salida', ajuste: 'Ajuste' }[tipo] || tipo || null;
+  }
+
+  static origenDisplay(origen) {
+    return {
+      compra: 'Compra',
+      venta: 'Venta',
+      inicial: 'Registro inicial',
+      ajuste: 'Ajuste de inventario',
+      otro: 'Otro',
+    }[origen] || origen || null;
   }
 
   static fromCreate(body) {

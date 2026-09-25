@@ -93,9 +93,9 @@ function seleccionarLotesFEFO(lotes = [], hoy = new Date()) {
       return diasRestantes === null || diasRestantes >= 0;
     })
     .sort((a, b) => {
-      const fechaA = normalizarFecha(a.fecha_vencimiento, true)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-      const fechaB = normalizarFecha(b.fecha_vencimiento, true)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-      return fechaA - fechaB || Number(a.id || 0) - Number(b.id || 0);
+      const fechaA = normalizarFecha(a.fecha_vencimiento, true) ?? '9999-12-31';
+      const fechaB = normalizarFecha(b.fecha_vencimiento, true) ?? '9999-12-31';
+      return fechaA.localeCompare(fechaB) || Number(a.id || 0) - Number(b.id || 0);
     });
 }
 

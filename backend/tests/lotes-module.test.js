@@ -5,6 +5,7 @@ const {
   generarCodigoLote,
   validarLoteParaCreacion,
   calcularEstadoLote,
+  seleccionarLotesFEFO,
 } = require('../src/services/loteService');
 
 test('genera un código de lote en formato LT-000001', () => {
@@ -38,4 +39,13 @@ test('compara fechas de vencimiento sin desplazar el día por UTC', () => {
 
   assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-09-27' }, fechaHoy), 'POR_VENCER');
   assert.equal(calcularEstadoLote({ cantidad_actual: 5, fecha_vencimiento: '2026-09-23' }, fechaHoy), 'VENCIDO');
+});
+
+test('selecciona lotes FEFO ordenando fechas normalizadas', () => {
+  const lotes = seleccionarLotesFEFO([
+    { id: 2, cantidad_actual: 4, fecha_vencimiento: '2026-10-10' },
+    { id: 1, cantidad_actual: 4, fecha_vencimiento: '2026-09-30' },
+  ], new Date('2026-09-23T12:00:00Z'));
+
+  assert.deepEqual(lotes.map((lote) => lote.id), [1, 2]);
 });

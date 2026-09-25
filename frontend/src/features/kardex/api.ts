@@ -52,7 +52,7 @@ export interface FiltrosKardex {
   fecha_hasta?: string
   desdeUltimoIngreso?: boolean
   pageSize?: string
-  pagina?: number
+  page?: number
 }
 
 export function useMovimientos(filtros: FiltrosKardex) {
@@ -64,14 +64,19 @@ export function useMovimientos(filtros: FiltrosKardex) {
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
   if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
   if (filtros.desdeUltimoIngreso) params.set('desde_ultimo_ingreso', 'true')
-  if (filtros.pagina && filtros.pagina > 1) params.set('page', String(filtros.pagina))
+  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
   params.set('page_size', filtros.pageSize || '10')
 
   return useQuery({
     queryKey: ['movimientos', filtros],
     queryFn: async () => {
       const respuesta = await api.get<Paginado<MovimientoInventario>>(`/movimientos/?${params.toString()}`)
-      return { results: respuesta.data, count: respuesta.data.length, previous: false, next: false }
+      return {
+        results: respuesta.data,
+        count: respuesta.count ?? respuesta.data.length,
+        previous: respuesta.previous ?? false,
+        next: respuesta.next ?? false,
+      }
     },
   })
 }
