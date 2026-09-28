@@ -1,21 +1,24 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const { Op } = require('sequelize');
 
 const { Usuario } = require('../src/models');
 const { login } = require('../src/services/authService');
 const { UsuarioDto } = require('../src/dtos/usuarioDto');
 
-const usuarioOriginal = Usuario.findOne;
+const buscarUsuariosOriginal = Usuario.findAll;
 
 test.afterEach(() => {
-  Usuario.findOne = usuarioOriginal;
+  Usuario.findAll = buscarUsuariosOriginal;
 });
 
-test('login autentica un usuario y devuelve tokens y permisos', async () => {
+test('login autentica por correo o nombres', async () => {
   const consultas = [];
   const usuario = {
     id: 7,
-    nombre: 'Ana',
+    nombres: 'Ana',
+    apellidos: 'García',
+    dni: '12345678',
     email: 'ana@demo.test',
     rol_id: 2,
     activo: true,
@@ -25,41 +28,55 @@ test('login autentica un usuario y devuelve tokens y permisos', async () => {
     save: async () => {},
   };
 
-  Usuario.findOne = async ({ where }) => {
-    consultas.push(where);
-    return usuario;
+  Usuario.findAll = async (consulta) => {
+    consultas.push(consulta);
+    return [usuario];
   };
 
-  const resultado = await login('ana@demo.test', 'correcta');
+  const resultados = await Promise.all([
+    login('ana@demo.test', 'correcta'),
+    login('Ana', 'correcta'),
+  ]);
 
-  assert.deepEqual(consultas, [{ email: 'ana@demo.test' }]);
-  assert.equal(resultado.usuario.email, 'ana@demo.test');
-  assert.deepEqual(resultado.usuario.permisos, ['gestionar_productos']);
-  assert.equal(typeof resultado.token, 'string');
-  assert.equal(typeof resultado.refreshToken, 'string');
+  assert.equal(consultas.length, 2);
+  for (const consulta of consultas) {
+    assert.equal(consulta.where[Op.or].length, 2);
+    assert.equal(consulta.limit, 2);
+  }
+  for (const resultado of resultados) {
+    assert.equal(resultado.usuario.email, 'ana@demo.test');
+    assert.deepEqual(resultado.usuario.permisos, ['gestionar_productos']);
+    assert.equal(typeof resultado.token, 'string');
+    assert.equal(typeof resultado.refreshToken, 'string');
+  }
 });
 
-test('login rechaza un usuario inexistente o una contraseña incorrecta', async () => {
-  Usuario.findOne = async () => null;
+test('login rechaza identificadores inexistentes, ambiguos o una contraseña incorrecta', async () => {
+  Usuario.findAll = async () => [];
   await assert.rejects(() => login('nadie@demo.test', 'cualquiera'), /Credenciales incorrectas/);
 
-  Usuario.findOne = async () => ({
+  Usuario.findAll = async () => [{
     activo: true,
     validarPassword: async () => false,
-  });
+  }];
   await assert.rejects(() => login('ana@demo.test', 'incorrecta'), /Correo o contraseña incorrectos/);
+
+  Usuario.findAll = async () => [{}, {}];
+  await assert.rejects(() => login('Ana', 'cualquiera'), /Credenciales incorrectas/);
 });
 
 test('UsuarioDto tolera un usuario Google sin rol cargado', () => {
   const usuario = UsuarioDto.fromModel({
     id: 9,
-    nombre: 'Usuario Google',
+    nombres: 'Usuario Google',
+    apellidos: 'Google',
+    dni: null,
     email: 'google@demo.test',
     rol: null,
     activo: true,
   });
 
-  assert.equal(usuario.nombre, 'Usuario Google');
+  assert.equal(usuario.nombres, 'Usuario Google');
   assert.equal(usuario.rol, null);
   assert.equal(usuario.rol_nombre, null);
   assert.deepEqual(usuario.permisos, []);

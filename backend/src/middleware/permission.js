@@ -37,4 +37,21 @@ const verificarPermiso = (permisoRequerido) => {
   };
 };
 
-module.exports = { verificarPermiso };
+const verificarAdministrador = async (req, res, next) => {
+  try {
+    const usuario = await Usuario.findByPk(req.user.id, {
+      include: [{ model: Usuario.sequelize.models.Rol, as: 'rol' }]
+    });
+
+    if (!usuario || usuario.rol?.nombre?.toLocaleLowerCase() !== 'administrador') {
+      return res.status(403).json({ error: 'Solo un administrador puede gestionar usuarios' });
+    }
+
+    return next();
+  } catch (error) {
+    logger.error('Error verificando el rol de administrador:', error.message);
+    return res.status(500).json({ error: 'Error al verificar permisos' });
+  }
+};
+
+module.exports = { verificarPermiso, verificarAdministrador };

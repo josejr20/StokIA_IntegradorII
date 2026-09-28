@@ -34,7 +34,7 @@ class MovimientoDto {
       producto_id: producto.id || null,
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,
-      usuario_nombre: usuario.nombre || null,
+      usuario_nombre: usuario.nombres || null,
       tipo_display: MovimientoDto.tipoDisplay(data.tipo),
       origen_display: MovimientoDto.origenDisplay(data.origen)
     });

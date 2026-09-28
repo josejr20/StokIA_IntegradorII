@@ -42,20 +42,17 @@ CREATE TABLE IF NOT EXISTS negocio.usuarios (
     id SERIAL PRIMARY KEY,
     password VARCHAR(128),
     password_hash VARCHAR(128),
-    nombre VARCHAR(150) NOT NULL,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    dni VARCHAR(20) UNIQUE,
     email VARCHAR(254) UNIQUE NOT NULL,
     rol_id INTEGER NOT NULL REFERENCES negocio.roles(id) ON DELETE RESTRICT,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     ultimo_acceso TIMESTAMP,
-    is_staff BOOLEAN NOT NULL DEFAULT FALSE,
-    google_id VARCHAR(255) UNIQUE,
-    avatar VARCHAR(500),
-    provider VARCHAR(30) NOT NULL DEFAULT 'local',
-    email_verified BOOLEAN NOT NULL DEFAULT FALSE,
-    last_login TIMESTAMP
+    is_staff BOOLEAN NOT NULL DEFAULT FALSE
 );
-COMMENT ON TABLE negocio.usuarios IS 'Usuarios del sistema (auth custom con email)';
+COMMENT ON TABLE negocio.usuarios IS 'Usuarios del sistema (autenticación con correo o nombres)';
 CREATE INDEX idx_usuarios_email ON negocio.usuarios(email);
 CREATE INDEX idx_usuarios_rol ON negocio.usuarios(rol_id);
 

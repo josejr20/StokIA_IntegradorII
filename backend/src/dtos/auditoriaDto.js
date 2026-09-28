@@ -14,7 +14,7 @@ class AuditoriaDto {
     if (!auditoria) return null;
     const data = auditoria.toJSON ? auditoria.toJSON() : auditoria;
     const usuario = data.usuario || {};
-    return new AuditoriaDto({ ...data, usuario_nombre: usuario.nombre || null });
+    return new AuditoriaDto({ ...data, usuario_nombre: usuario.nombres || null });
   }
 }
 

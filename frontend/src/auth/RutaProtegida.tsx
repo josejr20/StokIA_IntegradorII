@@ -26,6 +26,18 @@ export function RutaConPermiso({ permiso }: { permiso: PermisoCodigo }) {
   return <Outlet />
 }
 
+export function RutaSoloAdministrador() {
+  const { usuario, cargando } = useAuth()
+
+  if (cargando) {
+    return <div className="grid h-screen place-items-center text-muted-foreground">Cargando…</div>
+  }
+  if (!usuario) return <Navigate to="/login" replace />
+  const rol = (usuario.rol_nombre ?? usuario.rol ?? '').trim().toLocaleLowerCase()
+  if (rol !== 'administrador') return <Navigate to="/" replace />
+  return <Outlet />
+}
+
 export function RutaInicial({ children }: { children: React.ReactNode }) {
   const { usuario, cargando, tienePermiso } = useAuth()
 

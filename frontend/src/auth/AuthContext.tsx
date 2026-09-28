@@ -16,7 +16,9 @@ export type PermisoCodigo =
 
 export interface Usuario {
   id: number
-  nombre: string
+  nombres: string
+  apellidos: string
+  dni: string
   email: string
   rol_id: number | null
   rol_nombre?: string | null
@@ -30,10 +32,7 @@ interface AuthState {
   usuario: Usuario | null
   cargando: boolean
   isAuthenticated: boolean
-  iniciarSesion: (email: string, password: string) => Promise<void>
-  registrar: (datos: { nombre: string; email: string; password: string; confirmacion: string }) => Promise<void>
-  loginWithGoogle: (credential: string) => Promise<void>
-  registerWithGoogle: (credential: string) => Promise<void>
+  iniciarSesion: (identifier: string, password: string) => Promise<void>
   refreshUser: () => Promise<void>
   cerrarSesion: () => Promise<void>
   tienePermiso: (permiso: PermisoCodigo) => boolean
@@ -63,25 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     cargarUsuario()
   }, [])
 
-  async function iniciarSesion(email: string, password: string) {
+  async function iniciarSesion(identifier: string, password: string) {
     await api.post<{ usuario: Usuario }>(
       '/auth/login',
-      { email, password },
+      { identifier, password },
     )
     await cargarUsuario()
-  }
-
-  async function registrar(datos: { nombre: string; email: string; password: string; confirmacion: string }) {
-    await api.post('/auth/register', datos)
-  }
-
-  async function loginWithGoogle(credential: string) {
-    await api.post('/auth/google', { credential })
-    await cargarUsuario()
-  }
-
-  async function registerWithGoogle(credential: string) {
-    await api.post('/auth/google/register', { credential })
   }
 
   async function cerrarSesion() {
@@ -99,9 +85,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       cargando,
       isAuthenticated: Boolean(usuario),
       iniciarSesion,
-      registrar,
-      loginWithGoogle,
-      registerWithGoogle,
       refreshUser: cargarUsuario,
       cerrarSesion,
       tienePermiso,

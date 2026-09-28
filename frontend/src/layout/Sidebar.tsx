@@ -30,9 +30,7 @@ export function Sidebar() {
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex items-center gap-2 px-5 py-5">
-        <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground">
-          <BarChart3 className="size-4" />
-        </span>
+        <img src="/logo_vlag.png" alt="Logo VLAG" className="size-7 object-contain" />
         <span className="text-base font-semibold">StockIA</span>
       </div>
 
@@ -59,10 +57,10 @@ export function Sidebar() {
 
       <div className="flex items-center gap-3 border-t border-sidebar-border px-5 py-4">
         <span className="grid size-8 place-items-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-          {usuario?.nombre?.[0]?.toUpperCase() ?? '?'}
+          <img src="/usericon.png" alt="Usuario" className="size-8 rounded-full object-cover" />
         </span>
         <div className="min-w-0">
-          <p className="truncate text-sm font-medium">{usuario?.nombre}</p>
+          <p className="truncate text-sm font-medium">{usuario?.nombres} {usuario?.apellidos}</p>
           <p className="truncate text-xs text-sidebar-foreground/60">{usuario?.rol_nombre}</p>
         </div>
       </div>

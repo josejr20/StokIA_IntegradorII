@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Link, useNavigate } from 'react-router'
-import { BarChart3 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -11,11 +10,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ApiError } from '@/lib/api'
 import { useAuth } from './AuthContext'
-import { GoogleLoginButton } from './GoogleLoginButton'
 
 // HU12: inicio de sesión
 const esquema = z.object({
-  email: z.string().email('Ingresa un correo válido'),
+  identifier: z.string().trim().min(1, 'Ingresa tu correo o nombre'),
   password: z.string().min(1, 'Ingresa tu contraseña'),
 })
 type FormValues = z.infer<typeof esquema>
@@ -24,6 +22,8 @@ export default function LoginPage() {
   const { iniciarSesion } = useAuth()
   const navigate = useNavigate()
   const [enviando, setEnviando] = useState(false)
+  const [bloqueoHasta, setBloqueoHasta] = useState<number | null>(null)
+  const [segundosRestantes, setSegundosRestantes] = useState(0)
 
   const {
     register,
@@ -31,12 +31,33 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<FormValues>({ resolver: zodResolver(esquema) })
 
+  useEffect(() => {
+    if (bloqueoHasta === null) return
+
+    const actualizarContador = () => {
+      const milisegundos = Math.max(0, bloqueoHasta - Date.now())
+      setSegundosRestantes(Math.ceil(milisegundos / 1000))
+      if (milisegundos === 0) setBloqueoHasta(null)
+    }
+
+    actualizarContador()
+    const intervalo = window.setInterval(actualizarContador, 250)
+    return () => window.clearInterval(intervalo)
+  }, [bloqueoHasta])
+
   async function onSubmit(valores: FormValues) {
     setEnviando(true)
     try {
-      await iniciarSesion(valores.email, valores.password)
+      await iniciarSesion(valores.identifier, valores.password)
       navigate('/', { replace: true })
     } catch (error) {
+      if (error instanceof ApiError && error.status === 429) {
+        const cuerpo = error.body as { retryAfterMs?: unknown }
+        if (typeof cuerpo.retryAfterMs === 'number' && cuerpo.retryAfterMs > 0) {
+          setBloqueoHasta(Date.now() + cuerpo.retryAfterMs)
+          return
+        }
+      }
       const mensaje = error instanceof ApiError ? error.message : 'No se pudo iniciar sesión'
       toast.error(mensaje)
     } finally {
@@ -45,74 +66,53 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      {/* Panel de formulario */}
-      <div className="flex items-center justify-center bg-[#fdecec] p-8">
-        <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-sm">
-          <div className="mb-6 flex items-center gap-2">
-            <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-              <BarChart3 className="size-4" />
-            </span>
+    <div className="grid min-h-screen bg-white lg:grid-cols-[minmax(0,2fr)_minmax(370px,1fr)]">
+      <div
+        aria-hidden="true"
+        className="hidden min-h-screen bg-cover bg-center lg:block"
+        style={{ backgroundImage: "url('/fondo-login-vlag.png')" }}
+      />
+
+      <div className="flex min-h-screen items-center justify-center px-6 py-10 sm:px-10">
+        <div className="w-full max-w-sm">
+          <div className="mb-7 flex items-center gap-2">
+            <img src="/logo_vlag.png" alt="VLAG" className="h-10 w-12 object-contain" />
             <span className="text-lg font-semibold">StockIA</span>
           </div>
 
           <h1 className="text-xl font-semibold">Bienvenido de nuevo</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Ingresa tus credenciales para acceder al sistema.
-          </p>
+          <p className="mt-2 text-sm text-muted-foreground">Ingresa tus credenciales para acceder al sistema.</p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
             <div className="space-y-1.5">
-              <Label htmlFor="email">Correo institucional</Label>
-              <Input id="email" type="email" autoComplete="email" placeholder="nombre@empresa.com" {...register('email')} />
-              {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+              <Label htmlFor="identifier">Correo o nombre</Label>
+              <Input id="identifier" type="text" autoComplete="username" placeholder="correo@gmail.com o nombre" {...register('identifier')} />
+              {errors.identifier && <p className="text-xs text-destructive">{errors.identifier.message}</p>}
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">Clave</Label>
               <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register('password')} />
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
             </div>
 
             <div className="text-right text-sm">
-              {/* HU38 */}
-              <a href="/recuperar" className="text-primary hover:underline">
-                ¿Olvidaste tu contraseña?
-              </a>
+              <Link to="/recuperar" className="text-primary hover:underline">¿Olvidaste tu contraseña?</Link>
             </div>
 
-            <Button type="submit" className="w-full" disabled={enviando}>
+            {bloqueoHasta !== null && (
+              <p role="alert" aria-live="assertive" className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-center text-sm text-destructive">
+                Demasiadas solicitudes. Intenta nuevamente en{' '}
+                <span className="font-semibold tabular-nums">
+                  {`${Math.floor(segundosRestantes / 60).toString().padStart(2, '0')}:${(segundosRestantes % 60).toString().padStart(2, '0')}`}
+                </span>
+              </p>
+            )}
+
+            <Button type="submit" className="w-full" disabled={enviando || bloqueoHasta !== null}>
               {enviando ? 'Ingresando…' : 'Iniciar sesión'}
             </Button>
           </form>
-
-          <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px flex-1 bg-border" /> o <span className="h-px flex-1 bg-border" />
-          </div>
-          <GoogleLoginButton />
-
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Roles disponibles: Administrador · Encargado de inventario · Encargado de almacén · Jefe de ventas
-          </p>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            ¿Eres nuevo?{' '}
-            <Link to="/registro" className="font-medium text-primary hover:underline">
-              Registrar nuevo usuario
-            </Link>
-          </p>
-        </div>
-      </div>
-
-      {/* Panel de marca */}
-      <div className="relative hidden overflow-hidden bg-gradient-to-br from-primary to-red-800 lg:block">
-        <div className="relative z-10 flex h-full flex-col justify-center px-16 text-white">
-          <BarChart3 className="mb-4 size-8" />
-          <p className="text-lg font-bold tracking-wide">VLAG</p>
-          <p className="text-xs tracking-[0.2em] text-white/80">100% NATURAL</p>
-          <h2 className="mt-4 text-3xl font-bold">Gestión predictiva de inventarios</h2>
-          <p className="mt-2 max-w-sm text-white/85">
-            Predicción de demanda, riesgo de vencimiento y recomendaciones con Machine Learning.
-          </p>
         </div>
       </div>
     </div>

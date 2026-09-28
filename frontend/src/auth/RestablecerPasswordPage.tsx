@@ -11,7 +11,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ApiError, api } from '@/lib/api'
 
-const esquema = z.object({ password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'), confirmacion: z.string().min(1, 'Confirma tu contraseña') }).refine((valores) => valores.password === valores.confirmacion, { message: 'Las contraseñas no coinciden', path: ['confirmacion'] })
+const esquema = z.object({
+  password: z.string()
+    .min(8, 'La contraseña debe tener al menos 8 caracteres')
+    .regex(/\p{Lu}/u, 'Incluye al menos una letra mayúscula')
+    .regex(/\p{Ll}/u, 'Incluye al menos una letra minúscula')
+    .regex(/\p{N}/u, 'Incluye al menos un número')
+    .regex(/[^\p{L}\p{N}\s]/u, 'Incluye al menos un carácter especial'),
+  confirmacion: z.string().min(1, 'Confirma tu contraseña'),
+}).refine((valores) => valores.password === valores.confirmacion, { message: 'Las contraseñas no coinciden', path: ['confirmacion'] })
 
 export default function RestablecerPasswordPage() {
   const [params] = useSearchParams()
@@ -28,5 +36,5 @@ export default function RestablecerPasswordPage() {
     finally { setEnviando(false) }
   }
 
-  return <div className="grid min-h-screen place-items-center bg-[#fdecec] p-8"><div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-sm"><Link to="/login" className="mb-5 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" /> Volver al login</Link><h1 className="text-xl font-semibold">Nueva contraseña</h1><p className="mt-1 text-sm text-muted-foreground">Elige una contraseña segura para tu cuenta.</p><form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4"><div className="space-y-1.5"><Label htmlFor="password">Nueva contraseña</Label><Input id="password" type="password" {...register('password')} />{errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}</div><div className="space-y-1.5"><Label htmlFor="confirmacion">Confirmar contraseña</Label><Input id="confirmacion" type="password" {...register('confirmacion')} />{errors.confirmacion && <p className="text-xs text-destructive">{errors.confirmacion.message}</p>}</div><Button type="submit" className="w-full" disabled={enviando}>{enviando ? 'Actualizando…' : 'Cambiar contraseña'}</Button></form></div></div>
+  return <div className="grid min-h-screen place-items-center bg-[#fdecec] p-8"><div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-sm"><Link to="/login" className="mb-5 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" /> Volver al login</Link><h1 className="text-xl font-semibold">Nueva contraseña</h1><p className="mt-1 text-sm text-muted-foreground">Debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.</p><form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4"><div className="space-y-1.5"><Label htmlFor="password">Nueva contraseña</Label><Input id="password" type="password" {...register('password')} />{errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}</div><div className="space-y-1.5"><Label htmlFor="confirmacion">Confirmar contraseña</Label><Input id="confirmacion" type="password" {...register('confirmacion')} />{errors.confirmacion && <p className="text-xs text-destructive">{errors.confirmacion.message}</p>}</div><Button type="submit" className="w-full" disabled={enviando}>{enviando ? 'Actualizando…' : 'Cambiar contraseña'}</Button></form></div></div>
 }
