@@ -1,15 +1,15 @@
 class LoginDto {
-  constructor(email, password) {
-    this.email = email;
+  constructor(identifier, password) {
+    this.identifier = identifier;
     this.password = password;
   }
 
   static fromBody(body) {
-    return new LoginDto(body.email, body.password);
+    return new LoginDto(body.identifier ?? body.email, body.password);
   }
 
   toJSON() {
-    return { email: this.email, password: this.password };
+    return { identifier: this.identifier, password: this.password };
   }
 }
 

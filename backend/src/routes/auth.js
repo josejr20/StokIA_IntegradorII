@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { login, registrar, registrarGoogle, logout, refresh, me, google, forgotPassword, verifyResetCode, resetPassword } = require('../controllers/authController');
+const { login, logout, refresh, me, forgotPassword, verifyResetCode, resetPassword } = require('../controllers/authController');
 const { autenticar } = require('../middleware/authJwt');
 const { authRateLimit } = require('../middleware/rateLimit');
 const router = Router();
@@ -71,10 +71,6 @@ const router = Router();
  *         $ref: '#/components/responses/UnauthorizedError'
  */
 router.post('/login', authRateLimit, login);
-router.post('/register', authRateLimit, registrar);
-router.post('/registro', authRateLimit, registrar);
-router.post('/google', authRateLimit, google);
-router.post('/google/register', authRateLimit, registrarGoogle);
 router.post('/forgot-password', authRateLimit, forgotPassword);
 router.post('/verify-reset-code', authRateLimit, verifyResetCode);
 router.post('/reset-password', authRateLimit, resetPassword);

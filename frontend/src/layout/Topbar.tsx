@@ -15,7 +15,7 @@ export function Topbar({ titulo }: { titulo: string }) {
       <div className="min-w-0">
         <h1 className="truncate text-lg font-semibold">{titulo}</h1>
         <p className="truncate text-xs text-muted-foreground">
-          Bienvenido, {usuario?.nombre ?? 'usuario'} · Su rol es: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
+          Bienvenido, {usuario?.nombres ?? 'usuario'} · Su rol es: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
         </p>
       </div>
 
@@ -30,14 +30,14 @@ export function Topbar({ titulo }: { titulo: string }) {
         </Button>
 
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild>
             <button className="grid size-8 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-              {usuario?.nombre?.[0]?.toUpperCase() ?? '?'}
+              <img src="/usericon.png" alt="Usuario" className="size-8 rounded-full object-cover" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <div className="px-2 py-1.5">
-              <p className="text-sm font-medium">{usuario?.nombre}</p>
+              <p className="text-sm font-medium">{usuario?.nombres} {usuario?.apellidos}</p>
               <p className="text-xs text-muted-foreground">{usuario?.email}</p>
             </div>
             <DropdownMenuSeparator />

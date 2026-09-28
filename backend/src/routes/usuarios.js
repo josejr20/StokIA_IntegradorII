@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
-const { verificarPermiso } = require('../middleware/permission');
+const { verificarAdministrador } = require('../middleware/permission');
 const { listar, obtener, crear, actualizar, desactivar, yo } = require('../controllers/usuarioController');
 const router = Router();
 router.use(autenticar);
+router.get('/yo', yo);
+router.use(verificarAdministrador);
 
 /**
  * @openapi
@@ -158,10 +160,9 @@ router.use(autenticar);
  *             schema:
  *               $ref: '#/components/schemas/Usuario'
  */
-router.get('/', verificarPermiso('gestionar_usuarios'), listar);
-router.get('/:id', verificarPermiso('gestionar_usuarios'), obtener);
-router.post('/', verificarPermiso('gestionar_usuarios'), crear);
-router.put('/:id', verificarPermiso('gestionar_usuarios'), actualizar);
-router.patch('/:id/desactivar', verificarPermiso('gestionar_usuarios'), desactivar);
-router.get('/yo', yo);
+router.get('/', listar);
+router.get('/:id', obtener);
+router.post('/', crear);
+router.put('/:id', actualizar);
+router.patch('/:id/desactivar', desactivar);
 module.exports = router;

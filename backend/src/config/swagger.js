@@ -102,8 +102,10 @@ const options = {
           type: 'object',
           properties: {
             id: { type: 'integer', example: 1 },
-            nombre: { type: 'string', example: 'Administrador' },
-            email: { type: 'string', format: 'email', example: 'admin@stockia.local' },
+            nombres: { type: 'string', example: 'Ana' },
+            apellidos: { type: 'string', example: 'García' },
+            dni: { type: 'string', example: '12345678', nullable: true },
+            email: { type: 'string', format: 'email', example: 'ana@stockia.local' },
             rol_id: { type: 'integer', example: 1 },
             activo: { type: 'boolean', example: true },
             fecha_creacion: { type: 'string', format: 'date-time', example: '2024-01-01T10:00:00Z' },
@@ -112,9 +114,13 @@ const options = {
         },
         LoginRequest: {
           type: 'object',
-          required: ['email', 'password'],
+          oneOf: [
+            { required: ['identifier', 'password'] },
+            { required: ['email', 'password'] }
+          ],
           properties: {
-            email: { type: 'string', format: 'email', example: 'admin@stockia.local' },
+            identifier: { type: 'string', example: 'ana@stockia.local', description: 'Correo o nombres del usuario' },
+            email: { type: 'string', format: 'email', example: 'admin@stockia.local', description: 'Alias compatible con clientes anteriores' },
             password: { type: 'string', format: 'password', example: 'admin123' }
           }
         },

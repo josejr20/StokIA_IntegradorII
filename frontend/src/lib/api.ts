@@ -65,7 +65,7 @@ export async function apiFetch<T>(
 
   const respuesta = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include' })
 
-  const endpointSinRefresh = ['/auth/me', '/auth/login', '/auth/register', '/auth/registro', '/auth/google', '/auth/forgot-password', '/auth/verify-reset-code', '/auth/reset-password'].includes(path)
+  const endpointSinRefresh = ['/auth/me', '/auth/login', '/auth/forgot-password', '/auth/verify-reset-code', '/auth/reset-password'].includes(path)
   if ( respuesta.status === 401 && !_reintentado && !endpointSinRefresh) {
     const renovado = await refrescarToken()
     if (renovado) return apiFetch<T>(path, options, true)

@@ -21,6 +21,7 @@ module.exports = {
   EMAIL_FROM: process.env.EMAIL_FROM || process.env.SMTP_USER || process.env.BREVO_SENDER_EMAIL || 'no-reply@stockia.local',
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
+  USER_CREATION_SECRET: process.env.USER_CREATION_SECRET || '',
   RESET_CODE_TTL_MINUTES: parseInt(process.env.RESET_CODE_TTL_MINUTES, 10) || 10,
   RESET_CODE_MAX_ATTEMPTS: parseInt(process.env.RESET_CODE_MAX_ATTEMPTS, 10) || 5,
   AUTH_RATE_LIMIT_WINDOW_MS: parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS, 10) || 15 * 60 * 1000,

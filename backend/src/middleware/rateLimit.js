@@ -11,7 +11,13 @@ const authRateLimit = (req, res, next) => {
     return next();
   }
   if (current.count >= config.AUTH_RATE_LIMIT_MAX) {
-    return res.status(429).json({ error: 'Demasiadas solicitudes. Intenta nuevamente más tarde.' });
+    const retryAfterMs = Math.max(0, config.AUTH_RATE_LIMIT_WINDOW_MS - (now - current.startedAt));
+    const retryAfterSeconds = Math.ceil(retryAfterMs / 1000);
+    res.setHeader('Retry-After', String(retryAfterSeconds));
+    return res.status(429).json({
+      error: 'Demasiadas solicitudes. Intenta nuevamente más tarde.',
+      retryAfterMs,
+    });
   }
   current.count += 1;
   return next();

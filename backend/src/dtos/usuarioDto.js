@@ -1,7 +1,9 @@
 class UsuarioDto {
   constructor(data) {
     this.id = data.id;
-    this.nombre = data.nombre;
+    this.nombres = data.nombres || data.nombre || null;
+    this.apellidos = data.apellidos || '';
+    this.dni = data.dni || null;
     this.email = data.email;
     this.rol_id = data.rol_id;
     this.rol = data.rol && typeof data.rol === 'object' ? data.rol.nombre : data.rol;
@@ -30,7 +32,9 @@ class UsuarioDto {
 
   static fromCreate(body) {
     return {
-      nombre: body.nombre,
+      nombres: body.nombres,
+      apellidos: body.apellidos,
+      dni: body.dni,
       email: body.email,
       password_hash: body.password_hash || body.password,
       rol_id: body.rol_id,
@@ -40,7 +44,10 @@ class UsuarioDto {
 
   static fromUpdate(body) {
     const data = {};
-    if (body.nombre !== undefined) data.nombre = body.nombre;
+    if (body.nombres !== undefined) data.nombres = body.nombres;
+    if (body.nombre !== undefined) data.nombres = body.nombre;
+    if (body.apellidos !== undefined) data.apellidos = body.apellidos;
+    if (body.dni !== undefined) data.dni = body.dni;
     if (body.email !== undefined) data.email = body.email;
     if (body.password !== undefined) data.password_hash = body.password;
     if (body.rol_id !== undefined) data.rol_id = body.rol_id;

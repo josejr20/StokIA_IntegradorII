@@ -10,19 +10,35 @@ export interface Rol {
 
 export interface Usuario {
   id: number
-  nombre: string
+  nombres: string
+  apellidos: string
+  dni: string
   email: string
   rol_id: number
   rol: string | null
   activo: boolean
   fecha_creacion: string
+  ultimo_acceso: string | null
 }
 
 export interface CrearUsuarioInput {
-  nombre: string
+  nombres: string
+  apellidos: string
+  dni: string
   email: string
   password: string
   rol_id: number
+  clave_secreta: string
+}
+
+export function useUsuarios() {
+  return useQuery({
+    queryKey: ['usuarios'],
+    queryFn: async () => {
+      const respuesta = await api.get<{ data: Usuario[] }>('/usuarios')
+      return respuesta.data
+    },
+  })
 }
 
 export function useRoles() {
