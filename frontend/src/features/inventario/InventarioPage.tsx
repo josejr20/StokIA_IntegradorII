@@ -22,18 +22,11 @@ const formatoFecha = new Intl.DateTimeFormat('es-PE', { dateStyle: 'short' })
 
 type BadgeVariante = 'default' | 'secondary' | 'outline' | 'alto' | 'medio' | 'bajo'
 
-const HOY = new Date()
-const HORA_DIA = 1000 * 60 * 60 * 24
-
-function estadoLote(
-  fechaVencimiento: string,
-  cantidadActual: number,
-): { texto: string; variante: BadgeVariante } {
-  if (cantidadActual <= 0) return { texto: 'Agotado', variante: 'secondary' }
-  const diff = Math.ceil((new Date(fechaVencimiento).getTime() - HOY.getTime()) / HORA_DIA)
-  if (diff < 0) return { texto: 'Vencido', variante: 'alto' }
-  if (diff <= 7) return { texto: 'Próximo a vencer', variante: 'medio' }
-  return { texto: 'Vigente', variante: 'bajo' }
+const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> = {
+  AGOTADO: { texto: 'Agotado', variante: 'secondary' },
+  VENCIDO: { texto: 'Vencido', variante: 'alto' },
+  POR_VENCER: { texto: 'Próximo a vencer', variante: 'medio' },
+  VIGENTE: { texto: 'Vigente', variante: 'bajo' },
 }
 
 function aNumero(v: number | string | null | undefined): number {
@@ -154,7 +147,7 @@ export default function InventarioPage() {
               )}
               {lotes.map((lote) => {
                 const actual = aNumero(lote.cantidad_actual)
-                const { texto, variante } = estadoLote(lote.fecha_vencimiento, actual)
+                const { texto, variante } = ESTADO_LOTE[lote.estado ?? 'VIGENTE']
                 return (
                   <TableRow key={lote.id}>
                     <TableCell>

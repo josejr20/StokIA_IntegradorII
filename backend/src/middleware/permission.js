@@ -2,6 +2,7 @@ const { Usuario } = require('../models');
 const logger = require('../utils/logger');
 
 const verificarPermiso = (permisoRequerido) => {
+  const permisosValidos = Array.isArray(permisoRequerido) ? permisoRequerido : [permisoRequerido];
   return async (req, res, next) => {
     try {
       const usuario = await Usuario.findByPk(req.user.id, {
@@ -22,10 +23,10 @@ const verificarPermiso = (permisoRequerido) => {
       }
 
       const permisos = await rol.getPermisos();
-      const tienePermiso = permisos.some(p => p.codigo === permisoRequerido);
+      const tienePermiso = permisos.some(p => permisosValidos.includes(p.codigo));
 
       if (!tienePermiso) {
-        logger.warn(`Usuario ${usuario.email} sin permiso: ${permisoRequerido}`);
+        logger.warn(`Usuario ${usuario.email} sin permiso: ${permisosValidos.join(', ')}`);
         return res.status(403).json({ error: 'No tienes permiso para esta acción' });
       }
 

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router'
 import {
-  BarChart3, Home, LayoutDashboard, Package, Boxes, ShoppingCart,
+  Home, LayoutDashboard, Package, Boxes, ShoppingCart,
   TrendingUp, Brain, Settings, Users, ScrollText, History,
 } from 'lucide-react'
 

@@ -90,15 +90,6 @@ const actualizar = async (req, res, next) => {
   } catch (error) { next(error); }
 };
 
-const eliminar = async (req, res, next) => {
-  try {
-    const lote = await Lote.findByPk(req.params.id);
-    if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
-    await lote.destroy();
-    res.json({ message: 'Lote eliminado' });
-  } catch (error) { next(error); }
-};
-
 const historial = async (req, res, next) => {
   try {
     const lote = await Lote.findByPk(req.params.id);
@@ -161,4 +152,4 @@ const registrarMovimientoCtrl = async (req, res, next) => {
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, eliminar, historial, registrarMovimientoCtrl };
+module.exports = { listar, obtener, crear, actualizar, historial, registrarMovimientoCtrl };

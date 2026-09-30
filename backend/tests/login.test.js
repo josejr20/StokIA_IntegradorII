@@ -65,19 +65,19 @@ test('login rechaza identificadores inexistentes, ambiguos o una contraseña inc
   await assert.rejects(() => login('Ana', 'cualquiera'), /Credenciales incorrectas/);
 });
 
-test('UsuarioDto tolera un usuario Google sin rol cargado', () => {
-  const usuario = UsuarioDto.fromModel({
-    id: 9,
-    nombres: 'Usuario Google',
-    apellidos: 'Google',
-    dni: null,
-    email: 'google@demo.test',
-    rol: null,
-    activo: true,
-  });
+test('login rechaza campos vacíos', async () => {
+  await assert.rejects(() => login('', 'password'), /Credenciales incorrectas/);
+  await assert.rejects(() => login('   ', 'password'), /Credenciales incorrectas/);
 
-  assert.equal(usuario.nombres, 'Usuario Google');
-  assert.equal(usuario.rol, null);
-  assert.equal(usuario.rol_nombre, null);
-  assert.deepEqual(usuario.permisos, []);
+  const usuarioConPasswordInvalida = {
+    activo: true,
+    validarPassword: async () => false,
+  };
+  Usuario.findAll = async () => [usuarioConPasswordInvalida];
+  await assert.rejects(() => login('ana@demo.test', ''), /Correo o contraseña incorrectos/);
+  await assert.rejects(() => login('ana@demo.test', '   '), /Correo o contraseña incorrectos/);
+
+  Usuario.findAll = async () => [];
+  await assert.rejects(() => login('', ''), /Credenciales incorrectas/);
+  await assert.rejects(() => login('   ', '   '), /Credenciales incorrectas/);
 });

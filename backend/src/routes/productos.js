@@ -186,8 +186,8 @@ router.use(autenticar);
  *             schema:
  *               $ref: '#/components/schemas/Producto'
  */
-router.get('/', verificarPermiso('gestionar_productos'), listar);
-router.get('/:id', verificarPermiso('gestionar_productos'), obtener);
+router.get('/', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), listar);
+router.get('/:id', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), obtener);
 router.post('/', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), crear);
 router.put('/:id', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), actualizar);
 router.patch('/:id/desactivar', verificarPermiso('gestionar_productos'), desactivar);
