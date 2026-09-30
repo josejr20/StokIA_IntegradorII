@@ -19,7 +19,13 @@ const esquema = z.object({
   apellidos: z.string().trim().min(2, 'Ingresa los apellidos'),
   dni: z.string().trim().min(1, 'Ingresa el DNI'),
   email: z.string().trim().email('Ingresa un correo válido'),
-  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
+  password: z
+    .string()
+    .min(8, 'Mínimo 8 caracteres')
+    .regex(/[A-Z]/, 'Incluye al menos una mayúscula')
+    .regex(/[a-z]/, 'Incluye al menos una minúscula')
+    .regex(/[0-9]/, 'Incluye al menos un número')
+    .regex(/[^A-Za-z0-9]/, 'Incluye al menos un símbolo'),
   rol_id: z.string().min(1, 'Selecciona un rol'),
   clave_secreta: z.string().min(1, 'Ingresa la clave secreta del servidor'),
 })
@@ -117,7 +123,7 @@ export default function UsuariosPage() {
 
           <div className="space-y-1.5">
             <Label htmlFor="password">Contraseña temporal</Label>
-            <Input id="password" type="password" placeholder="Mínimo 8 caracteres" {...register('password')} />
+            <Input id="password" type="password" placeholder="Mínimo 8, con mayúscula, minúscula, número y símbolo" {...register('password')} />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
           </div>
 

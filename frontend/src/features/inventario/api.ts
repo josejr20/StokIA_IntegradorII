@@ -180,18 +180,6 @@ export function useActualizaLote() {
   })
 }
 
-export function useEliminarLote() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: (id: number) => api.del<{ message: string }>(`/lotes/${id}/`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lotes'] })
-      queryClient.invalidateQueries({ queryKey: ['movimientos-inventario'] })
-      queryClient.invalidateQueries({ queryKey: ['movimientos'] })
-    },
-  })
-}
-
 export interface RegistrarMovimientoInput {
   loteId: number
   tipo: TipoMovimiento

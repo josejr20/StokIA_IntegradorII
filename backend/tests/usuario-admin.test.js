@@ -75,7 +75,7 @@ test('el alta con clave válida persiste únicamente los datos del empleado', as
       apellidos: 'García',
       dni: '12345678',
       email: 'ANA@EMPRESA.TEST',
-      password: 'clave-temporal-segura',
+      password: 'Clave-temporal-7',
       rol_id: '3',
       clave_secreta: 'secreto-configurado',
     },
@@ -88,4 +88,26 @@ test('el alta con clave válida persiste únicamente los datos del empleado', as
   assert.equal(datosPersistidos.email, 'ana@empresa.test');
   assert.equal(datosPersistidos.rol_id, 3);
   assert.equal('clave_secreta' in datosPersistidos, false);
+});
+
+test('el alta rechaza contraseña que incumple la política', async () => {
+  config.USER_CREATION_SECRET = 'secreto-configurado';
+  Rol.findByPk = async (id) => ({ id });
+  Usuario.findOne = async () => null;
+  const respuesta = crearRespuesta();
+
+  await crear({
+    body: {
+      nombres: 'Prueba',
+      apellidos: 'Contraseña',
+      dni: '99999999',
+      email: 'prueba.password@test.com',
+      password: 'clave12345',
+      rol_id: '3',
+      clave_secreta: 'secreto-configurado',
+    },
+  }, respuesta, assert.fail);
+
+  assert.equal(respuesta.statusCode, 400);
+  assert.equal(respuesta.body.error, 'La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y símbolo');
 });

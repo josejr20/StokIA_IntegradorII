@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const { Usuario, Rol } = require('../models');
 const { UsuarioDto } = require('../dtos/usuarioDto');
 const config = require('../config');
+const { cumplePoliticaPassword } = require('../utils/passwordPolicy');
 
 const listar = async (req, res, next) => {
   try {
@@ -49,8 +50,10 @@ const crear = async (req, res, next) => {
     if (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       return res.status(400).json({ error: 'Ingresa un correo válido' });
     }
-    if (typeof password !== 'string' || password.length < 8) {
-      return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
+    if (!cumplePoliticaPassword(password)) {
+      return res.status(400).json({
+        error: 'La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y símbolo',
+      });
     }
     const rol = await Rol.findByPk(Number(rol_id));
     if (!rol) return res.status(400).json({ error: 'Selecciona un rol válido' });
