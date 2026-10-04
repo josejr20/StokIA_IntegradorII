@@ -53,7 +53,7 @@ export interface Lote {
   cantidad_inicial: number
   cantidad_actual: number
   fecha_ingreso: string
-  fecha_vencimiento: string
+  fecha_vencimiento: string | null
   fecha_creacion: string
 }
 

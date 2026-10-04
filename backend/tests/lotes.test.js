@@ -33,3 +33,12 @@ test('validarLoteParaCreacion devuelve cantidad y fecha normalizadas', () => {
     { cantidad_inicial: 12.5, fecha_vencimiento: '2099-01-02' },
   );
 });
+
+test('validarLoteParaCreacion permite crear un lote sin fecha de vencimiento', () => {
+  for (const fecha of [undefined, null, '', '   ']) {
+    assert.deepEqual(
+      validarLoteParaCreacion({ cantidad_inicial: '12.5', fecha_vencimiento: fecha }),
+      { cantidad_inicial: 12.5, fecha_vencimiento: null },
+    );
+  }
+});

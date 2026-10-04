@@ -6,7 +6,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 
-import { useHistorialLote, type TipoMovimiento } from '../api'
+import { useHistorialProductos, type TipoMovimiento } from '../api'
 
 const ICONO_TIPO: Record<TipoMovimiento, typeof ArrowDownCircle> = {
   ingreso: ArrowDownCircle,
@@ -18,23 +18,25 @@ const formatoMoneda = new Intl.NumberFormat('es-PE', { style: 'currency', curren
 const formatoFecha = new Intl.DateTimeFormat('es-PE', { dateStyle: 'medium', timeStyle: 'short' })
 
 export function LoteDetalleSheet({
-  loteId,
+  productoNombre,
+  productoIds,
   open,
   onOpenChange,
 }: {
-  loteId: number | null
+  productoNombre: string
+  productoIds: number[]
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { data: historial, isLoading } = useHistorialLote(loteId ?? 0)
+  const { data: historial, isLoading } = useHistorialProductos(productoIds)
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-lg">
+      <SheetContent className="sm:max-w-2xl">
         <SheetHeader>
           <SheetTitle>Historial del lote</SheetTitle>
           <SheetDescription>
-            Lote {loteId} · movimientos registrados en el kardex.
+            {productoNombre} · movimientos registrados en sus lotes.
           </SheetDescription>
         </SheetHeader>
 
@@ -48,6 +50,7 @@ export function LoteDetalleSheet({
               <TableHeader>
                 <TableRow>
                   <TableHead>Fecha</TableHead>
+                  <TableHead>ID / Lote</TableHead>
                   <TableHead>Tipo</TableHead>
                   <TableHead className="text-right">Cant.</TableHead>
                   <TableHead className="text-right">Saldo</TableHead>
@@ -61,6 +64,9 @@ export function LoteDetalleSheet({
                     <TableRow key={mov.id}>
                       <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                         {formatoFecha.format(new Date(mov.fecha))}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-xs">
+                        {mov.lote_numero ?? 'Sin código'} · #{mov.lote_id}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1.5">

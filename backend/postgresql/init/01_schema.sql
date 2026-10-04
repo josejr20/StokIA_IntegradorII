@@ -161,8 +161,8 @@ CREATE TABLE IF NOT EXISTS negocio.lotes (
     numero_lote VARCHAR(60) NOT NULL,
     cantidad_inicial NUMERIC(12,2) NOT NULL DEFAULT 0,
     cantidad_actual NUMERIC(12,2) NOT NULL DEFAULT 0,
-    fecha_ingresso DATE NOT NULL DEFAULT CURRENT_DATE,
-    fecha_vencimiento DATE NOT NULL,
+    fecha_ingreso DATE NOT NULL DEFAULT CURRENT_DATE,
+    fecha_vencimiento DATE,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     UNIQUE(producto_id, numero_lote)
 );

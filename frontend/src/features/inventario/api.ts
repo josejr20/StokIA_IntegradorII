@@ -29,7 +29,7 @@ export interface Lote {
   cantidad_inicial: number
   cantidad_actual: number
   fecha_ingreso: string
-  fecha_vencimiento: string
+  fecha_vencimiento: string | null
   fecha_creacion: string
   estado?: 'AGOTADO' | 'VENCIDO' | 'POR_VENCER' | 'VIGENTE'
   dias_para_vencer?: number | null
@@ -38,6 +38,7 @@ export interface Lote {
 export interface MovimientoInventario {
   id: number
   lote: number
+  lote_id: number
   lote_numero: string
   producto_id: number
   producto_nombre: string
@@ -78,21 +79,26 @@ export interface FiltrosMovimientos {
 }
 
 export function useLotes(filtros: FiltrosLotes = {}) {
-  const params = new URLSearchParams()
-  if (filtros.search) params.set('search', filtros.search)
-  if (filtros.producto) params.set('producto', filtros.producto)
-  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
-  params.set('page_size', String(filtros.pageSize || 10))
-
   return useQuery({
     queryKey: ['lotes', filtros],
     queryFn: async () => {
-      const respuesta = await api.get<Paginado<Lote>>(`/lotes/${params.toString() ? `?${params.toString()}` : ''}`)
+      const pageSize = 100
+      const resultados: Lote[] = []
+      let pagina = 1
+      let hayMas = true
+
+      while (hayMas) {
+        const respuesta = await api.get<Paginado<Lote>>(`/lotes/?page=${pagina}&page_size=${pageSize}`)
+        resultados.push(...respuesta.data)
+        hayMas = respuesta.next ?? false
+        pagina += 1
+      }
+
       return {
-        results: respuesta.data,
-        count: respuesta.count ?? respuesta.data.length,
-        previous: respuesta.previous ?? false,
-        next: respuesta.next ?? false,
+        results: resultados,
+        count: resultados.length,
+        previous: false,
+        next: false,
       }
     },
   })
@@ -135,23 +141,26 @@ export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
   })
 }
 
-export function useHistorialLote(loteId: number) {
+export function useHistorialProductos(productoIds: number[]) {
+  const ids = [...new Set(productoIds)].sort((a, b) => a - b)
+  const idsQuery = ids.join(',')
   return useQuery({
-    queryKey: ['lotes', loteId, 'historial'],
+    queryKey: ['lotes', 'historial-productos', idsQuery],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: MovimientoInventario[] }>(`/lotes/${loteId}/historial/`)
+      const respuesta = await api.get<{ data: MovimientoInventario[] }>(
+        `/lotes/historial-productos/?producto_ids=${idsQuery}`,
+      )
       return respuesta.data
     },
-    enabled: !!loteId,
+    enabled: ids.length > 0,
   })
 }
 
 export interface CrearLoteInput {
   producto: number
-  numero_lote: string
+  numero_lote?: string
   cantidad_inicial: string
   fecha_ingreso: string
-  fecha_vencimiento: string
 }
 
 export function useCreatorLote() {
@@ -161,7 +170,10 @@ export function useCreatorLote() {
       ...datos,
       producto_id: datos.producto,
     }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['lotes'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['lotes'] })
+      queryClient.invalidateQueries({ queryKey: ['productos'] })
+    },
   })
 }
 

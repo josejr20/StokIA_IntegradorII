@@ -219,8 +219,8 @@ const options = {
             numero_lote: { type: 'string', example: 'LOT-2024-001' },
             cantidad_inicial: { type: 'number', format: 'decimal', example: 100.00 },
             cantidad_actual: { type: 'number', format: 'decimal', example: 80.00 },
-            fecha_ingresso: { type: 'string', format: 'date', example: '2024-01-01' },
-            fecha_vencimiento: { type: 'string', format: 'date', example: '2025-01-01' },
+            fecha_ingreso: { type: 'string', format: 'date', example: '2024-01-01' },
+            fecha_vencimiento: { type: 'string', format: 'date', nullable: true, example: '2025-01-01' },
             fecha_creacion: { type: 'string', format: 'date-time' }
           }
         },

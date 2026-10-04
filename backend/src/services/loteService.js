@@ -55,14 +55,19 @@ function validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento } = {}) {
     throw new Error('La cantidad inicial del lote debe ser mayor a 0');
   }
 
-  const fecha = normalizarFecha(fecha_vencimiento, true);
-  if (!fecha) {
+  const vencimiento = typeof fecha_vencimiento === 'string'
+    ? fecha_vencimiento.trim()
+    : fecha_vencimiento;
+  const fecha = normalizarFecha(vencimiento, true);
+  if (!fecha && vencimiento !== null && vencimiento !== undefined && vencimiento !== '') {
     throw new Error('La fecha de vencimiento es inválida');
   }
 
-  const hoy = normalizarFecha(new Date(), true);
-  if (String(fecha) <= String(hoy)) {
-    throw new Error('La fecha de vencimiento debe ser posterior a hoy');
+  if (fecha) {
+    const hoy = normalizarFecha(new Date(), true);
+    if (String(fecha) <= String(hoy)) {
+      throw new Error('La fecha de vencimiento debe ser posterior a hoy');
+    }
   }
 
   return {

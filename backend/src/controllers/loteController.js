@@ -50,7 +50,10 @@ const crear = async (req, res, next) => {
     if (!producto.activo) return res.status(400).json({ error: 'No se puede crear un lote para un producto inactivo' });
 
     const cantidadInicial = Number(req.body.cantidad_inicial ?? req.body.cantidad_actual ?? 0);
-    validarLoteParaCreacion({ cantidad_inicial: cantidadInicial, fecha_vencimiento: req.body.fecha_vencimiento });
+    const fechaVencimiento = typeof req.body.fecha_vencimiento === 'string'
+      ? req.body.fecha_vencimiento.trim() || null
+      : req.body.fecha_vencimiento ?? null;
+    validarLoteParaCreacion({ cantidad_inicial: cantidadInicial, fecha_vencimiento: fechaVencimiento });
 
     const siguienteNumero = (await Lote.max('id', { where: { producto_id: req.body.producto_id } }) || 0) + 1;
     const data = LoteDto.fromCreate({
@@ -58,6 +61,7 @@ const crear = async (req, res, next) => {
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
       cantidad_actual: req.body.cantidad_actual !== undefined ? Number(req.body.cantidad_actual) : cantidadInicial,
+      fecha_vencimiento: fechaVencimiento,
     });
 
     transaction = await Lote.sequelize.transaction();
@@ -98,6 +102,32 @@ const historial = async (req, res, next) => {
       where: { lote_id: lote.id },
       include: [
         { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
+        { model: Usuario, as: 'usuario' },
+      ],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+    });
+    res.json({ data: movimientos.map((movimiento) => MovimientoDto.fromModel(movimiento)) });
+  } catch (error) { next(error); }
+};
+
+const historialProductos = async (req, res, next) => {
+  try {
+    const productoIds = String(req.query.producto_ids || '')
+      .split(',')
+      .map((id) => Number(id))
+      .filter((id) => Number.isInteger(id) && id > 0);
+    if (!productoIds.length) {
+      return res.status(400).json({ error: 'Selecciona al menos un producto válido' });
+    }
+
+    const movimientos = await MovimientoInventario.findAll({
+      include: [
+        {
+          model: Lote,
+          as: 'lote',
+          where: { producto_id: { [Op.in]: [...new Set(productoIds)] } },
+          include: [{ model: Producto, as: 'producto' }],
+        },
         { model: Usuario, as: 'usuario' },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
@@ -152,4 +182,4 @@ const registrarMovimientoCtrl = async (req, res, next) => {
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, historial, registrarMovimientoCtrl };
+module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl };
