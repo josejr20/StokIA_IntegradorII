@@ -20,7 +20,7 @@ import { useRegistrarMovimiento, TIPOS_MOVIMIENTO, ORIGENES_MOVIMIENTO, type Tip
 const esquema = z.object({
   tipo: z.enum(['ingreso', 'salida', 'ajuste'], { message: 'Selecciona un tipo' }),
   cantidad: z.string().min(1, 'Ingresa la cantidad').refine((v) => Number(v) > 0, 'La cantidad debe ser mayor a cero'),
-  origen: z.enum(['compra', 'venta', 'inicial', 'ajuste', 'otro']).optional(),
+  origen: z.enum(['compra', 'venta', 'inicial', 'ajuste', 'devolucion', 'anulacion', 'otro']).optional(),
   motivo: z.string().optional(),
   precio_unitario: z.string().optional(),
 })

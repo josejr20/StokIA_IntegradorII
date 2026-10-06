@@ -153,3 +153,84 @@ export const MOTIVOS_DESACTIVACION: { value: MotivoDesactivacion; label: string 
   { value: 'rectificado', label: 'Error de registro / rectificado' },
   { value: 'otro', label: 'Otro motivo' },
 ]
+
+// ---- Módulo de operaciones (clientes, ventas, devoluciones, ajustes) ----
+
+export interface Cliente {
+  id: number
+  nombre: string
+  documento: string | null
+  activo: boolean
+  fecha_creacion: string
+}
+
+export interface OperacionDetalle {
+  id: number
+  operacion_id: number
+  producto_id: number
+  producto_codigo: string | null
+  producto_nombre: string | null
+  lote_id: number | null
+  lote_numero: string | null
+  cantidad: number
+  cantidad_disponible_devolucion?: number
+  precio_unitario: number
+  subtotal: number
+}
+
+export interface ComprobanteItem {
+  producto_id: number
+  codigo: string
+  producto: string
+  cantidad: number
+  precio_unitario: number
+  subtotal: number
+  lote_id: number | null
+}
+
+export interface Comprobante {
+  id: number
+  operacion_id: number
+  numero: string
+  tipo: 'boleta' | 'factura' | 'nota_credito'
+  datos: {
+    numero_operacion: string
+    numero_comprobante: string
+    tipo_comprobante: string
+    fecha: string
+    cliente: { id: number; nombre: string; documento: string | null } | null
+    vendedor: { id: number; nombres: string; apellidos: string; email: string } | null
+    items: ComprobanteItem[]
+    subtotal: number
+    impuesto_porcentaje: number
+    impuesto: number
+    total: number
+    motivo: string | null
+    operacion_origen: { id: number; numero: string; fecha: string } | null
+  }
+  fecha_creacion: string
+}
+
+export type TipoOperacion = 'venta' | 'devolucion' | 'ajuste'
+
+export interface Operacion {
+  id: number
+  numero: string
+  tipo: TipoOperacion
+  cliente_id: number | null
+  cliente?: Cliente | null
+  usuario_id: number | null
+  usuario_nombre: string | null
+  fecha: string
+  subtotal: number
+  impuesto_porcentaje: number
+  impuesto: number
+  total: number
+  motivo: string | null
+  operacion_origen_id: number | null
+  operacion_origen_numero: string | null
+  estado: 'activa' | 'anulada'
+  fecha_creacion: string
+  detalles?: OperacionDetalle[]
+  comprobante?: Comprobante | null
+}

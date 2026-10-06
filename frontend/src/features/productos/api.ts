@@ -129,6 +129,39 @@ export function useCreacionProducto() {
   })
 }
 
+/**
+ * Carga masiva desde CSV/Excel. Las filas llegan ya validadas y con los ids de
+ * catálogo resueltos (ver importacion/validacion.ts); el backend vuelve a
+ * validarlas y las inserta todas en una sola transacción.
+ */
+export interface ProductoImportable {
+  fila: number
+  nombre: string
+  categoria_id: number
+  unidad_medida_id: number
+  categoria_paquete_id: number
+  marca_id?: number
+  contenido_valor?: number
+  contenido_paquete_cantidad?: number
+  contenido_paquete_envase_id?: number
+  precio_venta?: string
+  descripcion?: string
+}
+
+export interface ResultadoImportacion {
+  creados: number
+  codigos: string[]
+}
+
+export function useImportarProductos() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (productos: ProductoImportable[]) =>
+      api.post<{ data: ResultadoImportacion }>('/productos/importar', { productos }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['productos'] }),
+  })
+}
+
 export function useActualizaProducto() {
   const queryClient = useQueryClient()
   return useMutation({

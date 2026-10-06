@@ -92,7 +92,7 @@ INSERT INTO marca (nombre) VALUES
 -- Categorías sugeridas según los productos reales que vimos en el catálogo.
 -- SIBARITA por sí sola cruza varias (especias, vinagres, salsas para pasta,
 -- e incluso "PLATOS ... DE LOZA CHINA", que ni siquiera es un condimento) —
--- ajústalas con tu criterio de negocio antes de migrar el resto del catálogo.
+-- ajústalas con tu criterio de public antes de migrar el resto del catálogo.
 INSERT INTO categoria (nombre) VALUES
     ('Sazonadores en sobres'),
     ('Glutamato monosódico (GMS)'),

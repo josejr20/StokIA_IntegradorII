@@ -12,7 +12,9 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials: true,
 }));
-app.use(express.json());
+// El limite alto es para la carga masiva de productos (POST /api/productos/importar),
+// que envia hasta 500 filas en una sola peticion.
+app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use('/upload', express.static(path.resolve(__dirname, '../upload')));
 

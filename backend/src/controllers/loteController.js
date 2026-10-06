@@ -2,8 +2,8 @@ const { validationResult } = require('express-validator');
 const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
 const { MovimientoDto } = require('../dtos/movimientoDto');
-const { registrarMovimiento } = require('../services/kardexService');
-const { generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
+const { ErrorKardex, registrarMovimiento } = require('../services/kardexService');
+const { ErrorLote, generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
 const logger = require('../utils/logger');
 const { Op } = require('sequelize');
 
@@ -50,6 +50,9 @@ const crear = async (req, res, next) => {
     if (!producto.activo) return res.status(400).json({ error: 'No se puede crear un lote para un producto inactivo' });
 
     const cantidadInicial = Number(req.body.cantidad_inicial ?? req.body.cantidad_actual ?? 0);
+    if (req.body.cantidad_actual !== undefined && Number(req.body.cantidad_actual) !== cantidadInicial) {
+      return res.status(400).json({ error: 'La cantidad actual inicial debe coincidir con la cantidad inicial' });
+    }
     const fechaVencimiento = typeof req.body.fecha_vencimiento === 'string'
       ? req.body.fecha_vencimiento.trim() || null
       : req.body.fecha_vencimiento ?? null;
@@ -60,7 +63,7 @@ const crear = async (req, res, next) => {
       ...req.body,
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
-      cantidad_actual: req.body.cantidad_actual !== undefined ? Number(req.body.cantidad_actual) : cantidadInicial,
+      cantidad_actual: 0,
       fecha_vencimiento: fechaVencimiento,
     });
 
@@ -77,9 +80,12 @@ const crear = async (req, res, next) => {
       transaction
     );
     await transaction.commit();
+    await lote.reload();
     res.status(201).json({ data: LoteDto.fromModel(lote) });
   } catch (error) {
     if (transaction) await transaction.rollback();
+    if (error instanceof ErrorKardex) return res.status(400).json({ error: error.message });
+    if (error instanceof ErrorLote) return res.status(400).json({ error: error.message });
     next(error);
   }
 };
@@ -88,6 +94,9 @@ const actualizar = async (req, res, next) => {
   try {
     const lote = await Lote.findByPk(req.params.id);
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
+    if (req.body.cantidad_inicial !== undefined || req.body.cantidad_actual !== undefined) {
+      return res.status(400).json({ error: 'El stock solo puede modificarse mediante movimientos de kardex' });
+    }
     const data = LoteDto.fromUpdate(req.body);
     await lote.update(data);
     res.json({ data: LoteDto.fromModel(lote) });
@@ -147,7 +156,7 @@ const registrarMovimientoCtrl = async (req, res, next) => {
       return res.status(400).json({ error: 'Tipo inválido' });
     }
 
-    const cantidad = parseFloat(req.body.cantidad);
+    const cantidad = Number(req.body.cantidad);
     if (!Number.isFinite(cantidad) || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
     const motivo = String(req.body.motivo || '').trim();
     if (['salida', 'ajuste'].includes(tipo) && !motivo) {
@@ -158,19 +167,13 @@ const registrarMovimientoCtrl = async (req, res, next) => {
     if (!producto || !producto.activo) return res.status(400).json({ error: 'No se pueden registrar movimientos en un producto inactivo' });
 
     transaction = await Lote.sequelize.transaction();
-    const loteBloqueado = await Lote.findByPk(req.params.id, { transaction, lock: transaction.LOCK.UPDATE });
-    if (['salida', 'ajuste'].includes(tipo) && Number(loteBloqueado.cantidad_actual) < cantidad) {
-      await transaction.rollback();
-      return res.status(400).json({ error: 'Stock insuficiente' });
-    }
-
     const movimiento = await registrarMovimiento(
-      loteBloqueado.id,
+      lote.id,
       tipo,
       cantidad,
       req.body.origen || 'otro',
       motivo,
-      req.body.precio_unitario || null,
+      req.body.precio_unitario ?? null,
       req.user.id,
       transaction
     );
@@ -178,6 +181,7 @@ const registrarMovimientoCtrl = async (req, res, next) => {
     res.json({ data: movimiento });
   } catch (error) {
     if (transaction) await transaction.rollback();
+    if (error instanceof ErrorKardex) return res.status(400).json({ error: error.message });
     next(error);
   }
 };
