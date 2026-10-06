@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Plus, Pencil, Ban, RotateCcw, Image as IMAGE_ICON } from 'lucide-react'
+import { Search, Plus, Pencil, Ban, RotateCcw, Image as IMAGE_ICON, Upload } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import {
   useProductos, useCategorias, useMarcas, useActivarProducto, type Producto,
 } from './api'
 import { NuevoProductoModal } from './components/NuevoProductoModal'
+import { ImportarProductosModal } from './components/ImportarProductosModal'
 import { EditarProductoModal } from './components/EditarProductoModal'
 import { DesactivarProductoDialog } from './components/DesactivarProductoDialog'
 import { ConfirmDialog } from './components/ConfirmDialog'
@@ -33,6 +34,7 @@ export default function ProductosPage() {
   const [marcaFiltro, setMarcaFiltro] = useState<string>('')
 
   const [modalNuevo, setModalNuevo] = useState(false)
+  const [modalImportar, setModalImportar] = useState(false)
   const [productoEditar, setProductoEditar] = useState<Producto | null>(null)
   const [productoDesactivar, setProductoDesactivar] = useState<Producto | null>(null)
   const [productoActivar, setProductoActivar] = useState<Producto | null>(null)
@@ -86,6 +88,9 @@ export default function ProductosPage() {
             ))}
           </SelectContent>
         </Select>
+        <Button variant="outline" onClick={() => setModalImportar(true)}>
+          <Upload className="size-4" /> Importar
+        </Button>
         <Button onClick={() => setModalNuevo(true)}>
           <Plus className="size-4" /> Nuevo producto
         </Button>
@@ -188,6 +193,8 @@ export default function ProductosPage() {
       </div>
 
       <NuevoProductoModal open={modalNuevo} onOpenChange={setModalNuevo} />
+
+      <ImportarProductosModal open={modalImportar} onOpenChange={setModalImportar} />
 
       <EditarProductoModal producto={productoEditar} onOpenChange={(open) => !open && setProductoEditar(null)} />
 

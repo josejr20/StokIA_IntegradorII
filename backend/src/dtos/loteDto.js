@@ -42,8 +42,6 @@ class LoteDto {
   static fromUpdate(body) {
     const data = {};
     if (body.numero_lote !== undefined) data.numero_lote = body.numero_lote;
-    if (body.cantidad_inicial !== undefined) data.cantidad_inicial = body.cantidad_inicial;
-    if (body.cantidad_actual !== undefined) data.cantidad_actual = body.cantidad_actual;
     if (body.fecha_vencimiento !== undefined) data.fecha_vencimiento = body.fecha_vencimiento;
     return data;
   }

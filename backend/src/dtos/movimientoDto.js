@@ -50,6 +50,7 @@ class MovimientoDto {
       venta: 'Venta',
       inicial: 'Registro inicial',
       ajuste: 'Ajuste de inventario',
+      anulacion: 'Anulación de venta',
       otro: 'Otro',
     }[origen] || origen || null;
   }

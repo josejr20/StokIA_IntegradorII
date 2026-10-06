@@ -25,7 +25,7 @@ ALTER TABLE productos
     ADD COLUMN IF NOT EXISTS contenido_paquete_envase_id INTEGER
     REFERENCES tipo_envase(id);
 
--- Regla de negocio: cantidad y envase van juntos (ambos o ninguno)
+-- Regla de public: cantidad y envase van juntos (ambos o ninguno)
 ALTER TABLE productos
     DROP CONSTRAINT IF EXISTS chk_producto_paquete_emparejado;
 

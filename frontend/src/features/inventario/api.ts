@@ -5,7 +5,7 @@ import type { Paginado } from '@/types'
 
 // Tipos y constantes compartidas con el módulo de kardex (una sola fuente de verdad).
 export type TipoMovimiento = 'ingreso' | 'salida' | 'ajuste'
-export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'otro'
+export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'devolucion' | 'anulacion' | 'otro'
 
 export const TIPOS_MOVIMIENTO: { value: TipoMovimiento; label: string }[] = [
   { value: 'ingreso', label: 'Ingreso' },
@@ -18,6 +18,8 @@ export const ORIGENES_MOVIMIENTO: { value: OrigenMovimiento; label: string }[] =
   { value: 'venta', label: 'Venta' },
   { value: 'inicial', label: 'Registro inicial' },
   { value: 'ajuste', label: 'Ajuste de inventario' },
+  { value: 'devolucion', label: 'Devolución' },
+  { value: 'anulacion', label: 'Anulación de venta' },
   { value: 'otro', label: 'Otro' },
 ]
 
@@ -179,7 +181,6 @@ export function useCreatorLote() {
 
 export interface ActualizarLoteInput {
   numero_lote?: string
-  cantidad_inicial?: string
   fecha_vencimiento?: string
 }
 

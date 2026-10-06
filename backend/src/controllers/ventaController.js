@@ -1,11 +1,8 @@
 const { validationResult } = require('express-validator');
 const { Venta } = require('../models');
 const { VentaDto } = require('../dtos/ventaDto');
-const { Lote, Producto } = require('../models');
-const { registrarMovimiento } = require('../services/kardexService');
-const { seleccionarLotesFEFO, diasHastaVencimiento } = require('../services/loteService');
-const { Op } = require('sequelize');
-const logger = require('../utils/logger');
+const { Producto } = require('../models');
+const { ErrorOperacion, crearOperacion } = require('../services/operacionService');
 
 const listar = async (req, res, next) => {
   try {
@@ -28,80 +25,28 @@ const obtener = async (req, res, next) => {
 };
 
 const crear = async (req, res, next) => {
-  let transaction;
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
 
-    const { producto_id, cantidad, precio_unitario, fecha_venta } = req.body;
-    const cantidadVenta = Number(cantidad);
-    if (!Number.isFinite(cantidadVenta) || cantidadVenta <= 0) {
-      return res.status(400).json({ error: 'Cantidad inválida' });
-    }
-
-    const producto = await Producto.findByPk(producto_id);
-    if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
-    if (!producto.activo) return res.status(400).json({ error: 'El producto está inactivo' });
-
-    transaction = await Venta.sequelize.transaction();
-    const lotesDisponibles = seleccionarLotesFEFO(
-      await Lote.findAll({
-        where: { producto_id, cantidad_actual: { [Op.gt]: 0 } },
-        order: [['fecha_vencimiento', 'ASC'], ['id', 'ASC']],
-        transaction,
-        lock: transaction.LOCK.UPDATE,
-      })
-    );
-
-    const stockTotal = lotesDisponibles.reduce((sum, lote) => sum + Number(lote.cantidad_actual || 0), 0);
-    if (stockTotal < cantidadVenta) {
-      await transaction.rollback();
-      return res.status(400).json({ error: 'Stock insuficiente para realizar la venta' });
-    }
-
-    let restante = cantidadVenta;
-    const ventasGeneradas = [];
-    const precioVenta = Number(precio_unitario ?? producto.precio_venta ?? 0);
-
-    for (const lote of lotesDisponibles) {
-      if (restante <= 0) break;
-      const disponible = Number(lote.cantidad_actual || 0);
-      const cantidadAsignada = Math.min(disponible, restante);
-
-      if (cantidadAsignada > 0) {
-        const venta = await Venta.create({
-          producto_id,
-          lote_id: lote.id,
-          cantidad: cantidadAsignada,
-          precio_unitario: precioVenta,
-          fecha_venta: fecha_venta || new Date(),
-          origen: 'manual',
-          usuario_id: req.user.id,
-        }, { transaction });
-        await registrarMovimiento(
-          lote.id,
-          'salida',
-          cantidadAsignada,
-          'venta',
-          `Venta ${cantidadAsignada}`,
-          precioVenta,
-          req.user.id,
-          transaction,
-        );
-        ventasGeneradas.push(venta);
-        restante -= cantidadAsignada;
-      }
-    }
-
-    if (restante > 0) {
-      await transaction.rollback();
-      return res.status(400).json({ error: 'Stock insuficiente para realizar la venta' });
-    }
-
-    await transaction.commit();
-    res.status(201).json({ data: ventasGeneradas.map((venta) => VentaDto.fromModel(venta)) });
+    const { producto_id, cantidad, precio_unitario, fecha_venta, cliente_id, idempotency_key } = req.body;
+    if (!cliente_id) return res.status(400).json({ error: 'Debe seleccionar un cliente para la venta' });
+    const resultado = await crearOperacion({
+      tipo: 'venta',
+      cliente_id: Number(cliente_id),
+      items: [{ producto_id: Number(producto_id), cantidad, precio_unitario }],
+      fecha: fecha_venta ? new Date(fecha_venta) : null,
+      idempotency_key,
+      usuario_id: req.user.id,
+    });
+    const ventasGeneradas = await Venta.findAll({ where: { operacion_id: resultado.operacion.id } });
+    res.status(resultado.repetida ? 200 : 201).json({
+      data: ventasGeneradas.map((venta) => VentaDto.fromModel(venta)),
+      operacion: resultado.operacion,
+      repetida: resultado.repetida,
+    });
   } catch (error) {
-    if (transaction) await transaction.rollback();
+    if (error instanceof ErrorOperacion) return res.status(400).json({ error: error.message });
     next(error);
   }
 };

@@ -1,44 +1,43 @@
 -- ============================================================================
 -- StockIA — esquema para PostgreSQL local
--- Tablas del esquema negocio (equivalentes a los modelos Django)
+-- Tablas del esquema public (equivalentes a los modelos Django)
 -- Tablas del esquema ml (servicio de ML)
 -- Roles y permisos de base de datos
 -- ============================================================================
 create database StockIA
 
-CREATE SCHEMA IF NOT EXISTS negocio;
 CREATE SCHEMA IF NOT EXISTS ml;
 
 -- ============================================================================
--- Esquema negocio — Tablas
+-- Esquema public — Tablas
 -- ============================================================================
 
 -- AUTHENTICATION & AUTHORIZATION
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.roles (
+CREATE TABLE IF NOT EXISTS public.roles (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) UNIQUE NOT NULL,
     descripcion TEXT,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.roles IS 'Roles del sistema (Administrador, Encargado de Inventario, etc.)';
+COMMENT ON TABLE public.roles IS 'Roles del sistema (Administrador, Encargado de Inventario, etc.)';
 
-CREATE TABLE IF NOT EXISTS negocio.permisos (
+CREATE TABLE IF NOT EXISTS public.permisos (
     id SERIAL PRIMARY KEY,
     codigo VARCHAR(80) UNIQUE NOT NULL,
     descripcion TEXT
 );
-COMMENT ON TABLE negocio.permisos IS 'Permisos disponibles del sistema';
+COMMENT ON TABLE public.permisos IS 'Permisos disponibles del sistema';
 
-CREATE TABLE IF NOT EXISTS negocio.rol_permisos (
-    rol_id INTEGER NOT NULL REFERENCES negocio.roles(id) ON DELETE CASCADE,
-    permiso_id INTEGER NOT NULL REFERENCES negocio.permisos(id) ON DELETE CASCADE,
+CREATE TABLE IF NOT EXISTS public.rol_permisos (
+    rol_id INTEGER NOT NULL REFERENCES public.roles(id) ON DELETE CASCADE,
+    permiso_id INTEGER NOT NULL REFERENCES public.permisos(id) ON DELETE CASCADE,
     PRIMARY KEY (rol_id, permiso_id)
 );
-COMMENT ON TABLE negocio.rol_permisos IS 'Relación N:N entre roles y permisos';
+COMMENT ON TABLE public.rol_permisos IS 'Relación N:N entre roles y permisos';
 
-CREATE TABLE IF NOT EXISTS negocio.usuarios (
+CREATE TABLE IF NOT EXISTS public.usuarios (
     id SERIAL PRIMARY KEY,
     password VARCHAR(128),
     password_hash VARCHAR(128),
@@ -46,19 +45,19 @@ CREATE TABLE IF NOT EXISTS negocio.usuarios (
     apellidos VARCHAR(100) NOT NULL,
     dni VARCHAR(20) UNIQUE,
     email VARCHAR(254) UNIQUE NOT NULL,
-    rol_id INTEGER NOT NULL REFERENCES negocio.roles(id) ON DELETE RESTRICT,
+    rol_id INTEGER NOT NULL REFERENCES public.roles(id) ON DELETE RESTRICT,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     ultimo_acceso TIMESTAMP,
     is_staff BOOLEAN NOT NULL DEFAULT FALSE
 );
-COMMENT ON TABLE negocio.usuarios IS 'Usuarios del sistema (autenticación con correo o nombres)';
-CREATE INDEX idx_usuarios_email ON negocio.usuarios(email);
-CREATE INDEX idx_usuarios_rol ON negocio.usuarios(rol_id);
+COMMENT ON TABLE public.usuarios IS 'Usuarios del sistema (autenticación con correo o nombres)';
+CREATE INDEX idx_usuarios_email ON public.usuarios(email);
+CREATE INDEX idx_usuarios_rol ON public.usuarios(rol_id);
 
-CREATE TABLE IF NOT EXISTS negocio.tokens_recuperacion (
+CREATE TABLE IF NOT EXISTS public.tokens_recuperacion (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER NOT NULL REFERENCES negocio.usuarios(id) ON DELETE CASCADE,
+    usuario_id INTEGER NOT NULL REFERENCES public.usuarios(id) ON DELETE CASCADE,
     token VARCHAR(255) UNIQUE,
     code_hash VARCHAR(255),
     intentos INTEGER NOT NULL DEFAULT 0,
@@ -66,70 +65,70 @@ CREATE TABLE IF NOT EXISTS negocio.tokens_recuperacion (
     usado BOOLEAN NOT NULL DEFAULT FALSE,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.tokens_recuperacion IS 'Tokens para recuperación de contraseña';
-CREATE INDEX idx_tokens_usuario ON negocio.tokens_recuperacion(usuario_id);
+COMMENT ON TABLE public.tokens_recuperacion IS 'Tokens para recuperación de contraseña';
+CREATE INDEX idx_tokens_usuario ON public.tokens_recuperacion(usuario_id);
 
 -- CATALOGOS DE PRODUCTOS
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.categorias (
+CREATE TABLE IF NOT EXISTS public.categorias (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) UNIQUE NOT NULL,
     descripcion TEXT,
     vida_util_dias INTEGER,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.categorias IS 'Categorías de productos';
+COMMENT ON TABLE public.categorias IS 'Categorías de productos';
 
-CREATE TABLE IF NOT EXISTS negocio.unidades_medida (
+CREATE TABLE IF NOT EXISTS public.unidades_medida (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) UNIQUE NOT NULL,
     abreviatura VARCHAR(10) NOT NULL
 );
-COMMENT ON TABLE negocio.unidades_medida IS 'Unidades de medida físicas';
+COMMENT ON TABLE public.unidades_medida IS 'Unidades de medida físicas';
 
-CREATE TABLE IF NOT EXISTS negocio.presentaciones (
+CREATE TABLE IF NOT EXISTS public.presentaciones (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) UNIQUE NOT NULL,
     descripcion TEXT
 );
-COMMENT ON TABLE negocio.presentaciones IS 'Presentaciones de venta';
+COMMENT ON TABLE public.presentaciones IS 'Presentaciones de venta';
 
-CREATE TABLE IF NOT EXISTS negocio.catalogo_marcas (
+CREATE TABLE IF NOT EXISTS public.catalogo_marcas (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) UNIQUE NOT NULL
 );
-COMMENT ON TABLE negocio.catalogo_marcas IS 'Marcas del catálogo de Excel';
+COMMENT ON TABLE public.catalogo_marcas IS 'Marcas del catálogo de Excel';
 
-CREATE TABLE IF NOT EXISTS negocio.catalogo_marcas_familias (
-    marca_id INTEGER NOT NULL REFERENCES negocio.catalogo_marcas(id) ON DELETE CASCADE,
-    categoria_id INTEGER NOT NULL REFERENCES negocio.categorias(id) ON DELETE CASCADE,
+CREATE TABLE IF NOT EXISTS public.catalogo_marcas_familias (
+    marca_id INTEGER NOT NULL REFERENCES public.catalogo_marcas(id) ON DELETE CASCADE,
+    categoria_id INTEGER NOT NULL REFERENCES public.categorias(id) ON DELETE CASCADE,
     PRIMARY KEY (marca_id, categoria_id)
 );
-COMMENT ON TABLE negocio.catalogo_marcas_familias IS 'Relación N:N marcas-categorías (familias)';
+COMMENT ON TABLE public.catalogo_marcas_familias IS 'Relación N:N marcas-categorías (familias)';
 
-CREATE TABLE IF NOT EXISTS negocio.catalogo_valores (
+CREATE TABLE IF NOT EXISTS public.catalogo_valores (
     id SERIAL PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL,
     valor VARCHAR(100) NOT NULL,
     etiqueta VARCHAR(100),
     UNIQUE(tipo, valor)
 );
-COMMENT ON TABLE negocio.catalogo_valores IS 'Valores genéricos de catálogo (material, color, etc.)';
+COMMENT ON TABLE public.catalogo_valores IS 'Valores genéricos de catálogo (material, color, etc.)';
 
 -- PRODUCTOS
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.productos (
+CREATE TABLE IF NOT EXISTS public.productos (
     id SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
     nombre VARCHAR(200) NOT NULL,
-    categoria_id INTEGER REFERENCES negocio.categorias(id) ON DELETE SET NULL,
-    unidad_medida_id INTEGER REFERENCES negocio.unidades_medida(id) ON DELETE SET NULL,
-    presentacion_id INTEGER REFERENCES negocio.presentaciones(id) ON DELETE SET NULL,
+    categoria_id INTEGER REFERENCES public.categorias(id) ON DELETE SET NULL,
+    unidad_medida_id INTEGER REFERENCES public.unidades_medida(id) ON DELETE SET NULL,
+    presentacion_id INTEGER REFERENCES public.presentaciones(id) ON DELETE SET NULL,
     imagen VARCHAR(255),
     descripcion TEXT,
-    marca_id INTEGER REFERENCES negocio.catalogo_marcas(id) ON DELETE SET NULL,
+    marca_id INTEGER REFERENCES public.catalogo_marcas(id) ON DELETE SET NULL,
     precio_venta NUMERIC(10,2),
     caracteristicas JSONB DEFAULT '{}',
     activo BOOLEAN NOT NULL DEFAULT TRUE,
@@ -145,19 +144,19 @@ CREATE TABLE IF NOT EXISTS negocio.productos (
     CONSTRAINT chk_producto_paquete_emparejado
         CHECK ((contenido_paquete_cantidad IS NULL) = (contenido_paquete_envase_id IS NULL))
 );
-COMMENT ON TABLE negocio.productos IS 'Catálogo de productos';
-CREATE INDEX idx_productos_codigo ON negocio.productos(codigo);
-CREATE INDEX idx_productos_categoria ON negocio.productos(categoria_id);
-CREATE INDEX idx_productos_activo ON negocio.productos(activo);
-CREATE INDEX IF NOT EXISTS idx_productos_categoria_paquete ON negocio.productos(categoria_paquete_id);
-CREATE INDEX IF NOT EXISTS idx_productos_contenido_envase ON negocio.productos(contenido_paquete_envase_id);
+COMMENT ON TABLE public.productos IS 'Catálogo de productos';
+CREATE INDEX idx_productos_codigo ON public.productos(codigo);
+CREATE INDEX idx_productos_categoria ON public.productos(categoria_id);
+CREATE INDEX idx_productos_activo ON public.productos(activo);
+CREATE INDEX IF NOT EXISTS idx_productos_categoria_paquete ON public.productos(categoria_paquete_id);
+CREATE INDEX IF NOT EXISTS idx_productos_contenido_envase ON public.productos(contenido_paquete_envase_id);
 
 -- INVENTARIO
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.lotes (
+CREATE TABLE IF NOT EXISTS public.lotes (
     id SERIAL PRIMARY KEY,
-    producto_id INTEGER NOT NULL REFERENCES negocio.productos(id) ON DELETE CASCADE,
+    producto_id INTEGER NOT NULL REFERENCES public.productos(id) ON DELETE CASCADE,
     numero_lote VARCHAR(60) NOT NULL,
     cantidad_inicial NUMERIC(12,2) NOT NULL DEFAULT 0,
     cantidad_actual NUMERIC(12,2) NOT NULL DEFAULT 0,
@@ -166,95 +165,97 @@ CREATE TABLE IF NOT EXISTS negocio.lotes (
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     UNIQUE(producto_id, numero_lote)
 );
-COMMENT ON TABLE negocio.lotes IS 'Lotes de productos con vencimiento';
-CREATE INDEX idx_lotes_producto ON negocio.lotes(producto_id);
-CREATE INDEX idx_lotes_vencimiento ON negocio.lotes(fecha_vencimiento);
+COMMENT ON TABLE public.lotes IS 'Lotes de productos con vencimiento';
+CREATE INDEX idx_lotes_producto ON public.lotes(producto_id);
+CREATE INDEX idx_lotes_vencimiento ON public.lotes(fecha_vencimiento);
 
-CREATE TABLE IF NOT EXISTS negocio.movimientos_inventario (
+CREATE TABLE IF NOT EXISTS public.movimientos_inventario (
     id BIGSERIAL PRIMARY KEY,
-    lote_id INTEGER NOT NULL REFERENCES negocio.lotes(id) ON DELETE CASCADE,
+    lote_id INTEGER NOT NULL REFERENCES public.lotes(id) ON DELETE CASCADE,
     tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('ingreso', 'salida', 'ajuste')),
-    origen VARCHAR(20) NOT NULL DEFAULT 'otro' CHECK (origen IN ('compra', 'venta', 'inicial', 'ajuste', 'otro')),
+    origen VARCHAR(20) NOT NULL DEFAULT 'otro' CHECK (origen IN ('compra', 'venta', 'inicial', 'ajuste', 'devolucion', 'anulacion', 'otro')),
     cantidad NUMERIC(12,2) NOT NULL,
     precio_unitario NUMERIC(10,2),
+    costo_unitario_manual BOOLEAN NOT NULL DEFAULT FALSE,
     precio_total NUMERIC(12,2),
     saldo_cantidad NUMERIC(12,2) NOT NULL DEFAULT 0,
     saldo_precio_unitario NUMERIC(10,2) NOT NULL DEFAULT 0,
     saldo_valorizado NUMERIC(12,2) NOT NULL DEFAULT 0,
     motivo VARCHAR(200),
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     fecha TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.movimientos_inventario IS 'Kardex: historial de movimientos de stock';
-CREATE INDEX idx_movimientos_lote ON negocio.movimientos_inventario(lote_id);
-CREATE INDEX idx_movimientos_fecha ON negocio.movimientos_inventario(fecha);
-CREATE INDEX idx_movimientos_producto ON negocio.movimientos_inventario(lote_id);
+COMMENT ON TABLE public.movimientos_inventario IS 'Kardex: historial de movimientos de stock';
+CREATE INDEX idx_movimientos_lote ON public.movimientos_inventario(lote_id);
+CREATE INDEX idx_movimientos_fecha ON public.movimientos_inventario(fecha);
+CREATE INDEX idx_movimientos_producto ON public.movimientos_inventario(lote_id);
 
 -- VENTAS
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.ventas (
+CREATE TABLE IF NOT EXISTS public.ventas (
     id BIGSERIAL PRIMARY KEY,
-    producto_id INTEGER NOT NULL REFERENCES negocio.productos(id) ON DELETE CASCADE,
-    lote_id INTEGER REFERENCES negocio.lotes(id) ON DELETE SET NULL,
+    operacion_id BIGINT,
+    producto_id INTEGER NOT NULL REFERENCES public.productos(id) ON DELETE CASCADE,
+    lote_id INTEGER REFERENCES public.lotes(id) ON DELETE SET NULL,
     cantidad NUMERIC(12,2) NOT NULL,
     precio_unitario NUMERIC(10,2) NOT NULL,
     fecha_venta DATE NOT NULL,
-    origen VARCHAR(20) NOT NULL DEFAULT 'manual' CHECK (origen IN ('manual', 'importado')),
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    origen VARCHAR(20) NOT NULL DEFAULT 'manual' CHECK (origen IN ('manual', 'importado', 'devolucion', 'anulacion')),
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.ventas IS 'Registro de ventas';
-CREATE INDEX idx_ventas_producto ON negocio.ventas(producto_id);
-CREATE INDEX idx_ventas_fecha ON negocio.ventas(fecha_venta);
+COMMENT ON TABLE public.ventas IS 'Registro de ventas';
+CREATE INDEX idx_ventas_producto ON public.ventas(producto_id);
+CREATE INDEX idx_ventas_fecha ON public.ventas(fecha_venta);
 
-CREATE TABLE IF NOT EXISTS negocio.importaciones_ventas (
+CREATE TABLE IF NOT EXISTS public.importaciones_ventas (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     nombre_archivo VARCHAR(255) NOT NULL,
     filas_procesadas INTEGER NOT NULL DEFAULT 0,
     filas_con_error INTEGER NOT NULL DEFAULT 0,
     estado VARCHAR(20) NOT NULL DEFAULT 'procesando' CHECK (estado IN ('procesando', 'completado', 'fallido')),
     fecha TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.importaciones_ventas IS 'Importaciones masivas de ventas desde Excel/CSV';
+COMMENT ON TABLE public.importaciones_ventas IS 'Importaciones masivas de ventas desde Excel/CSV';
 
 -- OPERACIONES
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.umbrales_configuracion (
+CREATE TABLE IF NOT EXISTS public.umbrales_configuracion (
     id SERIAL PRIMARY KEY,
     tipo VARCHAR(30) NOT NULL CHECK (tipo IN ('dias_vencimiento', 'stock_minimo')),
-    producto_id INTEGER REFERENCES negocio.productos(id) ON DELETE CASCADE,
+    producto_id INTEGER REFERENCES public.productos(id) ON DELETE CASCADE,
     valor NUMERIC(10,2) NOT NULL,
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     fecha_actualizacion TIMESTAMP NOT NULL DEFAULT NOW(),
     UNIQUE(tipo, producto_id)
 );
-COMMENT ON TABLE negocio.umbrales_configuracion IS 'Umbrales de alerta por producto/tipo';
+COMMENT ON TABLE public.umbrales_configuracion IS 'Umbrales de alerta por producto/tipo';
 
-CREATE TABLE IF NOT EXISTS negocio.ordenes_reabastecimiento (
+CREATE TABLE IF NOT EXISTS public.ordenes_reabastecimiento (
     id SERIAL PRIMARY KEY,
-    producto_id INTEGER NOT NULL REFERENCES negocio.productos(id) ON DELETE CASCADE,
+    producto_id INTEGER NOT NULL REFERENCES public.productos(id) ON DELETE CASCADE,
     cantidad_sugerida NUMERIC(12,2) NOT NULL,
     cantidad_aprobada NUMERIC(12,2),
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente' CHECK (estado IN ('pendiente', 'aprobada', 'rechazada', 'completada')),
     generado_por VARCHAR(20) NOT NULL DEFAULT 'automatico' CHECK (generado_por IN ('automatico', 'manual')),
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     fecha_actualizacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.ordenes_reabastecimiento IS 'Órdenes de reabastecimiento';
-CREATE INDEX idx_ordenes_estado ON negocio.ordenes_reabastecimiento(estado);
+COMMENT ON TABLE public.ordenes_reabastecimiento IS 'Órdenes de reabastecimiento';
+CREATE INDEX idx_ordenes_estado ON public.ordenes_reabastecimiento(estado);
 
 -- ALERTAS
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.alertas (
+CREATE TABLE IF NOT EXISTS public.alertas (
     id BIGSERIAL PRIMARY KEY,
     tipo VARCHAR(30) NOT NULL CHECK (tipo IN ('riesgo_vencimiento', 'bajo_stock', 'anomalia')),
-    producto_id INTEGER NOT NULL REFERENCES negocio.productos(id) ON DELETE CASCADE,
-    lote_id INTEGER REFERENCES negocio.lotes(id) ON DELETE SET NULL,
+    producto_id INTEGER NOT NULL REFERENCES public.productos(id) ON DELETE CASCADE,
+    lote_id INTEGER REFERENCES public.lotes(id) ON DELETE SET NULL,
     mensaje TEXT NOT NULL,
     severidad VARCHAR(20) NOT NULL DEFAULT 'media' CHECK (severidad IN ('baja', 'media', 'alta', 'critica')),
     datos_origen JSONB,
@@ -262,61 +263,61 @@ CREATE TABLE IF NOT EXISTS negocio.alertas (
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     fecha_atendida TIMESTAMP
 );
-COMMENT ON TABLE negocio.alertas IS 'Alertas del dashboard';
-CREATE INDEX idx_alertas_producto ON negocio.alertas(producto_id);
-CREATE INDEX idx_alertas_estado ON negocio.alertas(estado);
-CREATE INDEX idx_alertas_severidad ON negocio.alertas(severidad);
+COMMENT ON TABLE public.alertas IS 'Alertas del dashboard';
+CREATE INDEX idx_alertas_producto ON public.alertas(producto_id);
+CREATE INDEX idx_alertas_estado ON public.alertas(estado);
+CREATE INDEX idx_alertas_severidad ON public.alertas(severidad);
 
-CREATE TABLE IF NOT EXISTS negocio.notificaciones_correo (
+CREATE TABLE IF NOT EXISTS public.notificaciones_correo (
     id BIGSERIAL PRIMARY KEY,
-    alerta_id INTEGER REFERENCES negocio.alertas(id) ON DELETE SET NULL,
+    alerta_id INTEGER REFERENCES public.alertas(id) ON DELETE SET NULL,
     destinatario VARCHAR(254) NOT NULL,
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente' CHECK (estado IN ('pendiente', 'enviado', 'fallido')),
     proveedor VARCHAR(30) NOT NULL DEFAULT 'brevo',
     fecha_envio TIMESTAMP
 );
-COMMENT ON TABLE negocio.notificaciones_correo IS 'Registro de notificaciones por correo';
+COMMENT ON TABLE public.notificaciones_correo IS 'Registro de notificaciones por correo';
 
 -- REPORTES Y PREFERENCIAS
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.reportes_generados (
+CREATE TABLE IF NOT EXISTS public.reportes_generados (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     tipo VARCHAR(50) NOT NULL,
     formato VARCHAR(10) NOT NULL CHECK (formato IN ('excel', 'pdf')),
     parametros JSONB,
     ruta_archivo VARCHAR(255),
     fecha_generacion TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.reportes_generados IS 'Reportes generados por usuarios';
+COMMENT ON TABLE public.reportes_generados IS 'Reportes generados por usuarios';
 
-CREATE TABLE IF NOT EXISTS negocio.preferencias_usuario (
+CREATE TABLE IF NOT EXISTS public.preferencias_usuario (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER NOT NULL REFERENCES negocio.usuarios(id) ON DELETE CASCADE,
+    usuario_id INTEGER NOT NULL REFERENCES public.usuarios(id) ON DELETE CASCADE,
     clave VARCHAR(80) NOT NULL,
     valor JSONB NOT NULL,
     fecha_actualizacion TIMESTAMP NOT NULL DEFAULT NOW(),
     UNIQUE(usuario_id, clave)
 );
-COMMENT ON TABLE negocio.preferencias_usuario IS 'Preferencias de visualización por usuario';
+COMMENT ON TABLE public.preferencias_usuario IS 'Preferencias de visualización por usuario';
 
 -- AUDITORÍA
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS negocio.auditoria (
+CREATE TABLE IF NOT EXISTS public.auditoria (
     id BIGSERIAL PRIMARY KEY,
-    usuario_id INTEGER REFERENCES negocio.usuarios(id) ON DELETE SET NULL,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
     accion VARCHAR(100) NOT NULL,
     entidad VARCHAR(80) NOT NULL,
     entidad_id INTEGER,
     detalle JSONB,
     fecha TIMESTAMP NOT NULL DEFAULT NOW()
 );
-COMMENT ON TABLE negocio.auditoria IS 'Registro de auditoría';
-CREATE INDEX idx_auditoria_entidad ON negocio.auditoria(entidad);
-CREATE INDEX idx_auditoria_usuario ON negocio.auditoria(usuario_id);
-CREATE INDEX idx_auditoria_fecha ON negocio.auditoria(fecha);
+COMMENT ON TABLE public.auditoria IS 'Registro de auditoría';
+CREATE INDEX idx_auditoria_entidad ON public.auditoria(entidad);
+CREATE INDEX idx_auditoria_usuario ON public.auditoria(usuario_id);
+CREATE INDEX idx_auditoria_fecha ON public.auditoria(fecha);
 
 -- ============================================================================
 -- Esquema ml — Tablas del servicio de Machine Learning
@@ -416,11 +417,11 @@ CREATE ROLE ml_service_role
 WITH LOGIN PASSWORD 'ml_local_pw';
 
 
-GRANT USAGE, CREATE ON SCHEMA negocio TO business_api_role;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA negocio TO business_api_role;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA negocio TO business_api_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA negocio GRANT ALL ON TABLES TO business_api_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA negocio GRANT ALL ON SEQUENCES TO business_api_role;
+GRANT USAGE, CREATE ON SCHEMA public TO business_api_role;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO business_api_role;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO business_api_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO business_api_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO business_api_role;
 
 GRANT USAGE, CREATE ON SCHEMA ml TO ml_service_role;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ml TO ml_service_role;
@@ -428,4 +429,4 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA ml TO ml_service_role;
 ALTER DEFAULT PRIVILEGES IN SCHEMA ml GRANT ALL ON TABLES TO ml_service_role;
 ALTER DEFAULT PRIVILEGES IN SCHEMA ml GRANT ALL ON SEQUENCES TO ml_service_role;
 
-GRANT USAGE ON SCHEMA negocio TO ml_service_role;
+GRANT USAGE ON SCHEMA public TO ml_service_role;

@@ -1,5 +1,5 @@
 -- Agrega nombres de usuario para bases ya inicializadas.
-ALTER TABLE negocio.usuarios ADD COLUMN IF NOT EXISTS username VARCHAR(80);
+ALTER TABLE public.usuarios ADD COLUMN IF NOT EXISTS username VARCHAR(80);
 
 DO $$
 DECLARE
@@ -9,7 +9,7 @@ DECLARE
     sufijo INTEGER;
 BEGIN
     FOR fila IN
-        SELECT id, email FROM negocio.usuarios WHERE username IS NULL ORDER BY id
+        SELECT id, email FROM public.usuarios WHERE username IS NULL ORDER BY id
     LOOP
         base_username := left(regexp_replace(lower(split_part(fila.email, '@', 1)), '[^a-z0-9._-]+', '_', 'g'), 55);
         IF base_username = '' THEN
@@ -19,15 +19,15 @@ BEGIN
         username_disponible := base_username;
         sufijo := 1;
         WHILE EXISTS (
-            SELECT 1 FROM negocio.usuarios WHERE username = username_disponible
+            SELECT 1 FROM public.usuarios WHERE username = username_disponible
         ) LOOP
             sufijo := sufijo + 1;
             username_disponible := base_username || '_' || fila.id || '_' || sufijo;
         END LOOP;
 
-        UPDATE negocio.usuarios SET username = username_disponible WHERE id = fila.id;
+        UPDATE public.usuarios SET username = username_disponible WHERE id = fila.id;
     END LOOP;
 END $$;
 
-ALTER TABLE negocio.usuarios ALTER COLUMN username SET NOT NULL;
-CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_username ON negocio.usuarios(username);
+ALTER TABLE public.usuarios ALTER COLUMN username SET NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_username ON public.usuarios(username);
