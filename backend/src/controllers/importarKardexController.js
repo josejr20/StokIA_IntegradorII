@@ -11,6 +11,7 @@ const crypto = require('crypto');
 
 const { sequelize } = require('../models');
 const { Cliente, Usuario, Operacion, OperacionDetalle, Producto, Venta } = require('../models');
+const { EMPLOYEE_MAP, PRESENTATION_TO_PRODUCT } = require('../config/kardexMappings');
 const {
   crearOperacion,
   buscarVentaOrigenDevolucion,
@@ -30,81 +31,6 @@ const upload = multer({
   }
 });
 
-const EMPLOYEE_MAP = {
-  'YVETT KATTERINE ': 10,
-  'CLAUDIA': 1,
-  'MAXIMO': 3,
-  'VICTOR HUMBERTO': 7,
-};
-
-const PRESENTATION_TO_PRODUCT = {
-  'AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES': 38,
-  'AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES': 26,
-  'AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES': 27,
-  'SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY': 89,
-  'VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND': 87,
-  'VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND': 92,
-  'VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ': 94,
-  'SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY': 93,
-  'GMS MAX SABOR 1 KG/SACO X25 UND': 39,
-  'COMINO MOLIDO A GRANEL': 69,
-  'PIMIENTA MOLIDO A GRANEL': 80,
-  'ROMERO MOLIDO A GRANEL': null,
-  'SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY': 76,
-  'AJI-NO-MOTO GMS 1 KG/SACO X18 UND': 25,
-  'VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND': 100,
-  'AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES': 28,
-  'AJI-NO-MEN GALLINA 80 GR X24 SOBRES': 14,
-  'DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S)': 46,
-  'SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY': 67,
-  'SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY': 81,
-  'AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES': 39,
-  'AJI-NO-MEN POLLO 80 GR X24 SOBRES': 16,
-  'AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S)': 20,
-  'SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY': 79,
-  'SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY': 88,
-  'AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND': 23,
-  'VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ': 89,
-  'AJI-NO-MOTO GMS 500 GR/SACO X30 UND': 31,
-  'AJI-NO-MEN VASO GALLINA 50 GR X12 UND': 18,
-  'SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY': 80,
-  'SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY': 69,
-  'AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES': 29,
-  'AJI-NO-MEN VASO POLLO 50 GR X12 UND': 19,
-  'DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S)': 45,
-  'SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY': 70,
-  'SILLAO TITO 150 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR': 97,
-  'VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND': 99,
-  'VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND': 96,
-  'SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY': 77,
-  'AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES': 29,
-  'VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND': 91,
-  'MAYONESA RICASA CAJA X250 SACHET POR 8 GR': 58,
-  'SIB OREGANO MERI ECON X68 SOB 3.5 GR/PAQUETE X12 DISPLAY + 2 VINAGRES TINTO 125 ML': 76,
-  'SIB SAZONADOR MERI SIN PCTE GIG X42 SOB 27 GR/PAQUETE X12 DISLPLAY': 75,
-  'VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND': 101,
-  'AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND': 21,
-  'AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND': 29,
-  'AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S)': 22,
-  'KETCHUP RICASA CAJA X250 SACHET POR 8 GR': 55,
-  'GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS': 48,
-  'VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND': 103,
-  'MAYONESA BASE RICASA CAJA X2 BOLSAS DE 2 KG': 57,
-  'AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES': 20,
-  'AJI-NO-MEN CARNE 80 GR X24 SOBRES': 13,
-  'CHUÑO SANTIS BLS/PAPELO X25 KILOS': 44,
-  'SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY': 92,
-  'AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES': 15,
-  'KETCHUP RICASA CAJA X2 BOLSAS DE 2 KG': 54,
-  'SIB SAZONADOR SIN PCTE X12 SOB GIG 100 GR /PAQUETE X6 DISLPL': 89,
-  'MOSTAZA RICASA CAJA X250 SACHET POR 8 GR': 60,
-  'AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES': 19,
-  'SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR': 97,
-  'SIB AJI PANQUITA SIN PCTE ECON X24 SOB 31.2 GR/PAQUETE X12 DISPLAY': 52,
-  'DURAZNOS EN ALMÍBAR KANKAY X820 GR/CJ X12 UND': null,
-  'SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY': 79,
-};
-
 async function findOrCreateClient(nombre, transaction) {
   const trimmed = nombre.trim();
   let cliente = await Cliente.findOne({ where: { nombre: trimmed }, transaction });
@@ -115,7 +41,7 @@ async function findOrCreateClient(nombre, transaction) {
   return cliente;
 }
 
-async function findOrCreateEmployee(nombre, transaction) {
+async function resolveEmployee(nombre, transaction, usuarioImportadorId) {
   const trimmed = nombre.trim();
   if (EMPLOYEE_MAP[trimmed]) {
     const usuario = await Usuario.findByPk(EMPLOYEE_MAP[trimmed], { transaction });
@@ -126,17 +52,9 @@ async function findOrCreateEmployee(nombre, transaction) {
     transaction
   });
   if (existing) return existing;
-  const email = trimmed.toLowerCase().replace(/\s+/g, '.') + '@import.local';
-  const usuario = await Usuario.create({
-    email,
-    nombres: trimmed,
-    apellidos: 'Importado',
-    password_hash: await require('bcryptjs').hash('Import1234!', 10),
-    rol_id: 2,
-    activo: true
-  }, { transaction });
-  logger.info(`Created user: ${usuario.id} ${trimmed}`);
-  return usuario;
+  const usuarioImportador = await Usuario.findByPk(usuarioImportadorId, { transaction });
+  if (!usuarioImportador) throw new Error('No se encontró el usuario que inició la importación');
+  return usuarioImportador;
 }
 
 function fechaDesdeExcel(valor) {
@@ -149,7 +67,7 @@ function fechaDesdeExcel(valor) {
   return new Date(valor);
 }
 
-async function processRow(row, transaction) {
+async function processRow(row, transaction, usuarioImportadorId) {
   const [, fcreacion, empleado, clienteNombre, presentacion, observaciones, motivo, cantidad] = row;
   const productoId = PRESENTATION_TO_PRODUCT[presentacion];
   if (productoId === null || productoId === undefined) {
@@ -170,7 +88,10 @@ async function processRow(row, transaction) {
   }
 
   const tipo = esDevolucion ? 'devolucion' : 'venta';
-  const motivoOperacion = String(observaciones || motivo || 'Importación histórica').trim();
+  const motivoOperacion = [
+    String(observaciones || motivo || 'Importación histórica').trim(),
+    empleado ? `Empleado histórico: ${String(empleado).trim()}` : '',
+  ].filter(Boolean).join(' | ');
   const idempotencyKey = `KX-${crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex').slice(0, 61)}`;
   const operacionExistente = await Operacion.findOne({
     where: { idempotency_key: idempotencyKey },
@@ -179,7 +100,7 @@ async function processRow(row, transaction) {
   if (operacionExistente) return { repetida: true };
 
   const cliente = await findOrCreateClient(clienteNombre, transaction);
-  const usuario = await findOrCreateEmployee(empleado, transaction);
+  const usuario = await resolveEmployee(empleado, transaction, usuarioImportadorId);
   let operacionOrigenId = null;
   const producto = await Producto.findByPk(productoId, { transaction });
   if (!producto) throw new Error(`No se encontró el producto ${productoId} para completar el comprobante`);
@@ -263,7 +184,7 @@ const importarKardex = async (req, res, next) => {
   for (const row of dataRows) {
     const transaction = await sequelize.transaction();
     try {
-      const result = await processRow(row, transaction);
+      const result = await processRow(row, transaction, req.user.id);
       await transaction.commit();
       
       if (result.skipped) {

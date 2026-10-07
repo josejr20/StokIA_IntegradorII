@@ -264,6 +264,17 @@ const options = {
             nombre_archivo: { type: 'string', example: 'ventas.xlsx' },
             filas_procesadas: { type: 'integer', example: 100 },
             filas_con_error: { type: 'integer', example: 2 },
+            detalle_errores: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  fila: { type: 'integer' },
+                  codigo: { type: 'string' },
+                  motivo: { type: 'string' },
+                },
+              },
+            },
             estado: { type: 'string', enum: ['procesando', 'completado', 'fallido'], example: 'completado' },
             fecha: { type: 'string', format: 'date-time' }
           }

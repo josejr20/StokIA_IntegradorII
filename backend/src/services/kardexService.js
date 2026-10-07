@@ -1,6 +1,7 @@
 const { Decimal } = require('decimal.js');
 const { Lote, MovimientoInventario, Producto } = require('../models');
 const logger = require('../utils/logger');
+const { Op } = require('sequelize');
 
 class ErrorKardex extends Error {}
 
@@ -21,7 +22,7 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
     }
   }
 
-  if (!['ingreso', 'salida', 'ajuste'].includes(tipo)) throw new ErrorKardex('Tipo de movimiento no válido');
+  if (!['ingreso', 'salida'].includes(tipo)) throw new ErrorKardex('Tipo de movimiento no válido. Use "ingreso" o "salida"');
   if (!ORIGENES_VALIDOS.includes(origen)) throw new ErrorKardex('Origen de movimiento no válido');
 
   let cantidadDec;
@@ -86,7 +87,22 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
     fecha: fechaMovimiento,
   }, { transaction });
 
-  const movimientos = await MovimientoInventario.findAll({
+  // HU8.2: Optimización - si el nuevo movimiento es posterior o igual al último,
+  // recalcular solo desde el último; si es retroactivo, recalcular todo.
+  const ultimoMovimiento = await MovimientoInventario.findOne({
+    include: [{
+      model: Lote,
+      as: 'lote',
+      attributes: [],
+      where: { producto_id: lote.producto_id },
+    }],
+    order: [['fecha', 'DESC'], ['id', 'DESC']],
+    transaction,
+  });
+
+  const esRetroactivo = ultimoMovimiento && new Date(ultimoMovimiento.fecha) > fechaMovimiento;
+
+  let whereCond = {
     include: [{
       model: Lote,
       as: 'lote',
@@ -96,10 +112,30 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
     order: [['fecha', 'ASC'], ['id', 'ASC']],
     transaction,
     lock: transaction ? transaction.LOCK.UPDATE : undefined,
-  });
+  };
 
   let saldoCantidad = new Decimal('0');
   let saldoValorizado = new Decimal('0');
+
+  if (!esRetroactivo && ultimoMovimiento) {
+    // Cargar solo el último movimiento para obtener su saldo
+    const ultimo = await MovimientoInventario.findByPk(ultimoMovimiento.id, { transaction });
+    if (ultimo) {
+      saldoCantidad = new Decimal(String(ultimo.saldo_cantidad ?? 0));
+      saldoValorizado = new Decimal(String(ultimo.saldo_valorizado ?? 0));
+    }
+    // Filtrar movimientos desde el último (incluyendo el nuevo)
+    whereCond.where = {
+      ...whereCond.where,
+      [Op.or]: [
+        { fecha: { [Op.gt]: ultimoMovimiento.fecha } },
+        { [Op.and]: [{ fecha: ultimoMovimiento.fecha }, { id: { [Op.gte]: ultimoMovimiento.id } }] }
+      ]
+    };
+  }
+
+  const movimientos = await MovimientoInventario.findAll(whereCond);
+
   for (const fila of movimientos) {
     const cantidadFila = new Decimal(String(fila.cantidad));
     let precioUnitarioFila;

@@ -1,14 +1,32 @@
+import { useState } from 'react'
+import { Upload } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/auth/AuthContext'
+
 import { useVentas } from './api'
+import { ImportarVentasModal } from './ImportarVentasModal'
 
 export default function VentasPage() {
   const { data, isLoading, isError } = useVentas()
+  const { tienePermiso } = useAuth()
+  const [importarAbierto, setImportarAbierto] = useState(false)
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Ventas</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Historial de ventas registrado en el backend.</p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold">Ventas</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Historial de ventas registrado en el backend.</p>
+        </div>
+        {tienePermiso('importar_ventas') && (
+          <Button onClick={() => setImportarAbierto(true)}>
+            <Upload className="size-4" />
+            Importar historial
+          </Button>
+        )}
       </div>
+      <ImportarVentasModal open={importarAbierto} onOpenChange={setImportarAbierto} />
       {isLoading && <p className="text-muted-foreground">Cargando ventas...</p>}
       {isError && <p className="text-destructive">No se pudieron cargar las ventas.</p>}
       {data && (

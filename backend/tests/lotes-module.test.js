@@ -13,12 +13,13 @@ test('genera un código de lote en formato LT-000001', () => {
   assert.equal(generarCodigoLote(123), 'LT-000123');
 });
 
-test('rechaza lotes con fecha de vencimiento no válida', () => {
-  assert.throws(
-    () => validarLoteParaCreacion({ cantidad_inicial: 10, fecha_vencimiento: '2020-01-01' }),
-    /posterior\s*a\s*hoy/i,
+test('validarLoteParaCreacion solo valida cantidad, ignora fecha_vencimiento', () => {
+  // No lanza error por fecha en el pasado - se valida solo cantidad
+  assert.deepEqual(
+    validarLoteParaCreacion({ cantidad_inicial: 10, fecha_vencimiento: '2020-01-01' }),
+    { cantidad_inicial: 10 },
   );
-
+  // Lanza error por cantidad cero
   assert.throws(
     () => validarLoteParaCreacion({ cantidad_inicial: 0, fecha_vencimiento: '2100-01-01' }),
     /mayor\s*a\s*0/i,

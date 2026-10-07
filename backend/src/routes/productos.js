@@ -3,8 +3,40 @@ const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
 const { uploadProducto } = require('../middleware/uploadProducto');
 const { listar, obtener, crear, actualizar, importar, desactivar, activar, ingreso } = require('../controllers/productoController');
+const { body, validationResult } = require('express-validator');
 const router = Router();
 router.use(autenticar);
+
+const validarProducto = [
+  body('nombre').trim().notEmpty().withMessage('El nombre es obligatorio')
+    .isLength({ max: 200 }).withMessage('Máximo 200 caracteres'),
+  body('categoria_id').isInt({ min: 1 }).withMessage('La categoría es obligatoria'),
+  body('unidad_medida_id').isInt({ min: 1 }).withMessage('La unidad de medida es obligatoria'),
+];
+
+const validarProductoActualizar = [
+  body('nombre').optional().trim().notEmpty().withMessage('El nombre no puede estar vacío')
+    .isLength({ max: 200 }).withMessage('Máximo 200 caracteres'),
+  body('categoria_id').optional().isInt({ min: 1 }).withMessage('La categoría debe ser un entero positivo'),
+  body('unidad_medida_id').optional().isInt({ min: 1 }).withMessage('La unidad de medida debe ser un entero positivo'),
+];
+
+const validarResultado = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
+  next();
+};
+
+const validarCodigoNoModificado = async (req, res, next) => {
+  if (req.body.codigo !== undefined) {
+    const { Producto } = require('../models');
+    const producto = await Producto.findByPk(req.params.id);
+    if (producto && req.body.codigo !== producto.codigo) {
+      return res.status(400).json({ error: 'El código del producto no se puede modificar' });
+    }
+  }
+  next();
+};
 
 /**
  * @openapi
@@ -253,8 +285,8 @@ router.use(autenticar);
 router.get('/', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), listar);
 router.post('/importar', verificarPermiso('gestionar_productos'), importar);
 router.get('/:id', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), obtener);
-router.post('/', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), crear);
-router.put('/:id', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), actualizar);
+router.post('/', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), validarProducto, validarResultado, crear);
+router.put('/:id', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), validarProductoActualizar, validarResultado, validarCodigoNoModificado, actualizar);
 router.patch('/:id/desactivar', verificarPermiso('gestionar_productos'), desactivar);
 router.patch('/:id/activar', verificarPermiso('gestionar_productos'), activar);
 router.post('/:id/ingreso', verificarPermiso('gestionar_productos'), ingreso);
