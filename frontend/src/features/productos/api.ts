@@ -34,7 +34,7 @@ export function useProductos(filtros: { search?: string; categoria?: string; mar
   if (filtros.marca) params.set('marca_id', filtros.marca)
   const usarPaginacion = filtros.page !== undefined
   if (usarPaginacion) {
-    if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+    params.set('page', String(filtros.page))
     params.set('page_size', String(filtros.pageSize || 10))
   }
 

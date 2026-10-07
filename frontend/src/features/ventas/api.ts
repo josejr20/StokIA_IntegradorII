@@ -51,11 +51,17 @@ export function useVentasResumen(filtros: { producto?: string; fecha_desde?: str
   })
 }
 
-export function useVentas() {
+export function useVentas(filtros: { producto?: string; fecha_desde?: string; fecha_hasta?: string } = {}) {
+  const params = new URLSearchParams()
+  if (filtros.producto) params.set('producto', filtros.producto)
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+
   return useQuery({
-    queryKey: ['ventas'],
+    queryKey: ['ventas', filtros],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: Venta[] }>('/ventas')
+      const qs = params.toString()
+      const respuesta = await api.get<{ data: Venta[] }>(qs ? `/ventas?${qs}` : '/ventas')
       return respuesta.data
     },
   })
@@ -71,6 +77,7 @@ export function useImportarVentas() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['ventas'] })
+      void queryClient.invalidateQueries({ queryKey: ['ventas-resumen'] })
     },
   })
 }

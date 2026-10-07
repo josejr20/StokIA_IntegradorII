@@ -70,9 +70,14 @@ export interface MovimientoInventario {
   fecha: string
 }
 
+export type EstadoFiltroLote = '' | 'con_stock' | 'agotado'
+
 export interface FiltrosLotes {
   search?: string
   producto?: string
+  fecha_desde?: string
+  fecha_hasta?: string
+  estado?: EstadoFiltroLote
   page?: number
   pageSize?: number
 }
@@ -93,6 +98,9 @@ export function useLotes(filtros: FiltrosLotes = {}) {
   const params = new URLSearchParams()
   if (filtros.search) params.set('numero_lote', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.estado) params.set('estado', filtros.estado)
 
   return useQuery({
     queryKey: ['lotes', filtros],

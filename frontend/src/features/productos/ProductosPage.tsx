@@ -69,10 +69,10 @@ export default function ProductosPage() {
             placeholder="Buscar por código o nombre…"
             className="pl-9"
             value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
+            onChange={(e) => { setBusqueda(e.target.value); setPagina(1) }}
           />
         </div>
-        <Select value={categoriaFiltro || 'todas'} onValueChange={(v) => setCategoriaFiltro(v === 'todas' ? '' : v)}>
+        <Select value={categoriaFiltro || 'todas'} onValueChange={(v) => { setCategoriaFiltro(v === 'todas' ? '' : v); setPagina(1) }}>
           <SelectTrigger className="w-48"><SelectValue placeholder="Categoría" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="todas">Categoría: Todas</SelectItem>
@@ -81,7 +81,7 @@ export default function ProductosPage() {
             ))}
           </SelectContent>
         </Select>
-        <Select value={marcaFiltro || 'todas'} onValueChange={(v) => setMarcaFiltro(v === 'todas' ? '' : v)}>
+        <Select value={marcaFiltro || 'todas'} onValueChange={(v) => { setMarcaFiltro(v === 'todas' ? '' : v); setPagina(1) }}>
           <SelectTrigger className="w-48"><SelectValue placeholder="Marca" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="todas">Marca: Todas</SelectItem>

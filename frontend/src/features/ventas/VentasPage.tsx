@@ -12,11 +12,12 @@ import { ImportarVentasModal } from './ImportarVentasModal'
 const formatoMoneda = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' })
 
 export default function VentasPage() {
-  const { data, isLoading, isError } = useVentas()
   const { tienePermiso } = useAuth()
   const [importarAbierto, setImportarAbierto] = useState(false)
   const [fechaDesde, setFechaDesde] = useState('')
   const [fechaHasta, setFechaHasta] = useState('')
+
+  const { data, isLoading, isError } = useVentas({ fecha_desde: fechaDesde, fecha_hasta: fechaHasta })
 
   const { data: resumen } = useVentasResumen({ fecha_desde: fechaDesde, fecha_hasta: fechaHasta })
 
@@ -82,7 +83,7 @@ export default function VentasPage() {
                   <td className="p-4 text-muted-foreground">{venta.origen}</td>
                 </tr>
               ))}
-              {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>No hay ventas registradas.</td></tr>}
+              {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}
             </tbody>
           </table>
         </div>

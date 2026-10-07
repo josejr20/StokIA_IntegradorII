@@ -13,7 +13,7 @@ import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from '@/components/ui/select'
 import { useProductos } from '@/features/productos/api'
-import { useLotes, type Lote } from './api'
+import { useLotes, type EstadoFiltroLote, type Lote } from './api'
 import { NuevoLoteModal } from './components/NuevoLoteModal'
 import { LoteDetalleSheet } from './components/LoteDetalleSheet'
 import { RegistrarMovimientoModal } from './components/RegistrarMovimientoModal'
@@ -55,13 +55,20 @@ export default function InventarioPage() {
   const [productoClave, setProductoClave] = useState('')
   const [pageSize, setPageSize] = useState(10)
   const [pagina, setPagina] = useState(1)
+  const [fechaDesde, setFechaDesde] = useState('')
+  const [fechaHasta, setFechaHasta] = useState('')
+  const [estadoFiltro, setEstadoFiltro] = useState<EstadoFiltroLote>('')
 
   const [modalNuevo, setModalNuevo] = useState(false)
   const [grupoDetalle, setGrupoDetalle] = useState<GrupoLotes | null>(null)
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null)
 
   const { data: productos } = useProductos({})
-  const { data, isLoading } = useLotes()
+  const { data, isLoading } = useLotes({
+    fecha_desde: fechaDesde,
+    fecha_hasta: fechaHasta,
+    estado: estadoFiltro,
+  })
 
   function codigoDelLote(lote: Lote): string {
     return productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? ''
@@ -133,6 +140,39 @@ export default function InventarioPage() {
             />
           </div>
 
+          <Select
+            value={estadoFiltro || 'todos'}
+            onValueChange={(v) => { setEstadoFiltro(v === 'todos' ? '' : (v as EstadoFiltroLote)); setPagina(1) }}
+          >
+            <SelectTrigger className="w-44"><SelectValue placeholder="Estado" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Estado: Todos</SelectItem>
+              <SelectItem value="con_stock">Con stock</SelectItem>
+              <SelectItem value="agotado">Agotado</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>Ingreso</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso desde"
+              className="w-40"
+              value={fechaDesde}
+              max={fechaHasta || undefined}
+              onChange={(e) => { setFechaDesde(e.target.value); setPagina(1) }}
+            />
+            <span>a</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso hasta"
+              className="w-40"
+              value={fechaHasta}
+              min={fechaDesde || undefined}
+              onChange={(e) => { setFechaHasta(e.target.value); setPagina(1) }}
+            />
+          </div>
+
           <Button
             onClick={() => setModalNuevo(true)}
           >
@@ -179,7 +219,7 @@ export default function InventarioPage() {
                   </TableCell>
                 </TableRow>
               )}
-              {!isLoading && lotes.length === 0 && (
+              {!isLoading && grupos.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={8} className="text-center text-muted-foreground">
                     No hay lotes para los filtros seleccionados.
