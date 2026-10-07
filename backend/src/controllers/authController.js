@@ -21,8 +21,8 @@ const login = async (req, res) => {
     return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
   }
 
+  const { identifier, password } = LoginDto.fromBody(req.body);
   try {
-    const { identifier, password } = LoginDto.fromBody(req.body);
     const { usuario, token, refreshToken } = await authService.login(identifier, password);
     setAuthCookies(res, token, refreshToken);
     return res.json({
@@ -31,6 +31,17 @@ const login = async (req, res) => {
     });
   } catch (error) {
     logger.warn(`Login fallido: ${error.message}`);
+    try {
+      const { crearAuditoria } = require('../middleware/auditoria');
+      await crearAuditoria(null, 'login_fallido', 'auth', null, {
+        identifier: typeof identifier === 'string' ? identifier.trim() : null,
+        motivo: error.message || 'Credenciales incorrectas',
+        ip: req.ip || null,
+        user_agent: req.get('user-agent') || null,
+      });
+    } catch (auditError) {
+      logger.warn(`No se pudo registrar auditoría de login fallido: ${auditError.message}`);
+    }
     return res.status(401).json({ error: 'Correo o contraseña incorrectos.' });
   }
 };

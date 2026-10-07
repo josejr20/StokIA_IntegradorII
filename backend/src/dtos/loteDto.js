@@ -31,7 +31,7 @@ class LoteDto {
       producto_id: body.producto_id,
       numero_lote: body.numero_lote,
       cantidad_inicial: cantidadInicial,
-      cantidad_actual: body.cantidad_actual !== undefined ? Number(body.cantidad_actual) : cantidadInicial,
+      cantidad_actual: 0,
       fecha_vencimiento: typeof body.fecha_vencimiento === 'string'
         ? body.fecha_vencimiento.trim() || null
         : body.fecha_vencimiento ?? null,

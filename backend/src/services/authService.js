@@ -7,12 +7,7 @@ const login = async (identifier, password) => {
   if (!valor) throw new Error('Credenciales incorrectas');
 
   const usuarios = await Usuario.findAll({
-    where: {
-      [Op.or]: [
-        { email: valor },
-        where(fn('LOWER', col('nombres')), valor),
-      ],
-    },
+    where: { email: valor },
     include: [{ model: Rol, as: 'rol', include: [{ model: Permiso, as: 'permisos', through: { attributes: [] } }] }],
     limit: 2,
   });

@@ -4,13 +4,22 @@ import { api } from '@/lib/api'
 import type { Paginado } from '@/types'
 
 // Tipos y constantes compartidas con el módulo de kardex (una sola fuente de verdad).
-export type TipoMovimiento = 'ingreso' | 'salida' | 'ajuste'
+// HU8.1: los ajustes se expresan como ingreso/salida con origen='ajuste'.
+export type TipoMovimiento = 'ingreso' | 'salida'
 export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'devolucion' | 'anulacion' | 'otro'
 
-export const TIPOS_MOVIMIENTO: { value: TipoMovimiento; label: string }[] = [
-  { value: 'ingreso', label: 'Ingreso' },
-  { value: 'salida', label: 'Salida' },
-  { value: 'ajuste', label: 'Ajuste' },
+export interface TipoMovimientoItem {
+  key: string
+  value: TipoMovimiento
+  label: string
+  origen: OrigenMovimiento
+}
+
+export const TIPOS_MOVIMIENTO: TipoMovimientoItem[] = [
+  { key: 'ingreso', value: 'ingreso', label: 'Ingreso', origen: 'compra' },
+  { key: 'salida', value: 'salida', label: 'Salida', origen: 'venta' },
+  { key: 'ajuste-pos', value: 'ingreso', label: 'Ajuste +', origen: 'ajuste' },
+  { key: 'ajuste-neg', value: 'salida', label: 'Ajuste −', origen: 'ajuste' },
 ]
 
 export const ORIGENES_MOVIMIENTO: { value: OrigenMovimiento; label: string }[] = [
@@ -81,16 +90,20 @@ export interface FiltrosMovimientos {
 }
 
 export function useLotes(filtros: FiltrosLotes = {}) {
+  const params = new URLSearchParams()
+  if (filtros.search) params.set('numero_lote', filtros.search)
+  if (filtros.producto) params.set('producto', filtros.producto)
+
   return useQuery({
     queryKey: ['lotes', filtros],
     queryFn: async () => {
-      const pageSize = 100
+      const pageSize = filtros.pageSize || 100
       const resultados: Lote[] = []
-      let pagina = 1
+      let pagina = filtros.page || 1
       let hayMas = true
 
       while (hayMas) {
-        const respuesta = await api.get<Paginado<Lote>>(`/lotes/?page=${pagina}&page_size=${pageSize}`)
+        const respuesta = await api.get<Paginado<Lote>>(`/lotes/?page=${pagina}&page_size=${pageSize}&${params.toString()}`)
         resultados.push(...respuesta.data)
         hayMas = respuesta.next ?? false
         pagina += 1

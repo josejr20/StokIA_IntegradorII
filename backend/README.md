@@ -51,14 +51,13 @@ Ejecuta `src/utils/seed.js` que a su vez invoca `seedService.seedInicial()` para
 
 ### Esquema SQL (producción / migraciones)
 
-Ejecutar en orden contra la base de datos destino:
+Para una base nueva, usar este orden real de carga:
 
-1. `postgresql/init/01_esquema_base.sql` — Tablas, índices, FK, triggers
-2. `postgresql/init/02_datos_iniciales.sql` — Permisos, roles, catálogos
-3. `postgresql/manual/03_lotes_fecha_vencimiento_nullable.sql` — Ajuste lote.fecha_vencimiento nullable
-4. `postgresql/manual/04_operaciones_kardex_coherencia.sql` — Vistas y funciones de coherencia kardex
+1. `postgresql/BackupStokIAV3.sql` — esquema base y datos principales
+2. `postgresql/manual/05_importaciones_ventas.sql` — permisos y soporte de importación de ventas
+3. `npm run seed` — permisos, roles y catálogos base del sistema
 
-> **Nota:** Los scripts en `postgresql/manual/` son correcciones puntuales aplicadas sobre el esquema base. En despliegues nuevos, ejecutar todo en el orden indicado.
+> **Nota:** Este orden es el que deja la base compatible con el código actual. Si se ejecuta solo el dump, faltarán columnas/permisos requeridos por `POST /api/ventas/importar` y por el bootstrap del módulo de ventas.
 
 ## Scripts disponibles
 
