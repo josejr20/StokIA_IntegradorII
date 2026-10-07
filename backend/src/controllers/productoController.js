@@ -1,12 +1,13 @@
 const { Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const { validationResult } = require('express-validator');
 const { Producto, ProductoPresentacion, Categoria, UnidadMedida, CatalogoMarca, tipoEnvase } = require('../models');
 const { ProductoDto } = require('../dtos/productoDto');
 const { Lote } = require('../models');
 const { registrarMovimiento } = require('../services/kardexService');
 const logger = require('../utils/logger');
+
+const { UniqueConstraintError } = require('sequelize');
 
 // Carga masiva desde CSV/Excel. Tope de filas por peticion: el endpoint es
 // todo-o-nada, asi que el limite evita que una sola llamada bloquee la base.
@@ -69,22 +70,57 @@ const listar = async (req, res, next) => {
         { codigo: { [Op.iLike]: `%${req.query.search}%` } },
       ];
     }
-    const productos = await Producto.findAll({
+
+    const paginar = req.query.page !== undefined;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+
+    const include = [
+      { model: Producto.sequelize.models.Categoria, as: 'categoria' },
+      { model: Producto.sequelize.models.UnidadMedida, as: 'unidadMedida' },
+      { model: Producto.sequelize.models.Presentacion, as: 'presentacion' },
+      { model: Producto.sequelize.models.CatalogoMarca, as: 'marca' },
+    ];
+
+    const attributes = {
+      include: [[
+        Producto.sequelize.literal(
+          '(SELECT COALESCE(SUM(cantidad_actual),0) FROM lotes l WHERE l.producto_id = "Producto".id)'
+        ), 'stock_total'
+      ]],
+    };
+
+    const options = {
       where,
-      include: [
-        { model: Producto.sequelize.models.Categoria, as: 'categoria' },
-        { model: Producto.sequelize.models.UnidadMedida, as: 'unidadMedida' },
-        { model: Producto.sequelize.models.Presentacion, as: 'presentacion' },
-        { model: Producto.sequelize.models.CatalogoMarca, as: 'marca' },
-        { model: Producto.sequelize.models.Lote, as: 'lotes' }
-      ]
-    });
-    const data = productos.map(p => {
+      include,
+      attributes,
+      order: [['nombre', 'ASC']],
+      distinct: true,
+    };
+
+    if (paginar) {
+      options.limit = pageSize;
+      options.offset = (page - 1) * pageSize;
+    }
+
+    const { rows, count } = await Producto.findAndCountAll(options);
+
+    const data = rows.map(p => {
       const dto = ProductoDto.fromModel(p);
-      dto.stock_total = (p.lotes || []).reduce((s, l) => s + Number(l.cantidad_actual || 0), 0);
+      dto.stock_total = Number(p.get('stock_total') || 0);
       return dto;
     });
-    res.json({ data });
+
+    if (paginar) {
+      res.json({
+        data,
+        count,
+        next: page * pageSize < count,
+        previous: page > 1,
+      });
+    } else {
+      res.json({ data });
+    }
   } catch (error) { next(error); }
 };
 
@@ -96,21 +132,26 @@ const obtener = async (req, res, next) => {
         { model: Producto.sequelize.models.UnidadMedida, as: 'unidadMedida' },
         { model: Producto.sequelize.models.Presentacion, as: 'presentacion' },
         { model: Producto.sequelize.models.CatalogoMarca, as: 'marca' },
-        { model: Producto.sequelize.models.Lote, as: 'lotes' }
-      ]
+      ],
+      attributes: {
+        include: [[
+          Producto.sequelize.literal(
+            '(SELECT COALESCE(SUM(cantidad_actual),0) FROM lotes l WHERE l.producto_id = "Producto".id)'
+          ), 'stock_total'
+        ]],
+      },
     });
     if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
     const dto = ProductoDto.fromModel(producto);
-    dto.stock_total = (producto.lotes || []).reduce((s, l) => s + Number(l.cantidad_actual || 0), 0);
+    dto.stock_total = Number(producto.get('stock_total') || 0);
     res.json({ data: dto });
   } catch (error) { next(error); }
 };
 
 const crear = async (req, res, next) => {
   let transaction;
+  let reintentado = false;
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
     transaction = await Producto.sequelize.transaction();
     const presentaciones = parsePresentaciones(req.body.presentaciones_niveles);
     const data = ProductoDto.fromCreate({
@@ -131,6 +172,10 @@ const crear = async (req, res, next) => {
   } catch (error) {
     if (transaction) await transaction.rollback();
     eliminarImagenSiExiste(req.file);
+    if (error instanceof UniqueConstraintError && !reintentado && error.fields?.codigo) {
+      reintentado = true;
+      return crear(req, res, next);
+    }
     next(error);
   }
 };
@@ -263,6 +308,7 @@ function responderInvalido(res, mensaje) {
  */
 const importar = async (req, res, next) => {
   let transaction;
+  let reintentado = false;
   try {
     const productos = Array.isArray(req.body?.productos) ? req.body.productos : null;
     if (!productos || productos.length === 0) {
@@ -309,6 +355,10 @@ const importar = async (req, res, next) => {
     res.status(201).json({ data: { creados: creados.length, codigos } });
   } catch (error) {
     if (transaction) await transaction.rollback();
+    if (error instanceof UniqueConstraintError && !reintentado && error.fields?.codigo) {
+      reintentado = true;
+      return importar(req, res, next);
+    }
     next(error);
   }
 };
@@ -331,11 +381,32 @@ const desactivar = async (req, res, next) => {
   try {
     const producto = await Producto.findByPk(req.params.id);
     if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+
     const motivo = req.body.motivo_desactivacion;
-    if (!motivo) return res.status(400).json({ error: 'Indica el motivo de desactivación' });
+    const motivoDetalle = req.body.motivo_desactivacion_detalle;
+    const confirmarStock = req.body.confirmar_stock === true;
+
+    const motivosValidos = ['agotado', 'caducado', 'sustituto', 'rectificado', 'otro'];
+    if (!motivo || !motivosValidos.includes(motivo)) {
+      return res.status(400).json({ error: 'Motivo de desactivación inválido' });
+    }
+    if (motivo === 'otro' && !motivoDetalle) {
+      return res.status(400).json({ error: 'Debe indicar el detalle del motivo cuando es "otro"' });
+    }
+
+    const { Lote } = require('../models');
+    const stock = Number(await Lote.sum('cantidad_actual', { where: { producto_id: producto.id } })) || 0;
+    if (stock > 0 && !confirmarStock) {
+      return res.status(409).json({
+        error: `El producto tiene ${stock} unidades en stock`,
+        code: 'STOCK_PENDIENTE',
+        stock_total: stock,
+      });
+    }
+
     producto.activo = false;
     producto.motivo_desactivacion = motivo;
-    producto.motivo_desactivacion_detalle = req.body.motivo_desactivacion_detalle || '';
+    producto.motivo_desactivacion_detalle = motivoDetalle || '';
     producto.fecha_desactivacion = new Date();
     await producto.save();
     res.json({ data: ProductoDto.fromModel(producto) });

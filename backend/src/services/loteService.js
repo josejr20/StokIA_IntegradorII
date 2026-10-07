@@ -51,7 +51,7 @@ function generarCodigoLote(numero = 1) {
   return `LT-${String(Math.max(1, valor)).padStart(6, '0')}`;
 }
 
-function validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento } = {}) {
+function validarLoteParaCreacion({ cantidad_inicial } = {}) {
   const cantidad = Number(cantidad_inicial);
   if (!Number.isFinite(cantidad) || cantidad <= 0) {
     throw new ErrorLote('La cantidad inicial del lote debe ser mayor a 0');
@@ -60,24 +60,8 @@ function validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento } = {}) {
     throw new ErrorLote('La cantidad inicial admite hasta 2 decimales');
   }
 
-  const vencimiento = typeof fecha_vencimiento === 'string'
-    ? fecha_vencimiento.trim()
-    : fecha_vencimiento;
-  const fecha = normalizarFecha(vencimiento, true);
-  if (!fecha && vencimiento !== null && vencimiento !== undefined && vencimiento !== '') {
-    throw new ErrorLote('La fecha de vencimiento es inválida');
-  }
-
-  if (fecha) {
-    const hoy = normalizarFecha(new Date(), true);
-    if (String(fecha) <= String(hoy)) {
-      throw new ErrorLote('La fecha de vencimiento debe ser posterior a hoy');
-    }
-  }
-
   return {
     cantidad_inicial: cantidad,
-    fecha_vencimiento: fecha,
   };
 }
 

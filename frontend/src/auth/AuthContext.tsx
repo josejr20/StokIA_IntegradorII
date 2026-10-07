@@ -5,6 +5,7 @@ export type PermisoCodigo =
   | 'gestionar_productos'
   | 'gestionar_inventario'
   | 'gestionar_ventas'
+  | 'importar_ventas'
   | 'configurar_umbrales'
   | 'gestionar_reabastecimiento'
   | 'ver_alertas'
