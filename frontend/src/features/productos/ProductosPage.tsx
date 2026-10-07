@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Plus, Pencil, Ban, RotateCcw, Image as IMAGE_ICON, Upload } from 'lucide-react'
+import { Search, Plus, Pencil, Ban, RotateCcw, ChevronLeft, ChevronRight, Image as IMAGE_ICON, Upload } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -32,6 +32,8 @@ export default function ProductosPage() {
   const [busqueda, setBusqueda] = useState('')
   const [categoriaFiltro, setCategoriaFiltro] = useState<string>('')
   const [marcaFiltro, setMarcaFiltro] = useState<string>('')
+  const [pageSize, setPageSize] = useState(10)
+  const [pagina, setPagina] = useState(1)
 
   const [modalNuevo, setModalNuevo] = useState(false)
   const [modalImportar, setModalImportar] = useState(false)
@@ -40,7 +42,7 @@ export default function ProductosPage() {
   const [productoActivar, setProductoActivar] = useState<Producto | null>(null)
 
   const { data: productos, isLoading } = useProductos({
-    search: busqueda, categoria: categoriaFiltro, marca: marcaFiltro,
+    search: busqueda, categoria: categoriaFiltro, marca: marcaFiltro, page: pagina, pageSize,
   })
   const { data: categorias } = useCategorias()
   const { data: marcas } = useMarcas()
@@ -189,8 +191,43 @@ export default function ProductosPage() {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </div>
+         </Table>
+       </div>
+
+       {productos && productos.count !== undefined && (
+         <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+           <span>
+             {productos.count} producto{productos.count === 1 ? '' : 's'}
+           </span>
+           <div className="flex items-center gap-2">
+             <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPagina(1) }}>
+               <SelectTrigger className="w-20"><SelectValue /></SelectTrigger>
+               <SelectContent>
+                 <SelectItem value="10">10</SelectItem>
+                 <SelectItem value="20">20</SelectItem>
+                 <SelectItem value="50">50</SelectItem>
+                 <SelectItem value="100">100</SelectItem>
+               </SelectContent>
+             </Select>
+             <Button
+               variant="outline"
+               size="sm"
+               disabled={!productos.previous}
+               onClick={() => setPagina((p) => p - 1)}
+             >
+               <ChevronLeft className="size-4" /> Anterior
+             </Button>
+             <Button
+               variant="outline"
+               size="sm"
+               disabled={!productos.next}
+               onClick={() => setPagina((p) => p + 1)}
+             >
+               Siguiente <ChevronRight className="size-4" />
+             </Button>
+           </div>
+         </div>
+       )}
 
       <NuevoProductoModal open={modalNuevo} onOpenChange={setModalNuevo} />
 

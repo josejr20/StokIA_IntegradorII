@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict 9q3m77ZtSahmCxemux4U7cto2JkBP8Qom9YA61yrhHVQm1zajfCVT0vl0G38aon
+\restrict s6QX8NiesUWF6LDCfTpxcldDgeJOigubdReG1VJJa8F6XGB0Wpnx6QGTXwZtumP
 
 -- Dumped from database version 17.9
 -- Dumped by pg_dump version 17.9
 
--- Started on 2026-10-06 19:51:33
+-- Started on 2026-10-07 13:48:50
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -58,7 +58,7 @@ CREATE TABLE ml.anomalias (
 ALTER TABLE ml.anomalias OWNER TO postgres;
 
 --
--- TOC entry 6058 (class 0 OID 0)
+-- TOC entry 6060 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: TABLE anomalias; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -82,7 +82,7 @@ CREATE SEQUENCE ml.anomalias_id_seq
 ALTER SEQUENCE ml.anomalias_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6060 (class 0 OID 0)
+-- TOC entry 6062 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: anomalias_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -108,7 +108,7 @@ CREATE TABLE ml.conjuntos_datos (
 ALTER TABLE ml.conjuntos_datos OWNER TO postgres;
 
 --
--- TOC entry 6062 (class 0 OID 0)
+-- TOC entry 6064 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: TABLE conjuntos_datos; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -133,7 +133,7 @@ CREATE SEQUENCE ml.conjuntos_datos_id_seq
 ALTER SEQUENCE ml.conjuntos_datos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6064 (class 0 OID 0)
+-- TOC entry 6066 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: conjuntos_datos_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -161,7 +161,7 @@ CREATE TABLE ml.entrenamientos (
 ALTER TABLE ml.entrenamientos OWNER TO postgres;
 
 --
--- TOC entry 6066 (class 0 OID 0)
+-- TOC entry 6068 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: TABLE entrenamientos; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -186,7 +186,7 @@ CREATE SEQUENCE ml.entrenamientos_id_seq
 ALTER SEQUENCE ml.entrenamientos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6068 (class 0 OID 0)
+-- TOC entry 6070 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: entrenamientos_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -215,7 +215,7 @@ CREATE TABLE ml.modelos (
 ALTER TABLE ml.modelos OWNER TO postgres;
 
 --
--- TOC entry 6070 (class 0 OID 0)
+-- TOC entry 6072 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: TABLE modelos; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -240,7 +240,7 @@ CREATE SEQUENCE ml.modelos_id_seq
 ALTER SEQUENCE ml.modelos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6072 (class 0 OID 0)
+-- TOC entry 6074 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: modelos_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -269,7 +269,7 @@ CREATE TABLE ml.predicciones_demanda (
 ALTER TABLE ml.predicciones_demanda OWNER TO postgres;
 
 --
--- TOC entry 6074 (class 0 OID 0)
+-- TOC entry 6076 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: TABLE predicciones_demanda; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -293,7 +293,7 @@ CREATE SEQUENCE ml.predicciones_demanda_id_seq
 ALTER SEQUENCE ml.predicciones_demanda_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6076 (class 0 OID 0)
+-- TOC entry 6078 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: predicciones_demanda_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -322,7 +322,7 @@ CREATE TABLE ml.recomendaciones (
 ALTER TABLE ml.recomendaciones OWNER TO postgres;
 
 --
--- TOC entry 6078 (class 0 OID 0)
+-- TOC entry 6080 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: TABLE recomendaciones; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -347,7 +347,7 @@ CREATE SEQUENCE ml.recomendaciones_id_seq
 ALTER SEQUENCE ml.recomendaciones_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6080 (class 0 OID 0)
+-- TOC entry 6082 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: recomendaciones_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -377,7 +377,7 @@ CREATE TABLE ml.riesgos_vencimiento (
 ALTER TABLE ml.riesgos_vencimiento OWNER TO postgres;
 
 --
--- TOC entry 6082 (class 0 OID 0)
+-- TOC entry 6084 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: TABLE riesgos_vencimiento; Type: COMMENT; Schema: ml; Owner: postgres
 --
@@ -401,7 +401,7 @@ CREATE SEQUENCE ml.riesgos_vencimiento_id_seq
 ALTER SEQUENCE ml.riesgos_vencimiento_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6084 (class 0 OID 0)
+-- TOC entry 6086 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: riesgos_vencimiento_id_seq; Type: SEQUENCE OWNED BY; Schema: ml; Owner: postgres
 --
@@ -446,7 +446,7 @@ CREATE SEQUENCE public.alertas_id_seq
 ALTER SEQUENCE public.alertas_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6086 (class 0 OID 0)
+-- TOC entry 6088 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: alertas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -488,7 +488,7 @@ CREATE SEQUENCE public.auditoria_id_seq
 ALTER SEQUENCE public.auditoria_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6087 (class 0 OID 0)
+-- TOC entry 6089 (class 0 OID 0)
 -- Dependencies: 275
 -- Name: auditoria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -526,7 +526,7 @@ CREATE SEQUENCE public.catalogo_marcas_id_seq
 ALTER SEQUENCE public.catalogo_marcas_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6088 (class 0 OID 0)
+-- TOC entry 6090 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: catalogo_marcas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -566,7 +566,7 @@ CREATE SEQUENCE public.catalogo_valores_id_seq
 ALTER SEQUENCE public.catalogo_valores_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6089 (class 0 OID 0)
+-- TOC entry 6091 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: catalogo_valores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -606,7 +606,7 @@ CREATE SEQUENCE public.categorias_id_seq
 ALTER SEQUENCE public.categorias_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6090 (class 0 OID 0)
+-- TOC entry 6092 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: categorias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -647,7 +647,7 @@ CREATE SEQUENCE public.clientes_id_seq
 ALTER SEQUENCE public.clientes_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6091 (class 0 OID 0)
+-- TOC entry 6093 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: clientes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -688,7 +688,7 @@ CREATE SEQUENCE public.comprobantes_id_seq
 ALTER SEQUENCE public.comprobantes_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6092 (class 0 OID 0)
+-- TOC entry 6094 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: comprobantes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -728,7 +728,7 @@ CREATE SEQUENCE public.configuraciones_id_seq
 ALTER SEQUENCE public.configuraciones_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6093 (class 0 OID 0)
+-- TOC entry 6095 (class 0 OID 0)
 -- Dependencies: 293
 -- Name: configuraciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -748,11 +748,22 @@ CREATE TABLE public.importaciones_ventas (
     filas_procesadas integer DEFAULT 0 NOT NULL,
     filas_con_error integer DEFAULT 0 NOT NULL,
     estado character varying(20) DEFAULT 'procesando'::character varying NOT NULL,
-    fecha timestamp with time zone NOT NULL
+    fecha timestamp with time zone NOT NULL,
+    hash_archivo character varying(64),
+    detalle_errores jsonb DEFAULT '[]'::jsonb NOT NULL
 );
 
 
 ALTER TABLE public.importaciones_ventas OWNER TO business_api_role;
+
+--
+-- TOC entry 6096 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: COLUMN importaciones_ventas.detalle_errores; Type: COMMENT; Schema: public; Owner: business_api_role
+--
+
+COMMENT ON COLUMN public.importaciones_ventas.detalle_errores IS 'Errores de validación por fila de la importación de ventas.';
+
 
 --
 -- TOC entry 261 (class 1259 OID 23480)
@@ -771,7 +782,7 @@ CREATE SEQUENCE public.importaciones_ventas_id_seq
 ALTER SEQUENCE public.importaciones_ventas_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6094 (class 0 OID 0)
+-- TOC entry 6097 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: importaciones_ventas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -815,7 +826,7 @@ CREATE SEQUENCE public.lotes_id_seq
 ALTER SEQUENCE public.lotes_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6095 (class 0 OID 0)
+-- TOC entry 6098 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: lotes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -865,7 +876,7 @@ CREATE SEQUENCE public.movimientos_inventario_id_seq
 ALTER SEQUENCE public.movimientos_inventario_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6096 (class 0 OID 0)
+-- TOC entry 6099 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: movimientos_inventario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -906,7 +917,7 @@ CREATE SEQUENCE public.notificaciones_correo_id_seq
 ALTER SEQUENCE public.notificaciones_correo_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6097 (class 0 OID 0)
+-- TOC entry 6100 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: notificaciones_correo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -948,7 +959,7 @@ CREATE SEQUENCE public.operacion_detalles_id_seq
 ALTER SEQUENCE public.operacion_detalles_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6098 (class 0 OID 0)
+-- TOC entry 6101 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: operacion_detalles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -998,7 +1009,7 @@ CREATE SEQUENCE public.operaciones_id_seq
 ALTER SEQUENCE public.operaciones_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6099 (class 0 OID 0)
+-- TOC entry 6102 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: operaciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1043,7 +1054,7 @@ CREATE SEQUENCE public.ordenes_reabastecimiento_id_seq
 ALTER SEQUENCE public.ordenes_reabastecimiento_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6100 (class 0 OID 0)
+-- TOC entry 6103 (class 0 OID 0)
 -- Dependencies: 265
 -- Name: ordenes_reabastecimiento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1082,7 +1093,7 @@ CREATE SEQUENCE public.permisos_id_seq
 ALTER SEQUENCE public.permisos_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6101 (class 0 OID 0)
+-- TOC entry 6104 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: permisos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1126,7 +1137,7 @@ CREATE SEQUENCE public.precio_id_seq
 ALTER SEQUENCE public.precio_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6102 (class 0 OID 0)
+-- TOC entry 6105 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: precio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1167,7 +1178,7 @@ CREATE SEQUENCE public.preferencias_usuario_id_seq
 ALTER SEQUENCE public.preferencias_usuario_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6103 (class 0 OID 0)
+-- TOC entry 6106 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: preferencias_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1206,7 +1217,7 @@ CREATE SEQUENCE public.presentaciones_id_seq
 ALTER SEQUENCE public.presentaciones_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6104 (class 0 OID 0)
+-- TOC entry 6107 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: presentaciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1249,7 +1260,7 @@ CREATE SEQUENCE public.producto_presentacion_id_seq
 ALTER SEQUENCE public.producto_presentacion_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6105 (class 0 OID 0)
+-- TOC entry 6108 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: producto_presentacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1310,7 +1321,7 @@ CREATE SEQUENCE public.productos_id_seq
 ALTER SEQUENCE public.productos_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6106 (class 0 OID 0)
+-- TOC entry 6109 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: productos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1353,7 +1364,7 @@ CREATE SEQUENCE public.reportes_generados_id_seq
 ALTER SEQUENCE public.reportes_generados_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6107 (class 0 OID 0)
+-- TOC entry 6110 (class 0 OID 0)
 -- Dependencies: 271
 -- Name: reportes_generados_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1406,7 +1417,7 @@ CREATE SEQUENCE public.roles_id_seq
 ALTER SEQUENCE public.roles_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6108 (class 0 OID 0)
+-- TOC entry 6111 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1446,7 +1457,7 @@ CREATE SEQUENCE public.tipo_envase_id_seq
 ALTER SEQUENCE public.tipo_envase_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6109 (class 0 OID 0)
+-- TOC entry 6112 (class 0 OID 0)
 -- Dependencies: 277
 -- Name: tipo_envase_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1490,7 +1501,7 @@ CREATE SEQUENCE public.tokens_recuperacion_id_seq
 ALTER SEQUENCE public.tokens_recuperacion_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6110 (class 0 OID 0)
+-- TOC entry 6113 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: tokens_recuperacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1532,7 +1543,7 @@ CREATE SEQUENCE public.umbrales_configuracion_id_seq
 ALTER SEQUENCE public.umbrales_configuracion_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6111 (class 0 OID 0)
+-- TOC entry 6114 (class 0 OID 0)
 -- Dependencies: 263
 -- Name: umbrales_configuracion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1571,7 +1582,7 @@ CREATE SEQUENCE public.unidades_medida_id_seq
 ALTER SEQUENCE public.unidades_medida_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6112 (class 0 OID 0)
+-- TOC entry 6115 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: unidades_medida_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1618,7 +1629,7 @@ CREATE SEQUENCE public.usuarios_id_seq
 ALTER SEQUENCE public.usuarios_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6113 (class 0 OID 0)
+-- TOC entry 6116 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1664,7 +1675,7 @@ CREATE SEQUENCE public.ventas_id_seq
 ALTER SEQUENCE public.ventas_id_seq OWNER TO business_api_role;
 
 --
--- TOC entry 6114 (class 0 OID 0)
+-- TOC entry 6117 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: ventas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: business_api_role
 --
@@ -1760,7 +1771,7 @@ ALTER TABLE ONLY ml.riesgos_vencimiento ALTER COLUMN id SET DEFAULT nextval('ml.
 
 
 --
--- TOC entry 4991 (class 2604 OID 23540)
+-- TOC entry 4992 (class 2604 OID 23540)
 -- Name: alertas id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1768,7 +1779,7 @@ ALTER TABLE ONLY public.alertas ALTER COLUMN id SET DEFAULT nextval('public.aler
 
 
 --
--- TOC entry 4999 (class 2604 OID 23608)
+-- TOC entry 5000 (class 2604 OID 23608)
 -- Name: auditoria id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1800,7 +1811,7 @@ ALTER TABLE ONLY public.categorias ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 5006 (class 2604 OID 41589)
+-- TOC entry 5007 (class 2604 OID 41589)
 -- Name: clientes id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1808,7 +1819,7 @@ ALTER TABLE ONLY public.clientes ALTER COLUMN id SET DEFAULT nextval('public.cli
 
 
 --
--- TOC entry 5016 (class 2604 OID 41661)
+-- TOC entry 5017 (class 2604 OID 41661)
 -- Name: comprobantes id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1816,7 +1827,7 @@ ALTER TABLE ONLY public.comprobantes ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 5018 (class 2604 OID 41681)
+-- TOC entry 5019 (class 2604 OID 41681)
 -- Name: configuraciones id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1848,7 +1859,7 @@ ALTER TABLE ONLY public.movimientos_inventario ALTER COLUMN id SET DEFAULT nextv
 
 
 --
--- TOC entry 4994 (class 2604 OID 23564)
+-- TOC entry 4995 (class 2604 OID 23564)
 -- Name: notificaciones_correo id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1856,7 +1867,7 @@ ALTER TABLE ONLY public.notificaciones_correo ALTER COLUMN id SET DEFAULT nextva
 
 
 --
--- TOC entry 5014 (class 2604 OID 41635)
+-- TOC entry 5015 (class 2604 OID 41635)
 -- Name: operacion_detalles id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1864,7 +1875,7 @@ ALTER TABLE ONLY public.operacion_detalles ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 5008 (class 2604 OID 41599)
+-- TOC entry 5009 (class 2604 OID 41599)
 -- Name: operaciones id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1872,7 +1883,7 @@ ALTER TABLE ONLY public.operaciones ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 4988 (class 2604 OID 23520)
+-- TOC entry 4989 (class 2604 OID 23520)
 -- Name: ordenes_reabastecimiento id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1888,7 +1899,7 @@ ALTER TABLE ONLY public.permisos ALTER COLUMN id SET DEFAULT nextval('public.per
 
 
 --
--- TOC entry 5003 (class 2604 OID 39793)
+-- TOC entry 5004 (class 2604 OID 39793)
 -- Name: precio id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1896,7 +1907,7 @@ ALTER TABLE ONLY public.precio ALTER COLUMN id SET DEFAULT nextval('public.preci
 
 
 --
--- TOC entry 4998 (class 2604 OID 23592)
+-- TOC entry 4999 (class 2604 OID 23592)
 -- Name: preferencias_usuario id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1912,7 +1923,7 @@ ALTER TABLE ONLY public.presentaciones ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 5002 (class 2604 OID 39766)
+-- TOC entry 5003 (class 2604 OID 39766)
 -- Name: producto_presentacion id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1928,7 +1939,7 @@ ALTER TABLE ONLY public.productos ALTER COLUMN id SET DEFAULT nextval('public.pr
 
 
 --
--- TOC entry 4997 (class 2604 OID 23578)
+-- TOC entry 4998 (class 2604 OID 23578)
 -- Name: reportes_generados id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1944,7 +1955,7 @@ ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_
 
 
 --
--- TOC entry 5000 (class 2604 OID 39755)
+-- TOC entry 5001 (class 2604 OID 39755)
 -- Name: tipo_envase id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1960,7 +1971,7 @@ ALTER TABLE ONLY public.tokens_recuperacion ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 4987 (class 2604 OID 23499)
+-- TOC entry 4988 (class 2604 OID 23499)
 -- Name: umbrales_configuracion id; Type: DEFAULT; Schema: public; Owner: business_api_role
 --
 
@@ -1992,7 +2003,7 @@ ALTER TABLE ONLY public.ventas ALTER COLUMN id SET DEFAULT nextval('public.venta
 
 
 --
--- TOC entry 5991 (class 0 OID 23239)
+-- TOC entry 5993 (class 0 OID 23239)
 -- Dependencies: 233
 -- Data for Name: anomalias; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2002,7 +2013,7 @@ COPY ml.anomalias (id, tipo, entidad, entidad_id, descripcion, severidad, estado
 
 
 --
--- TOC entry 5979 (class 0 OID 23161)
+-- TOC entry 5981 (class 0 OID 23161)
 -- Dependencies: 221
 -- Data for Name: conjuntos_datos; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2012,7 +2023,7 @@ COPY ml.conjuntos_datos (id, descripcion, filas, rango_desde, rango_hasta, fecha
 
 
 --
--- TOC entry 5983 (class 0 OID 23181)
+-- TOC entry 5985 (class 0 OID 23181)
 -- Dependencies: 225
 -- Data for Name: entrenamientos; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2022,7 +2033,7 @@ COPY ml.entrenamientos (id, modelo_id, iniciado_en, finalizado_en, estado, metri
 
 
 --
--- TOC entry 5981 (class 0 OID 23169)
+-- TOC entry 5983 (class 0 OID 23169)
 -- Dependencies: 223
 -- Data for Name: modelos; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2032,7 +2043,7 @@ COPY ml.modelos (id, nombre, tipo, version, metricas, ruta_artefacto, estado, fe
 
 
 --
--- TOC entry 5985 (class 0 OID 23198)
+-- TOC entry 5987 (class 0 OID 23198)
 -- Dependencies: 227
 -- Data for Name: predicciones_demanda; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2042,7 +2053,7 @@ COPY ml.predicciones_demanda (id, producto_id, modelo_id, horizonte_dias, cantid
 
 
 --
--- TOC entry 5989 (class 0 OID 23226)
+-- TOC entry 5991 (class 0 OID 23226)
 -- Dependencies: 231
 -- Data for Name: recomendaciones; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2052,7 +2063,7 @@ COPY ml.recomendaciones (id, producto_id, tipo, descripcion, prioridad, estado, 
 
 
 --
--- TOC entry 5987 (class 0 OID 23213)
+-- TOC entry 5989 (class 0 OID 23213)
 -- Dependencies: 229
 -- Data for Name: riesgos_vencimiento; Type: TABLE DATA; Schema: ml; Owner: postgres
 --
@@ -2062,7 +2073,7 @@ COPY ml.riesgos_vencimiento (id, producto_id, lote_id, puntaje_riesgo, nivel_pri
 
 
 --
--- TOC entry 6026 (class 0 OID 23537)
+-- TOC entry 6028 (class 0 OID 23537)
 -- Dependencies: 268
 -- Data for Name: alertas; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -2072,7 +2083,7 @@ COPY public.alertas (id, tipo, producto_id, lote_id, mensaje, severidad, datos_o
 
 
 --
--- TOC entry 6034 (class 0 OID 23605)
+-- TOC entry 6036 (class 0 OID 23605)
 -- Dependencies: 276
 -- Data for Name: auditoria; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -2081,7 +2092,6 @@ COPY public.auditoria (id, usuario_id, accion, entidad, entidad_id, detalle, fec
 1	\N	crear	Usuario	1	{"repr": "jararojasjose604@gmail.com"}	2026-09-15 06:10:23.927-05
 2	\N	actualizar	Usuario	1	{"repr": "jararojasjose604@gmail.com"}	2026-09-15 06:12:18.55-05
 3	\N	actualizar	Usuario	1	{"repr": "jararojasjose604@gmail.com"}	2026-09-16 07:52:40.048-05
-4	3	crear	Usuario	2	{"repr": "pedro@cliente.com"}	2026-09-16 08:05:00.942-05
 5	\N	actualizar	Usuario	1	{"repr": "jararojasjose604@gmail.com"}	2026-09-16 08:16:37.853-05
 6	\N	crear	Producto	1	{"repr": "P-001 - plato n° 16"}	2026-09-17 06:33:53.659-05
 7	\N	crear	Lote	1	{"repr": "P-001 / INICIAL"}	2026-09-17 06:33:53.867-05
@@ -2099,20 +2109,21 @@ COPY public.auditoria (id, usuario_id, accion, entidad, entidad_id, detalle, fec
 19	\N	actualizar	Lote	3	{"repr": "P-001 / GENERAL"}	2026-09-18 06:40:19.51-05
 20	\N	actualizar	Lote	3	{"repr": "P-001 / GENERAL"}	2026-09-18 06:43:55.352-05
 21	\N	crear	Producto	3	{"repr": "P-003 - Caja comino"}	2026-09-18 06:58:16.137-05
-22	3	crear	Usuario	3	{"repr": "pedroinventario@cliente.com"}	2026-09-18 08:23:31.558-05
 23	\N	actualizar	Lote	3	{"repr": "P-001 / GENERAL"}	2026-09-18 08:26:39.834-05
 24	\N	crear	Lote	4	{"repr": "P-003 / GENERAL"}	2026-09-18 08:28:46.583-05
 25	\N	actualizar	Lote	4	{"repr": "P-003 / GENERAL"}	2026-09-18 08:28:47.065-05
 26	\N	eliminar	Lote	1	{"repr": "P-001 / INICIAL"}	2026-09-18 08:52:09.669-05
 27	\N	actualizar	Producto	2	{"repr": "P-002 - plato n° 16"}	2026-09-18 09:04:22.288-05
+4	\N	crear	Usuario	2	{"repr": "pedro@cliente.com"}	2026-09-16 08:05:00.942-05
+22	\N	crear	Usuario	3	{"repr": "pedroinventario@cliente.com"}	2026-09-18 08:23:31.558-05
+51	\N	crear	operacion	17	{"tipo": "venta", "total": 12, "numero": "V-000017", "productos": 2, "cliente_id": 1}	2026-10-05 23:38:29.578-05
+52	\N	crear	operacion	18	{"tipo": "devolucion", "total": 5, "numero": "D-000018", "productos": 1, "cliente_id": 1}	2026-10-05 23:38:29.611-05
+57	\N	crear	operacion	22	{"tipo": "venta", "total": 12, "numero": "V-000022", "productos": 2, "cliente_id": 1}	2026-10-05 23:39:36.761-05
+58	\N	crear	operacion	23	{"tipo": "devolucion", "total": 5, "numero": "D-000023", "productos": 1, "cliente_id": 1}	2026-10-05 23:39:36.801-05
 35	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "18"}	2026-10-05 23:17:33.634-05
 37	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "0"}	2026-10-05 23:17:33.66-05
 44	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "18"}	2026-10-05 23:18:01.125-05
 46	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "0"}	2026-10-05 23:18:01.23-05
-51	10	crear	operacion	17	{"tipo": "venta", "total": 12, "numero": "V-000017", "productos": 2, "cliente_id": 1}	2026-10-05 23:38:29.578-05
-52	10	crear	operacion	18	{"tipo": "devolucion", "total": 5, "numero": "D-000018", "productos": 1, "cliente_id": 1}	2026-10-05 23:38:29.611-05
-57	10	crear	operacion	22	{"tipo": "venta", "total": 12, "numero": "V-000022", "productos": 2, "cliente_id": 1}	2026-10-05 23:39:36.761-05
-58	10	crear	operacion	23	{"tipo": "devolucion", "total": 5, "numero": "D-000023", "productos": 1, "cliente_id": 1}	2026-10-05 23:39:36.801-05
 73	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "18"}	2026-10-05 23:41:14.503-05
 75	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "0"}	2026-10-05 23:41:14.518-05
 82	\N	configurar	configuracion	1	{"clave": "impuesto_porcentaje", "valor": "18"}	2026-10-06 07:31:29.088-05
@@ -2125,30 +2136,17 @@ COPY public.auditoria (id, usuario_id, accion, entidad, entidad_id, detalle, fec
 
 
 --
--- TOC entry 6008 (class 0 OID 23361)
+-- TOC entry 6010 (class 0 OID 23361)
 -- Dependencies: 250
 -- Data for Name: catalogo_marcas; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.catalogo_marcas (id, nombre) FROM stdin;
-133	ALACENA
-134	ALPESA
-3	AJI-NO-MEN
-4	AJI-NO-MIX
-5	AJI-NO-MOTO
-6	AJI-NO-SILLAO
-135	EMSAL
-136	INDOMIE
-137	DOÑA GUSTA
-44	MAX SABOR
-51	NAKAMITO
-58	RICASA
-61	SIBARITA
 \.
 
 
 --
--- TOC entry 6010 (class 0 OID 23370)
+-- TOC entry 6012 (class 0 OID 23370)
 -- Dependencies: 252
 -- Data for Name: catalogo_valores; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -2158,593 +2156,28 @@ COPY public.catalogo_valores (id, tipo, valor, etiqueta) FROM stdin;
 
 
 --
--- TOC entry 6002 (class 0 OID 23330)
+-- TOC entry 6004 (class 0 OID 23330)
 -- Dependencies: 244
 -- Data for Name: categorias; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.categorias (id, nombre, descripcion, vida_util_dias) FROM stdin;
+602	Cat Test	Test	365
 \.
 
 
 --
--- TOC entry 6042 (class 0 OID 41586)
+-- TOC entry 6044 (class 0 OID 41586)
 -- Dependencies: 286
 -- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.clientes (id, nombre, documento, activo, fecha_creacion) FROM stdin;
-1	JUDITH MERCEDES GUTIERREZ RIVERA	\N	t	2026-10-05 23:17:07.221433-05
-2	MADELEINE NOVOA LUJAN	\N	t	2026-10-05 23:17:07.221433-05
-3	SANDRA ELIZABETH RAMIREZ QUISPE	\N	t	2026-10-05 23:17:07.221433-05
-4	VILLANUEVA GUERRERO, LEYDI ROCIO	\N	t	2026-10-05 23:17:07.221433-05
-5	JOSE ESTEBAN CANO MEJIA	\N	t	2026-10-05 23:17:07.221433-05
-6	YANA COLLANQUI ELOY PABLO	\N	t	2026-10-05 23:17:07.221433-05
-7	EVA BURGOS TANDAYPAN	\N	t	2026-10-05 23:17:07.221433-05
-8	NOVOA RODRIGUEZ, ROCIO DEL PILAR	\N	t	2026-10-05 23:17:07.221433-05
-9	CARLOS VICTOR LOZANO CALDERON	\N	t	2026-10-05 23:17:07.221433-05
-10	MAYO CASTRO MARTINA	\N	t	2026-10-05 23:17:07.221433-05
-11	BEJARANO ORTEGA, FELICITA	\N	t	2026-10-05 23:17:07.221433-05
-12	TANDAYPAN DE MARTINEZ, TOMASA	\N	t	2026-10-05 23:17:07.221433-05
-13	AVALOS MACALOPU CINTHIA	\N	t	2026-10-05 23:17:07.221433-05
-14	ELIZABETH ALFONSINA VICENCIO TRUJILLO	\N	t	2026-10-05 23:17:07.221433-05
-15	ROSALINA DELFINA REYES SANTILLAN	\N	t	2026-10-05 23:17:07.221433-05
-16	MCDO 3 OCTUBRE - BENILDA GONZALES BELTRAN	\N	t	2026-10-05 23:17:07.221433-05
-17	ANA MARIA MOLINA HUERTA	\N	t	2026-10-05 23:17:07.221433-05
-18	OLGA ZULAY MORENO CHAVEZ	\N	t	2026-10-05 23:17:07.221433-05
-19	MENDOZA TAMARIZ, ALEXANDRA BRIGGITH	\N	t	2026-10-05 23:17:07.221433-05
-20	ALBA LEON, JAQUELINE TATIANA	\N	t	2026-10-05 23:17:07.221433-05
-21	TERESITA YOLANDA SAONA MEDINA	\N	t	2026-10-05 23:17:07.221433-05
-22	RAUL OLIVEROS ASMATT CABALLERO	\N	t	2026-10-05 23:17:07.221433-05
-23	RAMOS MINAYA, JUSTINA MARTINA	\N	t	2026-10-05 23:17:07.221433-05
-24	BODEGA YOLITA - SERGIO PEÑA	\N	t	2026-10-05 23:17:07.221433-05
-25	RODRIGUEZ MARTOS, MARTHA LUCILA	\N	t	2026-10-05 23:17:07.221433-05
-26	MARIBEL JESUS CASTILLO MENDOZA	\N	t	2026-10-05 23:17:07.221433-05
-27	EUNICE TABITA MENDEZ RAMOS	\N	t	2026-10-05 23:17:07.221433-05
-28	HUIÑAC CRUZ BRILLITH MARISOL	\N	t	2026-10-05 23:17:07.221433-05
-29	ZELADA SALDAÑA, CARMEN TERESA	\N	t	2026-10-05 23:17:07.221433-05
-30	SILVESTRE FABIAN PALACIOS JARA	\N	t	2026-10-05 23:17:07.221433-05
-31	MORENO ESPINOZA, SILVIA GISSELA	\N	t	2026-10-05 23:17:07.221433-05
-32	AGUILAR GRANADOS NANCY MORAIMA	\N	t	2026-10-05 23:17:07.221433-05
-33	MARIA LUISA BENITES VASQUEZ	\N	t	2026-10-05 23:17:07.221433-05
-34	SIALER HUIMAN MERLY ROSA	\N	t	2026-10-05 23:17:07.221433-05
-35	BODEGA - SUSANA LAVADO ZUMARAN	\N	t	2026-10-05 23:17:07.221433-05
-36	IPARRAGUIRRE HORNA NELA	\N	t	2026-10-05 23:17:07.221433-05
-37	FERRE MONTENEGRO WILMER LUIS	\N	t	2026-10-05 23:17:07.221433-05
-38	BODEGA - MAGDALENA SAENZ DUEÑA	\N	t	2026-10-05 23:17:07.221433-05
-39	JUANA LOPEZ VALVERDE DE ATOCHE	\N	t	2026-10-05 23:17:07.221433-05
-40	LELA CATALINA SAENZ DUEÑAS	\N	t	2026-10-05 23:17:07.221433-05
-41	ESLAVA SANTA CRUZ, JHON WILY	\N	t	2026-10-05 23:17:07.221433-05
-42	ANITA GONZALES ORDOÑEZ DE OBLITAS	\N	t	2026-10-05 23:17:07.221433-05
-43	AIDA MAGDALENA LUJAN DE LA CRUZ	\N	t	2026-10-05 23:17:07.221433-05
-44	RODRIGUEZ BENITES, ERIKA MARITZA	\N	t	2026-10-05 23:17:07.221433-05
-45	SALAZAR LUJAN, GINA MARISOL	\N	t	2026-10-05 23:17:07.221433-05
-46	ROSAS QUEZADA DE BRUNO NELIDA	\N	t	2026-10-05 23:17:07.221433-05
-47	MARGARITA ISABEL QUITO SARMIENTO	\N	t	2026-10-05 23:17:07.221433-05
-48	DIESTRA LEON, NORMA ZONIA	\N	t	2026-10-05 23:17:07.221433-05
-49	BENITES CRUZ, ENMA	\N	t	2026-10-05 23:17:07.221433-05
-50	SILVA BENITES MANUELA	\N	t	2026-10-05 23:17:07.221433-05
-51	ZAMORA URBINA, EDWIN MIGUEL	\N	t	2026-10-05 23:17:07.221433-05
-52	CANCINO GUERRERO, RUBEN ARNALDO	\N	t	2026-10-05 23:17:07.221433-05
-53	PAREDES CUENCA, EDGARDO JORGE	\N	t	2026-10-05 23:17:07.221433-05
-54	MARIA AYASTA LLENQUE	\N	t	2026-10-05 23:17:07.221433-05
-55	NUÑUVERO LEZAMA, JOSEPH ANGEL RAPHAEL	\N	t	2026-10-05 23:17:07.221433-05
-56	CLIENTE EVENTUAL _ TOTO	\N	t	2026-10-05 23:17:07.221433-05
-57	MORENO ZAMUDIO, ZENAIDA JULIA	\N	t	2026-10-05 23:17:07.221433-05
-58	ADRIAN ROSARIO, LUISA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-59	VEGA CASTILLO, ROCIO DEL PILAR	\N	t	2026-10-05 23:17:07.221433-05
-60	CORPUS RAMIREZ, YANINA DEL PILAR	\N	t	2026-10-05 23:17:07.221433-05
-61	MARLENI APARICIO PABLO	\N	t	2026-10-05 23:17:07.221433-05
-62	RISCO BOCANEGRA EDGARD PAUL	\N	t	2026-10-05 23:17:07.221433-05
-63	CAMPANA & URCIA S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-64	RAMOS SANDOVAL, MARIA PAULA	\N	t	2026-10-05 23:17:07.221433-05
-65	BODEGA - ESTELA VASQUEZ ARTEAGA	\N	t	2026-10-05 23:17:07.221433-05
-66	CEV. - MARIA CARMEN MONTAÑEZ MORENO	\N	t	2026-10-05 23:17:07.221433-05
-67	LIDIA VARGAS DE ORTIZ	\N	t	2026-10-05 23:17:07.221433-05
-68	JUANA ZUÑIGA RAMIREZ	\N	t	2026-10-05 23:17:07.221433-05
-69	TITO MEJIA, YASMANI AURELIO	\N	t	2026-10-05 23:17:07.221433-05
-70	PAREDES RUPAY, NOHELIA MASIEL	\N	t	2026-10-05 23:17:07.221433-05
-71	VILLANUEVA SOTELO, YBAN	\N	t	2026-10-05 23:17:07.221433-05
-72	PASCUAL ALBITREZ, MARTHA YOLANDA	\N	t	2026-10-05 23:17:07.221433-05
-73	ORTEGA RODRIGUEZ LIESLY JANNINA	\N	t	2026-10-05 23:17:07.221433-05
-74	LEONOR CANDIA	\N	t	2026-10-05 23:17:07.221433-05
-75	SANDRA RAMIREZ RODRIGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-76	MANRIQUE DE LA CRUZ, PEDRO FORTUNATO	\N	t	2026-10-05 23:17:07.221433-05
-77	ELVA YSAMAR ALVITES ATENCIO	\N	t	2026-10-05 23:17:07.221433-05
-78	HOYOS VARGAS, OLGA	\N	t	2026-10-05 23:17:07.221433-05
-79	SANDOVAL LUNA, JOHN ARNOLD	\N	t	2026-10-05 23:17:07.221433-05
-80	ROSA ELIZABETH CUSTODIO VEJARANO	\N	t	2026-10-05 23:17:07.221433-05
-81	ADRIANA VALDERRAMA LOZANO	\N	t	2026-10-05 23:17:07.221433-05
-82	MCDO MODELO - MENU ISABEL SOTO ACOSTA	\N	t	2026-10-05 23:17:07.221433-05
-83	MARTINEZ CORDOVA, CYNTHIA NIEVES	\N	t	2026-10-05 23:17:07.221433-05
-84	BOADO VALVERDE, JOAQUIN GUILLERMO	\N	t	2026-10-05 23:17:07.221433-05
-85	MENDOCILLA VASQUEZ FLOR MARLENI	\N	t	2026-10-05 23:17:07.221433-05
-86	MENDOZA ALVAREZ MARIBEL	\N	t	2026-10-05 23:17:07.221433-05
-87	BODEGA - ROXANA CANO	\N	t	2026-10-05 23:17:07.221433-05
-88	YOLANDA HUAMAN MARCELIANA	\N	t	2026-10-05 23:17:07.221433-05
-89	MCDO CHACRA OLLA - MENU - ROSITA REYES MEJIA	\N	t	2026-10-05 23:17:07.221433-05
-90	COMERCIAL ZCR E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-91	IPARRAGUIRRE PAREDES, ALEX JUNIOR	\N	t	2026-10-05 23:17:07.221433-05
-92	MCDO CHACRA OLLA - ABARROTES - ROXANA ALBRECHA FERNANDEZ	\N	t	2026-10-05 23:17:07.221433-05
-93	CARRION HERMOZA, MANUEL JOSE	\N	t	2026-10-05 23:17:07.221433-05
-94	MCDO CHACRA A LA OLLA - NINFA ORTIZ	\N	t	2026-10-05 23:17:07.221433-05
-95	UBILLUS VARGAS CARMEN ANGELICA	\N	t	2026-10-05 23:17:07.221433-05
-96	NOEMI JARA ALMAZAN	\N	t	2026-10-05 23:17:07.221433-05
-97	VILLANUEVA BURGOS NERY YULIZA	\N	t	2026-10-05 23:17:07.221433-05
-98	ARANGO BAZALAR, CORINA JANETH	\N	t	2026-10-05 23:17:07.221433-05
-99	LECCA GARCIA ANA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-100	IBAÑEZ OLIVARES ANGELA ADRIANA	\N	t	2026-10-05 23:17:07.221433-05
-101	MINAYA RUFINO, JHON WILSON	\N	t	2026-10-05 23:17:07.221433-05
-102	LILA LIÑAN DE VASQUEZ	\N	t	2026-10-05 23:17:07.221433-05
-103	ESTHER SOFIA BLAS MORALES	\N	t	2026-10-05 23:17:07.221433-05
-104	TELLO LLANOS ROSA LILA	\N	t	2026-10-05 23:17:07.221433-05
-105	CASILDO QUISPE ANAMELBA	\N	t	2026-10-05 23:17:07.221433-05
-106	BODEGA - GLADYS MENACHO VASQUEZ	\N	t	2026-10-05 23:17:07.221433-05
-107	JOEL AGUIRRE MONTERO	\N	t	2026-10-05 23:17:07.221433-05
-108	SANTOS MANUELA CASTAÑEDA CHUQUIRUNA	\N	t	2026-10-05 23:17:07.221433-05
-109	CAROL ACOSTA SALVADOR	\N	t	2026-10-05 23:17:07.221433-05
-110	CABALLERO ROJAS ANA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-111	VLAG CONSUMO	\N	t	2026-10-05 23:17:07.221433-05
-112	FELIX AMERICO ABAL RAMIREZ	\N	t	2026-10-05 23:17:07.221433-05
-113	CHERO BENITES, MAGALLY	\N	t	2026-10-05 23:17:07.221433-05
-114	ROBLES PALMA MARILUZ DEYSI	\N	t	2026-10-05 23:17:07.221433-05
-115	MCDO MIRAMAR - SOFIA IZAGUIRRE ZUÑIGA	\N	t	2026-10-05 23:17:07.221433-05
-116	RUBIO VELIZ, SARA OBDULIA	\N	t	2026-10-05 23:17:07.221433-05
-117	TABITA ELIZABETH VASQUEZ PAREDES	\N	t	2026-10-05 23:17:07.221433-05
-118	DIANA VELESVILLA GORDILLO	\N	t	2026-10-05 23:17:07.221433-05
-119	LUCELY MARLIT VARAS NORIEGA	\N	t	2026-10-05 23:17:07.221433-05
-120	CHANCAFE VEGA, ASTRID BRIGHIT	\N	t	2026-10-05 23:17:07.221433-05
-121	PACHERRE ZAPATA, FREDESBINDA	\N	t	2026-10-05 23:17:07.221433-05
-122	SALDAÑA GUERRERO ARTURO MANUEL	\N	t	2026-10-05 23:17:07.221433-05
-123	VASQUEZ CRUZ, FELIX ANGEL	\N	t	2026-10-05 23:17:07.221433-05
-124	SALDAÑA GUERRERO LUCIANA PAOLA	\N	t	2026-10-05 23:17:07.221433-05
-125	BODEGA-AZUCENA SANCHEZ LOPEZ	\N	t	2026-10-05 23:17:07.221433-05
-126	TERESA GONZALEZ CORNEJO	\N	t	2026-10-05 23:17:07.221433-05
-127	TAMAYO RODRIGUEZ, MARIA DEL PILAR	\N	t	2026-10-05 23:17:07.221433-05
-128	ROSA SOLORZANO	\N	t	2026-10-05 23:17:07.221433-05
-129	MCDO TRAPECIO - MARIA ROMAN GALARZA	\N	t	2026-10-05 23:17:07.221433-05
-130	CORTEZ SOLANO LORENA MARIBEL	\N	t	2026-10-05 23:17:07.221433-05
-131	BODEGA - ESTHER HUAPAYA ORUNA	\N	t	2026-10-05 23:17:07.221433-05
-132	SILVIA MENDEZ URTEAGA	\N	t	2026-10-05 23:17:07.221433-05
-133	ANA ELIZABETH CARRANZA CASTILLO	\N	t	2026-10-05 23:17:07.221433-05
-134	ROSAS SAGASTEGUI LEON	\N	t	2026-10-05 23:17:07.221433-05
-135	ACEVEDO ALDAY KATY PAOLA	\N	t	2026-10-05 23:17:07.221433-05
-136	BODEGA - AMALIA TURRIATE LAGUNA	\N	t	2026-10-05 23:17:07.221433-05
-137	NELLY MARGARITA VELASQUEZ VASQUEZ	\N	t	2026-10-05 23:17:07.221433-05
-138	JHONNY ABEL MAZA MONTERO	\N	t	2026-10-05 23:17:07.221433-05
-139	CARBAJAL VASQUEZ DE CORAJE, EDISA	\N	t	2026-10-05 23:17:07.221433-05
-140	GRUPO SUMYCOR S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-141	YULI MIREYA MONZON POLO	\N	t	2026-10-05 23:17:07.221433-05
-142	IVON URBINAS ARQUEROS	\N	t	2026-10-05 23:17:07.221433-05
-143	ANGELES CIRIACO, MAGDA CELESTINA	\N	t	2026-10-05 23:17:07.221433-05
-144	MORENO RETO DE VASQUEZ MARLENY DEL SOCORRO	\N	t	2026-10-05 23:17:07.221433-05
-145	GRUPO YATANA E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-146	SILVA HUAMAN, ELIAS	\N	t	2026-10-05 23:17:07.221433-05
-147	ROCHA QUITO, CLAUDIA MEDALY	\N	t	2026-10-05 23:17:07.221433-05
-148	CONCESIONARIO GASTON S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-149	CASMA - BOD. MARIA ELENA FOW DIEZ	\N	t	2026-10-05 23:17:07.221433-05
-150	MAZA ABAD, DAVID ANGEL	\N	t	2026-10-05 23:17:07.221433-05
-151	PUMARICA LOPEZ LOLA ESTHER	\N	t	2026-10-05 23:17:07.221433-05
-152	LUZ MARLENY RODRIGUEZ DIAZ	\N	t	2026-10-05 23:17:07.221433-05
-153	CARHUANCOTA ESPINOZA WALTER BLADESMIR	\N	t	2026-10-05 23:17:07.221433-05
-154	MENU - MARIA MATTOS CRUZ	\N	t	2026-10-05 23:17:07.221433-05
-155	Bata ramos Danny David	\N	t	2026-10-05 23:17:07.221433-05
-156	URIARTE REYES, MIRELLA GUADALUPE	\N	t	2026-10-05 23:17:07.221433-05
-157	CAMPOS LAZARTE, ROSA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-158	CASTRO CORDOVA, GLENI	\N	t	2026-10-05 23:17:07.221433-05
-159	JIMENEZ CORDOVA, FLORINDA EDEL	\N	t	2026-10-05 23:17:07.221433-05
-160	CULQUI ESTELA LUZ ANGELICA	\N	t	2026-10-05 23:17:07.221433-05
-161	MCDO CEDROS-CONDIMENTO-ROSA SALAZAR FLORES	\N	t	2026-10-05 23:17:07.221433-05
-162	PARDO ARDILES VERLAINE	\N	t	2026-10-05 23:17:07.221433-05
-163	MCDO MOLINA - ASTERIA HARO MENDOZA	\N	t	2026-10-05 23:17:07.221433-05
-164	VELASQUEZ AGUILAR, ERIKA SIMONE	\N	t	2026-10-05 23:17:07.221433-05
-165	PAREDES RAFAILE LUIS ALFREDO	\N	t	2026-10-05 23:17:07.221433-05
-166	JULIO JARA	\N	t	2026-10-05 23:17:07.221433-05
-167	LINO HUAMAN LIZETH JAHAIRA	\N	t	2026-10-05 23:17:07.221433-05
-168	ALAVE MELGAREJO, ERIKA RAQUEL	\N	t	2026-10-05 23:17:07.221433-05
-169	ALEGRE MILLA, VICTORHUGO	\N	t	2026-10-05 23:17:07.221433-05
-170	ZAVALETA INFANTES, HELEN DELIA	\N	t	2026-10-05 23:17:07.221433-05
-171	PEREZ CARREÑO, JUANA AUREA	\N	t	2026-10-05 23:17:07.221433-05
-172	FAJARDO VEGA DE LEIVA, VIOLETA YOLANDA	\N	t	2026-10-05 23:17:07.221433-05
-173	PATRICIA BENITES IPARRAGUIRRE	\N	t	2026-10-05 23:17:07.221433-05
-174	ZOILA ALICIA GASPAR AVILA	\N	t	2026-10-05 23:17:07.221433-05
-175	MENU - MERI DEL CARPIO MELGAREJO	\N	t	2026-10-05 23:17:07.221433-05
-176	BODEGA KARINA - KARINA LLANCO	\N	t	2026-10-05 23:17:07.221433-05
-177	TORRES ESCALONA NAILET DAYMAR	\N	t	2026-10-05 23:17:07.221433-05
-178	PONCE MORALES, ALAN	\N	t	2026-10-05 23:17:07.221433-05
-179	GONZALEZ RUPAY NICANDRINA ELIZABETH	\N	t	2026-10-05 23:17:07.221433-05
-180	BODEGA MECHITA - MERCEDES LIÑAN DOMINGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-181	GIRON RAMOS ROXANA KATHERINE	\N	t	2026-10-05 23:17:07.221433-05
-182	RUIZ SARMIENTO, MILAGROS MARLENY	\N	t	2026-10-05 23:17:07.221433-05
-183	MORI QUISPE, JULIA ANGELICA	\N	t	2026-10-05 23:17:07.221433-05
-184	BODEGA - ANDREA TORRES GONZALES	\N	t	2026-10-05 23:17:07.221433-05
-185	OLIVA VERTIZ, PAMELA ELIZABETH	\N	t	2026-10-05 23:17:07.221433-05
-186	ROSARIO GARCIA OBREGÓN	\N	t	2026-10-05 23:17:07.221433-05
-187	CORPORACION LUFAJHE E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-188	SOLIS VENEGAS, CESAR JOSE	\N	t	2026-10-05 23:17:07.221433-05
-189	HILARIO LOPEZ MAXIMINA EUDOSIA	\N	t	2026-10-05 23:17:07.221433-05
-190	BODEGA - LUCERO MANRIQUE ARTEAGA	\N	t	2026-10-05 23:17:07.221433-05
-191	RESTAURANT CHIFA CHE GUEVARA	\N	t	2026-10-05 23:17:07.221433-05
-192	ESCOBEDO BOCANEGRA, JESSICA SILVANA	\N	t	2026-10-05 23:17:07.221433-05
-193	CEV. - SABOR NORTEÑO	\N	t	2026-10-05 23:17:07.221433-05
-194	ZUÑIGA QUIJANO, CECILIO	\N	t	2026-10-05 23:17:07.221433-05
-195	ALVARADO TAMBO, GLADYS YRAIDA	\N	t	2026-10-05 23:17:07.221433-05
-196	GLADYS ACOSTA ACOSTA	\N	t	2026-10-05 23:17:07.221433-05
-197	GIL REBAZA, MARCIONELA YOVANI	\N	t	2026-10-05 23:17:07.221433-05
-198	LESTER MORILLO PONTE	\N	t	2026-10-05 23:17:07.221433-05
-199	DESAYUNOS JUANITA - JUANA RUIZ	\N	t	2026-10-05 23:17:07.221433-05
-200	JULCA GAITAN, FLOR MARLENY	\N	t	2026-10-05 23:17:07.221433-05
-201	MI RANCHO LINDO S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-202	MENDOZA DURAND, IRMA VILMA	\N	t	2026-10-05 23:17:07.221433-05
-203	SUCESION INDIVISA CHOY HUI CHUNG SAU	\N	t	2026-10-05 23:17:07.221433-05
-204	MORALES ESQUIBEL, MELISSA	\N	t	2026-10-05 23:17:07.221433-05
-205	AMBROSIO DE LA CRUZ DE VILLA, ROSARIO CHARITO	\N	t	2026-10-05 23:17:07.221433-05
-206	INVERSIONES CONDORICAR E.I.R.L	\N	t	2026-10-05 23:17:07.221433-05
-207	NOEL SOTELO, PORFIDIA VERONICA	\N	t	2026-10-05 23:17:07.221433-05
-208	BARRENECHEA MELGAREJO, JUANA ROSA	\N	t	2026-10-05 23:17:07.221433-05
-209	ZULEMA PIRGO ALVA	\N	t	2026-10-05 23:17:07.221433-05
-210	BODEGA - ESTHER SUAREZ BECERRA	\N	t	2026-10-05 23:17:07.221433-05
-211	BODEGA - AMELIA BELTRAN DE LA CRUZ	\N	t	2026-10-05 23:17:07.221433-05
-212	CHEGNE PINO, IVONNE KEI	\N	t	2026-10-05 23:17:07.221433-05
-213	BODEGA - PATRICIA VILLAFANA PUMARICA	\N	t	2026-10-05 23:17:07.221433-05
-214	FLORES DE IRASABAL, LUISA ESTHER	\N	t	2026-10-05 23:17:07.221433-05
-215	TORRES VASQUEZ, DORA ANGELA	\N	t	2026-10-05 23:17:07.221433-05
-216	VALDERRAMA DE CRUZADO, EDITH	\N	t	2026-10-05 23:17:07.221433-05
-217	ZAMUDIO PASQUEL, ROSARIO DEL PILAR	\N	t	2026-10-05 23:17:07.221433-05
-218	RESTAURANT SBC CORPORACION E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-219	JOVANOVIC AGUIRRE JVAN	\N	t	2026-10-05 23:17:07.221433-05
-220	ZAVALETA HURTADO, GELIN HONA	\N	t	2026-10-05 23:17:07.221433-05
-221	CEVICHERIA EL HUEQUITO E.I.R.L	\N	t	2026-10-05 23:17:07.221433-05
-222	ZAVALETA HURTADO, HILDA NERIDA	\N	t	2026-10-05 23:17:07.221433-05
-223	EL RINCONSITO GML S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-224	ARROYO LOPEZ, YESENIA YESSICA	\N	t	2026-10-05 23:17:07.221433-05
-225	GARCIA ROJAS, EDGAR JAVIER	\N	t	2026-10-05 23:17:07.221433-05
-226	CRUZADO CRUZ YRENE MARIA	\N	t	2026-10-05 23:17:07.221433-05
-227	RESTAURANT POLLERIA LA ESQUINITA S.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-228	LILIA CASTRO MONTALVO	\N	t	2026-10-05 23:17:07.221433-05
-229	RICALDI LOPEZ, IRMA	\N	t	2026-10-05 23:17:07.221433-05
-230	VASQUEZ ZAVALETA, EVELYN ELIZABETH	\N	t	2026-10-05 23:17:07.221433-05
-231	REYES CERNA, MARITZA ISBEL	\N	t	2026-10-05 23:17:07.221433-05
-232	JESUS SAVAS CABREJOS	\N	t	2026-10-05 23:17:07.221433-05
-233	DIONICIO CHICLAYO YOMELI	\N	t	2026-10-05 23:17:07.221433-05
-234	PONTE MURILLO, MARLENY IRMA	\N	t	2026-10-05 23:17:07.221433-05
-235	DIAZ DIAZ, FANY	\N	t	2026-10-05 23:17:07.221433-05
-236	ENRIQUEZ JARA, YBETH GISELLA	\N	t	2026-10-05 23:17:07.221433-05
-237	SANCHEZ ROSO, CARMEN AMELIA	\N	t	2026-10-05 23:17:07.221433-05
-238	VALENCIA CAMPOS, SHEYLA TATIANA	\N	t	2026-10-05 23:17:07.221433-05
-239	PEREA MOZOMBITE, MILCA	\N	t	2026-10-05 23:17:07.221433-05
-240	LAVY HOLANDA, ARGENSON	\N	t	2026-10-05 23:17:07.221433-05
-241	ESCOBEDO FLORES, ANDERSON	\N	t	2026-10-05 23:17:07.221433-05
-242	GLENNI CUBAS, ANTONIO CARLOS	\N	t	2026-10-05 23:17:07.221433-05
-243	VILMA ROSEMERY RODRIGUEZ GAITAN	\N	t	2026-10-05 23:17:07.221433-05
-244	JHAJAIRA MORALES	\N	t	2026-10-05 23:17:07.221433-05
-245	YONALY NANCY COLLACHAGUA OLIVERA	\N	t	2026-10-05 23:17:07.221433-05
-246	MCDO BELLAMAR - ABARROTES - ABEL LIVIA	\N	t	2026-10-05 23:17:07.221433-05
-247	ENCOMENDERIA DIANA - VILMA SANCHEZ	\N	t	2026-10-05 23:17:07.221433-05
-248	REST - AMPARO BOCANEGRA RODRIGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-249	ZAVALA MORALES, SAYURI	\N	t	2026-10-05 23:17:07.221433-05
-250	CORTEZ VASQUEZ DE SALDAÑA, YSABEL R	\N	t	2026-10-05 23:17:07.221433-05
-251	TORREALVA MEZA CINTHYA LISSETH	\N	t	2026-10-05 23:17:07.221433-05
-252	PONTE CORNELIO NANCY VIOLETA	\N	t	2026-10-05 23:17:07.221433-05
-253	DINAIN S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-254	NORTHEM FOOD S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-255	SALVATORE GELATO S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-256	FIGUEROA ARNAU GERARDO	\N	t	2026-10-05 23:17:07.221433-05
-257	CULINARIA DEL NORTE S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-258	ASCUE YENDO CRISTABELL	\N	t	2026-10-05 23:17:07.221433-05
-259	A & A GROUP PERU S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-260	DIANA DEBORA DIAZ VILLANUEVA	\N	t	2026-10-05 23:17:07.221433-05
-261	FLORES IBARRA, JENNY CARMEN	\N	t	2026-10-05 23:17:07.221433-05
-262	BOCANEGRA RODRIGUEZ JUANA ESPERANZA	\N	t	2026-10-05 23:17:07.221433-05
-263	JESUS MARIA BENITEZ RODRIGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-264	AVALOS LOPEZ, ANA GABRIELA	\N	t	2026-10-05 23:17:07.221433-05
-265	LOPEZ MONTERO RONALD ALEX	\N	t	2026-10-05 23:17:07.221433-05
-266	VIRGINIA ESTHER SALINAS AGUIRRE	\N	t	2026-10-05 23:17:07.221433-05
-267	JUANA BAZA MENDOZA	\N	t	2026-10-05 23:17:07.221433-05
-268	RIOFRIO HUERTAS, LEONOR ESTHER	\N	t	2026-10-05 23:17:07.221433-05
-269	MARGARITA CRUZ AVILA	\N	t	2026-10-05 23:17:07.221433-05
-270	LUCIO DOMINGUEZ, ROBER	\N	t	2026-10-05 23:17:07.221433-05
-271	ELCI DORIS GONZALES SANDOVAL	\N	t	2026-10-05 23:17:07.221433-05
-272	MCDO 10 DE SEPTIEMBRE - DEMETRIO CRUZ	\N	t	2026-10-05 23:17:07.221433-05
-273	PAMELA MIRIAM RAMOS ESPINOZA	\N	t	2026-10-05 23:17:07.221433-05
-274	ASENCIO GAMBINI, VERONICA NELIDA	\N	t	2026-10-05 23:17:07.221433-05
-275	ANDERSON PAUL ARGOMEDO CUEVA/	\N	t	2026-10-05 23:17:07.221433-05
-276	REYES VELASQUEZ, LIDIA JACQUELINE	\N	t	2026-10-05 23:17:07.221433-05
-277	ROJAS TURRIATE MARIA ELENA	\N	t	2026-10-05 23:17:07.221433-05
-278	ROSA JUANA JACINTO REGALADO	\N	t	2026-10-05 23:17:07.221433-05
-279	ROJAS AGUILAR, DENISSE KARINA	\N	t	2026-10-05 23:17:07.221433-05
-280	BENIGNO AVILA, NAILE ISAMAR	\N	t	2026-10-05 23:17:07.221433-05
-281	JARA BLAS, JULIA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-282	WALTER MINCHOLA ARGOMEDO	\N	t	2026-10-05 23:17:07.221433-05
-283	RUMAY VEGA, JAQUELINE EVELIN	\N	t	2026-10-05 23:17:07.221433-05
-284	CONSUELO SALDAÑA IZAGUIRRE	\N	t	2026-10-05 23:17:07.221433-05
-285	BOCANEGRA QUEZADA, ANIBAL	\N	t	2026-10-05 23:17:07.221433-05
-286	JULIA ACELA MANTILLA ALVARADO	\N	t	2026-10-05 23:17:07.221433-05
-287	VELASQUEZ ACUÑA, GISELA MARICRUZ	\N	t	2026-10-05 23:17:07.221433-05
-288	MONTEZA ARROYO, ROJA ANA	\N	t	2026-10-05 23:17:07.221433-05
-289	RUPAY PORTILLA, ROSA YNGRID	\N	t	2026-10-05 23:17:07.221433-05
-290	ARTEAGA ANTICONA LUCIA EMERITA	\N	t	2026-10-05 23:17:07.221433-05
-291	FREDY GARCIA MAYHUA	\N	t	2026-10-05 23:17:07.221433-05
-292	RICO CHIMBOTE PERU S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-293	BODEGA - CARMEN JUAREZ	\N	t	2026-10-05 23:17:07.221433-05
-294	BENSON FLORES URSULA CATHERINE	\N	t	2026-10-05 23:17:07.221433-05
-295	CARBAJAL LECTOR LUCY MERIS	\N	t	2026-10-05 23:17:07.221433-05
-296	BODEGA - MARGARITA CONTINETT PELAEZ	\N	t	2026-10-05 23:17:07.221433-05
-297	SALDAÑA SANCHEZ MATILDE BERENIZE	\N	t	2026-10-05 23:17:07.221433-05
-298	REPRESENTACIONES JAPA SOCIEDAD ANONIMA	\N	t	2026-10-05 23:17:07.221433-05
-299	RAMIREZ CANO ARMINDA ALEJANDRINA	\N	t	2026-10-05 23:17:07.221433-05
-300	BODEGA - BENITEZ ARROYO MARIA LUISA	\N	t	2026-10-05 23:17:07.221433-05
-301	BOCANEGRA SAAVEDRA, GEISEL VANESA	\N	t	2026-10-05 23:17:07.221433-05
-302	JIMENEZ RUIZ, DANTE RAUL	\N	t	2026-10-05 23:17:07.221433-05
-303	ROXANA LEZAMA ASCOY	\N	t	2026-10-05 23:17:07.221433-05
-304	JULIA ZAVALETA CORTIJO	\N	t	2026-10-05 23:17:07.221433-05
-305	JESSICA BARDALES MENDOZA	\N	t	2026-10-05 23:17:07.221433-05
-306	BODEGA INTERMAX - LORENA CASTILLO	\N	t	2026-10-05 23:17:07.221433-05
-307	BUSTAMANTE DE LA CRUZ MARISA ELIZABETH	\N	t	2026-10-05 23:17:07.221433-05
-308	CARBAJAL BAZAN, MAIDER MARIBEL	\N	t	2026-10-05 23:17:07.221433-05
-309	ARTEAGA IPARRAGUIRRE, CARLOS DAVID	\N	t	2026-10-05 23:17:07.221433-05
-310	MARRUFO VEGA, JUNIOR GILBER	\N	t	2026-10-05 23:17:07.221433-05
-311	INVERSIONES EL PEZ BLANCO E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-312	VERA HIPOLITO NICOL ZULEISI	\N	t	2026-10-05 23:17:07.221433-05
-313	GREGORIA BENIGNA SILVESTRE VDA DE FIERRO	\N	t	2026-10-05 23:17:07.221433-05
-314	SALDARRIAGA ESPINOZA, JUANA GLADYS	\N	t	2026-10-05 23:17:07.221433-05
-315	SALDARRIAGA DE MAZA, VIOLETA	\N	t	2026-10-05 23:17:07.221433-05
-316	VIVAR DE LA CRUZ, RONAL	\N	t	2026-10-05 23:17:07.221433-05
-317	ROSA SEGUNDA RAMIREZ DE BRAVO	\N	t	2026-10-05 23:17:07.221433-05
-318	MARIA ISABEL ZAVALETA DE VILELA	\N	t	2026-10-05 23:17:07.221433-05
-319	TORRES VILLANUEVA, HUMBERTO	\N	t	2026-10-05 23:17:07.221433-05
-320	HENRIQUEZ HUALCA BETTY FRANCISCA	\N	t	2026-10-05 23:17:07.221433-05
-321	BODEGA - ELSA BOCANEGRA LOPEZ	\N	t	2026-10-05 23:17:07.221433-05
-322	BARTOLO LOPEZ, LUISA	\N	t	2026-10-05 23:17:07.221433-05
-323	CHAVEZ RIVERA, OLGA	\N	t	2026-10-05 23:17:07.221433-05
-324	HUAMAN CENA, NORMA FELICITA	\N	t	2026-10-05 23:17:07.221433-05
-325	URBANO MEHUE, LIDIA MERCEDES	\N	t	2026-10-05 23:17:07.221433-05
-326	MURGA HUAMAN, CARMINA SANTA	\N	t	2026-10-05 23:17:07.221433-05
-327	MORALES MARTINEZ, MAXIMA	\N	t	2026-10-05 23:17:07.221433-05
-328	ANGELES CONDOR, JAYME ROGER	\N	t	2026-10-05 23:17:07.221433-05
-329	CASHPA SANTILLAN, LINDA ESMERALDA	\N	t	2026-10-05 23:17:07.221433-05
-330	PEÑA MORENO, MARIA ALICIA	\N	t	2026-10-05 23:17:07.221433-05
-331	BODEGA - VICTORIA CABANA ACUÑA	\N	t	2026-10-05 23:17:07.221433-05
-332	DEYSI JANET PONTE CORNELIO	\N	t	2026-10-05 23:17:07.221433-05
-333	COMERCIAL CARMEN - CARMEN SOTO ESCOBAR	\N	t	2026-10-05 23:17:07.221433-05
-334	BODEGA - ALEJANDRINA VASQUEZ DE ROMAN	\N	t	2026-10-05 23:17:07.221433-05
-335	LUCY GRANADOS RODRIGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-336	MARIA GISELA GONZALES CUBAS	\N	t	2026-10-05 23:17:07.221433-05
-337	PIEDRA CASTRO MARIA ANTONIA	\N	t	2026-10-05 23:17:07.221433-05
-338	CHANCOLLA VERA GLORIA NANCY	\N	t	2026-10-05 23:17:07.221433-05
-339	BODEGA - ESTER CASTAÑEDA	\N	t	2026-10-05 23:17:07.221433-05
-340	AIDE VILLANUEVA CESPEDES	\N	t	2026-10-05 23:17:07.221433-05
-341	CATALINA CAJAS SUAREZ	\N	t	2026-10-05 23:17:07.221433-05
-342	MENU - MELINA CABANILLA PIZARRO	\N	t	2026-10-05 23:17:07.221433-05
-343	MELGAREJO ESPINOZA, LIDIA FELICITA	\N	t	2026-10-05 23:17:07.221433-05
-344	LEON GARCIA, ISABEL CRISTINA	\N	t	2026-10-05 23:17:07.221433-05
-345	HUERTA LAUYA NAOTO PAFELO	\N	t	2026-10-05 23:17:07.221433-05
-346	PAREDES AGURTO, ERVVINGT DANIEL	\N	t	2026-10-05 23:17:07.221433-05
-347	MENDOZA ZUÑIGA, DEYANIRA	\N	t	2026-10-05 23:17:07.221433-05
-348	DE LA CRUZ GUILLEN, VERONICA ROSARIO	\N	t	2026-10-05 23:17:07.221433-05
-349	HUAMAN GUERRERO, YULY ROSALVINA	\N	t	2026-10-05 23:17:07.221433-05
-350	LOPEZ CHINCHAY, ANDY JHONATAN	\N	t	2026-10-05 23:17:07.221433-05
-351	BRITO ESCALONA ROSANA CAROLINA	\N	t	2026-10-05 23:17:07.221433-05
-352	MORALES AVILA OTTO	\N	t	2026-10-05 23:17:07.221433-05
-353	MENU - SANTOS CUEVA MENDEZ	\N	t	2026-10-05 23:17:07.221433-05
-354	JULIO CESAR PERLOY E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-355	INVERSIONES Y SERVICIOS BRUN E.I.R.L	\N	t	2026-10-05 23:17:07.221433-05
-356	PAULO JESUS PUENTE ARROYO	\N	t	2026-10-05 23:17:07.221433-05
-357	FLORES SANCHEZ, ORLANDO JOSE	\N	t	2026-10-05 23:17:07.221433-05
-358	RIVADENEIRA COICO, MIDUA MARIBEL	\N	t	2026-10-05 23:17:07.221433-05
-359	MACHUCA ESPINOZA NANCY INES	\N	t	2026-10-05 23:17:07.221433-05
-360	ROJAS TORIBIO, ELENA MAGALY	\N	t	2026-10-05 23:17:07.221433-05
-361	PIZAN SILVA, MIRIAM MARILU	\N	t	2026-10-05 23:17:07.221433-05
-362	MILLA FAUSTINO, SUMICO NICOLE	\N	t	2026-10-05 23:17:07.221433-05
-363	HUAMANCHUMO PELAEZ, WILFREDO BALDEMIR	\N	t	2026-10-05 23:17:07.221433-05
-364	EDITH PAOLA VASQUEZ NAMAY	\N	t	2026-10-05 23:17:07.221433-05
-365	VELASQUEZ PEREZ MASSIEL MINELLI	\N	t	2026-10-05 23:17:07.221433-05
-366	ESMELDA EDITA LEIVA CABANILLA	\N	t	2026-10-05 23:17:07.221433-05
-367	PRISCILA SALOME OSORIO SALINAS	\N	t	2026-10-05 23:17:07.221433-05
-368	ANGELA MARCIONILA RAMOS ALFARO	\N	t	2026-10-05 23:17:07.221433-05
-369	ROBERT ALEXANDER CUEVA DEZA	\N	t	2026-10-05 23:17:07.221433-05
-370	RAMIREZ GONZALEZ ELIANA LISBETH	\N	t	2026-10-05 23:17:07.221433-05
-371	CASTILLO LOZADA JULIO	\N	t	2026-10-05 23:17:07.221433-05
-372	MALLQUI RIVERA REYNA PASCUALA	\N	t	2026-10-05 23:17:07.221433-05
-373	BODEGA - MIGUEL MARTINES HUAPALLA	\N	t	2026-10-05 23:17:07.221433-05
-374	BODEGA - IMENDA EVANGELISTA CALDERON	\N	t	2026-10-05 23:17:07.221433-05
-375	GLADYS ROMAN LIZARRAGA	\N	t	2026-10-05 23:17:07.221433-05
-376	NEGOCIOS SULLON E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-377	MCDO SIRENITA - FELICITA LINO PIZARRO	\N	t	2026-10-05 23:17:07.221433-05
-378	IPARRAGUIRRE PAREDES MIGUEL	\N	t	2026-10-05 23:17:07.221433-05
-379	MCDO CHACRA OLLA - CONDIMENTOS - JOSE MURILLO DIAZ	\N	t	2026-10-05 23:17:07.221433-05
-380	ROMERO ROSSO, JESSICA CRISTINA	\N	t	2026-10-05 23:17:07.221433-05
-381	BODEGA - ANGEL INFANTES CHINCHAYAN	\N	t	2026-10-05 23:17:07.221433-05
-382	BODEGA - GERMAN SILVA LOAYZA	\N	t	2026-10-05 23:17:07.221433-05
-383	CAMPOS CHAVEZ, BIANNEY BENEDITH	\N	t	2026-10-05 23:17:07.221433-05
-384	MANSILLAS OYOLA, INES LUPE	\N	t	2026-10-05 23:17:07.221433-05
-385	CASMA - REST. RAMADITA / GONZALES CUMPA MARIA JACKELIN	\N	t	2026-10-05 23:17:07.221433-05
-386	RESTAURANTE MILAGRITOS Y DANIELITOS E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-387	INVERSIONES ETA 5 E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-388	SANYU GAOJIA E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-389	DURAND RAMIREZ, FABIOLA RUTH	\N	t	2026-10-05 23:17:07.221433-05
-390	GONZALES ISIDRO, BRIGITT KATHERINE	\N	t	2026-10-05 23:17:07.221433-05
-391	ESTRADA SALINAS, VICENTE ALFREDO	\N	t	2026-10-05 23:17:07.221433-05
-392	ELVA PORTOCARRERO LOPEZ	\N	t	2026-10-05 23:17:07.221433-05
-393	TRINIDAD SHOCOSH, MARIA ELENA	\N	t	2026-10-05 23:17:07.221433-05
-394	VILLALTA RAMOS, MARIA ELENA	\N	t	2026-10-05 23:17:07.221433-05
-395	ESCOBEDO MACHAY, ESTEBAN ANDRÉ	\N	t	2026-10-05 23:17:07.221433-05
-396	TAPIA LAVALLE JAIME ARTURO	\N	t	2026-10-05 23:17:07.221433-05
-397	ELSA AGUIRRE VILLACRE	\N	t	2026-10-05 23:17:07.221433-05
-398	SALAZAR LOZADA, MARIA E	\N	t	2026-10-05 23:17:07.221433-05
-399	BODEGA - ESPERANZA ZAVALETA TRUJILLO	\N	t	2026-10-05 23:17:07.221433-05
-400	LA CHINGANITA DEL BUNKER E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-401	CASTILLO TORRES WILIAMS RAMON	\N	t	2026-10-05 23:17:07.221433-05
-402	ROJAS GUERRA DE ROJAS, JULIA ROSA	\N	t	2026-10-05 23:17:07.221433-05
-403	DIOSES CALDERON, HEIDY MIRELLA	\N	t	2026-10-05 23:17:07.221433-05
-404	SIFUENTES ESPEJO CATALINA	\N	t	2026-10-05 23:17:07.221433-05
-405	BODEGA- SILVIA MINAYA GALAN	\N	t	2026-10-05 23:17:07.221433-05
-406	RAMOS CANO, ANA ROCIO	\N	t	2026-10-05 23:17:07.221433-05
-407	GRIMALDO MAXIMO LEON BRONCANO	\N	t	2026-10-05 23:17:07.221433-05
-408	GARCIA RODRIGUEZ, SANTOS LILY	\N	t	2026-10-05 23:17:07.221433-05
-409	ABURTO PURISACA, JACKELINE LEONOR	\N	t	2026-10-05 23:17:07.221433-05
-410	FLORES ULLOA CARLOS ENRIQUE	\N	t	2026-10-05 23:17:07.221433-05
-411	MCDO LA MOLINA - SANTOS BEATRIZ VALDERAS	\N	t	2026-10-05 23:17:07.221433-05
-412	MCDO LA MOLINA - LUZ SANTIESTEBAN	\N	t	2026-10-05 23:17:07.221433-05
-413	AQUINO AQUINO JOSE MAXIMO	\N	t	2026-10-05 23:17:07.221433-05
-414	NOLASCO AGUIRRE HAYDEE EUFEMIA	\N	t	2026-10-05 23:17:07.221433-05
-415	BODEGA - RONALD RODRIGUEZ VALDERRAMA	\N	t	2026-10-05 23:17:07.221433-05
-416	ALBARRAN CRUZADO CONSUELO OFELIA	\N	t	2026-10-05 23:17:07.221433-05
-417	BODEGA - CLEOTILDE VALVERDE SULLON	\N	t	2026-10-05 23:17:07.221433-05
-418	IPARRAGUIRRE SEGURA, ALBERTO WILDE	\N	t	2026-10-05 23:17:07.221433-05
-419	BODEGA - HILDA BACA	\N	t	2026-10-05 23:17:07.221433-05
-420	GIL ROJAS VICTOR ALBERTO	\N	t	2026-10-05 23:17:07.221433-05
-421	BODEGA - NORA GONZALES ESPIRITU	\N	t	2026-10-05 23:17:07.221433-05
-422	BODEGA - HERNAN CORDOVA	\N	t	2026-10-05 23:17:07.221433-05
-423	BODEGA - CARMEN VASQUEZ DE LA CRUZ	\N	t	2026-10-05 23:17:07.221433-05
-424	JUANA ROCIO LOPEZ ESTRADA	\N	t	2026-10-05 23:17:07.221433-05
-425	AGUINAGA PUELLES, RUTH AURORA	\N	t	2026-10-05 23:17:07.221433-05
-426	MINAYA RAMOS, MARIBEL CLARA	\N	t	2026-10-05 23:17:07.221433-05
-427	LUERA JUANPEDRO DE QUIROZ, ERCELIZ ROSALVINA	\N	t	2026-10-05 23:17:07.221433-05
-428	ELSA TICONA LANASCA	\N	t	2026-10-05 23:17:07.221433-05
-429	CASTILLO RAMIREZ, LUY LEYDI HADDY CELESTE	\N	t	2026-10-05 23:17:07.221433-05
-430	VASQUEZ PAREDES, JULIO EYNER	\N	t	2026-10-05 23:17:07.221433-05
-431	TEMPLE MILLA, ELIDA NILDA	\N	t	2026-10-05 23:17:07.221433-05
-432	NEPONOCENO MILLA, MODESTO JULIAN	\N	t	2026-10-05 23:17:07.221433-05
-433	SALINAS FLORES EDWIN RONALD	\N	t	2026-10-05 23:17:07.221433-05
-434	EDITA YOVANA RODRIGUEZ NUÑEZ DE REYES	\N	t	2026-10-05 23:17:07.221433-05
-435	VILCHEZ CASTILLO, VANESA SOLEDAD	\N	t	2026-10-05 23:17:07.221433-05
-436	AZNARAN REYES TANIA MARICELLI	\N	t	2026-10-05 23:17:07.221433-05
-437	KAREN LEYTON ACEVEDO	\N	t	2026-10-05 23:17:07.221433-05
-438	KARINA LUZ QUISPE AGUIRRE	\N	t	2026-10-05 23:17:07.221433-05
-439	RODRIGUEZ TICERAN GEAKONDA	\N	t	2026-10-05 23:17:07.221433-05
-440	BODEGA - CARMEN ROSALES MEJIA	\N	t	2026-10-05 23:17:07.221433-05
-441	DANITZA FIARELLI ALAYO LOPEZ	\N	t	2026-10-05 23:17:07.221433-05
-442	MORILLO PONTE NORY CONSUELO	\N	t	2026-10-05 23:17:07.221433-05
-443	LUIS CALDERON, GUILLERMO	\N	t	2026-10-05 23:17:07.221433-05
-444	MARGOT MAELSY NORIEGA MORILLO	\N	t	2026-10-05 23:17:07.221433-05
-445	HUAMAN TRIGOSO PRACCIDES LINORIO	\N	t	2026-10-05 23:17:07.221433-05
-446	DENISE JULIANA MONTOYA MORALES	\N	t	2026-10-05 23:17:07.221433-05
-447	VILCA FRANCISCO, AQUILA	\N	t	2026-10-05 23:17:07.221433-05
-448	BODEGA - EUFENIA NARIZA QUISPE	\N	t	2026-10-05 23:17:07.221433-05
-449	GAMEZ DE LA CRUZ, JOSEM NAGUI	\N	t	2026-10-05 23:17:07.221433-05
-450	COLCHADO LAGUNA, CARLOS FERNANDO	\N	t	2026-10-05 23:17:07.221433-05
-451	BODEGA - MERCEDES GUTIERREZ VARAS	\N	t	2026-10-05 23:17:07.221433-05
-452	INVERSIONES BARRA CRIOLLA S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-453	MCDO ALF. UGARTE - AQUILES DOMINGUES BACILIO	\N	t	2026-10-05 23:17:07.221433-05
-454	OLEVAS S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-455	VEGA GARAY MARCO ANTONIO	\N	t	2026-10-05 23:17:07.221433-05
-456	SOFIA INVERSIONES GASTRONOMICAS S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-457	REST. PICANTERIA LA FLOR DEL NORTE - MANUELA ELIAS RODRIGUEZ	\N	t	2026-10-05 23:17:07.221433-05
-458	CHIASCATE S.A.C	\N	t	2026-10-05 23:17:07.221433-05
-459	VILLANUEVA QUEZADA, DAVID	\N	t	2026-10-05 23:17:07.221433-05
-460	ARENAS ROJAS, JULIA	\N	t	2026-10-05 23:17:07.221433-05
-461	MARTHA NANCY CARHUAYANO RAMIREZ	\N	t	2026-10-05 23:17:07.221433-05
-462	GUEVARA BENDEZU JUSTA NILDA	\N	t	2026-10-05 23:17:07.221433-05
-463	ZAVALETA VASQUEZ, GLORIA ESPERANZA	\N	t	2026-10-05 23:17:07.221433-05
-464	BODEGA - VERONICA RAMIREZ RODRIGEZ	\N	t	2026-10-05 23:17:07.221433-05
-465	PABLO JARAMILLO MOGOLLON	\N	t	2026-10-05 23:17:07.221433-05
-466	INVERSIONES BOJORQUEZ RIVERA Y ASOCIADOS S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-467	MARIA VALERIANA MURGA ESPINOZA	\N	t	2026-10-05 23:17:07.221433-05
-468	VERGARA MELGAREJO, ELIZABETH KARINA	\N	t	2026-10-05 23:17:07.221433-05
-469	TORRES SANTILLAN CARMEN ROSA	\N	t	2026-10-05 23:17:07.221433-05
-470	MEVEMAR S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-471	LOPEZ MARTINEZ MARIA EPIFANIA	\N	t	2026-10-05 23:17:07.221433-05
-472	SANTOS ALEJOS ELIZABETH ROSA	\N	t	2026-10-05 23:17:07.221433-05
-473	ASUCENA VILMA CASTILLO GARCIA	\N	t	2026-10-05 23:17:07.221433-05
-474	PACAYA JULCA, EDGAR AUGUSTO	\N	t	2026-10-05 23:17:07.221433-05
-475	PEREZ CHAVEZ, CATALINA	\N	t	2026-10-05 23:17:07.221433-05
-476	TORRES RUBIO, JUAN CARLOS	\N	t	2026-10-05 23:17:07.221433-05
-477	LLERENA MANRIQUE, JAIME ZENON	\N	t	2026-10-05 23:17:07.221433-05
-478	DELIA CRIBILLERO VENEGAS	\N	t	2026-10-05 23:17:07.221433-05
-479	MARILUZ JENNY VILLACHICA VILLANUEVA	\N	t	2026-10-05 23:17:07.221433-05
-480	ENMA NOEMI SARMIENTO VELASQUEZ MOLIDOS	\N	t	2026-10-05 23:17:07.221433-05
-481	JULCA SAMORA, HILDA ROSA	\N	t	2026-10-05 23:17:07.221433-05
-482	NILDA ESPINOZA ARTEAGA	\N	t	2026-10-05 23:17:07.221433-05
-483	CLIENTE - VICTOR ARROYO GAMEZ	\N	t	2026-10-05 23:17:07.221433-05
-484	SARA DIAZ TORRES	\N	t	2026-10-05 23:17:07.221433-05
-485	EDITH DORIS CASANOVA DE VEGA	\N	t	2026-10-05 23:17:07.221433-05
-486	EDELMIRA MORENO URBINA	\N	t	2026-10-05 23:17:07.221433-05
-487	LISSETH ELIANA VALERA FERNANDEZ	\N	t	2026-10-05 23:17:07.221433-05
-488	NORMA GONZALES PEREZ	\N	t	2026-10-05 23:17:07.221433-05
-489	VEGA PEREDA, NELLY MARTHA	\N	t	2026-10-05 23:17:07.221433-05
-490	MIRTHA YESENIA ZUÑIGA CANTARO	\N	t	2026-10-05 23:17:07.221433-05
-491	PRADA RACCHUMI RULYER ALDO	\N	t	2026-10-05 23:17:07.221433-05
-492	MARIN ALIAGA, ZOILITA	\N	t	2026-10-05 23:17:07.221433-05
-493	QUISPE VEGA, RICARDO MOISES	\N	t	2026-10-05 23:17:07.221433-05
-494	BODEGA - MILAGROS SUYLLON	\N	t	2026-10-05 23:17:07.221433-05
-495	ESTHER EMILIA DUEÑAS PAZ	\N	t	2026-10-05 23:17:07.221433-05
-496	BERMUDEZ MANRIQUE NOEMI ESTHER	\N	t	2026-10-05 23:17:07.221433-05
-497	BERMEJO SILVESTRE DE ULLOA, GLORIA AMELIA	\N	t	2026-10-05 23:17:07.221433-05
-498	REYNA PEREZ LAURA GUADALUPE	\N	t	2026-10-05 23:17:07.221433-05
-499	DERSY FABIOLA GUZMAN CELESTINO	\N	t	2026-10-05 23:17:07.221433-05
-500	JUAREZ VELASQUEZ DE ARELLANO, YOLANDA VALERIA	\N	t	2026-10-05 23:17:07.221433-05
-501	VELÁSQUEZ ESCOBEDO, ROSA	\N	t	2026-10-05 23:17:07.221433-05
-502	ALVARADO RUBIÑOS, VIRGINIA DE LIGORIO	\N	t	2026-10-05 23:17:07.221433-05
-503	ESPINOZA QUIROZ, TEODOCIO MAXIMO	\N	t	2026-10-05 23:17:07.221433-05
-504	CARRILLO ACOSTA, HILDA YESENIA	\N	t	2026-10-05 23:17:07.221433-05
-505	MACALOPU MENDOZA SANTOS ANGELICA	\N	t	2026-10-05 23:17:07.221433-05
-506	PEREDA CAMACHO, JOSE ENRIQUE	\N	t	2026-10-05 23:17:07.221433-05
-507	CHAFLOQUE VALUIS ISSIS DIANA IRENE	\N	t	2026-10-05 23:17:07.221433-05
-508	BODEGA - ROSARIO SOLORZANO DE SALAS	\N	t	2026-10-05 23:17:07.221433-05
-509	MCDO LA UNION - FELICITA MANTILLA MENDOZA	\N	t	2026-10-05 23:17:07.221433-05
-510	SONIA ESTHER AQUINO TORRES	\N	t	2026-10-05 23:17:07.221433-05
-511	HUERTA SALCEDO ROSA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-512	HORNA FLORES, DORKA CAROLAI	\N	t	2026-10-05 23:17:07.221433-05
-513	GLADYS SOLEDAD BECERRA MORALES	\N	t	2026-10-05 23:17:07.221433-05
-514	MAURICIO AGUIRRE, IRIS MAYRA	\N	t	2026-10-05 23:17:07.221433-05
-515	ORMEÑO SAAVEDRA, GINO RUBEN	\N	t	2026-10-05 23:17:07.221433-05
-516	ARGOMEDO ROLDAN DORCA RUH	\N	t	2026-10-05 23:17:07.221433-05
-517	SALCEDO MORENO JAVIER SILES	\N	t	2026-10-05 23:17:07.221433-05
-518	LIDIA LAVADO DE ROSALES	\N	t	2026-10-05 23:17:07.221433-05
-519	PRINCIPE GONZALES, CHARO MERCEDES	\N	t	2026-10-05 23:17:07.221433-05
-520	MUGUERZA TORO, SILVIA MARINA	\N	t	2026-10-05 23:17:07.221433-05
-521	TANDAYPAN DE RAMOS, MARIA TRINIDAD	\N	t	2026-10-05 23:17:07.221433-05
-522	LEB EMANUEL E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-523	MCDO VILLA MARIA - JUAN ENRIQUEZ RIOS	\N	t	2026-10-05 23:17:07.221433-05
-524	BODEGA - VICTORIA RODRIGUEZ EVARISTO	\N	t	2026-10-05 23:17:07.221433-05
-525	EDISON MARINE COMPANY S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-526	BODEGA - MIRIAN CANTA (CASUARINAS)	\N	t	2026-10-05 23:17:07.221433-05
-527	UP MARKET PERU S.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-528	BODEGA MARCO-VILCHEZ CORREA LUZ GRACIELA	\N	t	2026-10-05 23:17:07.221433-05
-529	ROJAS RODRIGUEZ ERICA RAQUEL	\N	t	2026-10-05 23:17:07.221433-05
-530	ROSAS DE LA CRUZ, JUAN CARLOS	\N	t	2026-10-05 23:17:07.221433-05
-531	LUY CRUZ NOEMI OTILIA	\N	t	2026-10-05 23:17:07.221433-05
-532	BODEGA - LILIANA ROXANA MINCHOLA SAENZ DE CASTILLO	\N	t	2026-10-05 23:17:07.221433-05
-533	INVERSIONES ARACABO S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-534	AZAÑA MATOS, ELMA ROCIO	\N	t	2026-10-05 23:17:07.221433-05
-535	HOYOS ANGULO, LUZ ANGELICA	\N	t	2026-10-05 23:17:07.221433-05
-536	PANADERIA - LIDIA GONZALES QUESÑAI	\N	t	2026-10-05 23:17:07.221433-05
-537	VIERA BERNUY MELINA HERMELINDA	\N	t	2026-10-05 23:17:07.221433-05
-538	OLIVERA ACEDO OLIVER ANTHONY	\N	t	2026-10-05 23:17:07.221433-05
-539	LIBIA LISSET SAER GAMONAL	\N	t	2026-10-05 23:17:07.221433-05
-540	IGREDA GASPAR, MARTHA MARIA	\N	t	2026-10-05 23:17:07.221433-05
-541	CHAVEZ FLORES, GIEZI MARIA	\N	t	2026-10-05 23:17:07.221433-05
-542	ESCUDERO BACA, CLOTILDE	\N	t	2026-10-05 23:17:07.221433-05
-543	CASTILLO OLGUIN, MARIO	\N	t	2026-10-05 23:17:07.221433-05
-544	BENITES ARANDA, FELICITA JOVINA	\N	t	2026-10-05 23:17:07.221433-05
-545	VILLAJULCA VALDIVIESO JORGE RAFAEL	\N	t	2026-10-05 23:17:07.221433-05
-546	VASQUEZ BURGOS, LUCINDA EMILIANA	\N	t	2026-10-05 23:17:07.221433-05
-547	MIRANDA MEJIA, PEDRO ERASMO	\N	t	2026-10-05 23:17:07.221433-05
-548	DELGADO TORRES, ROSALIA MARGARET	\N	t	2026-10-05 23:17:07.221433-05
-549	VILLANUEVA SOTELO JULIA ELENA	\N	t	2026-10-05 23:17:07.221433-05
-550	SERVICIOS & CONSTRUCCIONES D MARLON E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-551	SOBERON BENAVIDES, OSCAR MANUEL	\N	t	2026-10-05 23:17:07.221433-05
-552	SALAS HIGUERAS OFELIA ESTHER	\N	t	2026-10-05 23:17:07.221433-05
-553	LEON MORALES NESTOR ENRIQUE	\N	t	2026-10-05 23:17:07.221433-05
-554	D JHONNYS S.A.C.	\N	t	2026-10-05 23:17:07.221433-05
-555	LOS MADEROS RESTAURANTE POLLOS A LA BRASA Y PARRILLAS E.I.R.L.	\N	t	2026-10-05 23:17:07.221433-05
-556	ELVIS FELIPE GUTIERREZ PONCE	\N	t	2026-10-05 23:17:07.221433-05
-557	PAUL DANTE ROJAS VILLACORTA	\N	t	2026-10-05 23:17:07.221433-05
-558	VEGA CARRION WILFREDO ANTONIO	\N	t	2026-10-05 23:17:07.221433-05
-559	REST. EL GUSTITO - CONSUELO SALDAÑA CERQUIN	\N	t	2026-10-05 23:17:07.221433-05
-560	PEÑA VILLAVICENCIO, CATALINA	\N	t	2026-10-05 23:17:07.221433-05
-561	RESTAURANT JORGITO - GLADIS SANCHEZ AMOROTO	\N	t	2026-10-05 23:17:07.221433-05
-562	GARCIA GONZALES ROBERTO CARLOS	\N	t	2026-10-05 23:17:07.221433-05
-563	MANRIQUE BONILLA KIRK MICHAEL	\N	t	2026-10-05 23:17:07.221433-05
-564	ERICKA PATRICIA CULCOS GAVIOLA	\N	t	2026-10-05 23:17:07.221433-05
-565	COMERCIAL CARMEN  - CARMEN SOTO ESCOBAR	\N	t	2026-10-06 07:02:35.614-05
-566	SALAZAR HUAPAYA, CARLOS MANUEL	\N	t	2026-10-06 07:03:28.109-05
 \.
 
 
 --
--- TOC entry 6048 (class 0 OID 41658)
+-- TOC entry 6050 (class 0 OID 41658)
 -- Dependencies: 292
 -- Data for Name: comprobantes; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -3951,7 +3384,7 @@ COPY public.comprobantes (id, operacion_id, numero, tipo, datos, fecha_creacion)
 
 
 --
--- TOC entry 6050 (class 0 OID 41678)
+-- TOC entry 6052 (class 0 OID 41678)
 -- Dependencies: 294
 -- Data for Name: configuraciones; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -3962,27 +3395,28 @@ COPY public.configuraciones (id, clave, valor, fecha_actualizacion) FROM stdin;
 
 
 --
--- TOC entry 6020 (class 0 OID 23481)
+-- TOC entry 6022 (class 0 OID 23481)
 -- Dependencies: 262
 -- Data for Name: importaciones_ventas; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
-COPY public.importaciones_ventas (id, usuario_id, nombre_archivo, filas_procesadas, filas_con_error, estado, fecha) FROM stdin;
+COPY public.importaciones_ventas (id, usuario_id, nombre_archivo, filas_procesadas, filas_con_error, estado, fecha, hash_archivo, detalle_errores) FROM stdin;
 \.
 
 
 --
--- TOC entry 6014 (class 0 OID 23415)
+-- TOC entry 6016 (class 0 OID 23415)
 -- Dependencies: 256
 -- Data for Name: lotes; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.lotes (id, producto_id, numero_lote, cantidad_inicial, cantidad_actual, fecha_ingreso, fecha_vencimiento, fecha_creacion) FROM stdin;
+358	1067	LT-000001	100.00	100.00	2026-10-06 19:00:00-05	\N	2026-10-06 19:00:00-05
 \.
 
 
 --
--- TOC entry 6016 (class 0 OID 23433)
+-- TOC entry 6018 (class 0 OID 23433)
 -- Dependencies: 258
 -- Data for Name: movimientos_inventario; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -3992,7 +3426,7 @@ COPY public.movimientos_inventario (id, lote_id, tipo, origen, cantidad, precio_
 
 
 --
--- TOC entry 6028 (class 0 OID 23561)
+-- TOC entry 6030 (class 0 OID 23561)
 -- Dependencies: 270
 -- Data for Name: notificaciones_correo; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -4002,7 +3436,7 @@ COPY public.notificaciones_correo (id, alerta_id, destinatario, estado, proveedo
 
 
 --
--- TOC entry 6046 (class 0 OID 41632)
+-- TOC entry 6048 (class 0 OID 41632)
 -- Dependencies: 290
 -- Data for Name: operacion_detalles; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -4012,1214 +3446,1214 @@ COPY public.operacion_detalles (id, operacion_id, producto_id, lote_id, cantidad
 
 
 --
--- TOC entry 6044 (class 0 OID 41596)
+-- TOC entry 6046 (class 0 OID 41596)
 -- Dependencies: 288
 -- Data for Name: operaciones; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.operaciones (id, numero, idempotency_key, tipo, cliente_id, usuario_id, fecha, subtotal, impuesto_porcentaje, impuesto, total, motivo, operacion_origen_id, estado, fecha_creacion) FROM stdin;
-1313	V-001313	import-venta-1789764281000-80-1	venta	105	11	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.72-05
-1314	V-001314	import-venta-1789764281000-69-1	venta	105	11	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.874-05
-1315	V-001315	import-venta-1789764281000-48-1	venta	105	11	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.894-05
-1316	V-001316	import-venta-1789764282000-25-1	venta	564	11	2026-09-18 15:44:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7152	\N	activa	2026-10-06 07:27:59.913-05
-1317	V-001317	import-venta-1789764284000-16-1	venta	100	11	2026-09-18 15:44:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9952	\N	activa	2026-10-06 07:27:59.933-05
-1318	V-001318	import-venta-1789764288000-18-12	venta	563	11	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.957-05
-1319	V-001319	import-venta-1789764288000-39-2	venta	563	11	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.978-05
-1320	V-001320	import-venta-1789764288000-29-1	venta	563	11	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.995-05
-1321	V-001321	import-venta-1789764288000-25-1	venta	101	11	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13195	\N	activa	2026-10-06 07:28:00.016-05
-1322	V-001322	import-venta-1789764288000-76-1	venta	101	11	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13195	\N	activa	2026-10-06 07:28:00.038-05
-1323	V-001323	import-venta-1789764292000-14-1	venta	562	11	2026-09-18 15:44:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9953	\N	activa	2026-10-06 07:28:00.06-05
-1324	V-001324	import-venta-1789764292000-28-1	venta	562	11	2026-09-18 15:44:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9953	\N	activa	2026-10-06 07:28:00.075-05
-1325	V-001325	import-venta-1789764293000-25-4	venta	561	11	2026-09-18 15:44:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13198	\N	activa	2026-10-06 07:28:00.09-05
-1326	V-001326	import-venta-1789764294000-96-6	venta	560	11	2026-09-18 15:44:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13199	\N	activa	2026-10-06 07:28:00.111-05
-1327	V-001327	import-venta-1789764295000-14-1	venta	103	11	2026-09-18 15:44:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7156	\N	activa	2026-10-06 07:28:00.126-05
-1328	V-001328	import-venta-1789764297000-15-1	venta	98	11	2026-09-18 15:44:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13201	\N	activa	2026-10-06 07:28:00.139-05
-1329	V-001329	import-venta-1789764297000-14-1	venta	98	11	2026-09-18 15:44:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13201	\N	activa	2026-10-06 07:28:00.151-05
-1330	V-001330	import-venta-1789766774000-96-1	venta	559	11	2026-09-18 16:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13202	\N	activa	2026-10-06 07:28:00.163-05
-1331	V-001331	import-venta-1789767422000-16-1	venta	558	11	2026-09-18 16:37:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9955	\N	activa	2026-10-06 07:28:00.175-05
-1332	V-001332	import-venta-1789767423000-89-1	venta	75	11	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.202-05
-1333	V-001333	import-venta-1789767423000-91-6	venta	75	11	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.235-05
-1334	V-001334	import-venta-1789767423000-96-6	venta	75	11	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.254-05
-1335	V-001335	import-venta-1789767424000-69-1	venta	557	11	2026-09-18 16:37:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13205	\N	activa	2026-10-06 07:28:00.268-05
-1336	V-001336	import-venta-1789767427000-21-6	venta	556	11	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.317-05
-1337	V-001337	import-venta-1789767427000-23-6	venta	556	11	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.359-05
-1338	V-001338	import-venta-1789767427000-91-3	venta	556	11	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.413-05
-1339	V-001339	import-venta-1789767428000-21-6	venta	556	11	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.461-05
-1340	V-001340	import-venta-1789767428000-23-6	venta	556	11	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.49-05
-1341	V-001341	import-venta-1789767428000-91-3	venta	556	11	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.511-05
-1342	V-001342	import-venta-1789767430000-69-1	venta	55	11	2026-09-18 16:37:10-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7158	\N	activa	2026-10-06 07:28:00.529-05
-1343	V-001343	import-venta-1789767433000-97-1	venta	566	11	2026-09-18 16:37:13-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13213	\N	activa	2026-10-06 07:28:00.549-05
-1344	V-001344	import-venta-1789767434000-79-1	venta	70	11	2026-09-18 16:37:14-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13214	\N	activa	2026-10-06 07:28:00.57-05
-1345	V-001345	import-venta-1789767434000-25-1	venta	70	11	2026-09-18 16:37:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13214	\N	activa	2026-10-06 07:28:00.589-05
-1346	V-001346	import-venta-1789767436000-20-2	venta	66	11	2026-09-18 16:37:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13215	\N	activa	2026-10-06 07:28:00.608-05
-1347	V-001347	import-venta-1789767437000-87-1	venta	363	11	2026-09-18 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13217	\N	activa	2026-10-06 07:28:00.626-05
-1348	V-001348	import-venta-1789767437000-31-1	venta	363	11	2026-09-18 16:37:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13217	\N	activa	2026-10-06 07:28:00.64-05
-1349	D-001349	import-devolucion-1789769235000-21-6	devolucion	556	11	2026-09-18 17:07:15-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.651-05
-1350	D-001350	import-devolucion-1789769241000-23-6	devolucion	556	11	2026-09-18 17:07:21-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.662-05
-1351	D-001351	import-devolucion-1789769259000-91-3	devolucion	556	11	2026-09-18 17:07:39-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.673-05
-1352	V-001352	import-venta-1789772054000-25-1	venta	64	11	2026-09-18 17:54:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7159	\N	activa	2026-10-06 07:28:00.686-05
-1353	V-001353	import-venta-1789772057000-25-10	venta	555	11	2026-09-18 17:54:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 10.000000 por generacion de venta F001-9965	\N	activa	2026-10-06 07:28:00.698-05
-1354	V-001354	import-venta-1789772063000-25-1	venta	54	11	2026-09-18 17:54:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7161	\N	activa	2026-10-06 07:28:00.709-05
-1355	V-001355	import-venta-1789772064000-25-18	venta	62	11	2026-09-18 17:54:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-9969	\N	activa	2026-10-06 07:28:00.72-05
-1356	V-001356	import-venta-1789772069000-92-12	venta	554	11	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.733-05
-1357	V-001357	import-venta-1789772069000-89-2	venta	554	11	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.745-05
-1358	V-001358	import-venta-1789772069000-93-1	venta	554	11	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.756-05
-1359	V-001359	import-venta-1789772073000-25-2	venta	553	11	2026-09-18 17:54:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-9976	\N	activa	2026-10-06 07:28:00.77-05
-1360	V-001360	import-venta-1789772076000-96-12	venta	63	11	2026-09-18 17:54:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-9979	\N	activa	2026-10-06 07:28:00.784-05
-1361	V-001361	import-venta-1789772076000-29-1	venta	63	11	2026-09-18 17:54:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9979	\N	activa	2026-10-06 07:28:00.797-05
-1362	D-001362	import-devolucion-1789773494000-46-8	devolucion	552	11	2026-09-18 18:18:14-05	0.00	0.00	0.00	0.00	INGRESO DE DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.812-05
-1363	D-001363	import-devolucion-1789846150000-25-6	devolucion	201	11	2026-09-19 14:29:10-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.828-05
-1364	D-001364	import-devolucion-1789846309000-70-1	devolucion	551	11	2026-09-19 14:31:49-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.842-05
-1365	D-001365	import-devolucion-1789846314000-93-1	devolucion	551	11	2026-09-19 14:31:54-05	0.00	0.00	0.00	0.00	INGRESO DE SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.859-05
-1366	D-001366	import-devolucion-1789846317000-27-2	devolucion	551	11	2026-09-19 14:31:57-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.87-05
-1367	D-001367	import-devolucion-1789846320000-26-2	devolucion	551	11	2026-09-19 14:32:00-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.883-05
-1368	V-001368	import-venta-1789848421000-100-3	venta	550	11	2026-09-19 15:07:01-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta F001-9990	\N	activa	2026-10-06 07:28:00.894-05
-1369	V-001369	import-venta-1789848423000-99-24	venta	549	11	2026-09-19 15:07:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 24.000000 por generacion de venta F001-9992	\N	activa	2026-10-06 07:28:00.907-05
-1370	V-001370	import-venta-1789848423000-100-12	venta	549	11	2026-09-19 15:07:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-9992	\N	activa	2026-10-06 07:28:00.922-05
-1371	V-001371	import-venta-1789848424000-39-5	venta	51	11	2026-09-19 15:07:04-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 5.000000 por generacion de venta NP01-13228	\N	activa	2026-10-06 07:28:00.937-05
-1372	V-001372	import-venta-1789848425000-81-1	venta	51	11	2026-09-19 15:07:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13228	\N	activa	2026-10-06 07:28:00.952-05
-1373	V-001373	import-venta-1789848427000-69-1	venta	50	11	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.967-05
-1374	V-001374	import-venta-1789848427000-79-1	venta	50	11	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.981-05
-1375	V-001375	import-venta-1789848427000-89-1	venta	50	11	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.997-05
-1376	V-001376	import-venta-1789848428000-80-1	venta	50	11	2026-09-19 15:07:08-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:01.01-05
-1377	V-001377	import-venta-1789848430000-87-12	venta	548	11	2026-09-19 15:07:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13229	\N	activa	2026-10-06 07:28:01.023-05
-1378	V-001378	import-venta-1789848431000-92-12	venta	548	11	2026-09-19 15:07:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13229	\N	activa	2026-10-06 07:28:01.037-05
-1379	V-001379	import-venta-1789848431000-93-1	venta	53	11	2026-09-19 15:07:11-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13230	\N	activa	2026-10-06 07:28:01.049-05
-1380	V-001380	import-venta-1789848437000-70-1	venta	48	11	2026-09-19 15:07:17-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13235	\N	activa	2026-10-06 07:28:01.062-05
-1381	V-001381	import-venta-1789848437000-94-1	venta	547	11	2026-09-19 15:07:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7167	\N	activa	2026-10-06 07:28:01.075-05
-1382	V-001382	import-venta-1789848446000-79-1	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.085-05
-1383	V-001383	import-venta-1789848446000-89-1	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.098-05
-1384	V-001384	import-venta-1789848446000-103-12	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.109-05
-1385	V-001385	import-venta-1789848446000-94-1	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.12-05
-1386	V-001386	import-venta-1789848446000-101-12	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.133-05
-1387	V-001387	import-venta-1789848446000-81-1	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.144-05
-1388	V-001388	import-venta-1789848446000-70-1	venta	546	11	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.156-05
-1389	V-001389	import-venta-1789848450000-80-0.25	venta	545	11	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.168-05
-1390	V-001390	import-venta-1789848450000-89-0.5	venta	545	11	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.181-05
-1391	V-001391	import-venta-1789848450000-69-0.25	venta	545	11	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.194-05
-1392	V-001392	import-venta-1789848452000-79-1	venta	544	11	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.208-05
-1393	V-001393	import-venta-1789848452000-92-1	venta	544	11	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.219-05
-1394	V-001394	import-venta-1789848452000-97-1	venta	544	11	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.23-05
-1395	V-001395	import-venta-1789848452000-20-1	venta	544	11	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.242-05
-1396	V-001396	import-venta-1789848454000-26-1	venta	46	11	2026-09-19 15:07:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9999	\N	activa	2026-10-06 07:28:01.254-05
-1397	V-001397	import-venta-1789848454000-93-0.5	venta	46	11	2026-09-19 15:07:34-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-9999	\N	activa	2026-10-06 07:28:01.266-05
-1398	V-001398	import-venta-1789848847000-80-0.5	venta	543	11	2026-09-19 15:14:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13247	\N	activa	2026-10-06 07:28:01.289-05
-1399	V-001399	import-venta-1789848851000-96-3	venta	27	11	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.312-05
-1400	V-001400	import-venta-1789848851000-101-3	venta	27	11	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.333-05
-1401	V-001401	import-venta-1789848851000-103-3	venta	27	11	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.35-05
-1402	V-001402	import-venta-1789848851000-79-0.5	venta	27	11	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.366-05
-1403	V-001403	import-venta-1789848852000-46-2	venta	542	11	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.382-05
-1404	V-001404	import-venta-1789848852000-45-3	venta	542	11	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.398-05
-1405	V-001405	import-venta-1789848852000-87-3	venta	542	11	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.413-05
-1406	V-001406	import-venta-1789848853000-89-0.5	venta	541	11	2026-09-19 15:14:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13249	\N	activa	2026-10-06 07:28:01.428-05
-1407	V-001407	import-venta-1789848855000-79-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.442-05
-1408	V-001408	import-venta-1789848855000-81-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.456-05
-1409	V-001409	import-venta-1789848855000-70-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.469-05
-1410	V-001410	import-venta-1789848855000-89-3	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 3.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.486-05
-1411	V-001411	import-venta-1789848855000-101-2	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.504-05
-1412	V-001412	import-venta-1789848855000-89-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.519-05
-1413	V-001413	import-venta-1789848855000-94-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.538-05
-1414	V-001414	import-venta-1789848855000-39-1	venta	26	11	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.556-05
-1415	V-001415	import-venta-1789848857000-93-1	venta	540	11	2026-09-19 15:14:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13253	\N	activa	2026-10-06 07:28:01.576-05
-1416	V-001416	import-venta-1789848859000-19-1	venta	539	11	2026-09-19 15:14:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7180	\N	activa	2026-10-06 07:28:01.595-05
-1417	V-001417	import-venta-1789848860000-26-1	venta	350	11	2026-09-19 15:14:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13254	\N	activa	2026-10-06 07:28:01.611-05
-1418	V-001418	import-venta-1789849484000-80-0.25	venta	538	11	2026-09-19 15:24:44-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10006	\N	activa	2026-10-06 07:28:01.627-05
-1419	V-001419	import-venta-1789849485000-27-1	venta	38	11	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.646-05
-1420	V-001420	import-venta-1789849485000-28-1	venta	38	11	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.661-05
-1421	V-001421	import-venta-1789849485000-14-1	venta	38	11	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.678-05
-1422	V-001422	import-venta-1789849487000-81-1	venta	537	11	2026-09-19 15:24:47-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13257	\N	activa	2026-10-06 07:28:01.693-05
-1423	V-001423	import-venta-1789849487000-70-1	venta	537	11	2026-09-19 15:24:47-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13257	\N	activa	2026-10-06 07:28:01.709-05
-1424	V-001424	import-venta-1789849491000-25-3	venta	41	11	2026-09-19 15:24:51-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13262	\N	activa	2026-10-06 07:28:01.724-05
-1425	V-001425	import-venta-1789849492000-14-1	venta	39	11	2026-09-19 15:24:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7181	\N	activa	2026-10-06 07:28:01.741-05
-1427	V-001427	import-venta-1789849494000-29-1	venta	536	11	2026-09-19 15:24:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13264	\N	activa	2026-10-06 07:28:01.779-05
-1428	V-001428	import-venta-1789849494000-16-1	venta	536	11	2026-09-19 15:24:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13264	\N	activa	2026-10-06 07:28:01.81-05
-1429	V-001429	import-venta-1789849499000-81-1	venta	535	11	2026-09-19 15:24:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7187	\N	activa	2026-10-06 07:28:01.84-05
-1430	V-001430	import-venta-1789849499000-70-1	venta	535	11	2026-09-19 15:24:59-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7187	\N	activa	2026-10-06 07:28:01.867-05
-1431	V-001431	import-venta-1789849500000-29-1	venta	534	11	2026-09-19 15:25:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13266	\N	activa	2026-10-06 07:28:01.881-05
-1432	V-001432	import-venta-1789849503000-18-3	venta	34	11	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.895-05
-1433	V-001433	import-venta-1789849503000-19-3	venta	34	11	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.91-05
-1434	V-001434	import-venta-1789849503000-93-1	venta	34	11	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.925-05
-1435	V-001435	import-venta-1789849505000-31-2	venta	33	11	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta B001-7189	\N	activa	2026-10-06 07:28:01.94-05
-1436	V-001436	import-venta-1789849505000-31-1	venta	32	11	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.956-05
-1437	V-001437	import-venta-1789849505000-70-0.5	venta	32	11	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.97-05
-1438	V-001438	import-venta-1789849506000-89-0.5	venta	32	11	2026-09-19 15:25:06-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.986-05
-1439	V-001439	import-venta-1789849507000-81-0.5	venta	533	11	2026-09-19 15:25:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10009	\N	activa	2026-10-06 07:28:02.002-05
-1440	V-001440	import-venta-1789849507000-79-0.5	venta	533	11	2026-09-19 15:25:07-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta F001-10009	\N	activa	2026-10-06 07:28:02.018-05
-1441	V-001441	import-venta-1789849508000-67-1	venta	532	11	2026-09-19 15:25:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13268	\N	activa	2026-10-06 07:28:02.035-05
-1442	V-001442	import-venta-1789851067000-16-1	venta	531	11	2026-09-19 15:51:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10010	\N	activa	2026-10-06 07:28:02.051-05
-1443	V-001443	import-venta-1789851069000-15-1	venta	18	11	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.065-05
-1444	V-001444	import-venta-1789851069000-14-1	venta	18	11	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.08-05
-1445	V-001445	import-venta-1789851069000-16-1	venta	18	11	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.095-05
-1446	V-001446	import-venta-1789851069000-25-4	venta	530	11	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13271	\N	activa	2026-10-06 07:28:02.11-05
-1447	V-001447	import-venta-1789851073000-25-3	venta	529	11	2026-09-19 15:51:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta F001-10012	\N	activa	2026-10-06 07:28:02.125-05
-1448	V-001448	import-venta-1789851076000-93-0.5	venta	528	11	2026-09-19 15:51:16-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13276	\N	activa	2026-10-06 07:28:02.14-05
-1449	V-001449	import-venta-1789851076000-70-0.5	venta	528	11	2026-09-19 15:51:16-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13276	\N	activa	2026-10-06 07:28:02.155-05
-1450	V-001450	import-venta-1789851078000-81-1	venta	527	11	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.169-05
-1451	V-001451	import-venta-1789851078000-70-1	venta	527	11	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.184-05
-1452	V-001452	import-venta-1789851078000-89-1	venta	527	11	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.199-05
-1453	V-001453	import-venta-1789851078000-79-1	venta	527	11	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.214-05
-1454	V-001454	import-venta-1789851079000-16-1	venta	17	11	2026-09-19 15:51:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7190	\N	activa	2026-10-06 07:28:02.23-05
-1455	V-001455	import-venta-1789851080000-93-1	venta	526	11	2026-09-19 15:51:20-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13277	\N	activa	2026-10-06 07:28:02.245-05
-1456	V-001456	import-venta-1789851081000-76-1	venta	525	11	2026-09-19 15:51:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10016	\N	activa	2026-10-06 07:28:02.26-05
-1457	V-001457	import-venta-1789851084000-81-1	venta	524	11	2026-09-19 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13279	\N	activa	2026-10-06 07:28:02.275-05
-1458	V-001458	import-venta-1789851084000-70-1	venta	524	11	2026-09-19 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13279	\N	activa	2026-10-06 07:28:02.289-05
-1459	V-001459	import-venta-1789851526000-80-1	venta	523	11	2026-09-19 15:58:46-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13290	\N	activa	2026-10-06 07:28:02.303-05
-1460	V-001460	import-venta-1789852298000-39-3	venta	23	11	2026-09-19 16:11:38-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13297	\N	activa	2026-10-06 07:28:02.318-05
-1461	V-001461	import-venta-1789852301000-93-1	venta	21	11	2026-09-19 16:11:41-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7196	\N	activa	2026-10-06 07:28:02.332-05
-1462	V-001462	import-venta-1789852301000-70-1	venta	21	11	2026-09-19 16:11:41-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7196	\N	activa	2026-10-06 07:28:02.348-05
-1463	V-001463	import-venta-1789852970000-81-2	venta	522	11	2026-09-19 16:22:50-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10025	\N	activa	2026-10-06 07:28:02.365-05
-1464	V-001464	import-venta-1789852972000-25-3	venta	8	11	2026-09-19 16:22:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13315	\N	activa	2026-10-06 07:28:02.389-05
-1465	V-001465	import-venta-1789852974000-39-1	venta	6	11	2026-09-19 16:22:54-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10026	\N	activa	2026-10-06 07:28:02.409-05
-1466	V-001466	import-venta-1789852976000-80-0.75	venta	7	11	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.424-05
-1467	V-001467	import-venta-1789852976000-69-0.75	venta	7	11	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.439-05
-1468	V-001468	import-venta-1789852976000-31-2	venta	7	11	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.452-05
-1469	V-001469	import-venta-1789852979000-81-1	venta	12	11	2026-09-19 16:22:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7197	\N	activa	2026-10-06 07:28:02.465-05
-1470	V-001470	import-venta-1789852979000-27-1	venta	12	11	2026-09-19 16:22:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7197	\N	activa	2026-10-06 07:28:02.48-05
-1471	V-001471	import-venta-1789852980000-93-1	venta	11	11	2026-09-19 16:23:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13320	\N	activa	2026-10-06 07:28:02.494-05
-1472	V-001472	import-venta-1789852981000-29-1	venta	521	11	2026-09-19 16:23:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7198	\N	activa	2026-10-06 07:28:02.508-05
-1473	V-001473	import-venta-1789853837000-89-1	venta	520	11	2026-09-19 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13328	\N	activa	2026-10-06 07:28:02.523-05
-1474	V-001474	import-venta-1789853837000-94-1	venta	520	11	2026-09-19 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13328	\N	activa	2026-10-06 07:28:02.537-05
-1475	V-001475	import-venta-1789853838000-26-1	venta	519	11	2026-09-19 16:37:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13329	\N	activa	2026-10-06 07:28:02.552-05
-1476	V-001476	import-venta-1789853838000-31-1	venta	519	11	2026-09-19 16:37:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13329	\N	activa	2026-10-06 07:28:02.566-05
-1477	V-001477	import-venta-1789854114000-29-1	venta	518	11	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.582-05
-1479	V-001479	import-venta-1789854114000-19-6	venta	518	11	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.604-05
-1480	V-001480	import-venta-1789854114000-18-6	venta	518	11	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.619-05
-1481	V-001481	import-venta-1789854607000-91-1	venta	517	11	2026-09-19 16:50:07-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13332	\N	activa	2026-10-06 07:28:02.636-05
-1482	D-001482	import-devolucion-1789866258000-89-1	devolucion	516	11	2026-09-19 20:04:18-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:02.652-05
-1483	D-001483	import-devolucion-1789866302000-81-1	devolucion	515	11	2026-09-19 20:05:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:02.668-05
-1484	V-001484	import-venta-1790008186000-18-6	venta	514	3	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.682-05
-1485	V-001485	import-venta-1790008186000-15-1	venta	514	3	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.698-05
-1486	V-001486	import-venta-1790008186000-16-1	venta	514	3	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.715-05
-1487	V-001487	import-venta-1790021882000-15-1	venta	513	11	2026-09-21 15:18:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7200	\N	activa	2026-10-06 07:28:02.731-05
-1488	V-001488	import-venta-1790021884000-23-6	venta	512	11	2026-09-21 15:18:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7202	\N	activa	2026-10-06 07:28:02.749-05
-1489	V-001489	import-venta-1790021886000-89-0.5	venta	312	11	2026-09-21 15:18:06-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13337	\N	activa	2026-10-06 07:28:02.765-05
-1490	V-001490	import-venta-1790021887000-29-2	venta	313	11	2026-09-21 15:18:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta B001-7203	\N	activa	2026-10-06 07:28:02.78-05
-1491	V-001491	import-venta-1790021887000-89-1	venta	313	11	2026-09-21 15:18:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7203	\N	activa	2026-10-06 07:28:02.796-05
-1492	V-001492	import-venta-1790021888000-18-6	venta	511	11	2026-09-21 15:18:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta F001-10032	\N	activa	2026-10-06 07:28:02.812-05
-1493	V-001493	import-venta-1790021889000-25-2	venta	311	11	2026-09-21 15:18:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10033	\N	activa	2026-10-06 07:28:02.828-05
-1494	V-001494	import-venta-1790021892000-81-1	venta	310	11	2026-09-21 15:18:12-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13339	\N	activa	2026-10-06 07:28:02.843-05
-1495	V-001495	import-venta-1790021895000-69-1	venta	510	11	2026-09-21 15:18:15-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7206	\N	activa	2026-10-06 07:28:02.858-05
-1496	V-001496	import-venta-1790021895000-79-1	venta	510	11	2026-09-21 15:18:15-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7206	\N	activa	2026-10-06 07:28:02.874-05
-1497	V-001497	import-venta-1790021898000-28-1	venta	509	11	2026-09-21 15:18:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13343	\N	activa	2026-10-06 07:28:02.89-05
-1498	V-001498	import-venta-1790021901000-79-1	venta	508	11	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.905-05
-1499	V-001499	import-venta-1790021901000-29-1	venta	508	11	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.921-05
-1500	V-001500	import-venta-1790021901000-27-1	venta	508	11	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.936-05
-1501	V-001501	import-venta-1790021902000-87-6	venta	507	11	2026-09-21 15:18:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta F001-10035	\N	activa	2026-10-06 07:28:02.95-05
-1502	V-001502	import-venta-1790021905000-19-6	venta	302	11	2026-09-21 15:18:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13350	\N	activa	2026-10-06 07:28:02.967-05
-1503	V-001503	import-venta-1790021905000-14-1	venta	303	11	2026-09-21 15:18:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13351	\N	activa	2026-10-06 07:28:02.983-05
-1504	V-001504	import-venta-1790021906000-16-1	venta	506	11	2026-09-21 15:18:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13352	\N	activa	2026-10-06 07:28:03-05
-1505	V-001505	import-venta-1790021908000-26-1	venta	505	11	2026-09-21 15:18:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10037	\N	activa	2026-10-06 07:28:03.017-05
-1506	V-001506	import-venta-1790022755000-39-3	venta	274	11	2026-09-21 15:32:35-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13355	\N	activa	2026-10-06 07:28:03.034-05
-1507	V-001507	import-venta-1790022774000-48-1	venta	504	11	2026-09-21 15:32:54-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta NP01-13358	\N	activa	2026-10-06 07:28:03.052-05
-1508	V-001508	import-venta-1790022797000-93-1	venta	272	11	2026-09-21 15:33:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.067-05
-1509	V-001509	import-venta-1790022798000-79-1	venta	272	11	2026-09-21 15:33:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.084-05
-1510	V-001510	import-venta-1790022798000-89-1	venta	272	11	2026-09-21 15:33:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.101-05
-1511	V-001511	import-venta-1790022838000-25-3	venta	503	11	2026-09-21 15:33:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13369	\N	activa	2026-10-06 07:28:03.117-05
-1512	V-001512	import-venta-1790023229000-99-3	venta	502	11	2026-09-21 15:40:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13374	\N	activa	2026-10-06 07:28:03.135-05
-1513	V-001513	import-venta-1790023233000-16-1	venta	501	11	2026-09-21 15:40:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13376	\N	activa	2026-10-06 07:28:03.151-05
-1514	V-001514	import-venta-1790023234000-16-1	venta	289	11	2026-09-21 15:40:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13377	\N	activa	2026-10-06 07:28:03.167-05
-1515	V-001515	import-venta-1790023234000-27-1	venta	289	11	2026-09-21 15:40:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13377	\N	activa	2026-10-06 07:28:03.191-05
-1516	V-001516	import-venta-1790023238000-14-1	venta	500	11	2026-09-21 15:40:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13379	\N	activa	2026-10-06 07:28:03.215-05
-1517	V-001517	import-venta-1790023238000-16-1	venta	500	11	2026-09-21 15:40:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13379	\N	activa	2026-10-06 07:28:03.233-05
-1518	V-001518	import-venta-1790023241000-87-12	venta	499	11	2026-09-21 15:40:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7218	\N	activa	2026-10-06 07:28:03.247-05
-1519	V-001519	import-venta-1790023243000-16-1	venta	498	11	2026-09-21 15:40:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10043	\N	activa	2026-10-06 07:28:03.261-05
-1520	V-001520	import-venta-1790023244000-16-1	venta	497	11	2026-09-21 15:40:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13380	\N	activa	2026-10-06 07:28:03.277-05
-1521	V-001521	import-venta-1790023244000-15-1	venta	497	11	2026-09-21 15:40:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13380	\N	activa	2026-10-06 07:28:03.294-05
-1522	V-001522	import-venta-1790023247000-39-1	venta	496	11	2026-09-21 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13382	\N	activa	2026-10-06 07:28:03.31-05
-1523	V-001523	import-venta-1790023247000-29-1	venta	496	11	2026-09-21 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13382	\N	activa	2026-10-06 07:28:03.325-05
-1524	V-001524	import-venta-1790023250000-79-1	venta	495	11	2026-09-21 15:40:50-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7221	\N	activa	2026-10-06 07:28:03.34-05
-1525	V-001525	import-venta-1790023254000-89-0.5	venta	152	11	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.357-05
-1526	V-001526	import-venta-1790023254000-26-1	venta	152	11	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.373-05
-1527	V-001527	import-venta-1790023254000-99-6	venta	152	11	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.391-05
-1528	V-001528	import-venta-1790023823000-14-1	venta	494	11	2026-09-21 15:50:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13390	\N	activa	2026-10-06 07:28:03.409-05
-1529	V-001529	import-venta-1790023824000-27-1	venta	493	11	2026-09-21 15:50:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7226	\N	activa	2026-10-06 07:28:03.427-05
-1530	V-001530	import-venta-1790023824000-26-1	venta	493	11	2026-09-21 15:50:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7226	\N	activa	2026-10-06 07:28:03.447-05
-1531	V-001531	import-venta-1790023825000-89-2	venta	300	11	2026-09-21 15:50:25-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE X12 SOB GIG 100 GR /PAQUETE X6 DISLPL por la cantidad de 2.000000 por generacion de venta NP01-13391	\N	activa	2026-10-06 07:28:03.463-05
-1532	V-001532	import-venta-1790023826000-101-6	venta	492	11	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.476-05
-1533	V-001533	import-venta-1790023826000-103-6	venta	492	11	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.489-05
-1534	V-001534	import-venta-1790023826000-29-4	venta	492	11	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 4.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.502-05
-1535	V-001535	import-venta-1790023826000-28-1	venta	492	11	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.515-05
-1536	V-001536	import-venta-1790023826000-89-1	venta	492	11	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.527-05
-1537	V-001537	import-venta-1790023830000-39-1	venta	491	11	2026-09-21 15:50:30-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-13394	\N	activa	2026-10-06 07:28:03.538-05
-1538	V-001538	import-venta-1790023836000-70-1	venta	490	11	2026-09-21 15:50:36-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7228	\N	activa	2026-10-06 07:28:03.551-05
-1539	V-001539	import-venta-1790023840000-45-2	venta	296	11	2026-09-21 15:50:40-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13398	\N	activa	2026-10-06 07:28:03.567-05
-1540	V-001540	import-venta-1790023847000-39-3	venta	294	11	2026-09-21 15:50:47-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta F001-10050	\N	activa	2026-10-06 07:28:03.583-05
-1541	V-001541	import-venta-1790023850000-80-0.25	venta	489	11	2026-09-21 15:50:50-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13404	\N	activa	2026-10-06 07:28:03.601-05
-1542	V-001542	import-venta-1790023850000-94-1	venta	489	11	2026-09-21 15:50:50-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13404	\N	activa	2026-10-06 07:28:03.62-05
-1543	V-001543	import-venta-1790023851000-93-0.5	venta	293	11	2026-09-21 15:50:51-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13405	\N	activa	2026-10-06 07:28:03.634-05
-1544	V-001544	import-venta-1790024945000-26-1	venta	271	11	2026-09-21 16:09:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13410	\N	activa	2026-10-06 07:28:03.648-05
-1545	V-001545	import-venta-1790024950000-77-1	venta	408	11	2026-09-21 16:09:10-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13411	\N	activa	2026-10-06 07:28:03.662-05
-1546	V-001546	import-venta-1790024951000-89-1	venta	488	11	2026-09-21 16:09:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7239	\N	activa	2026-10-06 07:28:03.677-05
-1547	V-001547	import-venta-1790024952000-39-1	venta	487	11	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.691-05
-1548	V-001548	import-venta-1790024952000-29-1	venta	487	11	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.707-05
-1549	V-001549	import-venta-1790024952000-23-6	venta	487	11	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.725-05
-1550	V-001550	import-venta-1790024957000-27-1	venta	266	11	2026-09-21 16:09:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7241	\N	activa	2026-10-06 07:28:03.743-05
-1551	V-001551	import-venta-1790024957000-81-1	venta	266	11	2026-09-21 16:09:17-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7241	\N	activa	2026-10-06 07:28:03.757-05
-1552	V-001552	import-venta-1790026614000-89-1	venta	283	11	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.776-05
-1553	V-001553	import-venta-1790026614000-88-1	venta	283	11	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.791-05
-1554	V-001554	import-venta-1790026614000-67-6	venta	283	11	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.805-05
-1555	V-001555	import-venta-1790026620000-89-1	venta	486	11	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.818-05
-1556	V-001556	import-venta-1790026620000-92-6	venta	486	11	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.833-05
-1557	V-001557	import-venta-1790026620000-87-6	venta	486	11	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.852-05
-1558	V-001558	import-venta-1790026627000-29-1	venta	155	11	2026-09-21 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13440	\N	activa	2026-10-06 07:28:03.87-05
-1559	V-001559	import-venta-1790026629000-46-2	venta	485	11	2026-09-21 16:37:09-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13441	\N	activa	2026-10-06 07:28:03.886-05
-1560	V-001560	import-venta-1790026629000-29-6	venta	485	11	2026-09-21 16:37:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 6.000000 por generacion de venta NP01-13441	\N	activa	2026-10-06 07:28:03.903-05
-1561	V-001561	import-venta-1790026631000-26-1	venta	484	11	2026-09-21 16:37:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13442	\N	activa	2026-10-06 07:28:03.922-05
-1562	V-001562	import-venta-1790026632000-14-1	venta	276	11	2026-09-21 16:37:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13443	\N	activa	2026-10-06 07:28:03.935-05
-1563	V-001563	import-venta-1790026632000-76-1	venta	275	11	2026-09-21 16:37:12-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13444	\N	activa	2026-10-06 07:28:03.949-05
-1564	D-001564	import-devolucion-1790037284000-20-1	devolucion	315	11	2026-09-21 19:34:44-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.963-05
-1565	D-001565	import-devolucion-1790037287000-19-1	devolucion	315	11	2026-09-21 19:34:47-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.975-05
-1566	D-001566	import-devolucion-1790037290000-28-1	devolucion	315	11	2026-09-21 19:34:50-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.986-05
-1567	D-001567	import-devolucion-1790106245000-25-1	devolucion	101	11	2026-09-22 14:44:05-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.999-05
-1568	D-001568	import-devolucion-1790106248000-76-1	devolucion	101	11	2026-09-22 14:44:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.011-05
-1569	D-001569	import-devolucion-1790106354000-97-1	devolucion	566	11	2026-09-22 14:45:54-05	0.00	0.00	0.00	0.00	INGRESO DE SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.021-05
-1570	D-001570	import-devolucion-1790106441000-88-0.5	devolucion	482	11	2026-09-22 14:47:21-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.033-05
-1571	V-001571	import-venta-1790108878000-25-1	venta	481	11	2026-09-22 15:27:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13461	\N	activa	2026-10-06 07:28:04.045-05
-1572	V-001572	import-venta-1790108878000-93-1	venta	481	11	2026-09-22 15:27:58-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13461	\N	activa	2026-10-06 07:28:04.059-05
-1573	V-001573	import-venta-1790108912000-99-6	venta	243	11	2026-09-22 15:28:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13466	\N	activa	2026-10-06 07:28:04.071-05
-1574	V-001574	import-venta-1790108932000-25-3	venta	480	11	2026-09-22 15:28:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13471	\N	activa	2026-10-06 07:28:04.086-05
-1575	V-001575	import-venta-1790108935000-93-0.5	venta	244	11	2026-09-22 15:28:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7251	\N	activa	2026-10-06 07:28:04.1-05
-1576	V-001576	import-venta-1790108935000-89-0.5	venta	244	11	2026-09-22 15:28:55-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7251	\N	activa	2026-10-06 07:28:04.123-05
-1577	V-001577	import-venta-1790109604000-29-1	venta	479	11	2026-09-22 15:40:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7255	\N	activa	2026-10-06 07:28:04.139-05
-1578	V-001578	import-venta-1790109608000-46-4	venta	478	11	2026-09-22 15:40:08-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7256	\N	activa	2026-10-06 07:28:04.161-05
-1579	V-001579	import-venta-1790109610000-89-1	venta	477	11	2026-09-22 15:40:10-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13484	\N	activa	2026-10-06 07:28:04.178-05
-1580	V-001580	import-venta-1790109610000-14-1	venta	477	11	2026-09-22 15:40:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13484	\N	activa	2026-10-06 07:28:04.194-05
-1911	D-001911	import-devolucion-1790431542000-80-0.25	devolucion	182	11	2026-09-26 09:05:42-05	0.00	0.00	0.00	0.00	INGRESO DE PIMIENTA MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.781-05
-1581	V-001581	import-venta-1790109611000-31-1	venta	476	11	2026-09-22 15:40:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13485	\N	activa	2026-10-06 07:28:04.211-05
-1582	V-001582	import-venta-1790109612000-67-1	venta	475	11	2026-09-22 15:40:12-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13486	\N	activa	2026-10-06 07:28:04.234-05
-1583	V-001583	import-venta-1790109613000-94-1	venta	474	11	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.251-05
-1584	V-001584	import-venta-1790109613000-89-1	venta	474	11	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.269-05
-1585	V-001585	import-venta-1790109613000-97-1	venta	474	11	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.287-05
-1586	V-001586	import-venta-1790109616000-29-1	venta	473	11	2026-09-22 15:40:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13490	\N	activa	2026-10-06 07:28:04.305-05
-1587	V-001587	import-venta-1790109616000-28-1	venta	473	11	2026-09-22 15:40:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13490	\N	activa	2026-10-06 07:28:04.321-05
-1588	V-001588	import-venta-1790109618000-26-1	venta	237	11	2026-09-22 15:40:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13492	\N	activa	2026-10-06 07:28:04.338-05
-1589	V-001589	import-venta-1790109619000-89-1	venta	237	11	2026-09-22 15:40:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13492	\N	activa	2026-10-06 07:28:04.354-05
-1590	V-001590	import-venta-1790109627000-25-4	venta	229	11	2026-09-22 15:40:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13497	\N	activa	2026-10-06 07:28:04.373-05
-1591	V-001591	import-venta-1790109629000-81-1	venta	472	11	2026-09-22 15:40:29-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10071	\N	activa	2026-10-06 07:28:04.389-05
-1592	V-001592	import-venta-1790110651000-29-12	venta	204	11	2026-09-22 15:57:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.403-05
-1593	V-001593	import-venta-1790110651000-92-12	venta	204	11	2026-09-22 15:57:31-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.419-05
-1594	V-001594	import-venta-1790110652000-39-15	venta	204	11	2026-09-22 15:57:32-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 15.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.434-05
-1595	V-001595	import-venta-1790110655000-81-0.5	venta	471	11	2026-09-22 15:57:35-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10079	\N	activa	2026-10-06 07:28:04.446-05
-1596	V-001596	import-venta-1790110656000-25-1	venta	251	11	2026-09-22 15:57:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10080	\N	activa	2026-10-06 07:28:04.459-05
-1597	V-001597	import-venta-1790110658000-48-1	venta	470	11	2026-09-22 15:57:38-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10081	\N	activa	2026-10-06 07:28:04.472-05
-1598	V-001598	import-venta-1790110663000-92-6	venta	381	11	2026-09-22 15:57:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13507	\N	activa	2026-10-06 07:28:04.483-05
-1599	V-001599	import-venta-1790110665000-14-1	venta	382	11	2026-09-22 15:57:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13509	\N	activa	2026-10-06 07:28:04.495-05
-1600	V-001600	import-venta-1790110667000-93-1	venta	469	11	2026-09-22 15:57:47-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10084	\N	activa	2026-10-06 07:28:04.507-05
-1601	V-001601	import-venta-1790110668000-14-1	venta	256	11	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.518-05
-1602	V-001602	import-venta-1790110668000-93-1	venta	256	11	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.531-05
-1603	V-001603	import-venta-1790110668000-69-1	venta	256	11	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.543-05
-1604	V-001604	import-venta-1790114484000-29-1	venta	226	11	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13513	\N	activa	2026-10-06 07:28:04.559-05
-1605	V-001605	import-venta-1790114484000-26-1	venta	226	11	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13513	\N	activa	2026-10-06 07:28:04.572-05
-1606	V-001606	import-venta-1790114484000-27-1	venta	468	11	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13514	\N	activa	2026-10-06 07:28:04.585-05
-1607	V-001607	import-venta-1790114484000-76-1	venta	468	11	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13514	\N	activa	2026-10-06 07:28:04.599-05
-1608	V-001608	import-venta-1790114486000-26-1	venta	467	11	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.613-05
-1609	V-001609	import-venta-1790114486000-28-1	venta	467	11	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.626-05
-1610	V-001610	import-venta-1790114486000-80-1	venta	467	11	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.64-05
-1611	V-001611	import-venta-1790114490000-25-2	venta	227	11	2026-09-22 17:01:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10090	\N	activa	2026-10-06 07:28:04.652-05
-1612	V-001612	import-venta-1790114491000-80-1	venta	228	11	2026-09-22 17:01:31-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7268	\N	activa	2026-10-06 07:28:04.664-05
-1613	V-001613	import-venta-1790114492000-96-12	venta	466	11	2026-09-22 17:01:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10091	\N	activa	2026-10-06 07:28:04.677-05
-1614	V-001614	import-venta-1790114495000-76-1	venta	224	11	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.69-05
-1615	V-001615	import-venta-1790114495000-93-0.5	venta	224	11	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.703-05
-1616	V-001616	import-venta-1790114495000-25-1	venta	224	11	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.717-05
-1617	V-001617	import-venta-1790114496000-101-3	venta	465	11	2026-09-22 17:01:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13517	\N	activa	2026-10-06 07:28:04.731-05
-1618	V-001618	import-venta-1790114496000-14-1	venta	465	11	2026-09-22 17:01:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13517	\N	activa	2026-10-06 07:28:04.745-05
-1619	V-001619	import-venta-1790114498000-89-1	venta	464	11	2026-09-22 17:01:38-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13518	\N	activa	2026-10-06 07:28:04.759-05
-1620	V-001620	import-venta-1790114500000-80-1	venta	108	11	2026-09-22 17:01:40-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7272	\N	activa	2026-10-06 07:28:04.771-05
-1621	V-001621	import-venta-1790114501000-15-1	venta	463	11	2026-09-22 17:01:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13521	\N	activa	2026-10-06 07:28:04.784-05
-1622	V-001622	import-venta-1790114503000-89-1	venta	462	11	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.798-05
-1623	V-001623	import-venta-1790114503000-87-1	venta	462	11	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.812-05
-1624	V-001624	import-venta-1790114503000-28-1	venta	462	11	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.825-05
-1625	V-001625	import-venta-1790114505000-14-1	venta	461	11	2026-09-22 17:01:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13523	\N	activa	2026-10-06 07:28:04.839-05
-1626	V-001626	import-venta-1790118153000-89-1	venta	460	11	2026-09-22 18:02:33-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13532	\N	activa	2026-10-06 07:28:04.854-05
-1627	V-001627	import-venta-1790118153000-93-1	venta	460	11	2026-09-22 18:02:33-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13532	\N	activa	2026-10-06 07:28:04.868-05
-1628	V-001628	import-venta-1790118156000-99-12	venta	209	11	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.884-05
-1629	V-001629	import-venta-1790118156000-100-12	venta	209	11	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.9-05
-1630	V-001630	import-venta-1790118156000-25-2	venta	209	11	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.916-05
-1631	V-001631	import-venta-1790118163000-96-6	venta	208	11	2026-09-22 18:02:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13540	\N	activa	2026-10-06 07:28:04.931-05
-1632	V-001632	import-venta-1790118163000-91-6	venta	208	11	2026-09-22 18:02:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13540	\N	activa	2026-10-06 07:28:04.943-05
-1633	V-001633	import-venta-1790118164000-91-6	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.957-05
-1634	V-001634	import-venta-1790118164000-89-1	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.969-05
-1636	V-001636	import-venta-1790118164000-76-1	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.994-05
-1637	V-001637	import-venta-1790118164000-69-1	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.004-05
-1639	V-001639	import-venta-1790118164000-80-1	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.035-05
-1640	V-001640	import-venta-1790118164000-20-1	venta	459	11	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.065-05
-1641	V-001641	import-venta-1790118583000-96-1	venta	458	11	2026-09-22 18:09:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13543	\N	activa	2026-10-06 07:28:05.093-05
-1642	V-001642	import-venta-1790118651000-87-1	venta	223	11	2026-09-22 18:10:51-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.115-05
-1643	V-001643	import-venta-1790118651000-92-1	venta	223	11	2026-09-22 18:10:51-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.13-05
-1644	V-001644	import-venta-1790118652000-25-1	venta	223	11	2026-09-22 18:10:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.146-05
-1645	V-001645	import-venta-1790118653000-25-1	venta	457	11	2026-09-22 18:10:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13544	\N	activa	2026-10-06 07:28:05.164-05
-1646	V-001646	import-venta-1790118654000-80-1	venta	456	11	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.198-05
-1647	V-001647	import-venta-1790118654000-69-1	venta	456	11	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.231-05
-1648	V-001648	import-venta-1790118654000-103-6	venta	456	11	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.255-05
-1650	V-001650	import-venta-1790118656000-25-1	venta	222	11	2026-09-22 18:10:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7276	\N	activa	2026-10-06 07:28:05.286-05
-1651	V-001651	import-venta-1790118656000-99-6	venta	222	11	2026-09-22 18:10:56-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7276	\N	activa	2026-10-06 07:28:05.297-05
-1652	V-001652	import-venta-1790118658000-25-2	venta	455	11	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.309-05
-1653	V-001653	import-venta-1790118658000-69-0.5	venta	455	11	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.321-05
-1654	V-001654	import-venta-1790118658000-80-1	venta	455	11	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.335-05
-1655	V-001655	import-venta-1790118660000-80-0.5	venta	454	11	2026-09-22 18:11:00-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10113	\N	activa	2026-10-06 07:28:05.347-05
-1656	V-001656	import-venta-1790118660000-69-0.5	venta	454	11	2026-09-22 18:11:00-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10113	\N	activa	2026-10-06 07:28:05.361-05
-1657	V-001657	import-venta-1790118665000-25-1	venta	220	11	2026-09-22 18:11:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13545	\N	activa	2026-10-06 07:28:05.376-05
-1658	V-001658	import-venta-1790118665000-89-1	venta	220	11	2026-09-22 18:11:05-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13545	\N	activa	2026-10-06 07:28:05.389-05
-1660	V-001660	import-venta-1790119010000-76-1	venta	82	11	2026-09-22 18:16:50-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13549	\N	activa	2026-10-06 07:28:05.41-05
-1661	V-001661	import-venta-1790119012000-80-0.25	venta	453	11	2026-09-22 18:16:52-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13551	\N	activa	2026-10-06 07:28:05.422-05
-1662	V-001662	import-venta-1790119012000-69-0.25	venta	453	11	2026-09-22 18:16:52-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13551	\N	activa	2026-10-06 07:28:05.434-05
-1663	V-001663	import-venta-1790121147000-91-3	venta	452	11	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.447-05
-1664	V-001664	import-venta-1790121147000-96-3	venta	452	11	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.46-05
-1665	V-001665	import-venta-1790121147000-55-1	venta	452	11	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 1.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.474-05
-1666	D-001666	import-devolucion-1790171929000-93-1	devolucion	11	11	2026-09-23 08:58:49-05	0.00	0.00	0.00	0.00	INGRESO DE SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:05.486-05
-1667	V-001667	import-venta-1790176972000-25-5	venta	221	3	2026-09-23 10:22:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10128	\N	activa	2026-10-06 07:28:05.499-05
-1668	V-001668	import-venta-1790194858000-20-1	venta	197	11	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.511-05
-1669	V-001669	import-venta-1790194858000-23-6	venta	197	11	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.524-05
-1670	V-001670	import-venta-1790194858000-93-1	venta	197	11	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.536-05
-1671	V-001671	import-venta-1790194858000-79-1	venta	197	11	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.548-05
-1672	V-001672	import-venta-1790194861000-89-0.5	venta	451	11	2026-09-23 15:21:01-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13560	\N	activa	2026-10-06 07:28:05.564-05
-1673	V-001673	import-venta-1790194863000-80-1	venta	450	11	2026-09-23 15:21:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13562	\N	activa	2026-10-06 07:28:05.577-05
-1674	V-001674	import-venta-1790194868000-67-1	venta	449	11	2026-09-23 15:21:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7282	\N	activa	2026-10-06 07:28:05.592-05
-1675	V-001675	import-venta-1790194870000-25-2	venta	193	11	2026-09-23 15:21:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13567	\N	activa	2026-10-06 07:28:05.607-05
-1676	V-001676	import-venta-1790194872000-92-3	venta	448	11	2026-09-23 15:21:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13569	\N	activa	2026-10-06 07:28:05.621-05
-1677	V-001677	import-venta-1790194872000-16-1	venta	448	11	2026-09-23 15:21:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13569	\N	activa	2026-10-06 07:28:05.634-05
-1678	V-001678	import-venta-1790194873000-15-1	venta	447	11	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.65-05
-1679	V-001679	import-venta-1790194873000-14-1	venta	447	11	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.667-05
-1680	V-001680	import-venta-1790194873000-16-1	venta	447	11	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.684-05
-1681	V-001681	import-venta-1790194873000-46-8	venta	189	11	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13570	\N	activa	2026-10-06 07:28:05.698-05
-1682	V-001682	import-venta-1790194873000-45-3	venta	189	11	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-13570	\N	activa	2026-10-06 07:28:05.713-05
-1683	V-001683	import-venta-1790194874000-81-1	venta	446	11	2026-09-23 15:21:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7284	\N	activa	2026-10-06 07:28:05.727-05
-1684	V-001684	import-venta-1790194876000-18-12	venta	186	11	2026-09-23 15:21:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 12.000000 por generacion de venta B001-7285	\N	activa	2026-10-06 07:28:05.739-05
-1685	V-001685	import-venta-1790194876000-16-1	venta	186	11	2026-09-23 15:21:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7285	\N	activa	2026-10-06 07:28:05.75-05
-1686	V-001686	import-venta-1790194878000-67-1	venta	445	11	2026-09-23 15:21:18-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10130	\N	activa	2026-10-06 07:28:05.764-05
-1687	V-001687	import-venta-1790194880000-16-1	venta	444	11	2026-09-23 15:21:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7287	\N	activa	2026-10-06 07:28:05.776-05
-1688	V-001688	import-venta-1790194883000-46-4	venta	185	11	2026-09-23 15:21:23-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta NP01-13574	\N	activa	2026-10-06 07:28:05.788-05
-1689	V-001689	import-venta-1790194885000-16-1	venta	443	11	2026-09-23 15:21:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13576	\N	activa	2026-10-06 07:28:05.8-05
-1690	V-001690	import-venta-1790194886000-26-1	venta	442	11	2026-09-23 15:21:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10132	\N	activa	2026-10-06 07:28:05.813-05
-1691	V-001691	import-venta-1790194887000-15-1	venta	441	11	2026-09-23 15:21:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7290	\N	activa	2026-10-06 07:28:05.825-05
-1692	V-001692	import-venta-1790194889000-14-1	venta	440	11	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.837-05
-1693	V-001693	import-venta-1790194889000-15-1	venta	440	11	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.849-05
-1694	V-001694	import-venta-1790194889000-16-1	venta	440	11	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.86-05
-1695	V-001695	import-venta-1790194889000-89-1	venta	440	11	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.873-05
-1696	V-001696	import-venta-1790194890000-46-8	venta	183	11	2026-09-23 15:21:30-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13578	\N	activa	2026-10-06 07:28:05.886-05
-1697	V-001697	import-venta-1790194891000-89-1	venta	439	11	2026-09-23 15:21:31-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13579	\N	activa	2026-10-06 07:28:05.899-05
-1698	V-001698	import-venta-1790194891000-28-1	venta	439	11	2026-09-23 15:21:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13579	\N	activa	2026-10-06 07:28:05.912-05
-1699	V-001699	import-venta-1790194892000-25-1	venta	182	11	2026-09-23 15:21:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13580	\N	activa	2026-10-06 07:28:05.926-05
-1700	V-001700	import-venta-1790194892000-80-0.25	venta	182	11	2026-09-23 15:21:32-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13580	\N	activa	2026-10-06 07:28:05.938-05
-1701	V-001701	import-venta-1790195782000-93-1	venta	438	11	2026-09-23 15:36:22-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13582	\N	activa	2026-10-06 07:28:05.951-05
-1702	V-001702	import-venta-1790195782000-28-1	venta	438	11	2026-09-23 15:36:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13582	\N	activa	2026-10-06 07:28:05.964-05
-1703	V-001703	import-venta-1790195788000-93-0.5	venta	437	11	2026-09-23 15:36:28-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13588	\N	activa	2026-10-06 07:28:05.976-05
-1704	V-001704	import-venta-1790195788000-89-0.5	venta	437	11	2026-09-23 15:36:28-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13588	\N	activa	2026-10-06 07:28:05.989-05
-1705	V-001705	import-venta-1790195790000-89-0.5	venta	436	11	2026-09-23 15:36:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13590	\N	activa	2026-10-06 07:28:06.001-05
-1706	V-001706	import-venta-1790195791000-16-1	venta	435	11	2026-09-23 15:36:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7291	\N	activa	2026-10-06 07:28:06.023-05
-1707	V-001707	import-venta-1790195795000-79-1	venta	434	11	2026-09-23 15:36:35-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13595	\N	activa	2026-10-06 07:28:06.038-05
-1708	V-001708	import-venta-1790195801000-89-1	venta	433	11	2026-09-23 15:36:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10135	\N	activa	2026-10-06 07:28:06.062-05
-1709	V-001709	import-venta-1790195801000-22-1	venta	433	11	2026-09-23 15:36:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta F001-10135	\N	activa	2026-10-06 07:28:06.077-05
-1710	V-001710	import-venta-1790195802000-87-12	venta	432	11	2026-09-23 15:36:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13600	\N	activa	2026-10-06 07:28:06.091-05
-1711	V-001711	import-venta-1790195802000-92-12	venta	432	11	2026-09-23 15:36:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13600	\N	activa	2026-10-06 07:28:06.103-05
-1712	V-001712	import-venta-1790195806000-28-2	venta	431	11	2026-09-23 15:36:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13603	\N	activa	2026-10-06 07:28:06.121-05
-1713	V-001713	import-venta-1790195807000-87-3	venta	430	11	2026-09-23 15:36:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13604	\N	activa	2026-10-06 07:28:06.134-05
-1714	V-001714	import-venta-1790195808000-29-1	venta	429	11	2026-09-23 15:36:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13605	\N	activa	2026-10-06 07:28:06.147-05
-1715	V-001715	import-venta-1790196419000-15-1	venta	428	11	2026-09-23 15:46:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13611	\N	activa	2026-10-06 07:28:06.162-05
-1716	V-001716	import-venta-1790196420000-70-0.5	venta	427	11	2026-09-23 15:47:00-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13612	\N	activa	2026-10-06 07:28:06.175-05
-1717	V-001717	import-venta-1790196422000-93-1	venta	426	11	2026-09-23 15:47:02-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13613	\N	activa	2026-10-06 07:28:06.188-05
-1718	V-001718	import-venta-1790196422000-67-1	venta	426	11	2026-09-23 15:47:02-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13613	\N	activa	2026-10-06 07:28:06.201-05
-1719	V-001719	import-venta-1790196423000-27-1	venta	352	11	2026-09-23 15:47:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10139	\N	activa	2026-10-06 07:28:06.215-05
-1720	V-001720	import-venta-1790196424000-67-1	venta	425	11	2026-09-23 15:47:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13614	\N	activa	2026-10-06 07:28:06.229-05
-1721	V-001721	import-venta-1790196427000-21-6	venta	424	11	2026-09-23 15:47:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13616	\N	activa	2026-10-06 07:28:06.243-05
-1722	V-001722	import-venta-1790196433000-67-1	venta	423	11	2026-09-23 15:47:13-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13621	\N	activa	2026-10-06 07:28:06.256-05
-1723	V-001723	import-venta-1790196433000-76-1	venta	423	11	2026-09-23 15:47:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13621	\N	activa	2026-10-06 07:28:06.268-05
-1724	V-001724	import-venta-1790196434000-27-1	venta	422	11	2026-09-23 15:47:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13622	\N	activa	2026-10-06 07:28:06.282-05
-1725	V-001725	import-venta-1790196436000-16-1	venta	421	11	2026-09-23 15:47:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13623	\N	activa	2026-10-06 07:28:06.295-05
-1726	V-001726	import-venta-1790196436000-46-8	venta	421	11	2026-09-23 15:47:16-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13623	\N	activa	2026-10-06 07:28:06.31-05
-1727	V-001727	import-venta-1790196439000-70-0.5	venta	420	11	2026-09-23 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10143	\N	activa	2026-10-06 07:28:06.324-05
-1728	V-001728	import-venta-1790196440000-14-1	venta	419	11	2026-09-23 15:47:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13625	\N	activa	2026-10-06 07:28:06.338-05
-1729	V-001729	import-venta-1790196722000-25-1	venta	59	11	2026-09-23 15:52:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13627	\N	activa	2026-10-06 07:28:06.35-05
-1730	V-001730	import-venta-1790196724000-21-6	venta	418	11	2026-09-23 15:52:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7293	\N	activa	2026-10-06 07:28:06.364-05
-1731	V-001731	import-venta-1790196724000-29-1	venta	418	11	2026-09-23 15:52:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7293	\N	activa	2026-10-06 07:28:06.379-05
-1732	V-001732	import-venta-1790196726000-70-1	venta	417	11	2026-09-23 15:52:06-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13629	\N	activa	2026-10-06 07:28:06.39-05
-1733	V-001733	import-venta-1790196727000-81-0.5	venta	416	11	2026-09-23 15:52:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10148	\N	activa	2026-10-06 07:28:06.403-05
-1734	V-001734	import-venta-1790196732000-46-4	venta	179	11	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.416-05
-1735	V-001735	import-venta-1790196732000-45-4	venta	179	11	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.427-05
-1736	V-001736	import-venta-1790196732000-92-2	venta	179	11	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.44-05
-1737	V-001737	import-venta-1790196732000-29-1	venta	179	11	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.454-05
-1738	V-001738	import-venta-1790196736000-87-1	venta	178	11	2026-09-23 15:52:16-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13633	\N	activa	2026-10-06 07:28:06.468-05
-1739	V-001739	import-venta-1790196741000-25-1	venta	415	11	2026-09-23 15:52:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13636	\N	activa	2026-10-06 07:28:06.499-05
-1740	V-001740	import-venta-1790196741000-96-3	venta	415	11	2026-09-23 15:52:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13636	\N	activa	2026-10-06 07:28:06.515-05
-1741	V-001741	import-venta-1790196743000-26-1	venta	414	11	2026-09-23 15:52:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7298	\N	activa	2026-10-06 07:28:06.53-05
-1742	V-001742	import-venta-1790196743000-16-1	venta	414	11	2026-09-23 15:52:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7298	\N	activa	2026-10-06 07:28:06.547-05
-1743	V-001743	import-venta-1790197484000-25-1	venta	413	11	2026-09-23 16:04:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10160	\N	activa	2026-10-06 07:28:06.561-05
-1744	V-001744	import-venta-1790197485000-91-3	venta	167	11	2026-09-23 16:04:45-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10161	\N	activa	2026-10-06 07:28:06.575-05
-1745	V-001745	import-venta-1790197485000-96-3	venta	167	11	2026-09-23 16:04:45-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10161	\N	activa	2026-10-06 07:28:06.591-05
-1746	V-001746	import-venta-1790197489000-80-0.25	venta	165	11	2026-09-23 16:04:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10163	\N	activa	2026-10-06 07:28:06.604-05
-1747	V-001747	import-venta-1790197490000-27-1	venta	412	11	2026-09-23 16:04:50-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13642	\N	activa	2026-10-06 07:28:06.617-05
-1748	V-001748	import-venta-1790197491000-67-1	venta	411	11	2026-09-23 16:04:51-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13643	\N	activa	2026-10-06 07:28:06.629-05
-1749	V-001749	import-venta-1790198432000-93-1	venta	410	11	2026-09-23 16:20:32-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13652	\N	activa	2026-10-06 07:28:06.641-05
-1750	V-001750	import-venta-1790200645000-39-1	venta	409	11	2026-09-23 16:57:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13659	\N	activa	2026-10-06 07:28:06.652-05
-1751	V-001751	import-venta-1790200645000-29-1	venta	409	11	2026-09-23 16:57:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13659	\N	activa	2026-10-06 07:28:06.666-05
-1752	D-001752	import-devolucion-1790203636000-29-1	devolucion	155	11	2026-09-23 17:47:16-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.678-05
-1753	D-001753	import-devolucion-1790203688000-76-1	devolucion	275	11	2026-09-23 17:48:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.69-05
-1754	D-001754	import-devolucion-1790203818000-39-3	devolucion	274	11	2026-09-23 17:50:18-05	0.00	0.00	0.00	0.00	INGRESO DE GMS MAX SABOR 1 KG/SACO X25 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.7-05
-1755	D-001755	import-devolucion-1790204025000-77-1	devolucion	408	11	2026-09-23 17:53:45-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.712-05
-1756	D-001756	import-devolucion-1790208608000-89-0.5	devolucion	312	11	2026-09-23 19:10:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.724-05
-1757	V-001757	import-venta-1790281112000-81-6	venta	407	11	2026-09-24 15:18:32-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13671	\N	activa	2026-10-06 07:28:06.737-05
-1758	V-001758	import-venta-1790281112000-70-6	venta	407	11	2026-09-24 15:18:32-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13671	\N	activa	2026-10-06 07:28:06.75-05
-1759	V-001759	import-venta-1790281115000-20-3	venta	147	11	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 3.000000 por generacion de venta B001-7315	\N	activa	2026-10-06 07:28:06.763-05
-1760	V-001760	import-venta-1790281115000-28-1	venta	406	11	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13674	\N	activa	2026-10-06 07:28:06.775-05
-1761	V-001761	import-venta-1790281115000-14-1	venta	406	11	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13674	\N	activa	2026-10-06 07:28:06.787-05
-1762	V-001762	import-venta-1790281126000-92-12	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.799-05
-1763	V-001763	import-venta-1790281126000-81-1	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.812-05
-1764	V-001764	import-venta-1790281126000-70-1	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.823-05
-1765	V-001765	import-venta-1790281126000-89-1	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.836-05
-1766	V-001766	import-venta-1790281126000-93-1	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.848-05
-1767	V-001767	import-venta-1790281126000-79-1	venta	148	11	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.861-05
-1768	V-001768	import-venta-1790281557000-79-0.5	venta	133	11	2026-09-24 15:25:57-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7316	\N	activa	2026-10-06 07:28:06.874-05
-1769	V-001769	import-venta-1790281558000-20-1	venta	405	11	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.886-05
-1770	V-001770	import-venta-1790281558000-46-1	venta	405	11	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.899-05
-1771	V-001771	import-venta-1790281558000-39-1	venta	405	11	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.912-05
-1772	V-001772	import-venta-1790281560000-93-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.925-05
-1773	V-001773	import-venta-1790281560000-81-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.939-05
-1774	V-001774	import-venta-1790281560000-14-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.965-05
-1775	V-001775	import-venta-1790281560000-29-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.983-05
-1776	V-001776	import-venta-1790281560000-27-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:07.001-05
-1777	V-001777	import-venta-1790281560000-26-1	venta	404	11	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:07.016-05
-1778	V-001778	import-venta-1790281564000-81-12	venta	403	11	2026-09-24 15:26:04-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 12.000000 por generacion de venta NP01-13690	\N	activa	2026-10-06 07:28:07.029-05
-1779	V-001779	import-venta-1790281564000-70-12	venta	403	11	2026-09-24 15:26:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 12.000000 por generacion de venta NP01-13690	\N	activa	2026-10-06 07:28:07.042-05
-1780	V-001780	import-venta-1790281565000-20-2	venta	134	11	2026-09-24 15:26:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13691	\N	activa	2026-10-06 07:28:07.056-05
-1781	V-001781	import-venta-1790281567000-89-1	venta	402	11	2026-09-24 15:26:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13692	\N	activa	2026-10-06 07:28:07.067-05
-1782	V-001782	import-venta-1790281569000-46-8	venta	401	11	2026-09-24 15:26:09-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13693	\N	activa	2026-10-06 07:28:07.081-05
-1783	V-001783	import-venta-1790281571000-25-18	venta	400	11	2026-09-24 15:26:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10180	\N	activa	2026-10-06 07:28:07.094-05
-1784	V-001784	import-venta-1790281572000-77-0.5	venta	399	11	2026-09-24 15:26:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13695	\N	activa	2026-10-06 07:28:07.11-05
-1785	V-001785	import-venta-1790281574000-99-12	venta	398	11	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.123-05
-1786	V-001786	import-venta-1790281574000-91-12	venta	398	11	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.137-05
-1787	V-001787	import-venta-1790281574000-87-6	venta	398	11	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.15-05
-1789	V-001789	import-venta-1790281578000-26-1	venta	129	11	2026-09-24 15:26:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13701	\N	activa	2026-10-06 07:28:07.174-05
-1790	V-001790	import-venta-1790281580000-99-2	venta	397	11	2026-09-24 15:26:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10181	\N	activa	2026-10-06 07:28:07.187-05
-1791	V-001791	import-venta-1790281580000-100-2	venta	397	11	2026-09-24 15:26:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10181	\N	activa	2026-10-06 07:28:07.201-05
-1792	V-001792	import-venta-1790282440000-25-1	venta	383	11	2026-09-24 15:40:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13706	\N	activa	2026-10-06 07:28:07.215-05
-1793	V-001793	import-venta-1790282443000-70-0.5	venta	396	11	2026-09-24 15:40:43-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13708	\N	activa	2026-10-06 07:28:07.228-05
-1794	V-001794	import-venta-1790282443000-81-0.5	venta	396	11	2026-09-24 15:40:43-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13708	\N	activa	2026-10-06 07:28:07.241-05
-1795	V-001795	import-venta-1790282444000-88-0.5	venta	395	11	2026-09-24 15:40:44-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13709	\N	activa	2026-10-06 07:28:07.253-05
-1796	V-001796	import-venta-1790282446000-16-1	venta	394	11	2026-09-24 15:40:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13711	\N	activa	2026-10-06 07:28:07.267-05
-1797	V-001797	import-venta-1790282447000-99-2	venta	314	11	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.281-05
-1798	V-001798	import-venta-1790282447000-100-2	venta	314	11	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.293-05
-1799	V-001799	import-venta-1790282447000-25-1	venta	314	11	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.307-05
-1800	V-001800	import-venta-1790282689000-99-3	venta	393	11	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.32-05
-1801	V-001801	import-venta-1790282689000-46-2	venta	393	11	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.334-05
-1802	V-001802	import-venta-1790282689000-45-2	venta	393	11	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.347-05
-1803	V-001803	import-venta-1790282689000-80-0.25	venta	393	11	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.361-05
-1804	V-001804	import-venta-1790282689000-69-0.25	venta	393	11	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.373-05
-1805	V-001805	import-venta-1790282701000-79-1	venta	392	11	2026-09-24 15:45:01-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13725	\N	activa	2026-10-06 07:28:07.385-05
-1806	V-001806	import-venta-1790282705000-67-1	venta	391	11	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.397-05
-1807	V-001807	import-venta-1790282705000-70-1	venta	391	11	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.41-05
-1808	V-001808	import-venta-1790282705000-81-1	venta	391	11	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.426-05
-1809	V-001809	import-venta-1790283028000-99-12	venta	390	11	2026-09-24 15:50:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13732	\N	activa	2026-10-06 07:28:07.442-05
-1810	V-001810	import-venta-1790283030000-16-1	venta	389	11	2026-09-24 15:50:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13734	\N	activa	2026-10-06 07:28:07.457-05
-1811	V-001811	import-venta-1790283036000-87-12	venta	388	11	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.469-05
-1812	V-001812	import-venta-1790283036000-99-12	venta	388	11	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.483-05
-1813	V-001813	import-venta-1790283036000-100-12	venta	388	11	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.497-05
-1816	V-001816	import-venta-1790283044000-81-1	venta	386	11	2026-09-24 15:50:44-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10193	\N	activa	2026-10-06 07:28:07.527-05
-1817	V-001817	import-venta-1790283045000-29-1	venta	385	11	2026-09-24 15:50:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13745	\N	activa	2026-10-06 07:28:07.541-05
-1818	V-001818	import-venta-1790283047000-28-1	venta	384	11	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.553-05
-1819	V-001819	import-venta-1790283047000-89-1	venta	384	11	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.568-05
-1820	V-001820	import-venta-1790283047000-94-1	venta	384	11	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.582-05
-1821	V-001821	import-venta-1790283049000-27-1	venta	315	11	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.597-05
-1822	V-001822	import-venta-1790283049000-28-1	venta	315	11	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.609-05
-1823	V-001823	import-venta-1790283049000-94-1	venta	315	11	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.623-05
-1824	V-001824	import-venta-1790283049000-60-0.5	venta	315	11	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de MOSTAZA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.635-05
-1825	V-001825	import-venta-1790283294000-23-6	venta	113	11	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.647-05
-1826	V-001826	import-venta-1790283294000-27-2	venta	113	11	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.661-05
-1827	V-001827	import-venta-1790283294000-28-1	venta	113	11	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.672-05
-1828	V-001828	import-venta-1790283294000-26-2	venta	113	11	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.685-05
-1829	V-001829	import-venta-1790283294000-20-2	venta	113	11	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.697-05
-1830	V-001830	import-venta-1790284635000-93-1	venta	142	11	2026-09-24 16:17:15-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13754	\N	activa	2026-10-06 07:28:07.709-05
-1831	V-001831	import-venta-1790284643000-70-0.5	venta	141	11	2026-09-24 16:17:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7330	\N	activa	2026-10-06 07:28:07.722-05
-1832	V-001832	import-venta-1790284662000-14-1	venta	136	11	2026-09-24 16:17:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13765	\N	activa	2026-10-06 07:28:07.734-05
-1833	V-001833	import-venta-1790287421000-100-1	venta	383	11	2026-09-24 17:03:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13771	\N	activa	2026-10-06 07:28:07.749-05
-1834	D-001834	import-devolucion-1790367967000-14-1	devolucion	382	11	2026-09-25 15:26:07-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.762-05
-1835	D-001835	import-devolucion-1790368117000-80-1	devolucion	108	11	2026-09-25 15:28:37-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.774-05
-1836	D-001836	import-devolucion-1790368156000-92-6	devolucion	381	11	2026-09-25 15:29:16-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.786-05
-1837	V-001837	import-venta-1790369051000-89-2	venta	380	11	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.797-05
-1838	V-001838	import-venta-1790369051000-93-2	venta	380	11	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.81-05
-1839	V-001839	import-venta-1790369051000-70-2	venta	380	11	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.821-05
-1840	V-001840	import-venta-1790369074000-67-1	venta	261	11	2026-09-25 15:44:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13811	\N	activa	2026-10-06 07:28:07.834-05
-1841	V-001841	import-venta-1790369074000-81-1	venta	261	11	2026-09-25 15:44:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13811	\N	activa	2026-10-06 07:28:07.846-05
-1842	V-001842	import-venta-1790369077000-69-1	venta	78	11	2026-09-25 15:44:37-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7342	\N	activa	2026-10-06 07:28:07.859-05
-1843	V-001843	import-venta-1790369464000-80-1	venta	379	11	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.871-05
-1844	V-001844	import-venta-1790369464000-88-1	venta	379	11	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.885-05
-1845	V-001845	import-venta-1790369464000-77-1	venta	379	11	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.907-05
-1846	V-001846	import-venta-1790369465000-81-1	venta	378	11	2026-09-25 15:51:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10225	\N	activa	2026-10-06 07:28:07.925-05
-1847	V-001847	import-venta-1790369466000-76-1	venta	91	11	2026-09-25 15:51:06-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13819	\N	activa	2026-10-06 07:28:07.946-05
-1848	V-001848	import-venta-1790369473000-79-1	venta	93	11	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.961-05
-1849	V-001849	import-venta-1790369473000-76-1	venta	93	11	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.975-05
-1850	V-001850	import-venta-1790369473000-93-1	venta	93	11	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.988-05
-1851	V-001851	import-venta-1790369474000-26-5	venta	93	11	2026-09-25 15:51:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 5.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:08.002-05
-1852	V-001852	import-venta-1790369477000-39-5	venta	95	11	2026-09-25 15:51:17-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 5.000000 por generacion de venta NP01-13823	\N	activa	2026-10-06 07:28:08.017-05
-1853	V-001853	import-venta-1790369478000-25-2	venta	377	11	2026-09-25 15:51:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13824	\N	activa	2026-10-06 07:28:08.033-05
-1854	V-001854	import-venta-1790369480000-31-1	venta	89	11	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13826	\N	activa	2026-10-06 07:28:08.045-05
-1855	V-001855	import-venta-1790369480000-103-2	venta	88	11	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta B001-7347	\N	activa	2026-10-06 07:28:08.058-05
-1856	V-001856	import-venta-1790369480000-20-1	venta	88	11	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta B001-7347	\N	activa	2026-10-06 07:28:08.068-05
-1857	V-001857	import-venta-1790369481000-48-1	venta	376	11	2026-09-25 15:51:21-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10232	\N	activa	2026-10-06 07:28:08.083-05
-1858	V-001858	import-venta-1790369482000-27-1	venta	375	11	2026-09-25 15:51:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13827	\N	activa	2026-10-06 07:28:08.096-05
-1859	V-001859	import-venta-1790369484000-70-1	venta	374	11	2026-09-25 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13828	\N	activa	2026-10-06 07:28:08.108-05
-1860	V-001860	import-venta-1790369484000-81-1	venta	374	11	2026-09-25 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13828	\N	activa	2026-10-06 07:28:08.122-05
-1861	V-001861	import-venta-1790369488000-89-1	venta	373	11	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.134-05
-1862	V-001862	import-venta-1790369488000-94-1	venta	373	11	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.148-05
-1864	V-001864	import-venta-1790369488000-81-0.5	venta	373	11	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.165-05
-1865	V-001865	import-venta-1790369490000-92-1	venta	83	11	2026-09-25 15:51:30-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13834	\N	activa	2026-10-06 07:28:08.178-05
-1866	V-001866	import-venta-1790369491000-97-1	venta	372	11	2026-09-25 15:51:31-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta F001-10233	\N	activa	2026-10-06 07:28:08.192-05
-1867	V-001867	import-venta-1790369492000-28-1	venta	371	11	2026-09-25 15:51:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10234	\N	activa	2026-10-06 07:28:08.203-05
-1868	V-001868	import-venta-1790369492000-26-1	venta	371	11	2026-09-25 15:51:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10234	\N	activa	2026-10-06 07:28:08.215-05
-1869	V-001869	import-venta-1790369704000-25-1	venta	75	11	2026-09-25 15:55:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7349	\N	activa	2026-10-06 07:28:08.228-05
-1870	V-001870	import-venta-1790369705000-91-6	venta	370	11	2026-09-25 15:55:05-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta F001-10235	\N	activa	2026-10-06 07:28:08.24-05
-1871	V-001871	import-venta-1790369706000-26-1	venta	74	11	2026-09-25 15:55:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13838	\N	activa	2026-10-06 07:28:08.252-05
-1872	V-001872	import-venta-1790369708000-26-1	venta	369	11	2026-09-25 15:55:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7350	\N	activa	2026-10-06 07:28:08.266-05
-1873	V-001873	import-venta-1790369708000-28-1	venta	369	11	2026-09-25 15:55:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7350	\N	activa	2026-10-06 07:28:08.276-05
-1874	V-001874	import-venta-1790369711000-38-1	venta	73	11	2026-09-25 15:55:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10236	\N	activa	2026-10-06 07:28:08.289-05
-1875	V-001875	import-venta-1790369715000-20-1	venta	368	11	2026-09-25 15:55:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13846	\N	activa	2026-10-06 07:28:08.301-05
-1876	V-001876	import-venta-1790369716000-14-1	venta	367	11	2026-09-25 15:55:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13847	\N	activa	2026-10-06 07:28:08.312-05
-1877	V-001877	import-venta-1790369717000-89-0.5	venta	70	11	2026-09-25 15:55:17-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13848	\N	activa	2026-10-06 07:28:08.326-05
-1878	V-001878	import-venta-1790369718000-26-1	venta	366	11	2026-09-25 15:55:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13849	\N	activa	2026-10-06 07:28:08.338-05
-1879	V-001879	import-venta-1790369719000-14-1	venta	365	11	2026-09-25 15:55:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10238	\N	activa	2026-10-06 07:28:08.351-05
-1880	V-001880	import-venta-1790369720000-100-4	venta	364	11	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 4.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.366-05
-1881	V-001881	import-venta-1790369720000-29-2	venta	364	11	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.38-05
-1882	V-001882	import-venta-1790369720000-27-1	venta	364	11	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.393-05
-1883	V-001883	import-venta-1790369720000-46-1	venta	364	11	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.407-05
-1884	V-001884	import-venta-1790369721000-79-1	venta	66	11	2026-09-25 15:55:21-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13851	\N	activa	2026-10-06 07:28:08.419-05
-1885	V-001885	import-venta-1790369723000-99-1	venta	363	11	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.432-05
-1886	V-001886	import-venta-1790369723000-87-1	venta	363	11	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.446-05
-1887	V-001887	import-venta-1790369723000-103-1	venta	363	11	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.458-05
-1888	V-001888	import-venta-1790369724000-26-1	venta	362	11	2026-09-25 15:55:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13854	\N	activa	2026-10-06 07:28:08.471-05
-1889	V-001889	import-venta-1790373355000-93-1	venta	361	11	2026-09-25 16:55:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7352	\N	activa	2026-10-06 07:28:08.485-05
-1890	V-001890	import-venta-1790373355000-46-4	venta	361	11	2026-09-25 16:55:55-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7352	\N	activa	2026-10-06 07:28:08.498-05
-1891	V-001891	import-venta-1790373358000-91-6	venta	360	11	2026-09-25 16:55:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13857	\N	activa	2026-10-06 07:28:08.515-05
-1892	V-001892	import-venta-1790373360000-14-1	venta	359	11	2026-09-25 16:56:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10240	\N	activa	2026-10-06 07:28:08.53-05
-1893	V-001893	import-venta-1790373365000-81-0.5	venta	262	11	2026-09-25 16:56:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7356	\N	activa	2026-10-06 07:28:08.544-05
-1894	V-001894	import-venta-1790373365000-14-1	venta	262	11	2026-09-25 16:56:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7356	\N	activa	2026-10-06 07:28:08.557-05
-1895	V-001895	import-venta-1790373366000-93-1	venta	358	11	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.572-05
-1896	V-001896	import-venta-1790373366000-81-1	venta	358	11	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.586-05
-1897	V-001897	import-venta-1790373366000-70-1	venta	358	11	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.6-05
-1899	V-001899	import-venta-1790373366000-92-3	venta	358	11	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.624-05
-1900	V-001900	import-venta-1790373366000-80-0.25	venta	358	11	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.64-05
-1901	V-001901	import-venta-1790373368000-77-1	venta	357	11	2026-09-25 16:56:08-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13861	\N	activa	2026-10-06 07:28:08.653-05
-1902	V-001902	import-venta-1790373369000-14-1	venta	260	11	2026-09-25 16:56:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7358	\N	activa	2026-10-06 07:28:08.667-05
-1903	V-001903	import-venta-1790373371000-52-1	venta	356	11	2026-09-25 16:56:11-05	0.00	0.00	0.00	0.00	Salida de SIB AJI PANQUITA SIN PCTE ECON X24 SOB 31.2 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7359	\N	activa	2026-10-06 07:28:08.679-05
-1904	V-001904	import-venta-1790375454000-93-2	venta	62	11	2026-09-25 17:30:54-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10250	\N	activa	2026-10-06 07:28:08.693-05
-1905	V-001905	import-venta-1790375461000-26-1	venta	355	11	2026-09-25 17:31:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10256	\N	activa	2026-10-06 07:28:08.709-05
-1907	V-001907	import-venta-1790377645000-80-1	venta	353	11	2026-09-25 18:07:25-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13865	\N	activa	2026-10-06 07:28:08.731-05
-1908	V-001908	import-venta-1790377645000-69-1	venta	353	11	2026-09-25 18:07:25-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13865	\N	activa	2026-10-06 07:28:08.744-05
-1909	D-001909	import-devolucion-1790378615000-27-1	devolucion	352	11	2026-09-25 18:23:35-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.756-05
-1910	D-001910	import-devolucion-1790431535000-25-1	devolucion	182	11	2026-09-26 09:05:35-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.768-05
-1913	V-001913	import-venta-1790448118000-92-3	venta	351	7	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.802-05
-1914	V-001914	import-venta-1790448118000-69-0.25	venta	351	7	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.822-05
-1915	V-001915	import-venta-1790448118000-80-0.25	venta	351	7	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.859-05
-1916	V-001916	import-venta-1790448118000-39-1	venta	351	7	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.888-05
-1917	V-001917	import-venta-1790453653000-28-1	venta	25	11	2026-09-26 15:14:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13879	\N	activa	2026-10-06 07:28:08.909-05
-1918	V-001918	import-venta-1790453653000-26-1	venta	25	11	2026-09-26 15:14:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13879	\N	activa	2026-10-06 07:28:08.922-05
-1919	V-001919	import-venta-1790453655000-89-1	venta	350	11	2026-09-26 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13880	\N	activa	2026-10-06 07:28:08.934-05
-1920	V-001920	import-venta-1790453781000-25-3	venta	349	11	2026-09-26 15:16:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13881	\N	activa	2026-10-06 07:28:08.946-05
-1921	V-001921	import-venta-1790453786000-27-1	venta	348	11	2026-09-26 15:16:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13885	\N	activa	2026-10-06 07:28:08.96-05
-1922	V-001922	import-venta-1790453788000-80-1	venta	347	11	2026-09-26 15:16:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13888	\N	activa	2026-10-06 07:28:08.973-05
-1923	V-001923	import-venta-1790453788000-69-1	venta	347	11	2026-09-26 15:16:28-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13888	\N	activa	2026-10-06 07:28:08.987-05
-1924	V-001924	import-venta-1790453789000-99-12	venta	346	11	2026-09-26 15:16:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13889	\N	activa	2026-10-06 07:28:09.001-05
-1926	V-001926	import-venta-1790453792000-25-3	venta	345	11	2026-09-26 15:16:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta F001-10277	\N	activa	2026-10-06 07:28:09.025-05
-1927	V-001927	import-venta-1790453798000-81-1	venta	344	11	2026-09-26 15:16:38-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13897	\N	activa	2026-10-06 07:28:09.038-05
-1928	V-001928	import-venta-1790453798000-70-1	venta	344	11	2026-09-26 15:16:38-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13897	\N	activa	2026-10-06 07:28:09.05-05
-1929	V-001929	import-venta-1790454927000-26-1	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.063-05
-1930	V-001930	import-venta-1790454927000-27-1	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.073-05
-1931	V-001931	import-venta-1790454927000-28-1	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.085-05
-1932	V-001932	import-venta-1790454927000-38-1	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.097-05
-1933	V-001933	import-venta-1790454927000-20-1	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.11-05
-1934	V-001934	import-venta-1790454927000-93-0.5	venta	343	11	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.123-05
-1935	V-001935	import-venta-1790454930000-91-3	venta	342	11	2026-09-26 15:35:30-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13901	\N	activa	2026-10-06 07:28:09.137-05
-1936	V-001936	import-venta-1790454932000-77-1	venta	341	11	2026-09-26 15:35:32-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7373	\N	activa	2026-10-06 07:28:09.15-05
-1937	V-001937	import-venta-1790454933000-28-1	venta	340	11	2026-09-26 15:35:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7374	\N	activa	2026-10-06 07:28:09.164-05
-1938	V-001938	import-venta-1790454933000-29-1	venta	340	11	2026-09-26 15:35:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7374	\N	activa	2026-10-06 07:28:09.177-05
-1939	V-001939	import-venta-1790454934000-88-1	venta	339	11	2026-09-26 15:35:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13903	\N	activa	2026-10-06 07:28:09.19-05
-1940	V-001940	import-venta-1790454935000-67-1	venta	338	11	2026-09-26 15:35:35-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13904	\N	activa	2026-10-06 07:28:09.203-05
-1941	V-001941	import-venta-1790454935000-29-1	venta	338	11	2026-09-26 15:35:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13904	\N	activa	2026-10-06 07:28:09.216-05
-1942	V-001942	import-venta-1790454938000-15-1	venta	337	11	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.23-05
-1943	V-001943	import-venta-1790454938000-97-1	venta	337	11	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.243-05
-1944	V-001944	import-venta-1790454938000-89-1	venta	337	11	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.255-05
-1945	V-001945	import-venta-1790454938000-94-1	venta	337	11	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.268-05
-1946	V-001946	import-venta-1790454939000-23-6	venta	336	11	2026-09-26 15:35:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13906	\N	activa	2026-10-06 07:28:09.281-05
-1947	V-001947	import-venta-1790454947000-29-1	venta	335	11	2026-09-26 15:35:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7375	\N	activa	2026-10-06 07:28:09.295-05
-1948	V-001948	import-venta-1790454947000-76-1	venta	335	11	2026-09-26 15:35:47-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7375	\N	activa	2026-10-06 07:28:09.309-05
-1950	V-001950	import-venta-1790454949000-27-1	venta	334	11	2026-09-26 15:35:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13916	\N	activa	2026-10-06 07:28:09.326-05
-1951	V-001951	import-venta-1790454951000-93-0.5	venta	565	11	2026-09-26 15:35:51-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13918	\N	activa	2026-10-06 07:28:09.339-05
-1952	V-001952	import-venta-1790454953000-16-1	venta	332	11	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.351-05
-1953	V-001953	import-venta-1790454953000-29-1	venta	332	11	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.365-05
-1954	V-001954	import-venta-1790454953000-45-1	venta	332	11	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.378-05
-1955	V-001955	import-venta-1790454956000-16-1	venta	331	11	2026-09-26 15:35:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13923	\N	activa	2026-10-06 07:28:09.391-05
-1956	V-001956	import-venta-1790455054000-19-1	venta	330	11	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.403-05
-1957	V-001957	import-venta-1790455054000-77-1	venta	330	11	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.419-05
-1958	V-001958	import-venta-1790455054000-88-1	venta	330	11	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.434-05
-1959	V-001959	import-venta-1790455055000-92-1	venta	329	11	2026-09-26 15:37:35-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13926	\N	activa	2026-10-06 07:28:09.45-05
-1960	V-001960	import-venta-1790455058000-14-8	venta	328	11	2026-09-26 15:37:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 8.000000 por generacion de venta NP01-13929	\N	activa	2026-10-06 07:28:09.466-05
-1961	V-001961	import-venta-1790455059000-16-10	venta	326	11	2026-09-26 15:37:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 10.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.482-05
-1962	V-001962	import-venta-1790455059000-15-5	venta	326	11	2026-09-26 15:37:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 5.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.499-05
-1963	V-001963	import-venta-1790455060000-14-5	venta	326	11	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 5.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.515-05
-1964	V-001964	import-venta-1790455060000-13-1	venta	326	11	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN CARNE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.529-05
-1965	V-001965	import-venta-1790455060000-27-1	venta	327	11	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13932	\N	activa	2026-10-06 07:28:09.543-05
-1966	V-001966	import-venta-1790455060000-26-1	venta	327	11	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13932	\N	activa	2026-10-06 07:28:09.562-05
-1967	V-001967	import-venta-1790455061000-45-1	venta	325	11	2026-09-26 15:37:41-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13933	\N	activa	2026-10-06 07:28:09.578-05
-1968	V-001968	import-venta-1790455063000-14-1	venta	324	11	2026-09-26 15:37:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13935	\N	activa	2026-10-06 07:28:09.594-05
-1969	V-001969	import-venta-1790455063000-16-1	venta	324	11	2026-09-26 15:37:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13935	\N	activa	2026-10-06 07:28:09.606-05
-1970	V-001970	import-venta-1790455068000-14-4	venta	323	11	2026-09-26 15:37:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 4.000000 por generacion de venta NP01-13939	\N	activa	2026-10-06 07:28:09.618-05
-1971	V-001971	import-venta-1790455605000-39-3	venta	16	11	2026-09-26 15:46:45-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13952	\N	activa	2026-10-06 07:28:09.628-05
-1972	V-001972	import-venta-1790455606000-39-2	venta	322	11	2026-09-26 15:46:46-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-13953	\N	activa	2026-10-06 07:28:09.639-05
-1973	V-001973	import-venta-1790455628000-89-2	venta	321	11	2026-09-26 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta NP01-13958	\N	activa	2026-10-06 07:28:09.651-05
-1974	V-001974	import-venta-1790455630000-39-3	venta	23	11	2026-09-26 15:47:10-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13959	\N	activa	2026-10-06 07:28:09.664-05
-1975	V-001975	import-venta-1790455634000-89-1	venta	320	11	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.677-05
-1976	V-001976	import-venta-1790455634000-94-1	venta	320	11	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.69-05
-1978	V-001978	import-venta-1790455634000-81-1	venta	320	11	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.707-05
-1979	V-001979	import-venta-1790455635000-14-1	venta	21	11	2026-09-26 15:47:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7382	\N	activa	2026-10-06 07:28:09.719-05
-1980	V-001980	import-venta-1790455636000-16-1	venta	19	11	2026-09-26 15:47:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7383	\N	activa	2026-10-06 07:28:09.731-05
-1981	V-001981	import-venta-1790455639000-14-1	venta	318	11	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13965	\N	activa	2026-10-06 07:28:09.744-05
-1982	V-001982	import-venta-1790455639000-93-1	venta	319	11	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.759-05
-1983	V-001983	import-venta-1790455639000-79-1	venta	319	11	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.772-05
-1984	V-001984	import-venta-1790455639000-89-1	venta	319	11	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.783-05
-1985	V-001985	import-venta-1790455640000-89-0.5	venta	317	11	2026-09-26 15:47:20-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13967	\N	activa	2026-10-06 07:28:09.796-05
-1986	V-001986	import-venta-1790455975000-80-1	venta	316	11	2026-09-26 15:52:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13971	\N	activa	2026-10-06 07:28:09.819-05
-1987	D-001987	import-devolucion-1790616410000-27-1	devolucion	315	11	2026-09-28 12:26:50-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.838-05
-1988	D-001988	import-devolucion-1790616413000-28-1	devolucion	315	11	2026-09-28 12:26:53-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.857-05
-1989	D-001989	import-devolucion-1790616418000-94-1	devolucion	315	11	2026-09-28 12:26:58-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.874-05
-1990	D-001990	import-devolucion-1790616421000-60-0.5	devolucion	315	11	2026-09-28 12:27:01-05	0.00	0.00	0.00	0.00	INGRESO DE MOSTAZA RICASA CAJA X250 SACHET POR 8 GR POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.888-05
-1991	D-001991	import-devolucion-1790616957000-99-2	devolucion	314	11	2026-09-28 12:35:57-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.901-05
-1992	D-001992	import-devolucion-1790616961000-100-2	devolucion	314	11	2026-09-28 12:36:01-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.913-05
-1993	D-001993	import-devolucion-1790616965000-25-1	devolucion	314	11	2026-09-28 12:36:05-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.923-05
-1995	V-001995	import-venta-1790628074000-94-1	venta	313	11	2026-09-28 15:41:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7386	\N	activa	2026-10-06 07:28:09.943-05
-1996	V-001996	import-venta-1790628075000-92-0.5	venta	312	11	2026-09-28 15:41:15-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13983	\N	activa	2026-10-06 07:28:09.956-05
-1997	V-001997	import-venta-1790628076000-25-2	venta	311	11	2026-09-28 15:41:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10294	\N	activa	2026-10-06 07:28:09.97-05
-1998	V-001998	import-venta-1790628076000-81-1	venta	153	11	2026-09-28 15:41:16-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10295	\N	activa	2026-10-06 07:28:09.983-05
-1999	V-001999	import-venta-1790628079000-26-1	venta	310	11	2026-09-28 15:41:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13984	\N	activa	2026-10-06 07:28:09.996-05
-2000	V-002000	import-venta-1790628080000-29-1	venta	154	11	2026-09-28 15:41:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13985	\N	activa	2026-10-06 07:28:10.01-05
-2001	V-002001	import-venta-1790628080000-81-1	venta	308	11	2026-09-28 15:41:20-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.024-05
-2002	V-002002	import-venta-1790628081000-70-1	venta	308	11	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.038-05
-2003	V-002003	import-venta-1790628081000-89-1	venta	308	11	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.05-05
-2004	V-002004	import-venta-1790628081000-92-1	venta	308	11	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.065-05
-2005	V-002005	import-venta-1790628081000-76-1	venta	309	11	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7387	\N	activa	2026-10-06 07:28:10.078-05
-2006	V-002006	import-venta-1790628087000-81-1	venta	307	11	2026-09-28 15:41:27-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10297	\N	activa	2026-10-06 07:28:10.092-05
-2007	V-002007	import-venta-1790628088000-14-1	venta	306	11	2026-09-28 15:41:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13990	\N	activa	2026-10-06 07:28:10.104-05
-2008	V-002008	import-venta-1790628092000-99-9	venta	305	11	2026-09-28 15:41:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 9.000000 por generacion de venta NP01-13995	\N	activa	2026-10-06 07:28:10.117-05
-2009	V-002009	import-venta-1790628092000-100-3	venta	305	11	2026-09-28 15:41:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13995	\N	activa	2026-10-06 07:28:10.129-05
-2010	V-002010	import-venta-1790628097000-76-1	venta	304	11	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.14-05
-2011	V-002011	import-venta-1790628097000-93-1	venta	304	11	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.153-05
-2012	V-002012	import-venta-1790628097000-103-6	venta	304	11	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.167-05
-2013	V-002013	import-venta-1790628098000-89-1	venta	302	11	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13999	\N	activa	2026-10-06 07:28:10.179-05
-2015	V-002015	import-venta-1790628098000-94-1	venta	302	11	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13999	\N	activa	2026-10-06 07:28:10.197-05
-2016	V-002016	import-venta-1790628098000-14-1	venta	303	11	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14000	\N	activa	2026-10-06 07:28:10.214-05
-2017	V-002017	import-venta-1790628115000-77-1	venta	301	11	2026-09-28 15:41:55-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14001	\N	activa	2026-10-06 07:28:10.226-05
-2018	V-002018	import-venta-1790628118000-89-1	venta	300	11	2026-09-28 15:41:58-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE X12 SOB GIG 100 GR /PAQUETE X6 DISLPL por la cantidad de 1.000000 por generacion de venta NP01-14002	\N	activa	2026-10-06 07:28:10.238-05
-2019	V-002019	import-venta-1790628121000-39-2	venta	299	11	2026-09-28 15:42:01-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta B001-7395	\N	activa	2026-10-06 07:28:10.249-05
-2020	V-002020	import-venta-1790628123000-91-12	venta	298	11	2026-09-28 15:42:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10299	\N	activa	2026-10-06 07:28:10.262-05
-2021	V-002021	import-venta-1790628130000-89-1	venta	297	11	2026-09-28 15:42:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7396	\N	activa	2026-10-06 07:28:10.274-05
-2022	V-002022	import-venta-1790628132000-70-0.5	venta	296	11	2026-09-28 15:42:12-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14012	\N	activa	2026-10-06 07:28:10.286-05
-2023	V-002023	import-venta-1790628133000-54-0.5	venta	295	11	2026-09-28 15:42:13-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X2 BOLSAS DE 2 KG por la cantidad de 0.500000 por generacion de venta F001-10301	\N	activa	2026-10-06 07:28:10.299-05
-2024	V-002024	import-venta-1790628133000-46-2	venta	295	11	2026-09-28 15:42:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta F001-10301	\N	activa	2026-10-06 07:28:10.312-05
-2025	V-002025	import-venta-1790628139000-39-2	venta	294	11	2026-09-28 15:42:19-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta F001-10305	\N	activa	2026-10-06 07:28:10.324-05
-2026	V-002026	import-venta-1790628139000-91-2	venta	294	11	2026-09-28 15:42:19-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta F001-10305	\N	activa	2026-10-06 07:28:10.338-05
-2027	V-002027	import-venta-1790628141000-80-0.25	venta	107	11	2026-09-28 15:42:21-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14016	\N	activa	2026-10-06 07:28:10.353-05
-2028	V-002028	import-venta-1790628141000-69-0.25	venta	107	11	2026-09-28 15:42:21-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14016	\N	activa	2026-10-06 07:28:10.366-05
-2029	V-002029	import-venta-1790628142000-89-1	venta	293	11	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.38-05
-2030	V-002030	import-venta-1790628142000-101-6	venta	293	11	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.392-05
-2031	V-002031	import-venta-1790628142000-103-6	venta	293	11	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.404-05
-2032	V-002032	import-venta-1790628165000-25-2	venta	292	11	2026-09-28 15:42:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10306	\N	activa	2026-10-06 07:28:10.415-05
-2034	V-002034	import-venta-1790628168000-25-2	venta	290	11	2026-09-28 15:42:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10307	\N	activa	2026-10-06 07:28:10.437-05
-2035	V-002035	import-venta-1790628173000-76-1	venta	152	11	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.45-05
-2036	V-002036	import-venta-1790628173000-70-0.5	venta	152	11	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.461-05
-2037	V-002037	import-venta-1790628173000-67-1	venta	152	11	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.474-05
-2038	V-002038	import-venta-1790628173000-28-1	venta	152	11	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.485-05
-2039	V-002039	import-venta-1790628173000-27-1	venta	152	11	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.497-05
-2040	V-002040	import-venta-1790628174000-67-1	venta	289	11	2026-09-28 15:42:54-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14021	\N	activa	2026-10-06 07:28:10.509-05
-2041	V-002041	import-venta-1790628174000-88-0.5	venta	289	11	2026-09-28 15:42:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14021	\N	activa	2026-10-06 07:28:10.521-05
-2042	V-002042	import-venta-1790628175000-14-1	venta	288	11	2026-09-28 15:42:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7403	\N	activa	2026-10-06 07:28:10.532-05
-2043	V-002043	import-venta-1790628178000-99-12	venta	287	11	2026-09-28 15:42:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7404	\N	activa	2026-10-06 07:28:10.543-05
-2044	V-002044	import-venta-1790628183000-15-1	venta	286	11	2026-09-28 15:43:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7407	\N	activa	2026-10-06 07:28:10.555-05
-2045	V-002045	import-venta-1790628472000-69-1	venta	285	11	2026-09-28 15:47:52-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14033	\N	activa	2026-10-06 07:28:10.567-05
-2046	V-002046	import-venta-1790628475000-31-1	venta	284	11	2026-09-28 15:47:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14036	\N	activa	2026-10-06 07:28:10.582-05
-2047	V-002047	import-venta-1790628480000-77-1	venta	283	11	2026-09-28 15:48:00-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14041	\N	activa	2026-10-06 07:28:10.599-05
-2048	V-002048	import-venta-1790628486000-27-1	venta	282	11	2026-09-28 15:48:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14047	\N	activa	2026-10-06 07:28:10.614-05
-2049	V-002049	import-venta-1790628487000-20-1	venta	281	11	2026-09-28 15:48:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14048	\N	activa	2026-10-06 07:28:10.627-05
-2050	V-002050	import-venta-1790628489000-99-2	venta	280	11	2026-09-28 15:48:09-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14050	\N	activa	2026-10-06 07:28:10.64-05
-2051	V-002051	import-venta-1790628491000-46-8	venta	279	11	2026-09-28 15:48:11-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta B001-7410	\N	activa	2026-10-06 07:28:10.652-05
-2052	V-002052	import-venta-1790628491000-20-1	venta	279	11	2026-09-28 15:48:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7410	\N	activa	2026-10-06 07:28:10.667-05
-2054	V-002054	import-venta-1790628493000-67-1	venta	155	11	2026-09-28 15:48:13-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14053	\N	activa	2026-10-06 07:28:10.699-05
-2055	V-002055	import-venta-1790628493000-76-1	venta	155	11	2026-09-28 15:48:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14053	\N	activa	2026-10-06 07:28:10.718-05
-2056	V-002056	import-venta-1790628495000-14-1	venta	278	11	2026-09-28 15:48:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14054	\N	activa	2026-10-06 07:28:10.738-05
-2058	V-002058	import-venta-1790628500000-26-2	venta	276	11	2026-09-28 15:48:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14057	\N	activa	2026-10-06 07:28:10.769-05
-2059	V-002059	import-venta-1790628501000-76-1	venta	275	11	2026-09-28 15:48:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14058	\N	activa	2026-10-06 07:28:10.781-05
-2061	V-002061	import-venta-1790628623000-69-1	venta	273	11	2026-09-28 15:50:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7414	\N	activa	2026-10-06 07:28:10.802-05
-2062	V-002062	import-venta-1790628624000-89-1	venta	272	11	2026-09-28 15:50:24-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14074	\N	activa	2026-10-06 07:28:10.816-05
-2063	V-002063	import-venta-1790630336000-77-1	venta	271	11	2026-09-28 16:18:56-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14085	\N	activa	2026-10-06 07:28:10.828-05
-2064	V-002064	import-venta-1790630337000-79-0.5	venta	270	11	2026-09-28 16:18:57-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14086	\N	activa	2026-10-06 07:28:10.843-05
-2065	V-002065	import-venta-1790630342000-92-1	venta	269	11	2026-09-28 16:19:02-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7418	\N	activa	2026-10-06 07:28:10.854-05
-2066	V-002066	import-venta-1790630345000-31-1	venta	268	11	2026-09-28 16:19:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14091	\N	activa	2026-10-06 07:28:10.866-05
-2067	V-002067	import-venta-1790630346000-27-1	venta	267	11	2026-09-28 16:19:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7420	\N	activa	2026-10-06 07:28:10.88-05
-2068	V-002068	import-venta-1790630349000-26-1	venta	266	11	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.894-05
-2069	V-002069	import-venta-1790630349000-67-1	venta	266	11	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.906-05
-2070	V-002070	import-venta-1790630349000-16-1	venta	266	11	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.919-05
-2071	V-002071	import-venta-1790630352000-93-1	venta	265	11	2026-09-28 16:19:12-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10321	\N	activa	2026-10-06 07:28:10.932-05
-2072	V-002072	import-venta-1790630352000-89-1	venta	265	11	2026-09-28 16:19:12-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10321	\N	activa	2026-10-06 07:28:10.946-05
-2073	V-002073	import-venta-1790630353000-26-1	venta	264	11	2026-09-28 16:19:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14095	\N	activa	2026-10-06 07:28:10.958-05
-2074	V-002074	import-venta-1790630358000-77-1	venta	263	11	2026-09-28 16:19:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7424	\N	activa	2026-10-06 07:28:10.973-05
-2075	D-002075	import-devolucion-1790634882000-81-0.5	devolucion	262	11	2026-09-28 17:34:42-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:10.983-05
-2076	D-002076	import-devolucion-1790634885000-14-1	devolucion	262	11	2026-09-28 17:34:45-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:10.995-05
-2077	D-002077	import-devolucion-1790634951000-67-1	devolucion	261	11	2026-09-28 17:35:51-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.005-05
-2078	D-002078	import-devolucion-1790634954000-81-1	devolucion	261	11	2026-09-28 17:35:54-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.015-05
-2079	D-002079	import-devolucion-1790635084000-14-1	devolucion	260	11	2026-09-28 17:38:04-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.026-05
-2080	V-002080	import-venta-1790635678000-39-1	venta	111	11	2026-09-28 17:47:58-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-14103	\N	activa	2026-10-06 07:28:11.039-05
-2081	V-002081	import-venta-1790635678000-55-0.5	venta	111	11	2026-09-28 17:47:58-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14103	\N	activa	2026-10-06 07:28:11.052-05
-2082	D-002082	import-devolucion-1790646200000-79-1	devolucion	66	11	2026-09-28 20:43:20-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.065-05
-2083	V-002083	import-venta-1790685627000-44-1	venta	259	7	2026-09-29 07:40:27-05	0.00	0.00	0.00	0.00	Salida de CHUÑO SANTIS BLS/PAPELO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.078-05
-2084	V-002084	import-venta-1790685628000-39-3	venta	259	7	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.093-05
-2085	V-002085	import-venta-1790685628000-80-1	venta	259	7	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.106-05
-2086	V-002086	import-venta-1790685628000-69-1	venta	259	7	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.119-05
-2087	V-002087	import-venta-1790714846000-16-1	venta	258	11	2026-09-29 15:47:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7427	\N	activa	2026-10-06 07:28:11.135-05
-2088	V-002088	import-venta-1790714847000-80-0.5	venta	257	11	2026-09-29 15:47:27-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10336	\N	activa	2026-10-06 07:28:11.149-05
-2089	V-002089	import-venta-1790714847000-69-0.5	venta	257	11	2026-09-29 15:47:27-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10336	\N	activa	2026-10-06 07:28:11.161-05
-2090	V-002090	import-venta-1790714849000-27-1	venta	256	11	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.175-05
-2091	V-002091	import-venta-1790714849000-76-1	venta	256	11	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.187-05
-2092	V-002092	import-venta-1790714849000-29-1	venta	256	11	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.2-05
-2093	V-002093	import-venta-1790714849000-13-1	venta	256	11	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN CARNE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.214-05
-2094	V-002094	import-venta-1790714850000-48-1	venta	255	11	2026-09-29 15:47:30-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10337	\N	activa	2026-10-06 07:28:11.227-05
-2095	V-002095	import-venta-1790714851000-48-1	venta	254	11	2026-09-29 15:47:31-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10338	\N	activa	2026-10-06 07:28:11.239-05
-2097	V-002097	import-venta-1790714855000-99-12	venta	253	11	2026-09-29 15:47:35-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10341	\N	activa	2026-10-06 07:28:11.262-05
-2098	V-002098	import-venta-1790714856000-80-0.25	venta	252	11	2026-09-29 15:47:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10342	\N	activa	2026-10-06 07:28:11.276-05
-2099	V-002099	import-venta-1790714860000-20-1	venta	251	11	2026-09-29 15:47:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10345	\N	activa	2026-10-06 07:28:11.291-05
-2100	V-002100	import-venta-1790714866000-29-2	venta	250	11	2026-09-29 15:47:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14113	\N	activa	2026-10-06 07:28:11.303-05
-2101	V-002101	import-venta-1790714868000-57-1	venta	249	11	2026-09-29 15:47:48-05	0.00	0.00	0.00	0.00	Salida de MAYONESA BASE RICASA CAJA X2 BOLSAS DE 2 KG por la cantidad de 1.000000 por generacion de venta NP01-14114	\N	activa	2026-10-06 07:28:11.315-05
-2102	V-002102	import-venta-1790714868000-58-1	venta	249	11	2026-09-29 15:47:48-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 1.000000 por generacion de venta NP01-14114	\N	activa	2026-10-06 07:28:11.327-05
-2103	V-002103	import-venta-1790714869000-80-0.25	venta	248	11	2026-09-29 15:47:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14115	\N	activa	2026-10-06 07:28:11.34-05
-2104	V-002104	import-venta-1790714873000-14-1	venta	247	11	2026-09-29 15:47:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14118	\N	activa	2026-10-06 07:28:11.352-05
-2105	V-002105	import-venta-1790715466000-93-1	venta	246	11	2026-09-29 15:57:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14126	\N	activa	2026-10-06 07:28:11.365-05
-2106	V-002106	import-venta-1790715466000-70-1	venta	246	11	2026-09-29 15:57:46-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14126	\N	activa	2026-10-06 07:28:11.379-05
-2107	V-002107	import-venta-1790715483000-31-1	venta	245	11	2026-09-29 15:58:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7436	\N	activa	2026-10-06 07:28:11.391-05
-2108	V-002108	import-venta-1790715483000-81-0.5	venta	245	11	2026-09-29 15:58:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7436	\N	activa	2026-10-06 07:28:11.404-05
-2109	V-002109	import-venta-1790715488000-70-0.5	venta	244	11	2026-09-29 15:58:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7437	\N	activa	2026-10-06 07:28:11.417-05
-2110	V-002110	import-venta-1790715488000-81-0.5	venta	244	11	2026-09-29 15:58:08-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7437	\N	activa	2026-10-06 07:28:11.43-05
-2111	V-002111	import-venta-1790715696000-89-1	venta	243	11	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.443-05
-2112	V-002112	import-venta-1790715696000-79-1	venta	243	11	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.454-05
-2113	V-002113	import-venta-1790715696000-99-6	venta	243	11	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.466-05
-2114	V-002114	import-venta-1790716948000-25-2	venta	242	11	2026-09-29 16:22:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14142	\N	activa	2026-10-06 07:28:11.479-05
-2115	V-002115	import-venta-1790716949000-39-1	venta	241	11	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.491-05
-2116	V-002116	import-venta-1790716949000-29-1	venta	241	11	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.505-05
-2117	V-002117	import-venta-1790716949000-27-1	venta	241	11	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.517-05
-2118	V-002118	import-venta-1790716949000-26-1	venta	241	11	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.531-05
-2119	V-002119	import-venta-1790716949000-28-1	venta	241	11	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.545-05
-2120	V-002120	import-venta-1790716953000-14-1	venta	240	11	2026-09-29 16:22:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14145	\N	activa	2026-10-06 07:28:11.561-05
-2121	V-002121	import-venta-1790716954000-89-1	venta	239	11	2026-09-29 16:22:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7442	\N	activa	2026-10-06 07:28:11.575-05
-2122	V-002122	import-venta-1790716954000-79-1	venta	239	11	2026-09-29 16:22:34-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7442	\N	activa	2026-10-06 07:28:11.587-05
-2123	V-002123	import-venta-1790716960000-26-1	venta	238	11	2026-09-29 16:22:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14152	\N	activa	2026-10-06 07:28:11.598-05
-2124	V-002124	import-venta-1790716960000-27-1	venta	238	11	2026-09-29 16:22:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14152	\N	activa	2026-10-06 07:28:11.612-05
-2125	V-002125	import-venta-1790716963000-27-1	venta	237	11	2026-09-29 16:22:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14156	\N	activa	2026-10-06 07:28:11.633-05
-2126	V-002126	import-venta-1790716964000-27-1	venta	236	11	2026-09-29 16:22:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14157	\N	activa	2026-10-06 07:28:11.648-05
-2127	V-002127	import-venta-1790716964000-28-1	venta	236	11	2026-09-29 16:22:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14157	\N	activa	2026-10-06 07:28:11.667-05
-2128	V-002128	import-venta-1790716965000-19-6	venta	235	11	2026-09-29 16:22:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14158	\N	activa	2026-10-06 07:28:11.683-05
-2130	V-002130	import-venta-1790716966000-27-1	venta	234	11	2026-09-29 16:22:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14159	\N	activa	2026-10-06 07:28:11.706-05
-2131	V-002131	import-venta-1790716966000-26-1	venta	234	11	2026-09-29 16:22:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14159	\N	activa	2026-10-06 07:28:11.721-05
-2132	V-002132	import-venta-1790716968000-27-1	venta	232	11	2026-09-29 16:22:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7444	\N	activa	2026-10-06 07:28:11.734-05
-2133	V-002133	import-venta-1790716968000-25-1	venta	233	11	2026-09-29 16:22:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10354	\N	activa	2026-10-06 07:28:11.746-05
-2134	V-002134	import-venta-1790716969000-76-2	venta	231	11	2026-09-29 16:22:49-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-14160	\N	activa	2026-10-06 07:28:11.757-05
-2135	V-002135	import-venta-1790716969000-28-1	venta	231	11	2026-09-29 16:22:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14160	\N	activa	2026-10-06 07:28:11.772-05
-2136	V-002136	import-venta-1790716971000-14-1	venta	230	11	2026-09-29 16:22:51-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14161	\N	activa	2026-10-06 07:28:11.784-05
-2137	V-002137	import-venta-1790716973000-25-4	venta	229	11	2026-09-29 16:22:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-14162	\N	activa	2026-10-06 07:28:11.797-05
-2138	V-002138	import-venta-1790719382000-69-1	venta	228	11	2026-09-29 17:03:02-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7447	\N	activa	2026-10-06 07:28:11.81-05
-2139	V-002139	import-venta-1790719389000-25-2	venta	227	11	2026-09-29 17:03:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10361	\N	activa	2026-10-06 07:28:11.82-05
-2140	V-002140	import-venta-1790719391000-89-1	venta	226	11	2026-09-29 17:03:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14167	\N	activa	2026-10-06 07:28:11.833-05
-2141	V-002141	import-venta-1790719391000-27-1	venta	226	11	2026-09-29 17:03:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14167	\N	activa	2026-10-06 07:28:11.846-05
-2142	V-002142	import-venta-1790719394000-101-3	venta	225	11	2026-09-29 17:03:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7449	\N	activa	2026-10-06 07:28:11.859-05
-2143	V-002143	import-venta-1790719395000-25-1	venta	224	11	2026-09-29 17:03:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14168	\N	activa	2026-10-06 07:28:11.873-05
-2144	V-002144	import-venta-1790719675000-80-1	venta	108	11	2026-09-29 17:07:55-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7453	\N	activa	2026-10-06 07:28:11.884-05
-2145	V-002145	import-venta-1790721992000-25-1	venta	223	11	2026-09-29 17:46:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10370	\N	activa	2026-10-06 07:28:11.896-05
-2146	V-002146	import-venta-1790721995000-25-1	venta	222	11	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.909-05
-2147	V-002147	import-venta-1790721995000-99-6	venta	222	11	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.92-05
-2148	V-002148	import-venta-1790721995000-29-1	venta	222	11	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.932-05
-2149	V-002149	import-venta-1790721996000-80-0.25	venta	222	11	2026-09-29 17:46:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.943-05
-2150	V-002150	import-venta-1790721996000-69-0.25	venta	222	11	2026-09-29 17:46:36-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.952-05
-2151	V-002151	import-venta-1790721998000-25-5	venta	221	11	2026-09-29 17:46:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10374	\N	activa	2026-10-06 07:28:11.965-05
-2152	V-002152	import-venta-1790721999000-25-1	venta	220	11	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:11.975-05
-2153	V-002153	import-venta-1790721999000-91-2	venta	220	11	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:11.988-05
-2154	V-002154	import-venta-1790721999000-80-0.25	venta	220	11	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:12-05
-2155	V-002155	import-venta-1790721999000-69-0.25	venta	220	11	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:12.011-05
-2156	V-002156	import-venta-1790722002000-101-3	venta	219	11	2026-09-29 17:46:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10378	\N	activa	2026-10-06 07:28:12.023-05
-2158	V-002158	import-venta-1790722233000-92-6	venta	218	11	2026-09-29 17:50:33-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta F001-10382	\N	activa	2026-10-06 07:28:12.044-05
-2159	V-002159	import-venta-1790722233000-29-1	venta	218	11	2026-09-29 17:50:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10382	\N	activa	2026-10-06 07:28:12.055-05
-2160	V-002160	import-venta-1790722917000-94-1	venta	217	11	2026-09-29 18:01:57-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14182	\N	activa	2026-10-06 07:28:12.066-05
-2161	V-002161	import-venta-1790722918000-69-0.5	venta	216	11	2026-09-29 18:01:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta NP01-14183	\N	activa	2026-10-06 07:28:12.077-05
-2162	V-002162	import-venta-1790722923000-89-1	venta	215	11	2026-09-29 18:02:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14184	\N	activa	2026-10-06 07:28:12.09-05
-2163	V-002163	import-venta-1790722925000-26-1	venta	214	11	2026-09-29 18:02:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14185	\N	activa	2026-10-06 07:28:12.101-05
-2164	V-002164	import-venta-1790722925000-27-1	venta	214	11	2026-09-29 18:02:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14185	\N	activa	2026-10-06 07:28:12.114-05
-2165	V-002165	import-venta-1790722928000-89-1	venta	213	11	2026-09-29 18:02:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14188	\N	activa	2026-10-06 07:28:12.126-05
-2166	V-002166	import-venta-1790722928000-16-1	venta	213	11	2026-09-29 18:02:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14188	\N	activa	2026-10-06 07:28:12.138-05
-2167	V-002167	import-venta-1790722932000-79-1	venta	212	11	2026-09-29 18:02:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7457	\N	activa	2026-10-06 07:28:12.15-05
-2168	V-002168	import-venta-1790722934000-69-1	venta	109	11	2026-09-29 18:02:14-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7458	\N	activa	2026-10-06 07:28:12.164-05
-2169	V-002169	import-venta-1790722939000-89-1	venta	211	11	2026-09-29 18:02:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14193	\N	activa	2026-10-06 07:28:12.179-05
-2170	V-002170	import-venta-1790722940000-29-1	venta	210	11	2026-09-29 18:02:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14195	\N	activa	2026-10-06 07:28:12.191-05
-2171	V-002171	import-venta-1790722941000-89-1	venta	209	11	2026-09-29 18:02:21-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14196	\N	activa	2026-10-06 07:28:12.202-05
-2172	V-002172	import-venta-1790722941000-25-2	venta	209	11	2026-09-29 18:02:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14196	\N	activa	2026-10-06 07:28:12.216-05
-2173	V-002173	import-venta-1790722944000-23-6	venta	110	11	2026-09-29 18:02:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7460	\N	activa	2026-10-06 07:28:12.23-05
-2174	V-002174	import-venta-1790722947000-94-1	venta	208	11	2026-09-29 18:02:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14200	\N	activa	2026-10-06 07:28:12.242-05
-2175	V-002175	import-venta-1790722947000-103-2	venta	208	11	2026-09-29 18:02:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14200	\N	activa	2026-10-06 07:28:12.255-05
-2176	D-002176	import-devolucion-1790725241000-16-1	devolucion	19	11	2026-09-29 18:40:41-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN POLLO 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:12.266-05
-2177	V-002177	import-venta-1790770774000-16-1	venta	207	3	2026-09-30 07:19:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14203	\N	activa	2026-10-06 07:28:12.28-05
-2179	V-002179	import-venta-1790773527000-25-18	venta	205	3	2026-09-30 08:05:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta NP01-14206	\N	activa	2026-10-06 07:28:12.3-05
-2180	V-002180	import-venta-1790782924000-92-12	venta	204	3	2026-09-30 10:42:04-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14209	\N	activa	2026-10-06 07:28:12.311-05
-2181	V-002181	import-venta-1790782924000-29-12	venta	204	3	2026-09-30 10:42:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14209	\N	activa	2026-10-06 07:28:12.323-05
-2182	V-002182	import-venta-1790791679000-96-12	venta	203	7	2026-09-30 13:07:59-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10401	\N	activa	2026-10-06 07:28:12.337-05
-2183	V-002183	import-venta-1790791679000-25-5	venta	203	7	2026-09-30 13:07:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10401	\N	activa	2026-10-06 07:28:12.357-05
-2184	V-002184	import-venta-1790801217000-81-1	venta	202	11	2026-09-30 15:46:57-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7463	\N	activa	2026-10-06 07:28:12.379-05
-2185	V-002185	import-venta-1790801217000-25-2	venta	202	11	2026-09-30 15:46:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta B001-7463	\N	activa	2026-10-06 07:28:12.399-05
-2186	V-002186	import-venta-1790801222000-25-18	venta	201	11	2026-09-30 15:47:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10407	\N	activa	2026-10-06 07:28:12.418-05
-2187	V-002187	import-venta-1790801222000-103-24	venta	201	11	2026-09-30 15:47:02-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 24.000000 por generacion de venta F001-10407	\N	activa	2026-10-06 07:28:12.429-05
-2188	V-002188	import-venta-1790801228000-48-1	venta	200	11	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.443-05
-2189	V-002189	import-venta-1790801228000-70-1	venta	200	11	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.455-05
-2190	V-002190	import-venta-1790801228000-89-1	venta	200	11	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.467-05
-2191	V-002191	import-venta-1790801228000-93-1	venta	200	11	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.479-05
-2192	V-002192	import-venta-1790801230000-70-0.5	venta	58	11	2026-09-30 15:47:10-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14230	\N	activa	2026-10-06 07:28:12.494-05
-2193	V-002193	import-venta-1790801408000-25-1	venta	199	11	2026-09-30 15:50:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14233	\N	activa	2026-10-06 07:28:12.506-05
-2194	V-002194	import-venta-1790801410000-89-1	venta	197	11	2026-09-30 15:50:10-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.518-05
-2195	V-002195	import-venta-1790801411000-26-1	venta	197	11	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.531-05
-2196	V-002196	import-venta-1790801411000-27-1	venta	197	11	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.542-05
-2199	V-002199	import-venta-1790801411000-29-2	venta	198	11	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14235	\N	activa	2026-10-06 07:28:12.576-05
-2200	V-002200	import-venta-1790801413000-99-6	venta	196	11	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.594-05
-2202	V-002202	import-venta-1790801413000-29-2	venta	196	11	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.616-05
-2203	V-002203	import-venta-1790801413000-94-1	venta	196	11	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.63-05
-2204	V-002204	import-venta-1790801413000-26-1	venta	196	11	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.642-05
-2205	V-002205	import-venta-1790801413000-88-1	venta	196	11	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.657-05
-2206	V-002206	import-venta-1790801421000-76-1	venta	195	11	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.669-05
-2207	V-002207	import-venta-1790801421000-81-0.5	venta	195	11	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.686-05
-2208	V-002208	import-venta-1790801421000-70-0.5	venta	195	11	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.699-05
-2209	V-002209	import-venta-1790801422000-55-0.5	venta	194	11	2026-09-30 15:50:22-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14243	\N	activa	2026-10-06 07:28:12.711-05
-2210	V-002210	import-venta-1790801425000-25-2	venta	193	11	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.725-05
-2211	V-002211	import-venta-1790801425000-80-0.25	venta	193	11	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.736-05
-2212	V-002212	import-venta-1790801425000-69-0.25	venta	193	11	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.749-05
-2213	V-002213	import-venta-1790801426000-99-4	venta	191	11	2026-09-30 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 4.000000 por generacion de venta NP01-14247	\N	activa	2026-10-06 07:28:12.761-05
-2214	V-002214	import-venta-1790801426000-80-1	venta	192	11	2026-09-30 15:50:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14248	\N	activa	2026-10-06 07:28:12.771-05
-2215	V-002215	import-venta-1790801428000-80-0.25	venta	190	11	2026-09-30 15:50:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14250	\N	activa	2026-10-06 07:28:12.783-05
-2216	V-002216	import-venta-1790801430000-81-1	venta	189	11	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.795-05
-2217	V-002217	import-venta-1790801430000-80-1	venta	189	11	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.808-05
-2218	V-002218	import-venta-1790801430000-22-2	venta	189	11	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.82-05
-2219	V-002219	import-venta-1790801431000-93-1	venta	188	11	2026-09-30 15:50:31-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14252	\N	activa	2026-10-06 07:28:12.833-05
-2220	V-002220	import-venta-1790801431000-94-1	venta	188	11	2026-09-30 15:50:31-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14252	\N	activa	2026-10-06 07:28:12.845-05
-2221	V-002221	import-venta-1790801432000-55-5	venta	187	11	2026-09-30 15:50:32-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 5.000000 por generacion de venta F001-10410	\N	activa	2026-10-06 07:28:12.858-05
-2222	V-002222	import-venta-1790801433000-14-1	venta	186	11	2026-09-30 15:50:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7469	\N	activa	2026-10-06 07:28:12.87-05
-2223	V-002223	import-venta-1790801434000-80-0.5	venta	61	11	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.882-05
-2224	V-002224	import-venta-1790801434000-69-0.5	venta	61	11	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.895-05
-2225	V-002225	import-venta-1790801434000-93-0.5	venta	61	11	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.908-05
-2226	V-002226	import-venta-1790801438000-25-1	venta	185	11	2026-09-30 15:50:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14255	\N	activa	2026-10-06 07:28:12.92-05
-2227	V-002227	import-venta-1790801442000-14-1	venta	183	11	2026-09-30 15:50:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14258	\N	activa	2026-10-06 07:28:12.933-05
-2228	V-002228	import-venta-1790801442000-26-1	venta	184	11	2026-09-30 15:50:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14259	\N	activa	2026-10-06 07:28:12.946-05
-2229	V-002229	import-venta-1790801443000-25-1	venta	182	11	2026-09-30 15:50:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14260	\N	activa	2026-10-06 07:28:12.959-05
-2230	V-002230	import-venta-1790801443000-29-2	venta	182	11	2026-09-30 15:50:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14260	\N	activa	2026-10-06 07:28:12.97-05
-2231	V-002231	import-venta-1790801526000-80-0.25	venta	181	11	2026-09-30 15:52:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14261	\N	activa	2026-10-06 07:28:12.983-05
-2232	V-002232	import-venta-1790801526000-69-0.25	venta	181	11	2026-09-30 15:52:06-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14261	\N	activa	2026-10-06 07:28:12.996-05
-2233	V-002233	import-venta-1790801529000-99-6	venta	59	11	2026-09-30 15:52:09-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14262	\N	activa	2026-10-06 07:28:13.007-05
-2234	V-002234	import-venta-1790801529000-89-0.5	venta	59	11	2026-09-30 15:52:09-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14262	\N	activa	2026-10-06 07:28:13.019-05
-2235	V-002235	import-venta-1790801530000-22-1	venta	180	11	2026-09-30 15:52:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14263	\N	activa	2026-10-06 07:28:13.032-05
-2236	V-002236	import-venta-1790801539000-69-0.25	venta	179	11	2026-09-30 15:52:19-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10421	\N	activa	2026-10-06 07:28:13.042-05
-2237	V-002237	import-venta-1790801539000-25-1	venta	179	11	2026-09-30 15:52:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10421	\N	activa	2026-10-06 07:28:13.055-05
-2238	V-002238	import-venta-1790801542000-45-1	venta	178	11	2026-09-30 15:52:22-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14269	\N	activa	2026-10-06 07:28:13.067-05
-2239	V-002239	import-venta-1790801542000-46-1	venta	178	11	2026-09-30 15:52:22-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14269	\N	activa	2026-10-06 07:28:13.079-05
-2240	V-002240	import-venta-1790801543000-70-0.5	venta	177	11	2026-09-30 15:52:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14270	\N	activa	2026-10-06 07:28:13.093-05
-2242	V-002242	import-venta-1790801544000-16-1	venta	176	11	2026-09-30 15:52:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14271	\N	activa	2026-10-06 07:28:13.112-05
-2243	V-002243	import-venta-1790801545000-25-1	venta	175	11	2026-09-30 15:52:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14272	\N	activa	2026-10-06 07:28:13.125-05
-2244	V-002244	import-venta-1790801545000-96-6	venta	174	11	2026-09-30 15:52:25-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.138-05
-2246	V-002246	import-venta-1790801546000-89-1	venta	174	11	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.159-05
-2247	V-002247	import-venta-1790801546000-94-1	venta	174	11	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.172-05
-2248	V-002248	import-venta-1790801546000-101-6	venta	174	11	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.185-05
-2250	V-002250	import-venta-1790801547000-89-0.5	venta	173	11	2026-09-30 15:52:27-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7477	\N	activa	2026-10-06 07:28:13.204-05
-2251	V-002251	import-venta-1790801547000-79-0.5	venta	173	11	2026-09-30 15:52:27-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7477	\N	activa	2026-10-06 07:28:13.217-05
-2252	V-002252	import-venta-1790801634000-96-6	venta	172	11	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.231-05
-2253	V-002253	import-venta-1790801634000-46-5	venta	172	11	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 5.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.244-05
-2254	V-002254	import-venta-1790801634000-14-1	venta	172	11	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.255-05
-2255	V-002255	import-venta-1790801635000-69-0.25	venta	171	11	2026-09-30 15:53:55-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14280	\N	activa	2026-10-06 07:28:13.267-05
-2256	V-002256	import-venta-1790801635000-80-0.25	venta	171	11	2026-09-30 15:53:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14280	\N	activa	2026-10-06 07:28:13.279-05
-2257	V-002257	import-venta-1790801643000-81-1	venta	170	11	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.292-05
-2258	V-002258	import-venta-1790801643000-70-1	venta	170	11	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.305-05
-2259	V-002259	import-venta-1790801643000-93-1	venta	170	11	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.318-05
-2260	V-002260	import-venta-1790801647000-46-8	venta	57	11	2026-09-30 15:54:07-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14290	\N	activa	2026-10-06 07:28:13.331-05
-2261	V-002261	import-venta-1790801649000-89-1	venta	169	11	2026-09-30 15:54:09-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14292	\N	activa	2026-10-06 07:28:13.343-05
-2262	V-002262	import-venta-1790801649000-81-1	venta	169	11	2026-09-30 15:54:09-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14292	\N	activa	2026-10-06 07:28:13.356-05
-2263	V-002263	import-venta-1790801651000-29-1	venta	168	11	2026-09-30 15:54:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14294	\N	activa	2026-10-06 07:28:13.369-05
-2264	V-002264	import-venta-1790803853000-76-1	venta	167	11	2026-09-30 16:30:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.385-05
-2265	V-002265	import-venta-1790803854000-80-0.25	venta	167	11	2026-09-30 16:30:54-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.407-05
-2266	V-002266	import-venta-1790803854000-69-0.25	venta	167	11	2026-09-30 16:30:54-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.426-05
-2267	V-002267	import-venta-1790803855000-80-0.5	venta	166	11	2026-09-30 16:30:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta B001-7482	\N	activa	2026-10-06 07:28:13.452-05
-2268	V-002268	import-venta-1790803866000-80-0.25	venta	165	11	2026-09-30 16:31:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10429	\N	activa	2026-10-06 07:28:13.476-05
-2269	V-002269	import-venta-1790803866000-69-0.25	venta	165	11	2026-09-30 16:31:06-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10429	\N	activa	2026-10-06 07:28:13.491-05
-2270	V-002270	import-venta-1790803867000-14-1	venta	164	11	2026-09-30 16:31:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14301	\N	activa	2026-10-06 07:28:13.505-05
-2271	V-002271	import-venta-1790803869000-27-1	venta	163	11	2026-09-30 16:31:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14303	\N	activa	2026-10-06 07:28:13.518-05
-2272	V-002272	import-venta-1790803871000-25-1	venta	162	11	2026-09-30 16:31:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10430	\N	activa	2026-10-06 07:28:13.53-05
-2273	V-002273	import-venta-1790803874000-89-1	venta	160	11	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10432	\N	activa	2026-10-06 07:28:13.543-05
-2274	V-002274	import-venta-1790803874000-76-1	venta	160	11	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10432	\N	activa	2026-10-06 07:28:13.556-05
-2275	V-002275	import-venta-1790803874000-81-0.5	venta	161	11	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14306	\N	activa	2026-10-06 07:28:13.569-05
-2276	V-002276	import-venta-1790803874000-70-0.5	venta	161	11	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14306	\N	activa	2026-10-06 07:28:13.584-05
-2278	V-002278	import-venta-1790804175000-14-1	venta	158	11	2026-09-30 16:36:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14315	\N	activa	2026-10-06 07:28:13.609-05
-2279	V-002279	import-venta-1790804177000-31-2	venta	157	11	2026-09-30 16:36:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta NP01-14317	\N	activa	2026-10-06 07:28:13.623-05
-2280	V-002280	import-venta-1790804189000-76-1	venta	156	11	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.637-05
-2281	V-002281	import-venta-1790804189000-92-6	venta	156	11	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.65-05
-2282	V-002282	import-venta-1790804189000-25-1	venta	156	11	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.664-05
-2283	V-002283	import-venta-1790804371000-89-1	venta	60	11	2026-09-30 16:39:31-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14340	\N	activa	2026-10-06 07:28:13.679-05
-2284	D-002284	import-devolucion-1790810067000-29-2	devolucion	155	11	2026-09-30 18:14:27-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.693-05
-2285	D-002285	import-devolucion-1790810098000-67-1	devolucion	155	11	2026-09-30 18:14:58-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.708-05
-2286	D-002286	import-devolucion-1790810102000-76-1	devolucion	155	11	2026-09-30 18:15:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.724-05
-2287	D-002287	import-devolucion-1790811521000-29-1	devolucion	154	11	2026-09-30 18:38:41-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.737-05
-2288	D-002288	import-devolucion-1790811586000-81-1	devolucion	153	11	2026-09-30 18:39:46-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.753-05
-2289	D-002289	import-devolucion-1790818511000-67-1	devolucion	152	11	2026-09-30 20:35:11-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.766-05
-2290	D-002290	import-devolucion-1790818514000-28-1	devolucion	152	11	2026-09-30 20:35:14-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.782-05
-2291	D-002291	import-devolucion-1790818517000-27-1	devolucion	152	11	2026-09-30 20:35:17-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.794-05
-2292	V-002292	import-venta-1790876372000-25-18	venta	151	11	2026-10-01 12:39:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10437	\N	activa	2026-10-06 07:28:13.806-05
-2293	V-002293	import-venta-1790887897000-46-1	venta	150	11	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.819-05
-2294	V-002294	import-venta-1790887897000-25-1	venta	150	11	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.833-05
-2295	V-002295	import-venta-1790887897000-89-0.5	venta	150	11	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.846-05
-2296	V-002296	import-venta-1790887897000-79-0.5	venta	150	11	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.859-05
-2297	V-002297	import-venta-1790887899000-14-1	venta	149	11	2026-10-01 15:51:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14368	\N	activa	2026-10-06 07:28:13.872-05
-2298	V-002298	import-venta-1790887905000-25-18	venta	148	11	2026-10-01 15:51:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10440	\N	activa	2026-10-06 07:28:13.887-05
-2299	V-002299	import-venta-1790887907000-25-1	venta	147	11	2026-10-01 15:51:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7497	\N	activa	2026-10-06 07:28:13.9-05
-2300	V-002300	import-venta-1790887914000-46-2	venta	146	11	2026-10-01 15:51:54-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14379	\N	activa	2026-10-06 07:28:13.914-05
-2301	V-002301	import-venta-1790887915000-39-2	venta	145	11	2026-10-01 15:51:55-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta F001-10444	\N	activa	2026-10-06 07:28:13.931-05
-2302	V-002302	import-venta-1790888254000-89-1	venta	144	11	2026-10-01 15:57:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10458	\N	activa	2026-10-06 07:28:13.945-05
-2303	V-002303	import-venta-1790888254000-81-1	venta	144	11	2026-10-01 15:57:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10458	\N	activa	2026-10-06 07:28:13.96-05
-2304	V-002304	import-venta-1790888255000-27-1	venta	143	11	2026-10-01 15:57:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14394	\N	activa	2026-10-06 07:28:13.976-05
-2305	V-002305	import-venta-1790888465000-89-1	venta	142	11	2026-10-01 16:01:05-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14396	\N	activa	2026-10-06 07:28:13.991-05
-2306	V-002306	import-venta-1790888477000-93-0.5	venta	141	11	2026-10-01 16:01:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7502	\N	activa	2026-10-06 07:28:14.004-05
-2307	V-002307	import-venta-1790888482000-25-1	venta	140	11	2026-10-01 16:01:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10460	\N	activa	2026-10-06 07:28:14.019-05
-2308	V-002308	import-venta-1790888484000-25-1	venta	139	11	2026-10-01 16:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14408	\N	activa	2026-10-06 07:28:14.034-05
-2309	V-002309	import-venta-1790888486000-89-0.5	venta	138	11	2026-10-01 16:01:26-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7504	\N	activa	2026-10-06 07:28:14.047-05
-2310	V-002310	import-venta-1790888488000-93-1	venta	137	11	2026-10-01 16:01:28-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7505	\N	activa	2026-10-06 07:28:14.061-05
-2311	V-002311	import-venta-1790888493000-28-1	venta	136	11	2026-10-01 16:01:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14412	\N	activa	2026-10-06 07:28:14.075-05
-2312	V-002312	import-venta-1790888493000-46-8	venta	136	11	2026-10-01 16:01:33-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14412	\N	activa	2026-10-06 07:28:14.087-05
-2313	V-002313	import-venta-1790888495000-27-1	venta	1	11	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.1-05
-2314	V-002314	import-venta-1790888495000-26-1	venta	1	11	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.112-05
-2315	V-002315	import-venta-1790888495000-38-1	venta	1	11	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.125-05
-2316	V-002316	import-venta-1790888495000-80-0.5	venta	1	11	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.138-05
-2317	V-002317	import-venta-1790888498000-26-1	venta	135	11	2026-10-01 16:01:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7508	\N	activa	2026-10-06 07:28:14.151-05
-2319	V-002319	import-venta-1790888598000-27-1	venta	133	11	2026-10-01 16:03:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7510	\N	activa	2026-10-06 07:28:14.174-05
-2320	V-002320	import-venta-1790888603000-89-1	venta	132	11	2026-10-01 16:03:23-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7511	\N	activa	2026-10-06 07:28:14.188-05
-2321	V-002321	import-venta-1790888603000-76-1	venta	132	11	2026-10-01 16:03:23-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7511	\N	activa	2026-10-06 07:28:14.2-05
-2322	V-002322	import-venta-1790888604000-79-1	venta	131	11	2026-10-01 16:03:24-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14421	\N	activa	2026-10-06 07:28:14.215-05
-2323	V-002323	import-venta-1790888614000-39-1	venta	130	11	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.23-05
-2324	V-002324	import-venta-1790888614000-80-0.25	venta	130	11	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.245-05
-2325	V-002325	import-venta-1790888614000-69-0.25	venta	130	11	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.259-05
-2326	V-002326	import-venta-1790888619000-26-1	venta	129	11	2026-10-01 16:03:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14432	\N	activa	2026-10-06 07:28:14.271-05
-2327	V-002327	import-venta-1790888620000-28-1	venta	128	11	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.286-05
-2328	V-002328	import-venta-1790888620000-21-4	venta	128	11	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 4.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.299-05
-2329	V-002329	import-venta-1790888620000-46-1	venta	128	11	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.315-05
-2330	V-002330	import-venta-1790888621000-94-1	venta	127	11	2026-10-01 16:03:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7514	\N	activa	2026-10-06 07:28:14.329-05
-2331	V-002331	import-venta-1790888623000-99-12	venta	126	11	2026-10-01 16:03:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7515	\N	activa	2026-10-06 07:28:14.343-05
-2333	V-002333	import-venta-1790888624000-101-3	venta	125	11	2026-10-01 16:03:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-14435	\N	activa	2026-10-06 07:28:14.364-05
-2335	V-002335	import-venta-1790888624000-92-3	venta	125	11	2026-10-01 16:03:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-14435	\N	activa	2026-10-06 07:28:14.387-05
-2336	V-002336	import-venta-1790888627000-93-1	venta	124	11	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.402-05
-2337	V-002337	import-venta-1790888627000-89-1	venta	124	11	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.43-05
-2338	V-002338	import-venta-1790888627000-46-8	venta	124	11	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.45-05
-2339	V-002339	import-venta-1790888627000-20-8	venta	124	11	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 8.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.465-05
-2340	V-002340	import-venta-1790888628000-29-2	venta	123	11	2026-10-01 16:03:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta B001-7516	\N	activa	2026-10-06 07:28:14.479-05
-2341	V-002341	import-venta-1790888628000-94-1	venta	123	11	2026-10-01 16:03:48-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7516	\N	activa	2026-10-06 07:28:14.493-05
-2342	V-002342	import-venta-1790888630000-89-6	venta	122	11	2026-10-01 16:03:50-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 6.000000 por generacion de venta F001-10473	\N	activa	2026-10-06 07:28:14.506-05
-2343	V-002343	import-venta-1790888717000-80-1	venta	121	11	2026-10-01 16:05:17-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14438	\N	activa	2026-10-06 07:28:14.519-05
-2344	V-002344	import-venta-1790888718000-76-1	venta	120	11	2026-10-01 16:05:18-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO MERI ECON X68 SOB 3.5 GR/PAQUETE X12 DISPLAY + 2 VINAGRES TINTO 125 ML por la cantidad de 1.000000 por generacion de venta NP01-14439	\N	activa	2026-10-06 07:28:14.535-05
-2345	V-002345	import-venta-1790888718000-75-0.5	venta	120	11	2026-10-01 16:05:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR MERI SIN PCTE GIG X42 SOB 27 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14439	\N	activa	2026-10-06 07:28:14.549-05
-2346	V-002346	import-venta-1790888725000-14-1	venta	119	11	2026-10-01 16:05:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14446	\N	activa	2026-10-06 07:28:14.564-05
-2348	V-002348	import-venta-1790888726000-92-6	venta	118	11	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.589-05
-2349	V-002349	import-venta-1790888726000-79-1	venta	118	11	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.602-05
-2350	V-002350	import-venta-1790888726000-69-1	venta	118	11	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.62-05
-2351	V-002351	import-venta-1790888726000-76-1	venta	118	11	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.637-05
-2352	V-002352	import-venta-1790888728000-89-0.5	venta	2	11	2026-10-01 16:05:28-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7518	\N	activa	2026-10-06 07:28:14.652-05
-2353	V-002353	import-venta-1790888729000-46-8	venta	117	11	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.67-05
-2354	V-002354	import-venta-1790888729000-14-1	venta	117	11	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.685-05
-2355	V-002355	import-venta-1790888729000-26-1	venta	117	11	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.704-05
-2356	V-002356	import-venta-1790888730000-79-0.5	venta	116	11	2026-10-01 16:05:30-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14450	\N	activa	2026-10-06 07:28:14.721-05
-2357	V-002357	import-venta-1790888730000-89-0.5	venta	116	11	2026-10-01 16:05:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14450	\N	activa	2026-10-06 07:28:14.739-05
-2358	V-002358	import-venta-1790888734000-92-2	venta	3	11	2026-10-01 16:05:34-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14453	\N	activa	2026-10-06 07:28:14.753-05
-2359	V-002359	import-venta-1790888734000-87-1	venta	3	11	2026-10-01 16:05:34-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-14453	\N	activa	2026-10-06 07:28:14.768-05
-2360	V-002360	import-venta-1790888821000-89-1	venta	115	11	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.781-05
-2361	V-002361	import-venta-1790888821000-39-1	venta	115	11	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.797-05
-2362	V-002362	import-venta-1790888821000-76-1	venta	115	11	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.811-05
-2363	V-002363	import-venta-1790890397000-67-5	venta	114	11	2026-10-01 16:33:17-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 5.000000 por generacion de venta F001-10478	\N	activa	2026-10-06 07:28:14.822-05
-2364	V-002364	import-venta-1790890405000-25-4	venta	113	11	2026-10-01 16:33:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-14478	\N	activa	2026-10-06 07:28:14.833-05
-2365	V-002365	import-venta-1790890409000-70-2	venta	112	11	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.847-05
-2366	V-002366	import-venta-1790890409000-81-2	venta	112	11	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.861-05
-2367	V-002367	import-venta-1790890409000-93-2	venta	112	11	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.872-05
-2368	V-002368	import-venta-1790893121000-58-0.5	venta	111	11	2026-10-01 17:18:41-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14482	\N	activa	2026-10-06 07:28:14.886-05
-2369	D-002369	import-devolucion-1790903575000-23-6	devolucion	110	11	2026-10-01 20:12:55-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.899-05
-2370	D-002370	import-devolucion-1790903636000-69-1	devolucion	109	11	2026-10-01 20:13:56-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.911-05
-2371	D-002371	import-devolucion-1790903702000-80-1	devolucion	108	11	2026-10-01 20:15:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.923-05
-2372	D-002372	import-devolucion-1790949356000-80-0.25	devolucion	107	11	2026-10-02 08:55:56-05	0.00	0.00	0.00	0.00	INGRESO DE PIMIENTA MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.936-05
-2373	D-002373	import-devolucion-1790949360000-69-0.25	devolucion	107	11	2026-10-02 08:56:00-05	0.00	0.00	0.00	0.00	INGRESO DE COMINO MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.949-05
-2374	V-002374	import-venta-1790972938000-14-1	venta	106	11	2026-10-02 15:28:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14486	\N	activa	2026-10-06 07:28:14.963-05
-2375	V-002375	import-venta-1790972939000-99-12	venta	105	11	2026-10-02 15:28:59-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10484	\N	activa	2026-10-06 07:28:14.975-05
-2376	V-002376	import-venta-1790972939000-58-2	venta	105	11	2026-10-02 15:28:59-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 2.000000 por generacion de venta F001-10484	\N	activa	2026-10-06 07:28:14.986-05
-2377	V-002377	import-venta-1790972942000-96-12	venta	104	11	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:14.998-05
-2378	V-002378	import-venta-1790972942000-80-0.5	venta	104	11	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:15.01-05
-2379	V-002379	import-venta-1790972942000-69-0.5	venta	104	11	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:15.022-05
-2380	V-002380	import-venta-1790972944000-89-1	venta	103	11	2026-10-02 15:29:04-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7528	\N	activa	2026-10-06 07:28:15.034-05
-2381	V-002381	import-venta-1790972944000-93-1	venta	103	11	2026-10-02 15:29:04-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7528	\N	activa	2026-10-06 07:28:15.047-05
-2382	V-002382	import-venta-1790972946000-25-10	venta	102	11	2026-10-02 15:29:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 10.000000 por generacion de venta B001-7529	\N	activa	2026-10-06 07:28:15.059-05
-2383	V-002383	import-venta-1790972946000-58-0.5	venta	101	11	2026-10-02 15:29:06-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14489	\N	activa	2026-10-06 07:28:15.071-05
-2384	V-002384	import-venta-1790972947000-25-1	venta	101	11	2026-10-02 15:29:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14489	\N	activa	2026-10-06 07:28:15.085-05
-2385	V-002385	import-venta-1790972953000-29-1	venta	100	11	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.097-05
-2386	V-002386	import-venta-1790972953000-80-1	venta	100	11	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.111-05
-2387	V-002387	import-venta-1790972953000-26-1	venta	100	11	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.124-05
-2388	V-002388	import-venta-1790972956000-92-3	venta	99	11	2026-10-02 15:29:16-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7532	\N	activa	2026-10-06 07:28:15.136-05
-2389	V-002389	import-venta-1790972960000-89-1	venta	65	11	2026-10-02 15:29:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14497	\N	activa	2026-10-06 07:28:15.15-05
-2390	V-002390	import-venta-1790972961000-89-1	venta	65	11	2026-10-02 15:29:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14498	\N	activa	2026-10-06 07:28:15.162-05
-2391	V-002391	import-venta-1790972962000-14-1	venta	98	11	2026-10-02 15:29:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14499	\N	activa	2026-10-06 07:28:15.176-05
-2392	V-002392	import-venta-1790972964000-14-2	venta	97	11	2026-10-02 15:29:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 2.000000 por generacion de venta F001-10488	\N	activa	2026-10-06 07:28:15.189-05
-2393	V-002393	import-venta-1790972966000-25-1	venta	96	11	2026-10-02 15:29:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7534	\N	activa	2026-10-06 07:28:15.206-05
-2394	V-002394	import-venta-1790972986000-93-1	venta	95	11	2026-10-02 15:29:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14504	\N	activa	2026-10-06 07:28:15.219-05
-2395	V-002395	import-venta-1790972986000-79-1	venta	95	11	2026-10-02 15:29:46-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14504	\N	activa	2026-10-06 07:28:15.234-05
-2398	V-002398	import-venta-1790972993000-76-1	venta	93	11	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.266-05
-2399	V-002399	import-venta-1790972993000-80-0.25	venta	93	11	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.278-05
-2400	V-002400	import-venta-1790972993000-69-0.25	venta	93	11	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.289-05
-2401	V-002401	import-venta-1790972998000-89-1	venta	91	11	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14509	\N	activa	2026-10-06 07:28:15.303-05
-2402	V-002402	import-venta-1790972998000-67-1	venta	92	11	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14510	\N	activa	2026-10-06 07:28:15.324-05
-2403	V-002403	import-venta-1790972998000-79-1	venta	92	11	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14510	\N	activa	2026-10-06 07:28:15.343-05
-2404	V-002404	import-venta-1790972999000-79-1	venta	90	11	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.358-05
-2405	V-002405	import-venta-1790972999000-81-1	venta	90	11	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.373-05
-2406	V-002406	import-venta-1790972999000-70-1	venta	90	11	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.386-05
-2407	V-002407	import-venta-1790972999000-89-2	venta	90	11	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.4-05
-2408	V-002408	import-venta-1790973001000-31-1	venta	89	11	2026-10-02 15:30:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14511	\N	activa	2026-10-06 07:28:15.415-05
-2409	V-002409	import-venta-1790973002000-31-1	venta	88	11	2026-10-02 15:30:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7538	\N	activa	2026-10-06 07:28:15.429-05
-2410	V-002410	import-venta-1790973003000-89-1	venta	87	11	2026-10-02 15:30:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14512	\N	activa	2026-10-06 07:28:15.442-05
-2411	V-002411	import-venta-1790973003000-79-1	venta	87	11	2026-10-02 15:30:03-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14512	\N	activa	2026-10-06 07:28:15.456-05
-2412	V-002412	import-venta-1790973006000-29-1	venta	86	11	2026-10-02 15:30:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7539	\N	activa	2026-10-06 07:28:15.47-05
-2413	V-002413	import-venta-1790973006000-99-6	venta	86	11	2026-10-02 15:30:06-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7539	\N	activa	2026-10-06 07:28:15.483-05
-2414	V-002414	import-venta-1790973011000-27-1	venta	85	11	2026-10-02 15:30:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10496	\N	activa	2026-10-06 07:28:15.498-05
-2415	V-002415	import-venta-1790973011000-89-1	venta	85	11	2026-10-02 15:30:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10496	\N	activa	2026-10-06 07:28:15.511-05
-2416	V-002416	import-venta-1790973012000-93-0.5	venta	84	11	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.524-05
-2417	V-002417	import-venta-1790973012000-89-0.5	venta	84	11	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.535-05
-2418	V-002418	import-venta-1790973012000-79-0.5	venta	84	11	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.548-05
-2419	V-002419	import-venta-1790973013000-89-1	venta	83	11	2026-10-02 15:30:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14516	\N	activa	2026-10-06 07:28:15.561-05
-2421	V-002421	import-venta-1790973013000-94-1	venta	83	11	2026-10-02 15:30:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14516	\N	activa	2026-10-06 07:28:15.577-05
-2422	V-002422	import-venta-1790973963000-89-1	venta	82	11	2026-10-02 15:46:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14522	\N	activa	2026-10-06 07:28:15.59-05
-2423	V-002423	import-venta-1790973983000-29-1	venta	81	11	2026-10-02 15:46:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14525	\N	activa	2026-10-06 07:28:15.602-05
-2424	V-002424	import-venta-1790974000000-81-2	venta	80	11	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.615-05
-2425	V-002425	import-venta-1790974000000-79-1	venta	80	11	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.629-05
-2426	V-002426	import-venta-1790974000000-93-1	venta	80	11	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.642-05
-2427	V-002427	import-venta-1790974000000-89-1	venta	80	11	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.654-05
-2428	V-002428	import-venta-1790974000000-70-1	venta	80	11	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.668-05
-2429	V-002429	import-venta-1790974003000-46-8	venta	79	11	2026-10-02 15:46:43-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14529	\N	activa	2026-10-06 07:28:15.681-05
-2430	V-002430	import-venta-1790974003000-80-0.25	venta	79	11	2026-10-02 15:46:43-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14529	\N	activa	2026-10-06 07:28:15.693-05
-2431	V-002431	import-venta-1790974010000-81-1	venta	78	11	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.707-05
-2432	V-002432	import-venta-1790974010000-70-1	venta	78	11	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.718-05
-2433	V-002433	import-venta-1790974010000-89-1	venta	78	11	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.731-05
-2434	V-002434	import-venta-1790975669000-14-1	venta	77	11	2026-10-02 16:14:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14537	\N	activa	2026-10-06 07:28:15.745-05
-2435	V-002435	import-venta-1790975670000-79-1	venta	76	11	2026-10-02 16:14:30-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14538	\N	activa	2026-10-06 07:28:15.758-05
-2466	V-002466	import-venta-1791058223000-76-1	venta	52	11	2026-10-03 15:10:23-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14564	\N	activa	2026-10-06 07:28:16.186-05
-2436	V-002436	import-venta-1790975670000-93-1	venta	76	11	2026-10-02 16:14:30-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14538	\N	activa	2026-10-06 07:28:15.769-05
-2437	V-002437	import-venta-1790975674000-70-1	venta	75	11	2026-10-02 16:14:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7547	\N	activa	2026-10-06 07:28:15.781-05
-2438	V-002438	import-venta-1790975675000-16-1	venta	74	11	2026-10-02 16:14:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14541	\N	activa	2026-10-06 07:28:15.796-05
-2439	V-002439	import-venta-1790975676000-80-1	venta	55	11	2026-10-02 16:14:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7548	\N	activa	2026-10-06 07:28:15.808-05
-2440	V-002440	import-venta-1790975676000-69-1	venta	55	11	2026-10-02 16:14:36-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7548	\N	activa	2026-10-06 07:28:15.821-05
-2441	V-002441	import-venta-1790975678000-38-1	venta	73	11	2026-10-02 16:14:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10502	\N	activa	2026-10-06 07:28:15.834-05
-2442	V-002442	import-venta-1790975680000-14-1	venta	72	11	2026-10-02 16:14:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14544	\N	activa	2026-10-06 07:28:15.847-05
-2443	V-002443	import-venta-1790975681000-39-10	venta	71	11	2026-10-02 16:14:41-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 10.000000 por generacion de venta NP01-14545	\N	activa	2026-10-06 07:28:15.859-05
-2444	V-002444	import-venta-1790975681000-80-0.25	venta	71	11	2026-10-02 16:14:41-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14545	\N	activa	2026-10-06 07:28:15.873-05
-2445	V-002445	import-venta-1790975687000-79-0.5	venta	70	11	2026-10-02 16:14:47-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14551	\N	activa	2026-10-06 07:28:15.884-05
-2446	V-002446	import-venta-1790975689000-99-12	venta	69	11	2026-10-02 16:14:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14553	\N	activa	2026-10-06 07:28:15.898-05
-2447	V-002447	import-venta-1790975690000-46-2	venta	68	11	2026-10-02 16:14:50-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14554	\N	activa	2026-10-06 07:28:15.912-05
-2448	V-002448	import-venta-1790975692000-31-1	venta	67	11	2026-10-02 16:14:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14555	\N	activa	2026-10-06 07:28:15.926-05
-2449	V-002449	import-venta-1790975693000-77-1	venta	66	11	2026-10-02 16:14:53-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14556	\N	activa	2026-10-06 07:28:15.948-05
-2450	D-002450	import-devolucion-1790978397000-89-1	devolucion	65	11	2026-10-02 16:59:57-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:15.969-05
-2451	V-002451	import-venta-1790980419000-31-1	venta	64	11	2026-10-02 17:33:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7550	\N	activa	2026-10-06 07:28:15.99-05
-2452	V-002452	import-venta-1790980429000-96-12	venta	63	11	2026-10-02 17:33:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10513	\N	activa	2026-10-06 07:28:16.013-05
-2453	V-002453	import-venta-1790980430000-93-2	venta	62	11	2026-10-02 17:33:50-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10514	\N	activa	2026-10-06 07:28:16.025-05
-2454	D-002454	import-devolucion-1790983396000-80-0.5	devolucion	61	11	2026-10-02 18:23:16-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.036-05
-2455	D-002455	import-devolucion-1790983399000-69-0.5	devolucion	61	11	2026-10-02 18:23:19-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.047-05
-2456	D-002456	import-devolucion-1790983439000-89-1	devolucion	60	11	2026-10-02 18:23:59-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.062-05
-2457	D-002457	import-devolucion-1790983467000-99-6	devolucion	59	11	2026-10-02 18:24:27-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.073-05
-2458	D-002458	import-devolucion-1791031993000-70-0.5	devolucion	58	11	2026-10-03 07:53:13-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.083-05
-2459	D-002459	import-devolucion-1791032113000-46-8	devolucion	57	11	2026-10-03 07:55:13-05	0.00	0.00	0.00	0.00	INGRESO DE DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.095-05
-2460	V-002460	import-venta-1791034857000-39-1	venta	56	1	2026-10-03 08:40:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14561	\N	activa	2026-10-06 07:28:16.109-05
-2461	V-002461	import-venta-1791035340000-80-1	venta	55	1	2026-10-03 08:49:00-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7555	\N	activa	2026-10-06 07:28:16.119-05
-2462	V-002462	import-venta-1791035340000-69-1	venta	55	1	2026-10-03 08:49:00-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7555	\N	activa	2026-10-06 07:28:16.133-05
-2463	V-002463	import-venta-1791040423000-25-2	venta	54	1	2026-10-03 10:13:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta B001-7556	\N	activa	2026-10-06 07:28:16.148-05
-2464	V-002464	import-venta-1791058221000-81-1	venta	53	11	2026-10-03 15:10:21-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14563	\N	activa	2026-10-06 07:28:16.16-05
-2465	V-002465	import-venta-1791058223000-97-1	venta	52	11	2026-10-03 15:10:23-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 150 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-14564	\N	activa	2026-10-06 07:28:16.175-05
-2467	V-002467	import-venta-1791058224000-81-1	venta	51	11	2026-10-03 15:10:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14565	\N	activa	2026-10-06 07:28:16.197-05
-2468	V-002468	import-venta-1791058224000-70-1	venta	51	11	2026-10-03 15:10:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14565	\N	activa	2026-10-06 07:28:16.225-05
-2469	V-002469	import-venta-1791058232000-94-0.1	venta	50	11	2026-10-03 15:10:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 0.100000 por generacion de venta F001-10537	\N	activa	2026-10-06 07:28:16.246-05
-2470	V-002470	import-venta-1791058232000-89-1	venta	50	11	2026-10-03 15:10:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10537	\N	activa	2026-10-06 07:28:16.262-05
-2471	V-002471	import-venta-1791058234000-14-1	venta	49	11	2026-10-03 15:10:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14570	\N	activa	2026-10-06 07:28:16.278-05
-2472	V-002472	import-venta-1791058234000-16-1	venta	49	11	2026-10-03 15:10:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14570	\N	activa	2026-10-06 07:28:16.291-05
-2473	V-002473	import-venta-1791058240000-70-0.5	venta	48	11	2026-10-03 15:10:40-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14574	\N	activa	2026-10-06 07:28:16.303-05
-2474	V-002474	import-venta-1791058240000-93-1	venta	48	11	2026-10-03 15:10:40-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14574	\N	activa	2026-10-06 07:28:16.316-05
-2475	V-002475	import-venta-1791058247000-67-1	venta	47	11	2026-10-03 15:10:47-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7560	\N	activa	2026-10-06 07:28:16.329-05
-2476	V-002476	import-venta-1791058257000-81-0.5	venta	46	11	2026-10-03 15:10:57-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10543	\N	activa	2026-10-06 07:28:16.345-05
-2477	V-002477	import-venta-1791058555000-93-1	venta	45	11	2026-10-03 15:15:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14585	\N	activa	2026-10-06 07:28:16.357-05
-2478	V-002478	import-venta-1791058556000-46-3	venta	44	11	2026-10-03 15:15:56-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-14586	\N	activa	2026-10-06 07:28:16.369-05
-2479	V-002479	import-venta-1791058556000-45-1	venta	44	11	2026-10-03 15:15:56-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14586	\N	activa	2026-10-06 07:28:16.383-05
-2480	V-002480	import-venta-1791058557000-93-1	venta	43	11	2026-10-03 15:15:57-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14587	\N	activa	2026-10-06 07:28:16.396-05
-2481	V-002481	import-venta-1791058558000-27-1	venta	42	11	2026-10-03 15:15:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14588	\N	activa	2026-10-06 07:28:16.411-05
-2482	V-002482	import-venta-1791058562000-25-3	venta	41	11	2026-10-03 15:16:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-14590	\N	activa	2026-10-06 07:28:16.422-05
-2483	V-002483	import-venta-1791058565000-67-1	venta	39	11	2026-10-03 15:16:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7571	\N	activa	2026-10-06 07:28:16.431-05
-2484	V-002484	import-venta-1791058565000-27-1	venta	40	11	2026-10-03 15:16:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14591	\N	activa	2026-10-06 07:28:16.444-05
-2485	V-002485	import-venta-1791058567000-89-1	venta	38	11	2026-10-03 15:16:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14593	\N	activa	2026-10-06 07:28:16.456-05
-2486	V-002486	import-venta-1791058567000-67-1	venta	38	11	2026-10-03 15:16:07-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14593	\N	activa	2026-10-06 07:28:16.469-05
-2487	V-002487	import-venta-1791058568000-14-1	venta	37	11	2026-10-03 15:16:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10545	\N	activa	2026-10-06 07:28:16.484-05
-2488	V-002488	import-venta-1791058572000-14-1	venta	36	11	2026-10-03 15:16:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7573	\N	activa	2026-10-06 07:28:16.497-05
-2489	V-002489	import-venta-1791058574000-28-1	venta	35	11	2026-10-03 15:16:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14595	\N	activa	2026-10-06 07:28:16.51-05
-2490	V-002490	import-venta-1791058574000-89-1	venta	35	11	2026-10-03 15:16:14-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14595	\N	activa	2026-10-06 07:28:16.521-05
-2491	V-002491	import-venta-1791058582000-80-0.5	venta	34	11	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.535-05
-2492	V-002492	import-venta-1791058582000-69-0.5	venta	34	11	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.548-05
-2493	V-002493	import-venta-1791058582000-29-1	venta	34	11	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.559-05
-2494	V-002494	import-venta-1791058582000-19-3	venta	34	11	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.573-05
-2495	V-002495	import-venta-1791058583000-18-3	venta	34	11	2026-10-03 15:16:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.585-05
-2496	V-002496	import-venta-1791058584000-89-0.5	venta	33	11	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.597-05
-2497	V-002497	import-venta-1791058584000-79-0.5	venta	33	11	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.609-05
-2498	V-002498	import-venta-1791058584000-31-2	venta	33	11	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.623-05
-2499	V-002499	import-venta-1791058585000-31-1	venta	32	11	2026-10-03 15:16:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10547	\N	activa	2026-10-06 07:28:16.633-05
-2500	V-002500	import-venta-1791058585000-87-1	venta	32	11	2026-10-03 15:16:25-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10547	\N	activa	2026-10-06 07:28:16.646-05
-2501	V-002501	import-venta-1791058676000-93-0.5	venta	31	11	2026-10-03 15:17:56-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14598	\N	activa	2026-10-06 07:28:16.659-05
-2502	V-002502	import-venta-1791058676000-23-3	venta	31	11	2026-10-03 15:17:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 3.000000 por generacion de venta NP01-14598	\N	activa	2026-10-06 07:28:16.671-05
-2503	V-002503	import-venta-1791058680000-93-1	venta	30	11	2026-10-03 15:18:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7581	\N	activa	2026-10-06 07:28:16.683-05
-2504	V-002504	import-venta-1791058681000-46-4	venta	29	11	2026-10-03 15:18:01-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7582	\N	activa	2026-10-06 07:28:16.695-05
-2505	V-002505	import-venta-1791058687000-31-1	venta	28	11	2026-10-03 15:18:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10550	\N	activa	2026-10-06 07:28:16.706-05
-2506	V-002506	import-venta-1791058690000-89-1	venta	27	11	2026-10-03 15:18:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7584	\N	activa	2026-10-06 07:28:16.719-05
-2507	V-002507	import-venta-1791058691000-23-6	venta	26	11	2026-10-03 15:18:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-14605	\N	activa	2026-10-06 07:28:16.732-05
-2508	V-002508	import-venta-1791058698000-27-1	venta	25	11	2026-10-03 15:18:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14611	\N	activa	2026-10-06 07:28:16.746-05
-2509	V-002509	import-venta-1791058702000-89-1	venta	24	11	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.758-05
-2510	V-002510	import-venta-1791058702000-93-1	venta	24	11	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.769-05
-2511	V-002511	import-venta-1791058702000-79-0.5	venta	24	11	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.783-05
-2512	V-002512	import-venta-1791058702000-88-1	venta	24	11	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.798-05
-2513	V-002513	import-venta-1791059922000-39-2	venta	23	11	2026-10-03 15:38:42-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-14615	\N	activa	2026-10-06 07:28:16.81-05
-2514	V-002514	import-venta-1791059922000-20-3	venta	23	11	2026-10-03 15:38:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-14615	\N	activa	2026-10-06 07:28:16.824-05
-2515	V-002515	import-venta-1791059926000-92-2	venta	22	11	2026-10-03 15:38:46-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta B001-7586	\N	activa	2026-10-06 07:28:16.838-05
-2517	V-002517	import-venta-1791059927000-16-1	venta	21	11	2026-10-03 15:38:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7587	\N	activa	2026-10-06 07:28:16.857-05
-2518	V-002518	import-venta-1791059928000-14-1	venta	20	11	2026-10-03 15:38:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14618	\N	activa	2026-10-06 07:28:16.868-05
-2519	V-002519	import-venta-1791059929000-16-1	venta	19	11	2026-10-03 15:38:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7588	\N	activa	2026-10-06 07:28:16.879-05
-2520	V-002520	import-venta-1791060206000-27-1	venta	18	11	2026-10-03 15:43:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14626	\N	activa	2026-10-06 07:28:16.891-05
-2521	V-002521	import-venta-1791060214000-14-1	venta	17	11	2026-10-03 15:43:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7591	\N	activa	2026-10-06 07:28:16.904-05
-2522	V-002522	import-venta-1791060214000-39-1	venta	17	11	2026-10-03 15:43:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7591	\N	activa	2026-10-06 07:28:16.916-05
-2523	V-002523	import-venta-1791060507000-39-2	venta	16	11	2026-10-03 15:48:27-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-14650	\N	activa	2026-10-06 07:28:16.93-05
-2524	V-002524	import-venta-1791061407000-80-0.25	venta	15	11	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.941-05
-2525	V-002525	import-venta-1791061407000-69-0.25	venta	15	11	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.955-05
-2526	V-002526	import-venta-1791061407000-92-12	venta	15	11	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.967-05
-2528	V-002528	import-venta-1791061411000-81-1	venta	14	11	2026-10-03 16:03:31-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14654	\N	activa	2026-10-06 07:28:16.988-05
-2529	V-002529	import-venta-1791061414000-80-0.25	venta	13	11	2026-10-03 16:03:34-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14657	\N	activa	2026-10-06 07:28:17.001-05
-2530	V-002530	import-venta-1791061414000-69-0.25	venta	13	11	2026-10-03 16:03:34-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14657	\N	activa	2026-10-06 07:28:17.014-05
-2531	V-002531	import-venta-1791061416000-14-1	venta	12	11	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.025-05
-2533	V-002533	import-venta-1791061416000-89-1	venta	12	11	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.046-05
-2534	V-002534	import-venta-1791061416000-67-1	venta	12	11	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.059-05
-2535	V-002535	import-venta-1791061416000-76-1	venta	12	11	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.078-05
-2536	V-002536	import-venta-1791061418000-28-1	venta	11	11	2026-10-03 16:03:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14660	\N	activa	2026-10-06 07:28:17.097-05
-2537	V-002537	import-venta-1791061419000-93-1	venta	10	11	2026-10-03 16:03:39-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10570	\N	activa	2026-10-06 07:28:17.116-05
-2538	V-002538	import-venta-1791061420000-27-1	venta	9	11	2026-10-03 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14661	\N	activa	2026-10-06 07:28:17.136-05
-2539	V-002539	import-venta-1791061421000-25-3	venta	8	11	2026-10-03 16:03:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-14662	\N	activa	2026-10-06 07:28:17.15-05
-2541	V-002541	import-venta-1791061422000-69-0.75	venta	7	11	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.172-05
-2542	V-002542	import-venta-1791061422000-80-0.5	venta	7	11	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.184-05
-2543	V-002543	import-venta-1791061422000-76-1	venta	7	11	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.196-05
-2544	V-002544	import-venta-1791061424000-39-1	venta	6	11	2026-10-03 16:03:44-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10571	\N	activa	2026-10-06 07:28:17.208-05
-2545	V-002545	import-venta-1791061432000-89-1	venta	5	11	2026-10-03 16:03:52-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14672	\N	activa	2026-10-06 07:28:17.22-05
-2546	V-002546	import-venta-1791061432000-93-3	venta	5	11	2026-10-03 16:03:52-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 3.000000 por generacion de venta NP01-14672	\N	activa	2026-10-06 07:28:17.232-05
-2547	V-002547	import-venta-1791061487000-94-1	venta	4	11	2026-10-03 16:04:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14673	\N	activa	2026-10-06 07:28:17.246-05
-2548	D-002548	import-devolucion-1791067251000-92-2	devolucion	3	11	2026-10-03 17:40:51-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.26-05
-2549	D-002549	import-devolucion-1791067255000-87-1	devolucion	3	11	2026-10-03 17:40:55-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.27-05
-2550	D-002550	import-devolucion-1791067395000-89-0.5	devolucion	2	11	2026-10-03 17:43:15-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.284-05
-2551	D-002551	import-devolucion-1791070069000-27-1	devolucion	1	11	2026-10-03 18:27:49-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.297-05
-2552	D-002552	import-devolucion-1791070073000-26-1	devolucion	1	11	2026-10-03 18:27:53-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.309-05
-2553	D-002553	import-devolucion-1791070078000-38-1	devolucion	1	11	2026-10-03 18:27:58-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.319-05
+2313	V-002313	import-venta-1790888495000-27-1	venta	\N	\N	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.1-05
+2314	V-002314	import-venta-1790888495000-26-1	venta	\N	\N	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.112-05
+2315	V-002315	import-venta-1790888495000-38-1	venta	\N	\N	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.125-05
+2316	V-002316	import-venta-1790888495000-80-0.5	venta	\N	\N	2026-10-01 16:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7507	\N	activa	2026-10-06 07:28:14.138-05
+2352	V-002352	import-venta-1790888728000-89-0.5	venta	\N	\N	2026-10-01 16:05:28-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7518	\N	activa	2026-10-06 07:28:14.652-05
+2550	D-002550	import-devolucion-1791067395000-89-0.5	devolucion	\N	\N	2026-10-03 17:43:15-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.284-05
+2358	V-002358	import-venta-1790888734000-92-2	venta	\N	\N	2026-10-01 16:05:34-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14453	\N	activa	2026-10-06 07:28:14.753-05
+2359	V-002359	import-venta-1790888734000-87-1	venta	\N	\N	2026-10-01 16:05:34-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-14453	\N	activa	2026-10-06 07:28:14.768-05
+2548	D-002548	import-devolucion-1791067251000-92-2	devolucion	\N	\N	2026-10-03 17:40:51-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.26-05
+2549	D-002549	import-devolucion-1791067255000-87-1	devolucion	\N	\N	2026-10-03 17:40:55-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.27-05
+2547	V-002547	import-venta-1791061487000-94-1	venta	\N	\N	2026-10-03 16:04:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14673	\N	activa	2026-10-06 07:28:17.246-05
+2545	V-002545	import-venta-1791061432000-89-1	venta	\N	\N	2026-10-03 16:03:52-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14672	\N	activa	2026-10-06 07:28:17.22-05
+2546	V-002546	import-venta-1791061432000-93-3	venta	\N	\N	2026-10-03 16:03:52-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 3.000000 por generacion de venta NP01-14672	\N	activa	2026-10-06 07:28:17.232-05
+1465	V-001465	import-venta-1789852974000-39-1	venta	\N	\N	2026-09-19 16:22:54-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10026	\N	activa	2026-10-06 07:28:02.409-05
+2544	V-002544	import-venta-1791061424000-39-1	venta	\N	\N	2026-10-03 16:03:44-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10571	\N	activa	2026-10-06 07:28:17.208-05
+1466	V-001466	import-venta-1789852976000-80-0.75	venta	\N	\N	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.424-05
+1467	V-001467	import-venta-1789852976000-69-0.75	venta	\N	\N	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.439-05
+1468	V-001468	import-venta-1789852976000-31-2	venta	\N	\N	2026-09-19 16:22:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta NP01-13317	\N	activa	2026-10-06 07:28:02.452-05
+2541	V-002541	import-venta-1791061422000-69-0.75	venta	\N	\N	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.750000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.172-05
+2542	V-002542	import-venta-1791061422000-80-0.5	venta	\N	\N	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.184-05
+2543	V-002543	import-venta-1791061422000-76-1	venta	\N	\N	2026-10-03 16:03:42-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14663	\N	activa	2026-10-06 07:28:17.196-05
+1464	V-001464	import-venta-1789852972000-25-3	venta	\N	\N	2026-09-19 16:22:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13315	\N	activa	2026-10-06 07:28:02.389-05
+2539	V-002539	import-venta-1791061421000-25-3	venta	\N	\N	2026-10-03 16:03:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-14662	\N	activa	2026-10-06 07:28:17.15-05
+2538	V-002538	import-venta-1791061420000-27-1	venta	\N	\N	2026-10-03 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14661	\N	activa	2026-10-06 07:28:17.136-05
+2537	V-002537	import-venta-1791061419000-93-1	venta	\N	\N	2026-10-03 16:03:39-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10570	\N	activa	2026-10-06 07:28:17.116-05
+1471	V-001471	import-venta-1789852980000-93-1	venta	\N	\N	2026-09-19 16:23:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13320	\N	activa	2026-10-06 07:28:02.494-05
+1666	D-001666	import-devolucion-1790171929000-93-1	devolucion	\N	\N	2026-09-23 08:58:49-05	0.00	0.00	0.00	0.00	INGRESO DE SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:05.486-05
+2536	V-002536	import-venta-1791061418000-28-1	venta	\N	\N	2026-10-03 16:03:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14660	\N	activa	2026-10-06 07:28:17.097-05
+1469	V-001469	import-venta-1789852979000-81-1	venta	\N	\N	2026-09-19 16:22:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7197	\N	activa	2026-10-06 07:28:02.465-05
+1470	V-001470	import-venta-1789852979000-27-1	venta	\N	\N	2026-09-19 16:22:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7197	\N	activa	2026-10-06 07:28:02.48-05
+2531	V-002531	import-venta-1791061416000-14-1	venta	\N	\N	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.025-05
+2533	V-002533	import-venta-1791061416000-89-1	venta	\N	\N	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.046-05
+2534	V-002534	import-venta-1791061416000-67-1	venta	\N	\N	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.059-05
+2535	V-002535	import-venta-1791061416000-76-1	venta	\N	\N	2026-10-03 16:03:36-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7598	\N	activa	2026-10-06 07:28:17.078-05
+2529	V-002529	import-venta-1791061414000-80-0.25	venta	\N	\N	2026-10-03 16:03:34-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14657	\N	activa	2026-10-06 07:28:17.001-05
+2530	V-002530	import-venta-1791061414000-69-0.25	venta	\N	\N	2026-10-03 16:03:34-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14657	\N	activa	2026-10-06 07:28:17.014-05
+2528	V-002528	import-venta-1791061411000-81-1	venta	\N	\N	2026-10-03 16:03:31-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14654	\N	activa	2026-10-06 07:28:16.988-05
+2524	V-002524	import-venta-1791061407000-80-0.25	venta	\N	\N	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.941-05
+2525	V-002525	import-venta-1791061407000-69-0.25	venta	\N	\N	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.955-05
+2526	V-002526	import-venta-1791061407000-92-12	venta	\N	\N	2026-10-03 16:03:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7597	\N	activa	2026-10-06 07:28:16.967-05
+1971	V-001971	import-venta-1790455605000-39-3	venta	\N	\N	2026-09-26 15:46:45-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13952	\N	activa	2026-10-06 07:28:09.628-05
+2523	V-002523	import-venta-1791060507000-39-2	venta	\N	\N	2026-10-03 15:48:27-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-14650	\N	activa	2026-10-06 07:28:16.93-05
+1454	V-001454	import-venta-1789851079000-16-1	venta	\N	\N	2026-09-19 15:51:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7190	\N	activa	2026-10-06 07:28:02.23-05
+2521	V-002521	import-venta-1791060214000-14-1	venta	\N	\N	2026-10-03 15:43:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7591	\N	activa	2026-10-06 07:28:16.904-05
+2522	V-002522	import-venta-1791060214000-39-1	venta	\N	\N	2026-10-03 15:43:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7591	\N	activa	2026-10-06 07:28:16.916-05
+1443	V-001443	import-venta-1789851069000-15-1	venta	\N	\N	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.065-05
+1444	V-001444	import-venta-1789851069000-14-1	venta	\N	\N	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.08-05
+1445	V-001445	import-venta-1789851069000-16-1	venta	\N	\N	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13270	\N	activa	2026-10-06 07:28:02.095-05
+2520	V-002520	import-venta-1791060206000-27-1	venta	\N	\N	2026-10-03 15:43:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14626	\N	activa	2026-10-06 07:28:16.891-05
+1980	V-001980	import-venta-1790455636000-16-1	venta	\N	\N	2026-09-26 15:47:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7383	\N	activa	2026-10-06 07:28:09.731-05
+2519	V-002519	import-venta-1791059929000-16-1	venta	\N	\N	2026-10-03 15:38:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7588	\N	activa	2026-10-06 07:28:16.879-05
+2518	V-002518	import-venta-1791059928000-14-1	venta	\N	\N	2026-10-03 15:38:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14618	\N	activa	2026-10-06 07:28:16.868-05
+1461	V-001461	import-venta-1789852301000-93-1	venta	\N	\N	2026-09-19 16:11:41-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7196	\N	activa	2026-10-06 07:28:02.332-05
+1462	V-001462	import-venta-1789852301000-70-1	venta	\N	\N	2026-09-19 16:11:41-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7196	\N	activa	2026-10-06 07:28:02.348-05
+1979	V-001979	import-venta-1790455635000-14-1	venta	\N	\N	2026-09-26 15:47:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7382	\N	activa	2026-10-06 07:28:09.719-05
+2517	V-002517	import-venta-1791059927000-16-1	venta	\N	\N	2026-10-03 15:38:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7587	\N	activa	2026-10-06 07:28:16.857-05
+2515	V-002515	import-venta-1791059926000-92-2	venta	\N	\N	2026-10-03 15:38:46-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta B001-7586	\N	activa	2026-10-06 07:28:16.838-05
+1460	V-001460	import-venta-1789852298000-39-3	venta	\N	\N	2026-09-19 16:11:38-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13297	\N	activa	2026-10-06 07:28:02.318-05
+1974	V-001974	import-venta-1790455630000-39-3	venta	\N	\N	2026-09-26 15:47:10-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13959	\N	activa	2026-10-06 07:28:09.664-05
+2513	V-002513	import-venta-1791059922000-39-2	venta	\N	\N	2026-10-03 15:38:42-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-14615	\N	activa	2026-10-06 07:28:16.81-05
+2514	V-002514	import-venta-1791059922000-20-3	venta	\N	\N	2026-10-03 15:38:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-14615	\N	activa	2026-10-06 07:28:16.824-05
+2509	V-002509	import-venta-1791058702000-89-1	venta	\N	\N	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.758-05
+2510	V-002510	import-venta-1791058702000-93-1	venta	\N	\N	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.769-05
+2511	V-002511	import-venta-1791058702000-79-0.5	venta	\N	\N	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.783-05
+2512	V-002512	import-venta-1791058702000-88-1	venta	\N	\N	2026-10-03 15:18:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14613	\N	activa	2026-10-06 07:28:16.798-05
+1917	V-001917	import-venta-1790453653000-28-1	venta	\N	\N	2026-09-26 15:14:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13879	\N	activa	2026-10-06 07:28:08.909-05
+1918	V-001918	import-venta-1790453653000-26-1	venta	\N	\N	2026-09-26 15:14:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13879	\N	activa	2026-10-06 07:28:08.922-05
+2508	V-002508	import-venta-1791058698000-27-1	venta	\N	\N	2026-10-03 15:18:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14611	\N	activa	2026-10-06 07:28:16.746-05
+1407	V-001407	import-venta-1789848855000-79-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.442-05
+1408	V-001408	import-venta-1789848855000-81-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.456-05
+1409	V-001409	import-venta-1789848855000-70-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.469-05
+1410	V-001410	import-venta-1789848855000-89-3	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 3.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.486-05
+1411	V-001411	import-venta-1789848855000-101-2	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.504-05
+1412	V-001412	import-venta-1789848855000-89-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.519-05
+1413	V-001413	import-venta-1789848855000-94-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.538-05
+1414	V-001414	import-venta-1789848855000-39-1	venta	\N	\N	2026-09-19 15:14:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13250	\N	activa	2026-10-06 07:28:01.556-05
+2507	V-002507	import-venta-1791058691000-23-6	venta	\N	\N	2026-10-03 15:18:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-14605	\N	activa	2026-10-06 07:28:16.732-05
+1399	V-001399	import-venta-1789848851000-96-3	venta	\N	\N	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.312-05
+1400	V-001400	import-venta-1789848851000-101-3	venta	\N	\N	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.333-05
+1401	V-001401	import-venta-1789848851000-103-3	venta	\N	\N	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.35-05
+1402	V-001402	import-venta-1789848851000-79-0.5	venta	\N	\N	2026-09-19 15:14:11-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7179	\N	activa	2026-10-06 07:28:01.366-05
+2506	V-002506	import-venta-1791058690000-89-1	venta	\N	\N	2026-10-03 15:18:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7584	\N	activa	2026-10-06 07:28:16.719-05
+2505	V-002505	import-venta-1791058687000-31-1	venta	\N	\N	2026-10-03 15:18:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10550	\N	activa	2026-10-06 07:28:16.706-05
+2504	V-002504	import-venta-1791058681000-46-4	venta	\N	\N	2026-10-03 15:18:01-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7582	\N	activa	2026-10-06 07:28:16.695-05
+2503	V-002503	import-venta-1791058680000-93-1	venta	\N	\N	2026-10-03 15:18:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7581	\N	activa	2026-10-06 07:28:16.683-05
+2501	V-002501	import-venta-1791058676000-93-0.5	venta	\N	\N	2026-10-03 15:17:56-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14598	\N	activa	2026-10-06 07:28:16.659-05
+2502	V-002502	import-venta-1791058676000-23-3	venta	\N	\N	2026-10-03 15:17:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 3.000000 por generacion de venta NP01-14598	\N	activa	2026-10-06 07:28:16.671-05
+1436	V-001436	import-venta-1789849505000-31-1	venta	\N	\N	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.956-05
+1437	V-001437	import-venta-1789849505000-70-0.5	venta	\N	\N	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.97-05
+1438	V-001438	import-venta-1789849506000-89-0.5	venta	\N	\N	2026-09-19 15:25:06-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta F001-10008	\N	activa	2026-10-06 07:28:01.986-05
+2499	V-002499	import-venta-1791058585000-31-1	venta	\N	\N	2026-10-03 15:16:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta F001-10547	\N	activa	2026-10-06 07:28:16.633-05
+2500	V-002500	import-venta-1791058585000-87-1	venta	\N	\N	2026-10-03 15:16:25-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10547	\N	activa	2026-10-06 07:28:16.646-05
+1435	V-001435	import-venta-1789849505000-31-2	venta	\N	\N	2026-09-19 15:25:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta B001-7189	\N	activa	2026-10-06 07:28:01.94-05
+2496	V-002496	import-venta-1791058584000-89-0.5	venta	\N	\N	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.597-05
+2497	V-002497	import-venta-1791058584000-79-0.5	venta	\N	\N	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.609-05
+2498	V-002498	import-venta-1791058584000-31-2	venta	\N	\N	2026-10-03 15:16:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta B001-7580	\N	activa	2026-10-06 07:28:16.623-05
+1433	V-001433	import-venta-1789849503000-19-3	venta	\N	\N	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.91-05
+1434	V-001434	import-venta-1789849503000-93-1	venta	\N	\N	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.925-05
+2491	V-002491	import-venta-1791058582000-80-0.5	venta	\N	\N	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.535-05
+2492	V-002492	import-venta-1791058582000-69-0.5	venta	\N	\N	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.548-05
+2493	V-002493	import-venta-1791058582000-29-1	venta	\N	\N	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.559-05
+2494	V-002494	import-venta-1791058582000-19-3	venta	\N	\N	2026-10-03 15:16:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.573-05
+2495	V-002495	import-venta-1791058583000-18-3	venta	\N	\N	2026-10-03 15:16:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10546	\N	activa	2026-10-06 07:28:16.585-05
+2489	V-002489	import-venta-1791058574000-28-1	venta	\N	\N	2026-10-03 15:16:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14595	\N	activa	2026-10-06 07:28:16.51-05
+2490	V-002490	import-venta-1791058574000-89-1	venta	\N	\N	2026-10-03 15:16:14-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14595	\N	activa	2026-10-06 07:28:16.521-05
+2488	V-002488	import-venta-1791058572000-14-1	venta	\N	\N	2026-10-03 15:16:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7573	\N	activa	2026-10-06 07:28:16.497-05
+2487	V-002487	import-venta-1791058568000-14-1	venta	\N	\N	2026-10-03 15:16:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10545	\N	activa	2026-10-06 07:28:16.484-05
+1419	V-001419	import-venta-1789849485000-27-1	venta	\N	\N	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.646-05
+1420	V-001420	import-venta-1789849485000-28-1	venta	\N	\N	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.661-05
+1421	V-001421	import-venta-1789849485000-14-1	venta	\N	\N	2026-09-19 15:24:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13255	\N	activa	2026-10-06 07:28:01.678-05
+2485	V-002485	import-venta-1791058567000-89-1	venta	\N	\N	2026-10-03 15:16:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14593	\N	activa	2026-10-06 07:28:16.456-05
+2486	V-002486	import-venta-1791058567000-67-1	venta	\N	\N	2026-10-03 15:16:07-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14593	\N	activa	2026-10-06 07:28:16.469-05
+1425	V-001425	import-venta-1789849492000-14-1	venta	\N	\N	2026-09-19 15:24:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7181	\N	activa	2026-10-06 07:28:01.741-05
+2483	V-002483	import-venta-1791058565000-67-1	venta	\N	\N	2026-10-03 15:16:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7571	\N	activa	2026-10-06 07:28:16.431-05
+2484	V-002484	import-venta-1791058565000-27-1	venta	\N	\N	2026-10-03 15:16:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14591	\N	activa	2026-10-06 07:28:16.444-05
+1424	V-001424	import-venta-1789849491000-25-3	venta	\N	\N	2026-09-19 15:24:51-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13262	\N	activa	2026-10-06 07:28:01.724-05
+2482	V-002482	import-venta-1791058562000-25-3	venta	\N	\N	2026-10-03 15:16:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-14590	\N	activa	2026-10-06 07:28:16.422-05
+2481	V-002481	import-venta-1791058558000-27-1	venta	\N	\N	2026-10-03 15:15:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14588	\N	activa	2026-10-06 07:28:16.411-05
+2480	V-002480	import-venta-1791058557000-93-1	venta	\N	\N	2026-10-03 15:15:57-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14587	\N	activa	2026-10-06 07:28:16.396-05
+2478	V-002478	import-venta-1791058556000-46-3	venta	\N	\N	2026-10-03 15:15:56-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-14586	\N	activa	2026-10-06 07:28:16.369-05
+2479	V-002479	import-venta-1791058556000-45-1	venta	\N	\N	2026-10-03 15:15:56-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14586	\N	activa	2026-10-06 07:28:16.383-05
+2477	V-002477	import-venta-1791058555000-93-1	venta	\N	\N	2026-10-03 15:15:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14585	\N	activa	2026-10-06 07:28:16.357-05
+1396	V-001396	import-venta-1789848454000-26-1	venta	\N	\N	2026-09-19 15:07:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9999	\N	activa	2026-10-06 07:28:01.254-05
+1432	V-001432	import-venta-1789849503000-18-3	venta	\N	\N	2026-09-19 15:25:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 3.000000 por generacion de venta F001-10007	\N	activa	2026-10-06 07:28:01.895-05
+1397	V-001397	import-venta-1789848454000-93-0.5	venta	\N	\N	2026-09-19 15:07:34-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-9999	\N	activa	2026-10-06 07:28:01.266-05
+2476	V-002476	import-venta-1791058257000-81-0.5	venta	\N	\N	2026-10-03 15:10:57-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10543	\N	activa	2026-10-06 07:28:16.345-05
+2475	V-002475	import-venta-1791058247000-67-1	venta	\N	\N	2026-10-03 15:10:47-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7560	\N	activa	2026-10-06 07:28:16.329-05
+1380	V-001380	import-venta-1789848437000-70-1	venta	\N	\N	2026-09-19 15:07:17-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13235	\N	activa	2026-10-06 07:28:01.062-05
+2473	V-002473	import-venta-1791058240000-70-0.5	venta	\N	\N	2026-10-03 15:10:40-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14574	\N	activa	2026-10-06 07:28:16.303-05
+2474	V-002474	import-venta-1791058240000-93-1	venta	\N	\N	2026-10-03 15:10:40-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14574	\N	activa	2026-10-06 07:28:16.316-05
+2471	V-002471	import-venta-1791058234000-14-1	venta	\N	\N	2026-10-03 15:10:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14570	\N	activa	2026-10-06 07:28:16.278-05
+2472	V-002472	import-venta-1791058234000-16-1	venta	\N	\N	2026-10-03 15:10:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14570	\N	activa	2026-10-06 07:28:16.291-05
+1373	V-001373	import-venta-1789848427000-69-1	venta	\N	\N	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.967-05
+1374	V-001374	import-venta-1789848427000-79-1	venta	\N	\N	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.981-05
+1375	V-001375	import-venta-1789848427000-89-1	venta	\N	\N	2026-09-19 15:07:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:00.997-05
+1376	V-001376	import-venta-1789848428000-80-1	venta	\N	\N	2026-09-19 15:07:08-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9994	\N	activa	2026-10-06 07:28:01.01-05
+2469	V-002469	import-venta-1791058232000-94-0.1	venta	\N	\N	2026-10-03 15:10:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 0.100000 por generacion de venta F001-10537	\N	activa	2026-10-06 07:28:16.246-05
+2470	V-002470	import-venta-1791058232000-89-1	venta	\N	\N	2026-10-03 15:10:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10537	\N	activa	2026-10-06 07:28:16.262-05
+1371	V-001371	import-venta-1789848424000-39-5	venta	\N	\N	2026-09-19 15:07:04-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 5.000000 por generacion de venta NP01-13228	\N	activa	2026-10-06 07:28:00.937-05
+1372	V-001372	import-venta-1789848425000-81-1	venta	\N	\N	2026-09-19 15:07:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13228	\N	activa	2026-10-06 07:28:00.952-05
+2467	V-002467	import-venta-1791058224000-81-1	venta	\N	\N	2026-10-03 15:10:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14565	\N	activa	2026-10-06 07:28:16.197-05
+2468	V-002468	import-venta-1791058224000-70-1	venta	\N	\N	2026-10-03 15:10:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14565	\N	activa	2026-10-06 07:28:16.225-05
+2466	V-002466	import-venta-1791058223000-76-1	venta	\N	\N	2026-10-03 15:10:23-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14564	\N	activa	2026-10-06 07:28:16.186-05
+2465	V-002465	import-venta-1791058223000-97-1	venta	\N	\N	2026-10-03 15:10:23-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 150 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-14564	\N	activa	2026-10-06 07:28:16.175-05
+1379	V-001379	import-venta-1789848431000-93-1	venta	\N	\N	2026-09-19 15:07:11-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13230	\N	activa	2026-10-06 07:28:01.049-05
+2464	V-002464	import-venta-1791058221000-81-1	venta	\N	\N	2026-10-03 15:10:21-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14563	\N	activa	2026-10-06 07:28:16.16-05
+1354	V-001354	import-venta-1789772063000-25-1	venta	\N	\N	2026-09-18 17:54:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7161	\N	activa	2026-10-06 07:28:00.709-05
+1342	V-001342	import-venta-1789767430000-69-1	venta	\N	\N	2026-09-18 16:37:10-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7158	\N	activa	2026-10-06 07:28:00.529-05
+2439	V-002439	import-venta-1790975676000-80-1	venta	\N	\N	2026-10-02 16:14:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7548	\N	activa	2026-10-06 07:28:15.808-05
+2440	V-002440	import-venta-1790975676000-69-1	venta	\N	\N	2026-10-02 16:14:36-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7548	\N	activa	2026-10-06 07:28:15.821-05
+2260	V-002260	import-venta-1790801647000-46-8	venta	\N	\N	2026-09-30 15:54:07-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14290	\N	activa	2026-10-06 07:28:13.331-05
+2459	D-002459	import-devolucion-1791032113000-46-8	devolucion	\N	\N	2026-10-03 07:55:13-05	0.00	0.00	0.00	0.00	INGRESO DE DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.095-05
+2192	V-002192	import-venta-1790801230000-70-0.5	venta	\N	\N	2026-09-30 15:47:10-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14230	\N	activa	2026-10-06 07:28:12.494-05
+2458	D-002458	import-devolucion-1791031993000-70-0.5	devolucion	\N	\N	2026-10-03 07:53:13-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.083-05
+1729	V-001729	import-venta-1790196722000-25-1	venta	\N	\N	2026-09-23 15:52:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13627	\N	activa	2026-10-06 07:28:06.35-05
+2233	V-002233	import-venta-1790801529000-99-6	venta	\N	\N	2026-09-30 15:52:09-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14262	\N	activa	2026-10-06 07:28:13.007-05
+2234	V-002234	import-venta-1790801529000-89-0.5	venta	\N	\N	2026-09-30 15:52:09-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14262	\N	activa	2026-10-06 07:28:13.019-05
+2457	D-002457	import-devolucion-1790983467000-99-6	devolucion	\N	\N	2026-10-02 18:24:27-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.073-05
+2283	V-002283	import-venta-1790804371000-89-1	venta	\N	\N	2026-09-30 16:39:31-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14340	\N	activa	2026-10-06 07:28:13.679-05
+2456	D-002456	import-devolucion-1790983439000-89-1	devolucion	\N	\N	2026-10-02 18:23:59-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.062-05
+2223	V-002223	import-venta-1790801434000-80-0.5	venta	\N	\N	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.882-05
+2224	V-002224	import-venta-1790801434000-69-0.5	venta	\N	\N	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.895-05
+2225	V-002225	import-venta-1790801434000-93-0.5	venta	\N	\N	2026-09-30 15:50:34-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7471	\N	activa	2026-10-06 07:28:12.908-05
+2454	D-002454	import-devolucion-1790983396000-80-0.5	devolucion	\N	\N	2026-10-02 18:23:16-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.036-05
+2455	D-002455	import-devolucion-1790983399000-69-0.5	devolucion	\N	\N	2026-10-02 18:23:19-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:16.047-05
+1355	V-001355	import-venta-1789772064000-25-18	venta	\N	\N	2026-09-18 17:54:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-9969	\N	activa	2026-10-06 07:28:00.72-05
+1904	V-001904	import-venta-1790375454000-93-2	venta	\N	\N	2026-09-25 17:30:54-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10250	\N	activa	2026-10-06 07:28:08.693-05
+2453	V-002453	import-venta-1790980430000-93-2	venta	\N	\N	2026-10-02 17:33:50-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10514	\N	activa	2026-10-06 07:28:16.025-05
+1360	V-001360	import-venta-1789772076000-96-12	venta	\N	\N	2026-09-18 17:54:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-9979	\N	activa	2026-10-06 07:28:00.784-05
+1361	V-001361	import-venta-1789772076000-29-1	venta	\N	\N	2026-09-18 17:54:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9979	\N	activa	2026-10-06 07:28:00.797-05
+2452	V-002452	import-venta-1790980429000-96-12	venta	\N	\N	2026-10-02 17:33:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10513	\N	activa	2026-10-06 07:28:16.013-05
+1352	V-001352	import-venta-1789772054000-25-1	venta	\N	\N	2026-09-18 17:54:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7159	\N	activa	2026-10-06 07:28:00.686-05
+2451	V-002451	import-venta-1790980419000-31-1	venta	\N	\N	2026-10-02 17:33:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7550	\N	activa	2026-10-06 07:28:15.99-05
+2389	V-002389	import-venta-1790972960000-89-1	venta	\N	\N	2026-10-02 15:29:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14497	\N	activa	2026-10-06 07:28:15.15-05
+2390	V-002390	import-venta-1790972961000-89-1	venta	\N	\N	2026-10-02 15:29:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14498	\N	activa	2026-10-06 07:28:15.162-05
+2450	D-002450	import-devolucion-1790978397000-89-1	devolucion	\N	\N	2026-10-02 16:59:57-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:15.969-05
+1346	V-001346	import-venta-1789767436000-20-2	venta	\N	\N	2026-09-18 16:37:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13215	\N	activa	2026-10-06 07:28:00.608-05
+1884	V-001884	import-venta-1790369721000-79-1	venta	\N	\N	2026-09-25 15:55:21-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13851	\N	activa	2026-10-06 07:28:08.419-05
+2082	D-002082	import-devolucion-1790646200000-79-1	devolucion	\N	\N	2026-09-28 20:43:20-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.065-05
+2449	V-002449	import-venta-1790975693000-77-1	venta	\N	\N	2026-10-02 16:14:53-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14556	\N	activa	2026-10-06 07:28:15.948-05
+2448	V-002448	import-venta-1790975692000-31-1	venta	\N	\N	2026-10-02 16:14:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14555	\N	activa	2026-10-06 07:28:15.926-05
+2447	V-002447	import-venta-1790975690000-46-2	venta	\N	\N	2026-10-02 16:14:50-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14554	\N	activa	2026-10-06 07:28:15.912-05
+2446	V-002446	import-venta-1790975689000-99-12	venta	\N	\N	2026-10-02 16:14:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14553	\N	activa	2026-10-06 07:28:15.898-05
+1344	V-001344	import-venta-1789767434000-79-1	venta	\N	\N	2026-09-18 16:37:14-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13214	\N	activa	2026-10-06 07:28:00.57-05
+1345	V-001345	import-venta-1789767434000-25-1	venta	\N	\N	2026-09-18 16:37:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13214	\N	activa	2026-10-06 07:28:00.589-05
+1877	V-001877	import-venta-1790369717000-89-0.5	venta	\N	\N	2026-09-25 15:55:17-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13848	\N	activa	2026-10-06 07:28:08.326-05
+2445	V-002445	import-venta-1790975687000-79-0.5	venta	\N	\N	2026-10-02 16:14:47-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14551	\N	activa	2026-10-06 07:28:15.884-05
+2443	V-002443	import-venta-1790975681000-39-10	venta	\N	\N	2026-10-02 16:14:41-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 10.000000 por generacion de venta NP01-14545	\N	activa	2026-10-06 07:28:15.859-05
+2444	V-002444	import-venta-1790975681000-80-0.25	venta	\N	\N	2026-10-02 16:14:41-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14545	\N	activa	2026-10-06 07:28:15.873-05
+2442	V-002442	import-venta-1790975680000-14-1	venta	\N	\N	2026-10-02 16:14:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14544	\N	activa	2026-10-06 07:28:15.847-05
+1874	V-001874	import-venta-1790369711000-38-1	venta	\N	\N	2026-09-25 15:55:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10236	\N	activa	2026-10-06 07:28:08.289-05
+2441	V-002441	import-venta-1790975678000-38-1	venta	\N	\N	2026-10-02 16:14:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10502	\N	activa	2026-10-06 07:28:15.834-05
+1871	V-001871	import-venta-1790369706000-26-1	venta	\N	\N	2026-09-25 15:55:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13838	\N	activa	2026-10-06 07:28:08.252-05
+2438	V-002438	import-venta-1790975675000-16-1	venta	\N	\N	2026-10-02 16:14:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14541	\N	activa	2026-10-06 07:28:15.796-05
+1332	V-001332	import-venta-1789767423000-89-1	venta	\N	\N	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.202-05
+1333	V-001333	import-venta-1789767423000-91-6	venta	\N	\N	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.235-05
+1334	V-001334	import-venta-1789767423000-96-6	venta	\N	\N	2026-09-18 16:37:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7157	\N	activa	2026-10-06 07:28:00.254-05
+1869	V-001869	import-venta-1790369704000-25-1	venta	\N	\N	2026-09-25 15:55:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7349	\N	activa	2026-10-06 07:28:08.228-05
+2437	V-002437	import-venta-1790975674000-70-1	venta	\N	\N	2026-10-02 16:14:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7547	\N	activa	2026-10-06 07:28:15.781-05
+2435	V-002435	import-venta-1790975670000-79-1	venta	\N	\N	2026-10-02 16:14:30-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14538	\N	activa	2026-10-06 07:28:15.758-05
+2436	V-002436	import-venta-1790975670000-93-1	venta	\N	\N	2026-10-02 16:14:30-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14538	\N	activa	2026-10-06 07:28:15.769-05
+2434	V-002434	import-venta-1790975669000-14-1	venta	\N	\N	2026-10-02 16:14:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14537	\N	activa	2026-10-06 07:28:15.745-05
+2431	V-002431	import-venta-1790974010000-81-1	venta	\N	\N	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.707-05
+2432	V-002432	import-venta-1790974010000-70-1	venta	\N	\N	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.718-05
+2433	V-002433	import-venta-1790974010000-89-1	venta	\N	\N	2026-10-02 15:46:50-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7546	\N	activa	2026-10-06 07:28:15.731-05
+2429	V-002429	import-venta-1790974003000-46-8	venta	\N	\N	2026-10-02 15:46:43-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14529	\N	activa	2026-10-06 07:28:15.681-05
+2430	V-002430	import-venta-1790974003000-80-0.25	venta	\N	\N	2026-10-02 15:46:43-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14529	\N	activa	2026-10-06 07:28:15.693-05
+2424	V-002424	import-venta-1790974000000-81-2	venta	\N	\N	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.615-05
+2425	V-002425	import-venta-1790974000000-79-1	venta	\N	\N	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.629-05
+2426	V-002426	import-venta-1790974000000-93-1	venta	\N	\N	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.642-05
+2427	V-002427	import-venta-1790974000000-89-1	venta	\N	\N	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.654-05
+2428	V-002428	import-venta-1790974000000-70-1	venta	\N	\N	2026-10-02 15:46:40-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7544	\N	activa	2026-10-06 07:28:15.668-05
+2423	V-002423	import-venta-1790973983000-29-1	venta	\N	\N	2026-10-02 15:46:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14525	\N	activa	2026-10-06 07:28:15.602-05
+1660	V-001660	import-venta-1790119010000-76-1	venta	\N	\N	2026-09-22 18:16:50-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13549	\N	activa	2026-10-06 07:28:05.41-05
+2422	V-002422	import-venta-1790973963000-89-1	venta	\N	\N	2026-10-02 15:46:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14522	\N	activa	2026-10-06 07:28:15.59-05
+1493	V-001493	import-venta-1790021889000-25-2	venta	\N	\N	2026-09-21 15:18:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10033	\N	activa	2026-10-06 07:28:02.828-05
+1865	V-001865	import-venta-1790369490000-92-1	venta	\N	\N	2026-09-25 15:51:30-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13834	\N	activa	2026-10-06 07:28:08.178-05
+2419	V-002419	import-venta-1790973013000-89-1	venta	\N	\N	2026-10-02 15:30:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14516	\N	activa	2026-10-06 07:28:15.561-05
+2421	V-002421	import-venta-1790973013000-94-1	venta	\N	\N	2026-10-02 15:30:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14516	\N	activa	2026-10-06 07:28:15.577-05
+2416	V-002416	import-venta-1790973012000-93-0.5	venta	\N	\N	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.524-05
+2417	V-002417	import-venta-1790973012000-89-0.5	venta	\N	\N	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.535-05
+2418	V-002418	import-venta-1790973012000-79-0.5	venta	\N	\N	2026-10-02 15:30:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14515	\N	activa	2026-10-06 07:28:15.548-05
+2414	V-002414	import-venta-1790973011000-27-1	venta	\N	\N	2026-10-02 15:30:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10496	\N	activa	2026-10-06 07:28:15.498-05
+2415	V-002415	import-venta-1790973011000-89-1	venta	\N	\N	2026-10-02 15:30:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10496	\N	activa	2026-10-06 07:28:15.511-05
+2412	V-002412	import-venta-1790973006000-29-1	venta	\N	\N	2026-10-02 15:30:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7539	\N	activa	2026-10-06 07:28:15.47-05
+2413	V-002413	import-venta-1790973006000-99-6	venta	\N	\N	2026-10-02 15:30:06-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7539	\N	activa	2026-10-06 07:28:15.483-05
+2410	V-002410	import-venta-1790973003000-89-1	venta	\N	\N	2026-10-02 15:30:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14512	\N	activa	2026-10-06 07:28:15.442-05
+2411	V-002411	import-venta-1790973003000-79-1	venta	\N	\N	2026-10-02 15:30:03-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14512	\N	activa	2026-10-06 07:28:15.456-05
+1855	V-001855	import-venta-1790369480000-103-2	venta	\N	\N	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta B001-7347	\N	activa	2026-10-06 07:28:08.058-05
+1856	V-001856	import-venta-1790369480000-20-1	venta	\N	\N	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta B001-7347	\N	activa	2026-10-06 07:28:08.068-05
+2409	V-002409	import-venta-1790973002000-31-1	venta	\N	\N	2026-10-02 15:30:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7538	\N	activa	2026-10-06 07:28:15.429-05
+1854	V-001854	import-venta-1790369480000-31-1	venta	\N	\N	2026-09-25 15:51:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13826	\N	activa	2026-10-06 07:28:08.045-05
+2408	V-002408	import-venta-1790973001000-31-1	venta	\N	\N	2026-10-02 15:30:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14511	\N	activa	2026-10-06 07:28:15.415-05
+2404	V-002404	import-venta-1790972999000-79-1	venta	\N	\N	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.358-05
+2405	V-002405	import-venta-1790972999000-81-1	venta	\N	\N	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.373-05
+2406	V-002406	import-venta-1790972999000-70-1	venta	\N	\N	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.386-05
+2407	V-002407	import-venta-1790972999000-89-2	venta	\N	\N	2026-10-02 15:29:59-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta F001-10494	\N	activa	2026-10-06 07:28:15.4-05
+1847	V-001847	import-venta-1790369466000-76-1	venta	\N	\N	2026-09-25 15:51:06-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13819	\N	activa	2026-10-06 07:28:07.946-05
+2401	V-002401	import-venta-1790972998000-89-1	venta	\N	\N	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14509	\N	activa	2026-10-06 07:28:15.303-05
+2402	V-002402	import-venta-1790972998000-67-1	venta	\N	\N	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14510	\N	activa	2026-10-06 07:28:15.324-05
+2403	V-002403	import-venta-1790972998000-79-1	venta	\N	\N	2026-10-02 15:29:58-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14510	\N	activa	2026-10-06 07:28:15.343-05
+1848	V-001848	import-venta-1790369473000-79-1	venta	\N	\N	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.961-05
+1849	V-001849	import-venta-1790369473000-76-1	venta	\N	\N	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.975-05
+1850	V-001850	import-venta-1790369473000-93-1	venta	\N	\N	2026-09-25 15:51:13-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:07.988-05
+1851	V-001851	import-venta-1790369474000-26-5	venta	\N	\N	2026-09-25 15:51:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 5.000000 por generacion de venta B001-7346	\N	activa	2026-10-06 07:28:08.002-05
+2398	V-002398	import-venta-1790972993000-76-1	venta	\N	\N	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.266-05
+2399	V-002399	import-venta-1790972993000-80-0.25	venta	\N	\N	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.278-05
+2400	V-002400	import-venta-1790972993000-69-0.25	venta	\N	\N	2026-10-02 15:29:53-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7536	\N	activa	2026-10-06 07:28:15.289-05
+1852	V-001852	import-venta-1790369477000-39-5	venta	\N	\N	2026-09-25 15:51:17-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 5.000000 por generacion de venta NP01-13823	\N	activa	2026-10-06 07:28:08.017-05
+2394	V-002394	import-venta-1790972986000-93-1	venta	\N	\N	2026-10-02 15:29:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14504	\N	activa	2026-10-06 07:28:15.219-05
+2395	V-002395	import-venta-1790972986000-79-1	venta	\N	\N	2026-10-02 15:29:46-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14504	\N	activa	2026-10-06 07:28:15.234-05
+2393	V-002393	import-venta-1790972966000-25-1	venta	\N	\N	2026-10-02 15:29:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7534	\N	activa	2026-10-06 07:28:15.206-05
+2392	V-002392	import-venta-1790972964000-14-2	venta	\N	\N	2026-10-02 15:29:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 2.000000 por generacion de venta F001-10488	\N	activa	2026-10-06 07:28:15.189-05
+2391	V-002391	import-venta-1790972962000-14-1	venta	\N	\N	2026-10-02 15:29:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14499	\N	activa	2026-10-06 07:28:15.176-05
+2388	V-002388	import-venta-1790972956000-92-3	venta	\N	\N	2026-10-02 15:29:16-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7532	\N	activa	2026-10-06 07:28:15.136-05
+2385	V-002385	import-venta-1790972953000-29-1	venta	\N	\N	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.097-05
+2386	V-002386	import-venta-1790972953000-80-1	venta	\N	\N	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.111-05
+2387	V-002387	import-venta-1790972953000-26-1	venta	\N	\N	2026-10-02 15:29:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10487	\N	activa	2026-10-06 07:28:15.124-05
+1567	D-001567	import-devolucion-1790106245000-25-1	devolucion	\N	\N	2026-09-22 14:44:05-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.999-05
+1568	D-001568	import-devolucion-1790106248000-76-1	devolucion	\N	\N	2026-09-22 14:44:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.011-05
+2383	V-002383	import-venta-1790972946000-58-0.5	venta	\N	\N	2026-10-02 15:29:06-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14489	\N	activa	2026-10-06 07:28:15.071-05
+2384	V-002384	import-venta-1790972947000-25-1	venta	\N	\N	2026-10-02 15:29:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14489	\N	activa	2026-10-06 07:28:15.085-05
+2382	V-002382	import-venta-1790972946000-25-10	venta	\N	\N	2026-10-02 15:29:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 10.000000 por generacion de venta B001-7529	\N	activa	2026-10-06 07:28:15.059-05
+2380	V-002380	import-venta-1790972944000-89-1	venta	\N	\N	2026-10-02 15:29:04-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7528	\N	activa	2026-10-06 07:28:15.034-05
+2381	V-002381	import-venta-1790972944000-93-1	venta	\N	\N	2026-10-02 15:29:04-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7528	\N	activa	2026-10-06 07:28:15.047-05
+2377	V-002377	import-venta-1790972942000-96-12	venta	\N	\N	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:14.998-05
+2378	V-002378	import-venta-1790972942000-80-0.5	venta	\N	\N	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:15.01-05
+2379	V-002379	import-venta-1790972942000-69-0.5	venta	\N	\N	2026-10-02 15:29:02-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10485	\N	activa	2026-10-06 07:28:15.022-05
+1313	V-001313	import-venta-1789764281000-80-1	venta	\N	\N	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.72-05
+2375	V-002375	import-venta-1790972939000-99-12	venta	\N	\N	2026-10-02 15:28:59-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10484	\N	activa	2026-10-06 07:28:14.975-05
+2376	V-002376	import-venta-1790972939000-58-2	venta	\N	\N	2026-10-02 15:28:59-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 2.000000 por generacion de venta F001-10484	\N	activa	2026-10-06 07:28:14.986-05
+2374	V-002374	import-venta-1790972938000-14-1	venta	\N	\N	2026-10-02 15:28:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14486	\N	activa	2026-10-06 07:28:14.963-05
+2027	V-002027	import-venta-1790628141000-80-0.25	venta	\N	\N	2026-09-28 15:42:21-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14016	\N	activa	2026-10-06 07:28:10.353-05
+2028	V-002028	import-venta-1790628141000-69-0.25	venta	\N	\N	2026-09-28 15:42:21-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14016	\N	activa	2026-10-06 07:28:10.366-05
+2372	D-002372	import-devolucion-1790949356000-80-0.25	devolucion	\N	\N	2026-10-02 08:55:56-05	0.00	0.00	0.00	0.00	INGRESO DE PIMIENTA MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.936-05
+2373	D-002373	import-devolucion-1790949360000-69-0.25	devolucion	\N	\N	2026-10-02 08:56:00-05	0.00	0.00	0.00	0.00	INGRESO DE COMINO MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.949-05
+1620	V-001620	import-venta-1790114500000-80-1	venta	\N	\N	2026-09-22 17:01:40-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7272	\N	activa	2026-10-06 07:28:04.771-05
+1835	D-001835	import-devolucion-1790368117000-80-1	devolucion	\N	\N	2026-09-25 15:28:37-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.774-05
+2144	V-002144	import-venta-1790719675000-80-1	venta	\N	\N	2026-09-29 17:07:55-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7453	\N	activa	2026-10-06 07:28:11.884-05
+2371	D-002371	import-devolucion-1790903702000-80-1	devolucion	\N	\N	2026-10-01 20:15:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.923-05
+2168	V-002168	import-venta-1790722934000-69-1	venta	\N	\N	2026-09-29 18:02:14-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7458	\N	activa	2026-10-06 07:28:12.164-05
+2370	D-002370	import-devolucion-1790903636000-69-1	devolucion	\N	\N	2026-10-01 20:13:56-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.911-05
+2173	V-002173	import-venta-1790722944000-23-6	venta	\N	\N	2026-09-29 18:02:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7460	\N	activa	2026-10-06 07:28:12.23-05
+2369	D-002369	import-devolucion-1790903575000-23-6	devolucion	\N	\N	2026-10-01 20:12:55-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:14.899-05
+2080	V-002080	import-venta-1790635678000-39-1	venta	\N	\N	2026-09-28 17:47:58-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-14103	\N	activa	2026-10-06 07:28:11.039-05
+2081	V-002081	import-venta-1790635678000-55-0.5	venta	\N	\N	2026-09-28 17:47:58-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14103	\N	activa	2026-10-06 07:28:11.052-05
+2368	V-002368	import-venta-1790893121000-58-0.5	venta	\N	\N	2026-10-01 17:18:41-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14482	\N	activa	2026-10-06 07:28:14.886-05
+2365	V-002365	import-venta-1790890409000-70-2	venta	\N	\N	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.847-05
+2366	V-002366	import-venta-1790890409000-81-2	venta	\N	\N	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.861-05
+2367	V-002367	import-venta-1790890409000-93-2	venta	\N	\N	2026-10-01 16:33:29-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta B001-7525	\N	activa	2026-10-06 07:28:14.872-05
+1825	V-001825	import-venta-1790283294000-23-6	venta	\N	\N	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.647-05
+1826	V-001826	import-venta-1790283294000-27-2	venta	\N	\N	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.661-05
+1827	V-001827	import-venta-1790283294000-28-1	venta	\N	\N	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.672-05
+1828	V-001828	import-venta-1790283294000-26-2	venta	\N	\N	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.685-05
+1829	V-001829	import-venta-1790283294000-20-2	venta	\N	\N	2026-09-24 15:54:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13749	\N	activa	2026-10-06 07:28:07.697-05
+2364	V-002364	import-venta-1790890405000-25-4	venta	\N	\N	2026-10-01 16:33:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-14478	\N	activa	2026-10-06 07:28:14.833-05
+2363	V-002363	import-venta-1790890397000-67-5	venta	\N	\N	2026-10-01 16:33:17-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 5.000000 por generacion de venta F001-10478	\N	activa	2026-10-06 07:28:14.822-05
+2360	V-002360	import-venta-1790888821000-89-1	venta	\N	\N	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.781-05
+2361	V-002361	import-venta-1790888821000-39-1	venta	\N	\N	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.797-05
+2362	V-002362	import-venta-1790888821000-76-1	venta	\N	\N	2026-10-01 16:07:01-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14470	\N	activa	2026-10-06 07:28:14.811-05
+2356	V-002356	import-venta-1790888730000-79-0.5	venta	\N	\N	2026-10-01 16:05:30-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14450	\N	activa	2026-10-06 07:28:14.721-05
+2357	V-002357	import-venta-1790888730000-89-0.5	venta	\N	\N	2026-10-01 16:05:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14450	\N	activa	2026-10-06 07:28:14.739-05
+2353	V-002353	import-venta-1790888729000-46-8	venta	\N	\N	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.67-05
+2354	V-002354	import-venta-1790888729000-14-1	venta	\N	\N	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.685-05
+2355	V-002355	import-venta-1790888729000-26-1	venta	\N	\N	2026-10-01 16:05:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14449	\N	activa	2026-10-06 07:28:14.704-05
+2348	V-002348	import-venta-1790888726000-92-6	venta	\N	\N	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.589-05
+2349	V-002349	import-venta-1790888726000-79-1	venta	\N	\N	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.602-05
+2350	V-002350	import-venta-1790888726000-69-1	venta	\N	\N	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.62-05
+2351	V-002351	import-venta-1790888726000-76-1	venta	\N	\N	2026-10-01 16:05:26-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14447	\N	activa	2026-10-06 07:28:14.637-05
+2346	V-002346	import-venta-1790888725000-14-1	venta	\N	\N	2026-10-01 16:05:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14446	\N	activa	2026-10-06 07:28:14.564-05
+2344	V-002344	import-venta-1790888718000-76-1	venta	\N	\N	2026-10-01 16:05:18-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO MERI ECON X68 SOB 3.5 GR/PAQUETE X12 DISPLAY + 2 VINAGRES TINTO 125 ML por la cantidad de 1.000000 por generacion de venta NP01-14439	\N	activa	2026-10-06 07:28:14.535-05
+2345	V-002345	import-venta-1790888718000-75-0.5	venta	\N	\N	2026-10-01 16:05:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR MERI SIN PCTE GIG X42 SOB 27 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14439	\N	activa	2026-10-06 07:28:14.549-05
+2343	V-002343	import-venta-1790888717000-80-1	venta	\N	\N	2026-10-01 16:05:17-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14438	\N	activa	2026-10-06 07:28:14.519-05
+2342	V-002342	import-venta-1790888630000-89-6	venta	\N	\N	2026-10-01 16:03:50-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 6.000000 por generacion de venta F001-10473	\N	activa	2026-10-06 07:28:14.506-05
+2340	V-002340	import-venta-1790888628000-29-2	venta	\N	\N	2026-10-01 16:03:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta B001-7516	\N	activa	2026-10-06 07:28:14.479-05
+2341	V-002341	import-venta-1790888628000-94-1	venta	\N	\N	2026-10-01 16:03:48-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7516	\N	activa	2026-10-06 07:28:14.493-05
+2336	V-002336	import-venta-1790888627000-93-1	venta	\N	\N	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.402-05
+2337	V-002337	import-venta-1790888627000-89-1	venta	\N	\N	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.43-05
+2338	V-002338	import-venta-1790888627000-46-8	venta	\N	\N	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.45-05
+2339	V-002339	import-venta-1790888627000-20-8	venta	\N	\N	2026-10-01 16:03:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 8.000000 por generacion de venta F001-10472	\N	activa	2026-10-06 07:28:14.465-05
+2333	V-002333	import-venta-1790888624000-101-3	venta	\N	\N	2026-10-01 16:03:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-14435	\N	activa	2026-10-06 07:28:14.364-05
+2335	V-002335	import-venta-1790888624000-92-3	venta	\N	\N	2026-10-01 16:03:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-14435	\N	activa	2026-10-06 07:28:14.387-05
+2331	V-002331	import-venta-1790888623000-99-12	venta	\N	\N	2026-10-01 16:03:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7515	\N	activa	2026-10-06 07:28:14.343-05
+2330	V-002330	import-venta-1790888621000-94-1	venta	\N	\N	2026-10-01 16:03:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7514	\N	activa	2026-10-06 07:28:14.329-05
+2327	V-002327	import-venta-1790888620000-28-1	venta	\N	\N	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.286-05
+2328	V-002328	import-venta-1790888620000-21-4	venta	\N	\N	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 4.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.299-05
+2329	V-002329	import-venta-1790888620000-46-1	venta	\N	\N	2026-10-01 16:03:40-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14433	\N	activa	2026-10-06 07:28:14.315-05
+1789	V-001789	import-venta-1790281578000-26-1	venta	\N	\N	2026-09-24 15:26:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13701	\N	activa	2026-10-06 07:28:07.174-05
+2326	V-002326	import-venta-1790888619000-26-1	venta	\N	\N	2026-10-01 16:03:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14432	\N	activa	2026-10-06 07:28:14.271-05
+2323	V-002323	import-venta-1790888614000-39-1	venta	\N	\N	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.23-05
+2324	V-002324	import-venta-1790888614000-80-0.25	venta	\N	\N	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.245-05
+2325	V-002325	import-venta-1790888614000-69-0.25	venta	\N	\N	2026-10-01 16:03:34-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10470	\N	activa	2026-10-06 07:28:14.259-05
+2322	V-002322	import-venta-1790888604000-79-1	venta	\N	\N	2026-10-01 16:03:24-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14421	\N	activa	2026-10-06 07:28:14.215-05
+2320	V-002320	import-venta-1790888603000-89-1	venta	\N	\N	2026-10-01 16:03:23-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7511	\N	activa	2026-10-06 07:28:14.188-05
+2321	V-002321	import-venta-1790888603000-76-1	venta	\N	\N	2026-10-01 16:03:23-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7511	\N	activa	2026-10-06 07:28:14.2-05
+1768	V-001768	import-venta-1790281557000-79-0.5	venta	\N	\N	2026-09-24 15:25:57-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7316	\N	activa	2026-10-06 07:28:06.874-05
+2319	V-002319	import-venta-1790888598000-27-1	venta	\N	\N	2026-10-01 16:03:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7510	\N	activa	2026-10-06 07:28:14.174-05
+1780	V-001780	import-venta-1790281565000-20-2	venta	\N	\N	2026-09-24 15:26:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13691	\N	activa	2026-10-06 07:28:07.056-05
+2317	V-002317	import-venta-1790888498000-26-1	venta	\N	\N	2026-10-01 16:01:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7508	\N	activa	2026-10-06 07:28:14.151-05
+1832	V-001832	import-venta-1790284662000-14-1	venta	\N	\N	2026-09-24 16:17:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13765	\N	activa	2026-10-06 07:28:07.734-05
+2311	V-002311	import-venta-1790888493000-28-1	venta	\N	\N	2026-10-01 16:01:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14412	\N	activa	2026-10-06 07:28:14.075-05
+2312	V-002312	import-venta-1790888493000-46-8	venta	\N	\N	2026-10-01 16:01:33-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-14412	\N	activa	2026-10-06 07:28:14.087-05
+2310	V-002310	import-venta-1790888488000-93-1	venta	\N	\N	2026-10-01 16:01:28-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7505	\N	activa	2026-10-06 07:28:14.061-05
+2309	V-002309	import-venta-1790888486000-89-0.5	venta	\N	\N	2026-10-01 16:01:26-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7504	\N	activa	2026-10-06 07:28:14.047-05
+2308	V-002308	import-venta-1790888484000-25-1	venta	\N	\N	2026-10-01 16:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14408	\N	activa	2026-10-06 07:28:14.034-05
+2307	V-002307	import-venta-1790888482000-25-1	venta	\N	\N	2026-10-01 16:01:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10460	\N	activa	2026-10-06 07:28:14.019-05
+1831	V-001831	import-venta-1790284643000-70-0.5	venta	\N	\N	2026-09-24 16:17:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7330	\N	activa	2026-10-06 07:28:07.722-05
+2306	V-002306	import-venta-1790888477000-93-0.5	venta	\N	\N	2026-10-01 16:01:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7502	\N	activa	2026-10-06 07:28:14.004-05
+1830	V-001830	import-venta-1790284635000-93-1	venta	\N	\N	2026-09-24 16:17:15-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13754	\N	activa	2026-10-06 07:28:07.709-05
+2305	V-002305	import-venta-1790888465000-89-1	venta	\N	\N	2026-10-01 16:01:05-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14396	\N	activa	2026-10-06 07:28:13.991-05
+2304	V-002304	import-venta-1790888255000-27-1	venta	\N	\N	2026-10-01 15:57:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14394	\N	activa	2026-10-06 07:28:13.976-05
+2302	V-002302	import-venta-1790888254000-89-1	venta	\N	\N	2026-10-01 15:57:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10458	\N	activa	2026-10-06 07:28:13.945-05
+2303	V-002303	import-venta-1790888254000-81-1	venta	\N	\N	2026-10-01 15:57:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10458	\N	activa	2026-10-06 07:28:13.96-05
+2301	V-002301	import-venta-1790887915000-39-2	venta	\N	\N	2026-10-01 15:51:55-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta F001-10444	\N	activa	2026-10-06 07:28:13.931-05
+2300	V-002300	import-venta-1790887914000-46-2	venta	\N	\N	2026-10-01 15:51:54-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14379	\N	activa	2026-10-06 07:28:13.914-05
+1759	V-001759	import-venta-1790281115000-20-3	venta	\N	\N	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 3.000000 por generacion de venta B001-7315	\N	activa	2026-10-06 07:28:06.763-05
+2299	V-002299	import-venta-1790887907000-25-1	venta	\N	\N	2026-10-01 15:51:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7497	\N	activa	2026-10-06 07:28:13.9-05
+1762	V-001762	import-venta-1790281126000-92-12	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.799-05
+1763	V-001763	import-venta-1790281126000-81-1	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.812-05
+1764	V-001764	import-venta-1790281126000-70-1	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.823-05
+1765	V-001765	import-venta-1790281126000-89-1	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.836-05
+1766	V-001766	import-venta-1790281126000-93-1	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.848-05
+1767	V-001767	import-venta-1790281126000-79-1	venta	\N	\N	2026-09-24 15:18:46-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10174	\N	activa	2026-10-06 07:28:06.861-05
+2298	V-002298	import-venta-1790887905000-25-18	venta	\N	\N	2026-10-01 15:51:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10440	\N	activa	2026-10-06 07:28:13.887-05
+2297	V-002297	import-venta-1790887899000-14-1	venta	\N	\N	2026-10-01 15:51:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14368	\N	activa	2026-10-06 07:28:13.872-05
+2293	V-002293	import-venta-1790887897000-46-1	venta	\N	\N	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.819-05
+2294	V-002294	import-venta-1790887897000-25-1	venta	\N	\N	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.833-05
+2295	V-002295	import-venta-1790887897000-89-0.5	venta	\N	\N	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.846-05
+2296	V-002296	import-venta-1790887897000-79-0.5	venta	\N	\N	2026-10-01 15:51:37-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14367	\N	activa	2026-10-06 07:28:13.859-05
+2292	V-002292	import-venta-1790876372000-25-18	venta	\N	\N	2026-10-01 12:39:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10437	\N	activa	2026-10-06 07:28:13.806-05
+1525	V-001525	import-venta-1790023254000-89-0.5	venta	\N	\N	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.357-05
+1526	V-001526	import-venta-1790023254000-26-1	venta	\N	\N	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.373-05
+1527	V-001527	import-venta-1790023254000-99-6	venta	\N	\N	2026-09-21 15:40:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7224	\N	activa	2026-10-06 07:28:03.391-05
+2035	V-002035	import-venta-1790628173000-76-1	venta	\N	\N	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.45-05
+2036	V-002036	import-venta-1790628173000-70-0.5	venta	\N	\N	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.461-05
+2037	V-002037	import-venta-1790628173000-67-1	venta	\N	\N	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.474-05
+2038	V-002038	import-venta-1790628173000-28-1	venta	\N	\N	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.485-05
+2039	V-002039	import-venta-1790628173000-27-1	venta	\N	\N	2026-09-28 15:42:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7402	\N	activa	2026-10-06 07:28:10.497-05
+2289	D-002289	import-devolucion-1790818511000-67-1	devolucion	\N	\N	2026-09-30 20:35:11-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.766-05
+2290	D-002290	import-devolucion-1790818514000-28-1	devolucion	\N	\N	2026-09-30 20:35:14-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.782-05
+2291	D-002291	import-devolucion-1790818517000-27-1	devolucion	\N	\N	2026-09-30 20:35:17-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.794-05
+1998	V-001998	import-venta-1790628076000-81-1	venta	\N	\N	2026-09-28 15:41:16-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10295	\N	activa	2026-10-06 07:28:09.983-05
+2288	D-002288	import-devolucion-1790811586000-81-1	devolucion	\N	\N	2026-09-30 18:39:46-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.753-05
+2000	V-002000	import-venta-1790628080000-29-1	venta	\N	\N	2026-09-28 15:41:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13985	\N	activa	2026-10-06 07:28:10.01-05
+2287	D-002287	import-devolucion-1790811521000-29-1	devolucion	\N	\N	2026-09-30 18:38:41-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.737-05
+1558	V-001558	import-venta-1790026627000-29-1	venta	\N	\N	2026-09-21 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13440	\N	activa	2026-10-06 07:28:03.87-05
+1752	D-001752	import-devolucion-1790203636000-29-1	devolucion	\N	\N	2026-09-23 17:47:16-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.678-05
+2054	V-002054	import-venta-1790628493000-67-1	venta	\N	\N	2026-09-28 15:48:13-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14053	\N	activa	2026-10-06 07:28:10.699-05
+2055	V-002055	import-venta-1790628493000-76-1	venta	\N	\N	2026-09-28 15:48:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14053	\N	activa	2026-10-06 07:28:10.718-05
+2284	D-002284	import-devolucion-1790810067000-29-2	devolucion	\N	\N	2026-09-30 18:14:27-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.693-05
+2285	D-002285	import-devolucion-1790810098000-67-1	devolucion	\N	\N	2026-09-30 18:14:58-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.708-05
+2286	D-002286	import-devolucion-1790810102000-76-1	devolucion	\N	\N	2026-09-30 18:15:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:13.724-05
+2280	V-002280	import-venta-1790804189000-76-1	venta	\N	\N	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.637-05
+2281	V-002281	import-venta-1790804189000-92-6	venta	\N	\N	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.65-05
+2282	V-002282	import-venta-1790804189000-25-1	venta	\N	\N	2026-09-30 16:36:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14328	\N	activa	2026-10-06 07:28:13.664-05
+2279	V-002279	import-venta-1790804177000-31-2	venta	\N	\N	2026-09-30 16:36:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 2.000000 por generacion de venta NP01-14317	\N	activa	2026-10-06 07:28:13.623-05
+2278	V-002278	import-venta-1790804175000-14-1	venta	\N	\N	2026-09-30 16:36:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14315	\N	activa	2026-10-06 07:28:13.609-05
+2273	V-002273	import-venta-1790803874000-89-1	venta	\N	\N	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10432	\N	activa	2026-10-06 07:28:13.543-05
+2274	V-002274	import-venta-1790803874000-76-1	venta	\N	\N	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10432	\N	activa	2026-10-06 07:28:13.556-05
+2275	V-002275	import-venta-1790803874000-81-0.5	venta	\N	\N	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14306	\N	activa	2026-10-06 07:28:13.569-05
+2276	V-002276	import-venta-1790803874000-70-0.5	venta	\N	\N	2026-09-30 16:31:14-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14306	\N	activa	2026-10-06 07:28:13.584-05
+2272	V-002272	import-venta-1790803871000-25-1	venta	\N	\N	2026-09-30 16:31:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10430	\N	activa	2026-10-06 07:28:13.53-05
+2271	V-002271	import-venta-1790803869000-27-1	venta	\N	\N	2026-09-30 16:31:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14303	\N	activa	2026-10-06 07:28:13.518-05
+2270	V-002270	import-venta-1790803867000-14-1	venta	\N	\N	2026-09-30 16:31:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14301	\N	activa	2026-10-06 07:28:13.505-05
+1746	V-001746	import-venta-1790197489000-80-0.25	venta	\N	\N	2026-09-23 16:04:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10163	\N	activa	2026-10-06 07:28:06.604-05
+2268	V-002268	import-venta-1790803866000-80-0.25	venta	\N	\N	2026-09-30 16:31:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10429	\N	activa	2026-10-06 07:28:13.476-05
+2269	V-002269	import-venta-1790803866000-69-0.25	venta	\N	\N	2026-09-30 16:31:06-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10429	\N	activa	2026-10-06 07:28:13.491-05
+2267	V-002267	import-venta-1790803855000-80-0.5	venta	\N	\N	2026-09-30 16:30:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta B001-7482	\N	activa	2026-10-06 07:28:13.452-05
+1744	V-001744	import-venta-1790197485000-91-3	venta	\N	\N	2026-09-23 16:04:45-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10161	\N	activa	2026-10-06 07:28:06.575-05
+1745	V-001745	import-venta-1790197485000-96-3	venta	\N	\N	2026-09-23 16:04:45-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10161	\N	activa	2026-10-06 07:28:06.591-05
+2264	V-002264	import-venta-1790803853000-76-1	venta	\N	\N	2026-09-30 16:30:53-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.385-05
+2265	V-002265	import-venta-1790803854000-80-0.25	venta	\N	\N	2026-09-30 16:30:54-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.407-05
+2266	V-002266	import-venta-1790803854000-69-0.25	venta	\N	\N	2026-09-30 16:30:54-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10427	\N	activa	2026-10-06 07:28:13.426-05
+2263	V-002263	import-venta-1790801651000-29-1	venta	\N	\N	2026-09-30 15:54:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14294	\N	activa	2026-10-06 07:28:13.369-05
+2261	V-002261	import-venta-1790801649000-89-1	venta	\N	\N	2026-09-30 15:54:09-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14292	\N	activa	2026-10-06 07:28:13.343-05
+2262	V-002262	import-venta-1790801649000-81-1	venta	\N	\N	2026-09-30 15:54:09-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14292	\N	activa	2026-10-06 07:28:13.356-05
+2257	V-002257	import-venta-1790801643000-81-1	venta	\N	\N	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.292-05
+2258	V-002258	import-venta-1790801643000-70-1	venta	\N	\N	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.305-05
+2259	V-002259	import-venta-1790801643000-93-1	venta	\N	\N	2026-09-30 15:54:03-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14286	\N	activa	2026-10-06 07:28:13.318-05
+2255	V-002255	import-venta-1790801635000-69-0.25	venta	\N	\N	2026-09-30 15:53:55-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14280	\N	activa	2026-10-06 07:28:13.267-05
+2256	V-002256	import-venta-1790801635000-80-0.25	venta	\N	\N	2026-09-30 15:53:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14280	\N	activa	2026-10-06 07:28:13.279-05
+2252	V-002252	import-venta-1790801634000-96-6	venta	\N	\N	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.231-05
+2253	V-002253	import-venta-1790801634000-46-5	venta	\N	\N	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 5.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.244-05
+2254	V-002254	import-venta-1790801634000-14-1	venta	\N	\N	2026-09-30 15:53:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14279	\N	activa	2026-10-06 07:28:13.255-05
+2250	V-002250	import-venta-1790801547000-89-0.5	venta	\N	\N	2026-09-30 15:52:27-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7477	\N	activa	2026-10-06 07:28:13.204-05
+2251	V-002251	import-venta-1790801547000-79-0.5	venta	\N	\N	2026-09-30 15:52:27-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta B001-7477	\N	activa	2026-10-06 07:28:13.217-05
+2244	V-002244	import-venta-1790801545000-96-6	venta	\N	\N	2026-09-30 15:52:25-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.138-05
+2246	V-002246	import-venta-1790801546000-89-1	venta	\N	\N	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.159-05
+2247	V-002247	import-venta-1790801546000-94-1	venta	\N	\N	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.172-05
+2248	V-002248	import-venta-1790801546000-101-6	venta	\N	\N	2026-09-30 15:52:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7476	\N	activa	2026-10-06 07:28:13.185-05
+2243	V-002243	import-venta-1790801545000-25-1	venta	\N	\N	2026-09-30 15:52:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14272	\N	activa	2026-10-06 07:28:13.125-05
+2242	V-002242	import-venta-1790801544000-16-1	venta	\N	\N	2026-09-30 15:52:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14271	\N	activa	2026-10-06 07:28:13.112-05
+2240	V-002240	import-venta-1790801543000-70-0.5	venta	\N	\N	2026-09-30 15:52:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14270	\N	activa	2026-10-06 07:28:13.093-05
+1738	V-001738	import-venta-1790196736000-87-1	venta	\N	\N	2026-09-23 15:52:16-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13633	\N	activa	2026-10-06 07:28:06.468-05
+2238	V-002238	import-venta-1790801542000-45-1	venta	\N	\N	2026-09-30 15:52:22-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14269	\N	activa	2026-10-06 07:28:13.067-05
+2239	V-002239	import-venta-1790801542000-46-1	venta	\N	\N	2026-09-30 15:52:22-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14269	\N	activa	2026-10-06 07:28:13.079-05
+1734	V-001734	import-venta-1790196732000-46-4	venta	\N	\N	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.416-05
+1735	V-001735	import-venta-1790196732000-45-4	venta	\N	\N	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.427-05
+1736	V-001736	import-venta-1790196732000-92-2	venta	\N	\N	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.44-05
+1737	V-001737	import-venta-1790196732000-29-1	venta	\N	\N	2026-09-23 15:52:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta F001-10152	\N	activa	2026-10-06 07:28:06.454-05
+2236	V-002236	import-venta-1790801539000-69-0.25	venta	\N	\N	2026-09-30 15:52:19-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10421	\N	activa	2026-10-06 07:28:13.042-05
+2237	V-002237	import-venta-1790801539000-25-1	venta	\N	\N	2026-09-30 15:52:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10421	\N	activa	2026-10-06 07:28:13.055-05
+2235	V-002235	import-venta-1790801530000-22-1	venta	\N	\N	2026-09-30 15:52:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-14263	\N	activa	2026-10-06 07:28:13.032-05
+2231	V-002231	import-venta-1790801526000-80-0.25	venta	\N	\N	2026-09-30 15:52:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14261	\N	activa	2026-10-06 07:28:12.983-05
+2232	V-002232	import-venta-1790801526000-69-0.25	venta	\N	\N	2026-09-30 15:52:06-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14261	\N	activa	2026-10-06 07:28:12.996-05
+1911	D-001911	import-devolucion-1790431542000-80-0.25	devolucion	\N	\N	2026-09-26 09:05:42-05	0.00	0.00	0.00	0.00	INGRESO DE PIMIENTA MOLIDO A GRANEL POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.781-05
+1699	V-001699	import-venta-1790194892000-25-1	venta	\N	\N	2026-09-23 15:21:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13580	\N	activa	2026-10-06 07:28:05.926-05
+1700	V-001700	import-venta-1790194892000-80-0.25	venta	\N	\N	2026-09-23 15:21:32-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13580	\N	activa	2026-10-06 07:28:05.938-05
+1910	D-001910	import-devolucion-1790431535000-25-1	devolucion	\N	\N	2026-09-26 09:05:35-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.768-05
+2229	V-002229	import-venta-1790801443000-25-1	venta	\N	\N	2026-09-30 15:50:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14260	\N	activa	2026-10-06 07:28:12.959-05
+2230	V-002230	import-venta-1790801443000-29-2	venta	\N	\N	2026-09-30 15:50:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14260	\N	activa	2026-10-06 07:28:12.97-05
+1696	V-001696	import-venta-1790194890000-46-8	venta	\N	\N	2026-09-23 15:21:30-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13578	\N	activa	2026-10-06 07:28:05.886-05
+2227	V-002227	import-venta-1790801442000-14-1	venta	\N	\N	2026-09-30 15:50:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14258	\N	activa	2026-10-06 07:28:12.933-05
+2228	V-002228	import-venta-1790801442000-26-1	venta	\N	\N	2026-09-30 15:50:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14259	\N	activa	2026-10-06 07:28:12.946-05
+1688	V-001688	import-venta-1790194883000-46-4	venta	\N	\N	2026-09-23 15:21:23-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta NP01-13574	\N	activa	2026-10-06 07:28:05.788-05
+2226	V-002226	import-venta-1790801438000-25-1	venta	\N	\N	2026-09-30 15:50:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14255	\N	activa	2026-10-06 07:28:12.92-05
+1684	V-001684	import-venta-1790194876000-18-12	venta	\N	\N	2026-09-23 15:21:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 12.000000 por generacion de venta B001-7285	\N	activa	2026-10-06 07:28:05.739-05
+1685	V-001685	import-venta-1790194876000-16-1	venta	\N	\N	2026-09-23 15:21:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7285	\N	activa	2026-10-06 07:28:05.75-05
+2222	V-002222	import-venta-1790801433000-14-1	venta	\N	\N	2026-09-30 15:50:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7469	\N	activa	2026-10-06 07:28:12.87-05
+2221	V-002221	import-venta-1790801432000-55-5	venta	\N	\N	2026-09-30 15:50:32-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 5.000000 por generacion de venta F001-10410	\N	activa	2026-10-06 07:28:12.858-05
+2219	V-002219	import-venta-1790801431000-93-1	venta	\N	\N	2026-09-30 15:50:31-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14252	\N	activa	2026-10-06 07:28:12.833-05
+2220	V-002220	import-venta-1790801431000-94-1	venta	\N	\N	2026-09-30 15:50:31-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14252	\N	activa	2026-10-06 07:28:12.845-05
+1681	V-001681	import-venta-1790194873000-46-8	venta	\N	\N	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13570	\N	activa	2026-10-06 07:28:05.698-05
+1682	V-001682	import-venta-1790194873000-45-3	venta	\N	\N	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-13570	\N	activa	2026-10-06 07:28:05.713-05
+2216	V-002216	import-venta-1790801430000-81-1	venta	\N	\N	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.795-05
+2217	V-002217	import-venta-1790801430000-80-1	venta	\N	\N	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.808-05
+2218	V-002218	import-venta-1790801430000-22-2	venta	\N	\N	2026-09-30 15:50:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-14251	\N	activa	2026-10-06 07:28:12.82-05
+2215	V-002215	import-venta-1790801428000-80-0.25	venta	\N	\N	2026-09-30 15:50:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14250	\N	activa	2026-10-06 07:28:12.783-05
+2213	V-002213	import-venta-1790801426000-99-4	venta	\N	\N	2026-09-30 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 4.000000 por generacion de venta NP01-14247	\N	activa	2026-10-06 07:28:12.761-05
+2214	V-002214	import-venta-1790801426000-80-1	venta	\N	\N	2026-09-30 15:50:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14248	\N	activa	2026-10-06 07:28:12.771-05
+1675	V-001675	import-venta-1790194870000-25-2	venta	\N	\N	2026-09-23 15:21:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13567	\N	activa	2026-10-06 07:28:05.607-05
+2210	V-002210	import-venta-1790801425000-25-2	venta	\N	\N	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.725-05
+2211	V-002211	import-venta-1790801425000-80-0.25	venta	\N	\N	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.736-05
+2212	V-002212	import-venta-1790801425000-69-0.25	venta	\N	\N	2026-09-30 15:50:25-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14246	\N	activa	2026-10-06 07:28:12.749-05
+2209	V-002209	import-venta-1790801422000-55-0.5	venta	\N	\N	2026-09-30 15:50:22-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-14243	\N	activa	2026-10-06 07:28:12.711-05
+2206	V-002206	import-venta-1790801421000-76-1	venta	\N	\N	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.669-05
+2207	V-002207	import-venta-1790801421000-81-0.5	venta	\N	\N	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.686-05
+2208	V-002208	import-venta-1790801421000-70-0.5	venta	\N	\N	2026-09-30 15:50:21-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14242	\N	activa	2026-10-06 07:28:12.699-05
+2200	V-002200	import-venta-1790801413000-99-6	venta	\N	\N	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.594-05
+2202	V-002202	import-venta-1790801413000-29-2	venta	\N	\N	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.616-05
+2203	V-002203	import-venta-1790801413000-94-1	venta	\N	\N	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.63-05
+2204	V-002204	import-venta-1790801413000-26-1	venta	\N	\N	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.642-05
+2205	V-002205	import-venta-1790801413000-88-1	venta	\N	\N	2026-09-30 15:50:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14236	\N	activa	2026-10-06 07:28:12.657-05
+1668	V-001668	import-venta-1790194858000-20-1	venta	\N	\N	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.511-05
+1669	V-001669	import-venta-1790194858000-23-6	venta	\N	\N	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.524-05
+1670	V-001670	import-venta-1790194858000-93-1	venta	\N	\N	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.536-05
+1671	V-001671	import-venta-1790194858000-79-1	venta	\N	\N	2026-09-23 15:20:58-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13559	\N	activa	2026-10-06 07:28:05.548-05
+2194	V-002194	import-venta-1790801410000-89-1	venta	\N	\N	2026-09-30 15:50:10-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.518-05
+2195	V-002195	import-venta-1790801411000-26-1	venta	\N	\N	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.531-05
+2196	V-002196	import-venta-1790801411000-27-1	venta	\N	\N	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14234	\N	activa	2026-10-06 07:28:12.542-05
+2199	V-002199	import-venta-1790801411000-29-2	venta	\N	\N	2026-09-30 15:50:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14235	\N	activa	2026-10-06 07:28:12.576-05
+2193	V-002193	import-venta-1790801408000-25-1	venta	\N	\N	2026-09-30 15:50:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14233	\N	activa	2026-10-06 07:28:12.506-05
+2188	V-002188	import-venta-1790801228000-48-1	venta	\N	\N	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.443-05
+2189	V-002189	import-venta-1790801228000-70-1	venta	\N	\N	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.455-05
+2190	V-002190	import-venta-1790801228000-89-1	venta	\N	\N	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.467-05
+2191	V-002191	import-venta-1790801228000-93-1	venta	\N	\N	2026-09-30 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14229	\N	activa	2026-10-06 07:28:12.479-05
+1363	D-001363	import-devolucion-1789846150000-25-6	devolucion	\N	\N	2026-09-19 14:29:10-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.828-05
+2186	V-002186	import-venta-1790801222000-25-18	venta	\N	\N	2026-09-30 15:47:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10407	\N	activa	2026-10-06 07:28:12.418-05
+2187	V-002187	import-venta-1790801222000-103-24	venta	\N	\N	2026-09-30 15:47:02-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 24.000000 por generacion de venta F001-10407	\N	activa	2026-10-06 07:28:12.429-05
+2184	V-002184	import-venta-1790801217000-81-1	venta	\N	\N	2026-09-30 15:46:57-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7463	\N	activa	2026-10-06 07:28:12.379-05
+2185	V-002185	import-venta-1790801217000-25-2	venta	\N	\N	2026-09-30 15:46:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta B001-7463	\N	activa	2026-10-06 07:28:12.399-05
+2180	V-002180	import-venta-1790782924000-92-12	venta	\N	\N	2026-09-30 10:42:04-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14209	\N	activa	2026-10-06 07:28:12.311-05
+2181	V-002181	import-venta-1790782924000-29-12	venta	\N	\N	2026-09-30 10:42:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-14209	\N	activa	2026-10-06 07:28:12.323-05
+1592	V-001592	import-venta-1790110651000-29-12	venta	\N	\N	2026-09-22 15:57:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.403-05
+1593	V-001593	import-venta-1790110651000-92-12	venta	\N	\N	2026-09-22 15:57:31-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.419-05
+1594	V-001594	import-venta-1790110652000-39-15	venta	\N	\N	2026-09-22 15:57:32-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 15.000000 por generacion de venta NP01-13500	\N	activa	2026-10-06 07:28:04.434-05
+1631	V-001631	import-venta-1790118163000-96-6	venta	\N	\N	2026-09-22 18:02:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13540	\N	activa	2026-10-06 07:28:04.931-05
+1632	V-001632	import-venta-1790118163000-91-6	venta	\N	\N	2026-09-22 18:02:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13540	\N	activa	2026-10-06 07:28:04.943-05
+2174	V-002174	import-venta-1790722947000-94-1	venta	\N	\N	2026-09-29 18:02:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14200	\N	activa	2026-10-06 07:28:12.242-05
+2175	V-002175	import-venta-1790722947000-103-2	venta	\N	\N	2026-09-29 18:02:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14200	\N	activa	2026-10-06 07:28:12.255-05
+1628	V-001628	import-venta-1790118156000-99-12	venta	\N	\N	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.884-05
+1629	V-001629	import-venta-1790118156000-100-12	venta	\N	\N	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.9-05
+1630	V-001630	import-venta-1790118156000-25-2	venta	\N	\N	2026-09-22 18:02:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13535	\N	activa	2026-10-06 07:28:04.916-05
+2171	V-002171	import-venta-1790722941000-89-1	venta	\N	\N	2026-09-29 18:02:21-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14196	\N	activa	2026-10-06 07:28:12.202-05
+2172	V-002172	import-venta-1790722941000-25-2	venta	\N	\N	2026-09-29 18:02:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14196	\N	activa	2026-10-06 07:28:12.216-05
+2170	V-002170	import-venta-1790722940000-29-1	venta	\N	\N	2026-09-29 18:02:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14195	\N	activa	2026-10-06 07:28:12.191-05
+2169	V-002169	import-venta-1790722939000-89-1	venta	\N	\N	2026-09-29 18:02:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14193	\N	activa	2026-10-06 07:28:12.179-05
+2167	V-002167	import-venta-1790722932000-79-1	venta	\N	\N	2026-09-29 18:02:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7457	\N	activa	2026-10-06 07:28:12.15-05
+2165	V-002165	import-venta-1790722928000-89-1	venta	\N	\N	2026-09-29 18:02:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14188	\N	activa	2026-10-06 07:28:12.126-05
+2166	V-002166	import-venta-1790722928000-16-1	venta	\N	\N	2026-09-29 18:02:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14188	\N	activa	2026-10-06 07:28:12.138-05
+2163	V-002163	import-venta-1790722925000-26-1	venta	\N	\N	2026-09-29 18:02:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14185	\N	activa	2026-10-06 07:28:12.101-05
+2164	V-002164	import-venta-1790722925000-27-1	venta	\N	\N	2026-09-29 18:02:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14185	\N	activa	2026-10-06 07:28:12.114-05
+2162	V-002162	import-venta-1790722923000-89-1	venta	\N	\N	2026-09-29 18:02:03-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14184	\N	activa	2026-10-06 07:28:12.09-05
+2161	V-002161	import-venta-1790722918000-69-0.5	venta	\N	\N	2026-09-29 18:01:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta NP01-14183	\N	activa	2026-10-06 07:28:12.077-05
+2160	V-002160	import-venta-1790722917000-94-1	venta	\N	\N	2026-09-29 18:01:57-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14182	\N	activa	2026-10-06 07:28:12.066-05
+2158	V-002158	import-venta-1790722233000-92-6	venta	\N	\N	2026-09-29 17:50:33-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta F001-10382	\N	activa	2026-10-06 07:28:12.044-05
+2159	V-002159	import-venta-1790722233000-29-1	venta	\N	\N	2026-09-29 17:50:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10382	\N	activa	2026-10-06 07:28:12.055-05
+2156	V-002156	import-venta-1790722002000-101-3	venta	\N	\N	2026-09-29 17:46:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta F001-10378	\N	activa	2026-10-06 07:28:12.023-05
+1657	V-001657	import-venta-1790118665000-25-1	venta	\N	\N	2026-09-22 18:11:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13545	\N	activa	2026-10-06 07:28:05.376-05
+1658	V-001658	import-venta-1790118665000-89-1	venta	\N	\N	2026-09-22 18:11:05-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13545	\N	activa	2026-10-06 07:28:05.389-05
+2152	V-002152	import-venta-1790721999000-25-1	venta	\N	\N	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:11.975-05
+2153	V-002153	import-venta-1790721999000-91-2	venta	\N	\N	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:11.988-05
+2154	V-002154	import-venta-1790721999000-80-0.25	venta	\N	\N	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:12-05
+2155	V-002155	import-venta-1790721999000-69-0.25	venta	\N	\N	2026-09-29 17:46:39-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14179	\N	activa	2026-10-06 07:28:12.011-05
+1667	V-001667	import-venta-1790176972000-25-5	venta	\N	\N	2026-09-23 10:22:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10128	\N	activa	2026-10-06 07:28:05.499-05
+2151	V-002151	import-venta-1790721998000-25-5	venta	\N	\N	2026-09-29 17:46:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10374	\N	activa	2026-10-06 07:28:11.965-05
+1650	V-001650	import-venta-1790118656000-25-1	venta	\N	\N	2026-09-22 18:10:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7276	\N	activa	2026-10-06 07:28:05.286-05
+1651	V-001651	import-venta-1790118656000-99-6	venta	\N	\N	2026-09-22 18:10:56-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7276	\N	activa	2026-10-06 07:28:05.297-05
+2146	V-002146	import-venta-1790721995000-25-1	venta	\N	\N	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.909-05
+2147	V-002147	import-venta-1790721995000-99-6	venta	\N	\N	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.92-05
+2148	V-002148	import-venta-1790721995000-29-1	venta	\N	\N	2026-09-29 17:46:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.932-05
+2149	V-002149	import-venta-1790721996000-80-0.25	venta	\N	\N	2026-09-29 17:46:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.943-05
+2150	V-002150	import-venta-1790721996000-69-0.25	venta	\N	\N	2026-09-29 17:46:36-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7454	\N	activa	2026-10-06 07:28:11.952-05
+1642	V-001642	import-venta-1790118651000-87-1	venta	\N	\N	2026-09-22 18:10:51-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.115-05
+1643	V-001643	import-venta-1790118651000-92-1	venta	\N	\N	2026-09-22 18:10:51-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.13-05
+1644	V-001644	import-venta-1790118652000-25-1	venta	\N	\N	2026-09-22 18:10:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10106	\N	activa	2026-10-06 07:28:05.146-05
+2145	V-002145	import-venta-1790721992000-25-1	venta	\N	\N	2026-09-29 17:46:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10370	\N	activa	2026-10-06 07:28:11.896-05
+1614	V-001614	import-venta-1790114495000-76-1	venta	\N	\N	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.69-05
+1615	V-001615	import-venta-1790114495000-93-0.5	venta	\N	\N	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.703-05
+1616	V-001616	import-venta-1790114495000-25-1	venta	\N	\N	2026-09-22 17:01:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13516	\N	activa	2026-10-06 07:28:04.717-05
+2143	V-002143	import-venta-1790719395000-25-1	venta	\N	\N	2026-09-29 17:03:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-14168	\N	activa	2026-10-06 07:28:11.873-05
+2142	V-002142	import-venta-1790719394000-101-3	venta	\N	\N	2026-09-29 17:03:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta B001-7449	\N	activa	2026-10-06 07:28:11.859-05
+1604	V-001604	import-venta-1790114484000-29-1	venta	\N	\N	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13513	\N	activa	2026-10-06 07:28:04.559-05
+1605	V-001605	import-venta-1790114484000-26-1	venta	\N	\N	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13513	\N	activa	2026-10-06 07:28:04.572-05
+2140	V-002140	import-venta-1790719391000-89-1	venta	\N	\N	2026-09-29 17:03:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-14167	\N	activa	2026-10-06 07:28:11.833-05
+2141	V-002141	import-venta-1790719391000-27-1	venta	\N	\N	2026-09-29 17:03:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14167	\N	activa	2026-10-06 07:28:11.846-05
+1611	V-001611	import-venta-1790114490000-25-2	venta	\N	\N	2026-09-22 17:01:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10090	\N	activa	2026-10-06 07:28:04.652-05
+2139	V-002139	import-venta-1790719389000-25-2	venta	\N	\N	2026-09-29 17:03:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10361	\N	activa	2026-10-06 07:28:11.82-05
+1612	V-001612	import-venta-1790114491000-80-1	venta	\N	\N	2026-09-22 17:01:31-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7268	\N	activa	2026-10-06 07:28:04.664-05
+2138	V-002138	import-venta-1790719382000-69-1	venta	\N	\N	2026-09-29 17:03:02-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7447	\N	activa	2026-10-06 07:28:11.81-05
+1590	V-001590	import-venta-1790109627000-25-4	venta	\N	\N	2026-09-22 15:40:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13497	\N	activa	2026-10-06 07:28:04.373-05
+2137	V-002137	import-venta-1790716973000-25-4	venta	\N	\N	2026-09-29 16:22:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-14162	\N	activa	2026-10-06 07:28:11.797-05
+2136	V-002136	import-venta-1790716971000-14-1	venta	\N	\N	2026-09-29 16:22:51-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14161	\N	activa	2026-10-06 07:28:11.784-05
+2134	V-002134	import-venta-1790716969000-76-2	venta	\N	\N	2026-09-29 16:22:49-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-14160	\N	activa	2026-10-06 07:28:11.757-05
+2135	V-002135	import-venta-1790716969000-28-1	venta	\N	\N	2026-09-29 16:22:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14160	\N	activa	2026-10-06 07:28:11.772-05
+2132	V-002132	import-venta-1790716968000-27-1	venta	\N	\N	2026-09-29 16:22:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7444	\N	activa	2026-10-06 07:28:11.734-05
+2133	V-002133	import-venta-1790716968000-25-1	venta	\N	\N	2026-09-29 16:22:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10354	\N	activa	2026-10-06 07:28:11.746-05
+2130	V-002130	import-venta-1790716966000-27-1	venta	\N	\N	2026-09-29 16:22:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14159	\N	activa	2026-10-06 07:28:11.706-05
+2131	V-002131	import-venta-1790716966000-26-1	venta	\N	\N	2026-09-29 16:22:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14159	\N	activa	2026-10-06 07:28:11.721-05
+2128	V-002128	import-venta-1790716965000-19-6	venta	\N	\N	2026-09-29 16:22:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14158	\N	activa	2026-10-06 07:28:11.683-05
+2126	V-002126	import-venta-1790716964000-27-1	venta	\N	\N	2026-09-29 16:22:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14157	\N	activa	2026-10-06 07:28:11.648-05
+2127	V-002127	import-venta-1790716964000-28-1	venta	\N	\N	2026-09-29 16:22:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14157	\N	activa	2026-10-06 07:28:11.667-05
+1588	V-001588	import-venta-1790109618000-26-1	venta	\N	\N	2026-09-22 15:40:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13492	\N	activa	2026-10-06 07:28:04.338-05
+1589	V-001589	import-venta-1790109619000-89-1	venta	\N	\N	2026-09-22 15:40:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13492	\N	activa	2026-10-06 07:28:04.354-05
+2125	V-002125	import-venta-1790716963000-27-1	venta	\N	\N	2026-09-29 16:22:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14156	\N	activa	2026-10-06 07:28:11.633-05
+2123	V-002123	import-venta-1790716960000-26-1	venta	\N	\N	2026-09-29 16:22:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14152	\N	activa	2026-10-06 07:28:11.598-05
+2124	V-002124	import-venta-1790716960000-27-1	venta	\N	\N	2026-09-29 16:22:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14152	\N	activa	2026-10-06 07:28:11.612-05
+2121	V-002121	import-venta-1790716954000-89-1	venta	\N	\N	2026-09-29 16:22:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7442	\N	activa	2026-10-06 07:28:11.575-05
+2122	V-002122	import-venta-1790716954000-79-1	venta	\N	\N	2026-09-29 16:22:34-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7442	\N	activa	2026-10-06 07:28:11.587-05
+2120	V-002120	import-venta-1790716953000-14-1	venta	\N	\N	2026-09-29 16:22:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14145	\N	activa	2026-10-06 07:28:11.561-05
+2115	V-002115	import-venta-1790716949000-39-1	venta	\N	\N	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.491-05
+2116	V-002116	import-venta-1790716949000-29-1	venta	\N	\N	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.505-05
+2085	V-002085	import-venta-1790685628000-80-1	venta	\N	\N	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.106-05
+2117	V-002117	import-venta-1790716949000-27-1	venta	\N	\N	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.517-05
+2118	V-002118	import-venta-1790716949000-26-1	venta	\N	\N	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.531-05
+2119	V-002119	import-venta-1790716949000-28-1	venta	\N	\N	2026-09-29 16:22:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7440	\N	activa	2026-10-06 07:28:11.545-05
+2114	V-002114	import-venta-1790716948000-25-2	venta	\N	\N	2026-09-29 16:22:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-14142	\N	activa	2026-10-06 07:28:11.479-05
+1573	V-001573	import-venta-1790108912000-99-6	venta	\N	\N	2026-09-22 15:28:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13466	\N	activa	2026-10-06 07:28:04.071-05
+2111	V-002111	import-venta-1790715696000-89-1	venta	\N	\N	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.443-05
+2112	V-002112	import-venta-1790715696000-79-1	venta	\N	\N	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.454-05
+2113	V-002113	import-venta-1790715696000-99-6	venta	\N	\N	2026-09-29 16:01:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14136	\N	activa	2026-10-06 07:28:11.466-05
+1575	V-001575	import-venta-1790108935000-93-0.5	venta	\N	\N	2026-09-22 15:28:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7251	\N	activa	2026-10-06 07:28:04.1-05
+1576	V-001576	import-venta-1790108935000-89-0.5	venta	\N	\N	2026-09-22 15:28:55-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta B001-7251	\N	activa	2026-10-06 07:28:04.123-05
+2109	V-002109	import-venta-1790715488000-70-0.5	venta	\N	\N	2026-09-29 15:58:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7437	\N	activa	2026-10-06 07:28:11.417-05
+2110	V-002110	import-venta-1790715488000-81-0.5	venta	\N	\N	2026-09-29 15:58:08-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7437	\N	activa	2026-10-06 07:28:11.43-05
+2107	V-002107	import-venta-1790715483000-31-1	venta	\N	\N	2026-09-29 15:58:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta B001-7436	\N	activa	2026-10-06 07:28:11.391-05
+2108	V-002108	import-venta-1790715483000-81-0.5	venta	\N	\N	2026-09-29 15:58:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7436	\N	activa	2026-10-06 07:28:11.404-05
+2105	V-002105	import-venta-1790715466000-93-1	venta	\N	\N	2026-09-29 15:57:46-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14126	\N	activa	2026-10-06 07:28:11.365-05
+2106	V-002106	import-venta-1790715466000-70-1	venta	\N	\N	2026-09-29 15:57:46-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14126	\N	activa	2026-10-06 07:28:11.379-05
+2104	V-002104	import-venta-1790714873000-14-1	venta	\N	\N	2026-09-29 15:47:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14118	\N	activa	2026-10-06 07:28:11.352-05
+2103	V-002103	import-venta-1790714869000-80-0.25	venta	\N	\N	2026-09-29 15:47:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-14115	\N	activa	2026-10-06 07:28:11.34-05
+2101	V-002101	import-venta-1790714868000-57-1	venta	\N	\N	2026-09-29 15:47:48-05	0.00	0.00	0.00	0.00	Salida de MAYONESA BASE RICASA CAJA X2 BOLSAS DE 2 KG por la cantidad de 1.000000 por generacion de venta NP01-14114	\N	activa	2026-10-06 07:28:11.315-05
+2102	V-002102	import-venta-1790714868000-58-1	venta	\N	\N	2026-09-29 15:47:48-05	0.00	0.00	0.00	0.00	Salida de MAYONESA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 1.000000 por generacion de venta NP01-14114	\N	activa	2026-10-06 07:28:11.327-05
+2100	V-002100	import-venta-1790714866000-29-2	venta	\N	\N	2026-09-29 15:47:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14113	\N	activa	2026-10-06 07:28:11.303-05
+1596	V-001596	import-venta-1790110656000-25-1	venta	\N	\N	2026-09-22 15:57:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10080	\N	activa	2026-10-06 07:28:04.459-05
+2099	V-002099	import-venta-1790714860000-20-1	venta	\N	\N	2026-09-29 15:47:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10345	\N	activa	2026-10-06 07:28:11.291-05
+2098	V-002098	import-venta-1790714856000-80-0.25	venta	\N	\N	2026-09-29 15:47:36-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10342	\N	activa	2026-10-06 07:28:11.276-05
+2097	V-002097	import-venta-1790714855000-99-12	venta	\N	\N	2026-09-29 15:47:35-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-10341	\N	activa	2026-10-06 07:28:11.262-05
+2095	V-002095	import-venta-1790714851000-48-1	venta	\N	\N	2026-09-29 15:47:31-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10338	\N	activa	2026-10-06 07:28:11.239-05
+2094	V-002094	import-venta-1790714850000-48-1	venta	\N	\N	2026-09-29 15:47:30-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10337	\N	activa	2026-10-06 07:28:11.227-05
+1601	V-001601	import-venta-1790110668000-14-1	venta	\N	\N	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.518-05
+1602	V-001602	import-venta-1790110668000-93-1	venta	\N	\N	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.531-05
+1603	V-001603	import-venta-1790110668000-69-1	venta	\N	\N	2026-09-22 15:57:48-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7265	\N	activa	2026-10-06 07:28:04.543-05
+2090	V-002090	import-venta-1790714849000-27-1	venta	\N	\N	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.175-05
+2091	V-002091	import-venta-1790714849000-76-1	venta	\N	\N	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.187-05
+2092	V-002092	import-venta-1790714849000-29-1	venta	\N	\N	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.2-05
+2093	V-002093	import-venta-1790714849000-13-1	venta	\N	\N	2026-09-29 15:47:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN CARNE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7429	\N	activa	2026-10-06 07:28:11.214-05
+2088	V-002088	import-venta-1790714847000-80-0.5	venta	\N	\N	2026-09-29 15:47:27-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10336	\N	activa	2026-10-06 07:28:11.149-05
+2089	V-002089	import-venta-1790714847000-69-0.5	venta	\N	\N	2026-09-29 15:47:27-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10336	\N	activa	2026-10-06 07:28:11.161-05
+2087	V-002087	import-venta-1790714846000-16-1	venta	\N	\N	2026-09-29 15:47:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7427	\N	activa	2026-10-06 07:28:11.135-05
+2084	V-002084	import-venta-1790685628000-39-3	venta	\N	\N	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.093-05
+1902	V-001902	import-venta-1790373369000-14-1	venta	\N	\N	2026-09-25 16:56:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7358	\N	activa	2026-10-06 07:28:08.667-05
+2079	D-002079	import-devolucion-1790635084000-14-1	devolucion	\N	\N	2026-09-28 17:38:04-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.026-05
+1840	V-001840	import-venta-1790369074000-67-1	venta	\N	\N	2026-09-25 15:44:34-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13811	\N	activa	2026-10-06 07:28:07.834-05
+1841	V-001841	import-venta-1790369074000-81-1	venta	\N	\N	2026-09-25 15:44:34-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13811	\N	activa	2026-10-06 07:28:07.846-05
+2077	D-002077	import-devolucion-1790634951000-67-1	devolucion	\N	\N	2026-09-28 17:35:51-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.005-05
+2078	D-002078	import-devolucion-1790634954000-81-1	devolucion	\N	\N	2026-09-28 17:35:54-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:11.015-05
+1893	V-001893	import-venta-1790373365000-81-0.5	venta	\N	\N	2026-09-25 16:56:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta B001-7356	\N	activa	2026-10-06 07:28:08.544-05
+1894	V-001894	import-venta-1790373365000-14-1	venta	\N	\N	2026-09-25 16:56:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7356	\N	activa	2026-10-06 07:28:08.557-05
+2075	D-002075	import-devolucion-1790634882000-81-0.5	devolucion	\N	\N	2026-09-28 17:34:42-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:10.983-05
+2076	D-002076	import-devolucion-1790634885000-14-1	devolucion	\N	\N	2026-09-28 17:34:45-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:10.995-05
+2074	V-002074	import-venta-1790630358000-77-1	venta	\N	\N	2026-09-28 16:19:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7424	\N	activa	2026-10-06 07:28:10.973-05
+2073	V-002073	import-venta-1790630353000-26-1	venta	\N	\N	2026-09-28 16:19:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14095	\N	activa	2026-10-06 07:28:10.958-05
+2071	V-002071	import-venta-1790630352000-93-1	venta	\N	\N	2026-09-28 16:19:12-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10321	\N	activa	2026-10-06 07:28:10.932-05
+2072	V-002072	import-venta-1790630352000-89-1	venta	\N	\N	2026-09-28 16:19:12-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10321	\N	activa	2026-10-06 07:28:10.946-05
+1550	V-001550	import-venta-1790024957000-27-1	venta	\N	\N	2026-09-21 16:09:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7241	\N	activa	2026-10-06 07:28:03.743-05
+1551	V-001551	import-venta-1790024957000-81-1	venta	\N	\N	2026-09-21 16:09:17-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7241	\N	activa	2026-10-06 07:28:03.757-05
+2068	V-002068	import-venta-1790630349000-26-1	venta	\N	\N	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.894-05
+2069	V-002069	import-venta-1790630349000-67-1	venta	\N	\N	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.906-05
+2070	V-002070	import-venta-1790630349000-16-1	venta	\N	\N	2026-09-28 16:19:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7421	\N	activa	2026-10-06 07:28:10.919-05
+2067	V-002067	import-venta-1790630346000-27-1	venta	\N	\N	2026-09-28 16:19:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7420	\N	activa	2026-10-06 07:28:10.88-05
+2066	V-002066	import-venta-1790630345000-31-1	venta	\N	\N	2026-09-28 16:19:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14091	\N	activa	2026-10-06 07:28:10.866-05
+2065	V-002065	import-venta-1790630342000-92-1	venta	\N	\N	2026-09-28 16:19:02-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7418	\N	activa	2026-10-06 07:28:10.854-05
+2064	V-002064	import-venta-1790630337000-79-0.5	venta	\N	\N	2026-09-28 16:18:57-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta NP01-14086	\N	activa	2026-10-06 07:28:10.843-05
+1544	V-001544	import-venta-1790024945000-26-1	venta	\N	\N	2026-09-21 16:09:05-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13410	\N	activa	2026-10-06 07:28:03.648-05
+2063	V-002063	import-venta-1790630336000-77-1	venta	\N	\N	2026-09-28 16:18:56-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14085	\N	activa	2026-10-06 07:28:10.828-05
+2086	V-002086	import-venta-1790685628000-69-1	venta	\N	\N	2026-09-29 07:40:28-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.119-05
+1508	V-001508	import-venta-1790022797000-93-1	venta	\N	\N	2026-09-21 15:33:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.067-05
+1509	V-001509	import-venta-1790022798000-79-1	venta	\N	\N	2026-09-21 15:33:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.084-05
+1510	V-001510	import-venta-1790022798000-89-1	venta	\N	\N	2026-09-21 15:33:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13365	\N	activa	2026-10-06 07:28:03.101-05
+2062	V-002062	import-venta-1790628624000-89-1	venta	\N	\N	2026-09-28 15:50:24-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14074	\N	activa	2026-10-06 07:28:10.816-05
+2061	V-002061	import-venta-1790628623000-69-1	venta	\N	\N	2026-09-28 15:50:23-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7414	\N	activa	2026-10-06 07:28:10.802-05
+1506	V-001506	import-venta-1790022755000-39-3	venta	\N	\N	2026-09-21 15:32:35-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta NP01-13355	\N	activa	2026-10-06 07:28:03.034-05
+1754	D-001754	import-devolucion-1790203818000-39-3	devolucion	\N	\N	2026-09-23 17:50:18-05	0.00	0.00	0.00	0.00	INGRESO DE GMS MAX SABOR 1 KG/SACO X25 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.7-05
+1563	V-001563	import-venta-1790026632000-76-1	venta	\N	\N	2026-09-21 16:37:12-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13444	\N	activa	2026-10-06 07:28:03.949-05
+1753	D-001753	import-devolucion-1790203688000-76-1	devolucion	\N	\N	2026-09-23 17:48:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.69-05
+2059	V-002059	import-venta-1790628501000-76-1	venta	\N	\N	2026-09-28 15:48:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14058	\N	activa	2026-10-06 07:28:10.781-05
+1562	V-001562	import-venta-1790026632000-14-1	venta	\N	\N	2026-09-21 16:37:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13443	\N	activa	2026-10-06 07:28:03.935-05
+2058	V-002058	import-venta-1790628500000-26-2	venta	\N	\N	2026-09-28 15:48:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-14057	\N	activa	2026-10-06 07:28:10.769-05
+2056	V-002056	import-venta-1790628495000-14-1	venta	\N	\N	2026-09-28 15:48:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14054	\N	activa	2026-10-06 07:28:10.738-05
+2051	V-002051	import-venta-1790628491000-46-8	venta	\N	\N	2026-09-28 15:48:11-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta B001-7410	\N	activa	2026-10-06 07:28:10.652-05
+2052	V-002052	import-venta-1790628491000-20-1	venta	\N	\N	2026-09-28 15:48:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7410	\N	activa	2026-10-06 07:28:10.667-05
+2050	V-002050	import-venta-1790628489000-99-2	venta	\N	\N	2026-09-28 15:48:09-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-14050	\N	activa	2026-10-06 07:28:10.64-05
+2049	V-002049	import-venta-1790628487000-20-1	venta	\N	\N	2026-09-28 15:48:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14048	\N	activa	2026-10-06 07:28:10.627-05
+2048	V-002048	import-venta-1790628486000-27-1	venta	\N	\N	2026-09-28 15:48:06-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14047	\N	activa	2026-10-06 07:28:10.614-05
+1552	V-001552	import-venta-1790026614000-89-1	venta	\N	\N	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.776-05
+1553	V-001553	import-venta-1790026614000-88-1	venta	\N	\N	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.791-05
+1554	V-001554	import-venta-1790026614000-67-6	venta	\N	\N	2026-09-21 16:36:54-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13427	\N	activa	2026-10-06 07:28:03.805-05
+2047	V-002047	import-venta-1790628480000-77-1	venta	\N	\N	2026-09-28 15:48:00-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14041	\N	activa	2026-10-06 07:28:10.599-05
+2046	V-002046	import-venta-1790628475000-31-1	venta	\N	\N	2026-09-28 15:47:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-14036	\N	activa	2026-10-06 07:28:10.582-05
+2045	V-002045	import-venta-1790628472000-69-1	venta	\N	\N	2026-09-28 15:47:52-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14033	\N	activa	2026-10-06 07:28:10.567-05
+2044	V-002044	import-venta-1790628183000-15-1	venta	\N	\N	2026-09-28 15:43:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7407	\N	activa	2026-10-06 07:28:10.555-05
+2043	V-002043	import-venta-1790628178000-99-12	venta	\N	\N	2026-09-28 15:42:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7404	\N	activa	2026-10-06 07:28:10.543-05
+2042	V-002042	import-venta-1790628175000-14-1	venta	\N	\N	2026-09-28 15:42:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7403	\N	activa	2026-10-06 07:28:10.532-05
+1514	V-001514	import-venta-1790023234000-16-1	venta	\N	\N	2026-09-21 15:40:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13377	\N	activa	2026-10-06 07:28:03.167-05
+1515	V-001515	import-venta-1790023234000-27-1	venta	\N	\N	2026-09-21 15:40:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13377	\N	activa	2026-10-06 07:28:03.191-05
+2040	V-002040	import-venta-1790628174000-67-1	venta	\N	\N	2026-09-28 15:42:54-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14021	\N	activa	2026-10-06 07:28:10.509-05
+2182	V-002182	import-venta-1790791679000-96-12	venta	\N	\N	2026-09-30 13:07:59-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10401	\N	activa	2026-10-06 07:28:12.337-05
+2041	V-002041	import-venta-1790628174000-88-0.5	venta	\N	\N	2026-09-28 15:42:54-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14021	\N	activa	2026-10-06 07:28:10.521-05
+2034	V-002034	import-venta-1790628168000-25-2	venta	\N	\N	2026-09-28 15:42:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10307	\N	activa	2026-10-06 07:28:10.437-05
+2032	V-002032	import-venta-1790628165000-25-2	venta	\N	\N	2026-09-28 15:42:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10306	\N	activa	2026-10-06 07:28:10.415-05
+1543	V-001543	import-venta-1790023851000-93-0.5	venta	\N	\N	2026-09-21 15:50:51-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13405	\N	activa	2026-10-06 07:28:03.634-05
+2029	V-002029	import-venta-1790628142000-89-1	venta	\N	\N	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.38-05
+2030	V-002030	import-venta-1790628142000-101-6	venta	\N	\N	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.392-05
+2031	V-002031	import-venta-1790628142000-103-6	venta	\N	\N	2026-09-28 15:42:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-14017	\N	activa	2026-10-06 07:28:10.404-05
+1540	V-001540	import-venta-1790023847000-39-3	venta	\N	\N	2026-09-21 15:50:47-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 3.000000 por generacion de venta F001-10050	\N	activa	2026-10-06 07:28:03.583-05
+2025	V-002025	import-venta-1790628139000-39-2	venta	\N	\N	2026-09-28 15:42:19-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta F001-10305	\N	activa	2026-10-06 07:28:10.324-05
+2026	V-002026	import-venta-1790628139000-91-2	venta	\N	\N	2026-09-28 15:42:19-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta F001-10305	\N	activa	2026-10-06 07:28:10.338-05
+2023	V-002023	import-venta-1790628133000-54-0.5	venta	\N	\N	2026-09-28 15:42:13-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X2 BOLSAS DE 2 KG por la cantidad de 0.500000 por generacion de venta F001-10301	\N	activa	2026-10-06 07:28:10.299-05
+2024	V-002024	import-venta-1790628133000-46-2	venta	\N	\N	2026-09-28 15:42:13-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta F001-10301	\N	activa	2026-10-06 07:28:10.312-05
+1539	V-001539	import-venta-1790023840000-45-2	venta	\N	\N	2026-09-21 15:50:40-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13398	\N	activa	2026-10-06 07:28:03.567-05
+2022	V-002022	import-venta-1790628132000-70-0.5	venta	\N	\N	2026-09-28 15:42:12-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-14012	\N	activa	2026-10-06 07:28:10.286-05
+2021	V-002021	import-venta-1790628130000-89-1	venta	\N	\N	2026-09-28 15:42:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7396	\N	activa	2026-10-06 07:28:10.274-05
+2020	V-002020	import-venta-1790628123000-91-12	venta	\N	\N	2026-09-28 15:42:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10299	\N	activa	2026-10-06 07:28:10.262-05
+2019	V-002019	import-venta-1790628121000-39-2	venta	\N	\N	2026-09-28 15:42:01-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta B001-7395	\N	activa	2026-10-06 07:28:10.249-05
+1531	V-001531	import-venta-1790023825000-89-2	venta	\N	\N	2026-09-21 15:50:25-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE X12 SOB GIG 100 GR /PAQUETE X6 DISLPL por la cantidad de 2.000000 por generacion de venta NP01-13391	\N	activa	2026-10-06 07:28:03.463-05
+2018	V-002018	import-venta-1790628118000-89-1	venta	\N	\N	2026-09-28 15:41:58-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE X12 SOB GIG 100 GR /PAQUETE X6 DISLPL por la cantidad de 1.000000 por generacion de venta NP01-14002	\N	activa	2026-10-06 07:28:10.238-05
+2017	V-002017	import-venta-1790628115000-77-1	venta	\N	\N	2026-09-28 15:41:55-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-14001	\N	activa	2026-10-06 07:28:10.226-05
+1502	V-001502	import-venta-1790021905000-19-6	venta	\N	\N	2026-09-21 15:18:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13350	\N	activa	2026-10-06 07:28:02.967-05
+2013	V-002013	import-venta-1790628098000-89-1	venta	\N	\N	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13999	\N	activa	2026-10-06 07:28:10.179-05
+2015	V-002015	import-venta-1790628098000-94-1	venta	\N	\N	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13999	\N	activa	2026-10-06 07:28:10.197-05
+1503	V-001503	import-venta-1790021905000-14-1	venta	\N	\N	2026-09-21 15:18:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13351	\N	activa	2026-10-06 07:28:02.983-05
+2016	V-002016	import-venta-1790628098000-14-1	venta	\N	\N	2026-09-28 15:41:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14000	\N	activa	2026-10-06 07:28:10.214-05
+2010	V-002010	import-venta-1790628097000-76-1	venta	\N	\N	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.14-05
+2011	V-002011	import-venta-1790628097000-93-1	venta	\N	\N	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.153-05
+2012	V-002012	import-venta-1790628097000-103-6	venta	\N	\N	2026-09-28 15:41:37-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta B001-7390	\N	activa	2026-10-06 07:28:10.167-05
+2008	V-002008	import-venta-1790628092000-99-9	venta	\N	\N	2026-09-28 15:41:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 9.000000 por generacion de venta NP01-13995	\N	activa	2026-10-06 07:28:10.117-05
+2009	V-002009	import-venta-1790628092000-100-3	venta	\N	\N	2026-09-28 15:41:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13995	\N	activa	2026-10-06 07:28:10.129-05
+2461	V-002461	import-venta-1791035340000-80-1	venta	\N	\N	2026-10-03 08:49:00-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7555	\N	activa	2026-10-06 07:28:16.119-05
+2183	V-002183	import-venta-1790791679000-25-5	venta	\N	\N	2026-09-30 13:07:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 5.000000 por generacion de venta F001-10401	\N	activa	2026-10-06 07:28:12.357-05
+2007	V-002007	import-venta-1790628088000-14-1	venta	\N	\N	2026-09-28 15:41:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13990	\N	activa	2026-10-06 07:28:10.104-05
+2006	V-002006	import-venta-1790628087000-81-1	venta	\N	\N	2026-09-28 15:41:27-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10297	\N	activa	2026-10-06 07:28:10.092-05
+2001	V-002001	import-venta-1790628080000-81-1	venta	\N	\N	2026-09-28 15:41:20-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.024-05
+2002	V-002002	import-venta-1790628081000-70-1	venta	\N	\N	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.038-05
+2003	V-002003	import-venta-1790628081000-89-1	venta	\N	\N	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.05-05
+2004	V-002004	import-venta-1790628081000-92-1	venta	\N	\N	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13986	\N	activa	2026-10-06 07:28:10.065-05
+2005	V-002005	import-venta-1790628081000-76-1	venta	\N	\N	2026-09-28 15:41:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7387	\N	activa	2026-10-06 07:28:10.078-05
+1494	V-001494	import-venta-1790021892000-81-1	venta	\N	\N	2026-09-21 15:18:12-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13339	\N	activa	2026-10-06 07:28:02.843-05
+1999	V-001999	import-venta-1790628079000-26-1	venta	\N	\N	2026-09-28 15:41:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13984	\N	activa	2026-10-06 07:28:09.996-05
+1997	V-001997	import-venta-1790628076000-25-2	venta	\N	\N	2026-09-28 15:41:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10294	\N	activa	2026-10-06 07:28:09.97-05
+1489	V-001489	import-venta-1790021886000-89-0.5	venta	\N	\N	2026-09-21 15:18:06-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13337	\N	activa	2026-10-06 07:28:02.765-05
+1756	D-001756	import-devolucion-1790208608000-89-0.5	devolucion	\N	\N	2026-09-23 19:10:08-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.724-05
+1996	V-001996	import-venta-1790628075000-92-0.5	venta	\N	\N	2026-09-28 15:41:15-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13983	\N	activa	2026-10-06 07:28:09.956-05
+1490	V-001490	import-venta-1790021887000-29-2	venta	\N	\N	2026-09-21 15:18:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 2.000000 por generacion de venta B001-7203	\N	activa	2026-10-06 07:28:02.78-05
+1491	V-001491	import-venta-1790021887000-89-1	venta	\N	\N	2026-09-21 15:18:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7203	\N	activa	2026-10-06 07:28:02.796-05
+1995	V-001995	import-venta-1790628074000-94-1	venta	\N	\N	2026-09-28 15:41:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7386	\N	activa	2026-10-06 07:28:09.943-05
+1797	V-001797	import-venta-1790282447000-99-2	venta	\N	\N	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.281-05
+1798	V-001798	import-venta-1790282447000-100-2	venta	\N	\N	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.293-05
+1799	V-001799	import-venta-1790282447000-25-1	venta	\N	\N	2026-09-24 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13712	\N	activa	2026-10-06 07:28:07.307-05
+1991	D-001991	import-devolucion-1790616957000-99-2	devolucion	\N	\N	2026-09-28 12:35:57-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.901-05
+1992	D-001992	import-devolucion-1790616961000-100-2	devolucion	\N	\N	2026-09-28 12:36:01-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.913-05
+1993	D-001993	import-devolucion-1790616965000-25-1	devolucion	\N	\N	2026-09-28 12:36:05-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 1 KG/SACO X18 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.923-05
+1564	D-001564	import-devolucion-1790037284000-20-1	devolucion	\N	\N	2026-09-21 19:34:44-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.963-05
+1565	D-001565	import-devolucion-1790037287000-19-1	devolucion	\N	\N	2026-09-21 19:34:47-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.975-05
+1566	D-001566	import-devolucion-1790037290000-28-1	devolucion	\N	\N	2026-09-21 19:34:50-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:03.986-05
+1821	V-001821	import-venta-1790283049000-27-1	venta	\N	\N	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.597-05
+1822	V-001822	import-venta-1790283049000-28-1	venta	\N	\N	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.609-05
+1823	V-001823	import-venta-1790283049000-94-1	venta	\N	\N	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.623-05
+2462	V-002462	import-venta-1791035340000-69-1	venta	\N	\N	2026-10-03 08:49:00-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta B001-7555	\N	activa	2026-10-06 07:28:16.133-05
+1824	V-001824	import-venta-1790283049000-60-0.5	venta	\N	\N	2026-09-24 15:50:49-05	0.00	0.00	0.00	0.00	Salida de MOSTAZA RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 0.500000 por generacion de venta NP01-13747	\N	activa	2026-10-06 07:28:07.635-05
+1987	D-001987	import-devolucion-1790616410000-27-1	devolucion	\N	\N	2026-09-28 12:26:50-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.838-05
+1988	D-001988	import-devolucion-1790616413000-28-1	devolucion	\N	\N	2026-09-28 12:26:53-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.857-05
+1989	D-001989	import-devolucion-1790616418000-94-1	devolucion	\N	\N	2026-09-28 12:26:58-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.874-05
+1990	D-001990	import-devolucion-1790616421000-60-0.5	devolucion	\N	\N	2026-09-28 12:27:01-05	0.00	0.00	0.00	0.00	INGRESO DE MOSTAZA RICASA CAJA X250 SACHET POR 8 GR POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:09.888-05
+1986	V-001986	import-venta-1790455975000-80-1	venta	\N	\N	2026-09-26 15:52:55-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13971	\N	activa	2026-10-06 07:28:09.819-05
+1985	V-001985	import-venta-1790455640000-89-0.5	venta	\N	\N	2026-09-26 15:47:20-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13967	\N	activa	2026-10-06 07:28:09.796-05
+1981	V-001981	import-venta-1790455639000-14-1	venta	\N	\N	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13965	\N	activa	2026-10-06 07:28:09.744-05
+1982	V-001982	import-venta-1790455639000-93-1	venta	\N	\N	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.759-05
+1983	V-001983	import-venta-1790455639000-79-1	venta	\N	\N	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.772-05
+1984	V-001984	import-venta-1790455639000-89-1	venta	\N	\N	2026-09-26 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13966	\N	activa	2026-10-06 07:28:09.783-05
+1975	V-001975	import-venta-1790455634000-89-1	venta	\N	\N	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.677-05
+1976	V-001976	import-venta-1790455634000-94-1	venta	\N	\N	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.69-05
+1978	V-001978	import-venta-1790455634000-81-1	venta	\N	\N	2026-09-26 15:47:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13962	\N	activa	2026-10-06 07:28:09.707-05
+1973	V-001973	import-venta-1790455628000-89-2	venta	\N	\N	2026-09-26 15:47:08-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta NP01-13958	\N	activa	2026-10-06 07:28:09.651-05
+1972	V-001972	import-venta-1790455606000-39-2	venta	\N	\N	2026-09-26 15:46:46-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 2.000000 por generacion de venta NP01-13953	\N	activa	2026-10-06 07:28:09.639-05
+1970	V-001970	import-venta-1790455068000-14-4	venta	\N	\N	2026-09-26 15:37:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 4.000000 por generacion de venta NP01-13939	\N	activa	2026-10-06 07:28:09.618-05
+1968	V-001968	import-venta-1790455063000-14-1	venta	\N	\N	2026-09-26 15:37:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13935	\N	activa	2026-10-06 07:28:09.594-05
+1969	V-001969	import-venta-1790455063000-16-1	venta	\N	\N	2026-09-26 15:37:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13935	\N	activa	2026-10-06 07:28:09.606-05
+1967	V-001967	import-venta-1790455061000-45-1	venta	\N	\N	2026-09-26 15:37:41-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13933	\N	activa	2026-10-06 07:28:09.578-05
+1961	V-001961	import-venta-1790455059000-16-10	venta	\N	\N	2026-09-26 15:37:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 10.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.482-05
+1962	V-001962	import-venta-1790455059000-15-5	venta	\N	\N	2026-09-26 15:37:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 5.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.499-05
+1963	V-001963	import-venta-1790455060000-14-5	venta	\N	\N	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 5.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.515-05
+1964	V-001964	import-venta-1790455060000-13-1	venta	\N	\N	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN CARNE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13931	\N	activa	2026-10-06 07:28:09.529-05
+1965	V-001965	import-venta-1790455060000-27-1	venta	\N	\N	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13932	\N	activa	2026-10-06 07:28:09.543-05
+1966	V-001966	import-venta-1790455060000-26-1	venta	\N	\N	2026-09-26 15:37:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13932	\N	activa	2026-10-06 07:28:09.562-05
+1960	V-001960	import-venta-1790455058000-14-8	venta	\N	\N	2026-09-26 15:37:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 8.000000 por generacion de venta NP01-13929	\N	activa	2026-10-06 07:28:09.466-05
+1959	V-001959	import-venta-1790455055000-92-1	venta	\N	\N	2026-09-26 15:37:35-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13926	\N	activa	2026-10-06 07:28:09.45-05
+1956	V-001956	import-venta-1790455054000-19-1	venta	\N	\N	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.403-05
+1957	V-001957	import-venta-1790455054000-77-1	venta	\N	\N	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.419-05
+2083	V-002083	import-venta-1790685627000-44-1	venta	\N	\N	2026-09-29 07:40:27-05	0.00	0.00	0.00	0.00	Salida de CHUÑO SANTIS BLS/PAPELO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10327	\N	activa	2026-10-06 07:28:11.078-05
+1958	V-001958	import-venta-1790455054000-88-1	venta	\N	\N	2026-09-26 15:37:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13925	\N	activa	2026-10-06 07:28:09.434-05
+1955	V-001955	import-venta-1790454956000-16-1	venta	\N	\N	2026-09-26 15:35:56-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13923	\N	activa	2026-10-06 07:28:09.391-05
+1952	V-001952	import-venta-1790454953000-16-1	venta	\N	\N	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.351-05
+1953	V-001953	import-venta-1790454953000-29-1	venta	\N	\N	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.365-05
+1954	V-001954	import-venta-1790454953000-45-1	venta	\N	\N	2026-09-26 15:35:53-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13920	\N	activa	2026-10-06 07:28:09.378-05
+1950	V-001950	import-venta-1790454949000-27-1	venta	\N	\N	2026-09-26 15:35:49-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13916	\N	activa	2026-10-06 07:28:09.326-05
+1947	V-001947	import-venta-1790454947000-29-1	venta	\N	\N	2026-09-26 15:35:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7375	\N	activa	2026-10-06 07:28:09.295-05
+1948	V-001948	import-venta-1790454947000-76-1	venta	\N	\N	2026-09-26 15:35:47-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7375	\N	activa	2026-10-06 07:28:09.309-05
+1946	V-001946	import-venta-1790454939000-23-6	venta	\N	\N	2026-09-26 15:35:39-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13906	\N	activa	2026-10-06 07:28:09.281-05
+1942	V-001942	import-venta-1790454938000-15-1	venta	\N	\N	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.23-05
+1943	V-001943	import-venta-1790454938000-97-1	venta	\N	\N	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.243-05
+1944	V-001944	import-venta-1790454938000-89-1	venta	\N	\N	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.255-05
+1945	V-001945	import-venta-1790454938000-94-1	venta	\N	\N	2026-09-26 15:35:38-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10281	\N	activa	2026-10-06 07:28:09.268-05
+1940	V-001940	import-venta-1790454935000-67-1	venta	\N	\N	2026-09-26 15:35:35-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13904	\N	activa	2026-10-06 07:28:09.203-05
+1941	V-001941	import-venta-1790454935000-29-1	venta	\N	\N	2026-09-26 15:35:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13904	\N	activa	2026-10-06 07:28:09.216-05
+1939	V-001939	import-venta-1790454934000-88-1	venta	\N	\N	2026-09-26 15:35:34-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13903	\N	activa	2026-10-06 07:28:09.19-05
+1937	V-001937	import-venta-1790454933000-28-1	venta	\N	\N	2026-09-26 15:35:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7374	\N	activa	2026-10-06 07:28:09.164-05
+1938	V-001938	import-venta-1790454933000-29-1	venta	\N	\N	2026-09-26 15:35:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7374	\N	activa	2026-10-06 07:28:09.177-05
+1936	V-001936	import-venta-1790454932000-77-1	venta	\N	\N	2026-09-26 15:35:32-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7373	\N	activa	2026-10-06 07:28:09.15-05
+1935	V-001935	import-venta-1790454930000-91-3	venta	\N	\N	2026-09-26 15:35:30-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13901	\N	activa	2026-10-06 07:28:09.137-05
+1929	V-001929	import-venta-1790454927000-26-1	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.063-05
+1930	V-001930	import-venta-1790454927000-27-1	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.073-05
+1931	V-001931	import-venta-1790454927000-28-1	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.085-05
+1932	V-001932	import-venta-1790454927000-38-1	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.097-05
+1933	V-001933	import-venta-1790454927000-20-1	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.11-05
+1934	V-001934	import-venta-1790454927000-93-0.5	venta	\N	\N	2026-09-26 15:35:27-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13899	\N	activa	2026-10-06 07:28:09.123-05
+1927	V-001927	import-venta-1790453798000-81-1	venta	\N	\N	2026-09-26 15:16:38-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13897	\N	activa	2026-10-06 07:28:09.038-05
+1928	V-001928	import-venta-1790453798000-70-1	venta	\N	\N	2026-09-26 15:16:38-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13897	\N	activa	2026-10-06 07:28:09.05-05
+1926	V-001926	import-venta-1790453792000-25-3	venta	\N	\N	2026-09-26 15:16:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta F001-10277	\N	activa	2026-10-06 07:28:09.025-05
+2463	V-002463	import-venta-1791040423000-25-2	venta	\N	\N	2026-10-03 10:13:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta B001-7556	\N	activa	2026-10-06 07:28:16.148-05
+1924	V-001924	import-venta-1790453789000-99-12	venta	\N	\N	2026-09-26 15:16:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13889	\N	activa	2026-10-06 07:28:09.001-05
+1922	V-001922	import-venta-1790453788000-80-1	venta	\N	\N	2026-09-26 15:16:28-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13888	\N	activa	2026-10-06 07:28:08.973-05
+1923	V-001923	import-venta-1790453788000-69-1	venta	\N	\N	2026-09-26 15:16:28-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13888	\N	activa	2026-10-06 07:28:08.987-05
+1921	V-001921	import-venta-1790453786000-27-1	venta	\N	\N	2026-09-26 15:16:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13885	\N	activa	2026-10-06 07:28:08.96-05
+1920	V-001920	import-venta-1790453781000-25-3	venta	\N	\N	2026-09-26 15:16:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13881	\N	activa	2026-10-06 07:28:08.946-05
+1417	V-001417	import-venta-1789848860000-26-1	venta	\N	\N	2026-09-19 15:14:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13254	\N	activa	2026-10-06 07:28:01.611-05
+1919	V-001919	import-venta-1790453655000-89-1	venta	\N	\N	2026-09-26 15:14:15-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13880	\N	activa	2026-10-06 07:28:08.934-05
+1914	V-001914	import-venta-1790448118000-69-0.25	venta	\N	\N	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.822-05
+1915	V-001915	import-venta-1790448118000-80-0.25	venta	\N	\N	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.859-05
+1916	V-001916	import-venta-1790448118000-39-1	venta	\N	\N	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.888-05
+1913	V-001913	import-venta-1790448118000-92-3	venta	\N	\N	2026-09-26 13:41:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7368	\N	activa	2026-10-06 07:28:08.802-05
+1719	V-001719	import-venta-1790196423000-27-1	venta	\N	\N	2026-09-23 15:47:03-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10139	\N	activa	2026-10-06 07:28:06.215-05
+1909	D-001909	import-devolucion-1790378615000-27-1	devolucion	\N	\N	2026-09-25 18:23:35-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:08.756-05
+1907	V-001907	import-venta-1790377645000-80-1	venta	\N	\N	2026-09-25 18:07:25-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13865	\N	activa	2026-10-06 07:28:08.731-05
+1908	V-001908	import-venta-1790377645000-69-1	venta	\N	\N	2026-09-25 18:07:25-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13865	\N	activa	2026-10-06 07:28:08.744-05
+1905	V-001905	import-venta-1790375461000-26-1	venta	\N	\N	2026-09-25 17:31:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10256	\N	activa	2026-10-06 07:28:08.709-05
+1903	V-001903	import-venta-1790373371000-52-1	venta	\N	\N	2026-09-25 16:56:11-05	0.00	0.00	0.00	0.00	Salida de SIB AJI PANQUITA SIN PCTE ECON X24 SOB 31.2 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7359	\N	activa	2026-10-06 07:28:08.679-05
+1901	V-001901	import-venta-1790373368000-77-1	venta	\N	\N	2026-09-25 16:56:08-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13861	\N	activa	2026-10-06 07:28:08.653-05
+1895	V-001895	import-venta-1790373366000-93-1	venta	\N	\N	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.572-05
+1896	V-001896	import-venta-1790373366000-81-1	venta	\N	\N	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.586-05
+1897	V-001897	import-venta-1790373366000-70-1	venta	\N	\N	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.6-05
+1899	V-001899	import-venta-1790373366000-92-3	venta	\N	\N	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.624-05
+1900	V-001900	import-venta-1790373366000-80-0.25	venta	\N	\N	2026-09-25 16:56:06-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7357	\N	activa	2026-10-06 07:28:08.64-05
+1892	V-001892	import-venta-1790373360000-14-1	venta	\N	\N	2026-09-25 16:56:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10240	\N	activa	2026-10-06 07:28:08.53-05
+1891	V-001891	import-venta-1790373358000-91-6	venta	\N	\N	2026-09-25 16:55:58-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13857	\N	activa	2026-10-06 07:28:08.515-05
+1889	V-001889	import-venta-1790373355000-93-1	venta	\N	\N	2026-09-25 16:55:55-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7352	\N	activa	2026-10-06 07:28:08.485-05
+1890	V-001890	import-venta-1790373355000-46-4	venta	\N	\N	2026-09-25 16:55:55-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7352	\N	activa	2026-10-06 07:28:08.498-05
+1888	V-001888	import-venta-1790369724000-26-1	venta	\N	\N	2026-09-25 15:55:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13854	\N	activa	2026-10-06 07:28:08.471-05
+1347	V-001347	import-venta-1789767437000-87-1	venta	\N	\N	2026-09-18 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13217	\N	activa	2026-10-06 07:28:00.626-05
+1348	V-001348	import-venta-1789767437000-31-1	venta	\N	\N	2026-09-18 16:37:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13217	\N	activa	2026-10-06 07:28:00.64-05
+1314	V-001314	import-venta-1789764281000-69-1	venta	\N	\N	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.874-05
+1885	V-001885	import-venta-1790369723000-99-1	venta	\N	\N	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.432-05
+1886	V-001886	import-venta-1790369723000-87-1	venta	\N	\N	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.446-05
+1887	V-001887	import-venta-1790369723000-103-1	venta	\N	\N	2026-09-25 15:55:23-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13853	\N	activa	2026-10-06 07:28:08.458-05
+1880	V-001880	import-venta-1790369720000-100-4	venta	\N	\N	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 4.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.366-05
+1881	V-001881	import-venta-1790369720000-29-2	venta	\N	\N	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 2.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.38-05
+1882	V-001882	import-venta-1790369720000-27-1	venta	\N	\N	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.393-05
+1883	V-001883	import-venta-1790369720000-46-1	venta	\N	\N	2026-09-25 15:55:20-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13850	\N	activa	2026-10-06 07:28:08.407-05
+1879	V-001879	import-venta-1790369719000-14-1	venta	\N	\N	2026-09-25 15:55:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10238	\N	activa	2026-10-06 07:28:08.351-05
+1878	V-001878	import-venta-1790369718000-26-1	venta	\N	\N	2026-09-25 15:55:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13849	\N	activa	2026-10-06 07:28:08.338-05
+1876	V-001876	import-venta-1790369716000-14-1	venta	\N	\N	2026-09-25 15:55:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13847	\N	activa	2026-10-06 07:28:08.312-05
+1875	V-001875	import-venta-1790369715000-20-1	venta	\N	\N	2026-09-25 15:55:15-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13846	\N	activa	2026-10-06 07:28:08.301-05
+1872	V-001872	import-venta-1790369708000-26-1	venta	\N	\N	2026-09-25 15:55:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7350	\N	activa	2026-10-06 07:28:08.266-05
+1873	V-001873	import-venta-1790369708000-28-1	venta	\N	\N	2026-09-25 15:55:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7350	\N	activa	2026-10-06 07:28:08.276-05
+1870	V-001870	import-venta-1790369705000-91-6	venta	\N	\N	2026-09-25 15:55:05-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta F001-10235	\N	activa	2026-10-06 07:28:08.24-05
+1867	V-001867	import-venta-1790369492000-28-1	venta	\N	\N	2026-09-25 15:51:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10234	\N	activa	2026-10-06 07:28:08.203-05
+1868	V-001868	import-venta-1790369492000-26-1	venta	\N	\N	2026-09-25 15:51:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10234	\N	activa	2026-10-06 07:28:08.215-05
+1866	V-001866	import-venta-1790369491000-97-1	venta	\N	\N	2026-09-25 15:51:31-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta F001-10233	\N	activa	2026-10-06 07:28:08.192-05
+1861	V-001861	import-venta-1790369488000-89-1	venta	\N	\N	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.134-05
+1862	V-001862	import-venta-1790369488000-94-1	venta	\N	\N	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.148-05
+1864	V-001864	import-venta-1790369488000-81-0.5	venta	\N	\N	2026-09-25 15:51:28-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13832	\N	activa	2026-10-06 07:28:08.165-05
+1859	V-001859	import-venta-1790369484000-70-1	venta	\N	\N	2026-09-25 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13828	\N	activa	2026-10-06 07:28:08.108-05
+1860	V-001860	import-venta-1790369484000-81-1	venta	\N	\N	2026-09-25 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13828	\N	activa	2026-10-06 07:28:08.122-05
+1858	V-001858	import-venta-1790369482000-27-1	venta	\N	\N	2026-09-25 15:51:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13827	\N	activa	2026-10-06 07:28:08.096-05
+1857	V-001857	import-venta-1790369481000-48-1	venta	\N	\N	2026-09-25 15:51:21-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10232	\N	activa	2026-10-06 07:28:08.083-05
+1853	V-001853	import-venta-1790369478000-25-2	venta	\N	\N	2026-09-25 15:51:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta NP01-13824	\N	activa	2026-10-06 07:28:08.033-05
+1846	V-001846	import-venta-1790369465000-81-1	venta	\N	\N	2026-09-25 15:51:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10225	\N	activa	2026-10-06 07:28:07.925-05
+1843	V-001843	import-venta-1790369464000-80-1	venta	\N	\N	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.871-05
+1844	V-001844	import-venta-1790369464000-88-1	venta	\N	\N	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.885-05
+1845	V-001845	import-venta-1790369464000-77-1	venta	\N	\N	2026-09-25 15:51:04-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13818	\N	activa	2026-10-06 07:28:07.907-05
+2179	V-002179	import-venta-1790773527000-25-18	venta	\N	\N	2026-09-30 08:05:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta NP01-14206	\N	activa	2026-10-06 07:28:12.3-05
+2177	V-002177	import-venta-1790770774000-16-1	venta	\N	\N	2026-09-30 07:19:34-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-14203	\N	activa	2026-10-06 07:28:12.28-05
+1837	V-001837	import-venta-1790369051000-89-2	venta	\N	\N	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.797-05
+1838	V-001838	import-venta-1790369051000-93-2	venta	\N	\N	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.81-05
+1839	V-001839	import-venta-1790369051000-70-2	venta	\N	\N	2026-09-25 15:44:11-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta NP01-13804	\N	activa	2026-10-06 07:28:07.821-05
+1598	V-001598	import-venta-1790110663000-92-6	venta	\N	\N	2026-09-22 15:57:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13507	\N	activa	2026-10-06 07:28:04.483-05
+1836	D-001836	import-devolucion-1790368156000-92-6	devolucion	\N	\N	2026-09-25 15:29:16-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.786-05
+1599	V-001599	import-venta-1790110665000-14-1	venta	\N	\N	2026-09-22 15:57:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13509	\N	activa	2026-10-06 07:28:04.495-05
+1834	D-001834	import-devolucion-1790367967000-14-1	devolucion	\N	\N	2026-09-25 15:26:07-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN GALLINA 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:07.762-05
+1792	V-001792	import-venta-1790282440000-25-1	venta	\N	\N	2026-09-24 15:40:40-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13706	\N	activa	2026-10-06 07:28:07.215-05
+1833	V-001833	import-venta-1790287421000-100-1	venta	\N	\N	2026-09-24 17:03:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13771	\N	activa	2026-10-06 07:28:07.749-05
+1818	V-001818	import-venta-1790283047000-28-1	venta	\N	\N	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.553-05
+1819	V-001819	import-venta-1790283047000-89-1	venta	\N	\N	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.568-05
+1820	V-001820	import-venta-1790283047000-94-1	venta	\N	\N	2026-09-24 15:50:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13746	\N	activa	2026-10-06 07:28:07.582-05
+1817	V-001817	import-venta-1790283045000-29-1	venta	\N	\N	2026-09-24 15:50:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13745	\N	activa	2026-10-06 07:28:07.541-05
+1816	V-001816	import-venta-1790283044000-81-1	venta	\N	\N	2026-09-24 15:50:44-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10193	\N	activa	2026-10-06 07:28:07.527-05
+1811	V-001811	import-venta-1790283036000-87-12	venta	\N	\N	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.469-05
+1812	V-001812	import-venta-1790283036000-99-12	venta	\N	\N	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.483-05
+1813	V-001813	import-venta-1790283036000-100-12	venta	\N	\N	2026-09-24 15:50:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13739	\N	activa	2026-10-06 07:28:07.497-05
+1810	V-001810	import-venta-1790283030000-16-1	venta	\N	\N	2026-09-24 15:50:30-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13734	\N	activa	2026-10-06 07:28:07.457-05
+1809	V-001809	import-venta-1790283028000-99-12	venta	\N	\N	2026-09-24 15:50:28-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13732	\N	activa	2026-10-06 07:28:07.442-05
+1806	V-001806	import-venta-1790282705000-67-1	venta	\N	\N	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.397-05
+1807	V-001807	import-venta-1790282705000-70-1	venta	\N	\N	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.41-05
+1808	V-001808	import-venta-1790282705000-81-1	venta	\N	\N	2026-09-24 15:45:05-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13729	\N	activa	2026-10-06 07:28:07.426-05
+1805	V-001805	import-venta-1790282701000-79-1	venta	\N	\N	2026-09-24 15:45:01-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13725	\N	activa	2026-10-06 07:28:07.385-05
+1800	V-001800	import-venta-1790282689000-99-3	venta	\N	\N	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.32-05
+1801	V-001801	import-venta-1790282689000-46-2	venta	\N	\N	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.334-05
+1802	V-001802	import-venta-1790282689000-45-2	venta	\N	\N	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.347-05
+1803	V-001803	import-venta-1790282689000-80-0.25	venta	\N	\N	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.361-05
+1804	V-001804	import-venta-1790282689000-69-0.25	venta	\N	\N	2026-09-24 15:44:49-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta B001-7323	\N	activa	2026-10-06 07:28:07.373-05
+1315	V-001315	import-venta-1789764281000-48-1	venta	\N	\N	2026-09-18 15:44:41-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-9951	\N	activa	2026-10-06 07:27:59.894-05
+1796	V-001796	import-venta-1790282446000-16-1	venta	\N	\N	2026-09-24 15:40:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13711	\N	activa	2026-10-06 07:28:07.267-05
+1795	V-001795	import-venta-1790282444000-88-0.5	venta	\N	\N	2026-09-24 15:40:44-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13709	\N	activa	2026-10-06 07:28:07.253-05
+1793	V-001793	import-venta-1790282443000-70-0.5	venta	\N	\N	2026-09-24 15:40:43-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13708	\N	activa	2026-10-06 07:28:07.228-05
+1794	V-001794	import-venta-1790282443000-81-0.5	venta	\N	\N	2026-09-24 15:40:43-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13708	\N	activa	2026-10-06 07:28:07.241-05
+1790	V-001790	import-venta-1790281580000-99-2	venta	\N	\N	2026-09-24 15:26:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10181	\N	activa	2026-10-06 07:28:07.187-05
+1791	V-001791	import-venta-1790281580000-100-2	venta	\N	\N	2026-09-24 15:26:20-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 2.000000 por generacion de venta F001-10181	\N	activa	2026-10-06 07:28:07.201-05
+1785	V-001785	import-venta-1790281574000-99-12	venta	\N	\N	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.123-05
+1786	V-001786	import-venta-1790281574000-91-12	venta	\N	\N	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.137-05
+1787	V-001787	import-venta-1790281574000-87-6	venta	\N	\N	2026-09-24 15:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13698	\N	activa	2026-10-06 07:28:07.15-05
+1784	V-001784	import-venta-1790281572000-77-0.5	venta	\N	\N	2026-09-24 15:26:12-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13695	\N	activa	2026-10-06 07:28:07.11-05
+1783	V-001783	import-venta-1790281571000-25-18	venta	\N	\N	2026-09-24 15:26:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 18.000000 por generacion de venta F001-10180	\N	activa	2026-10-06 07:28:07.094-05
+1782	V-001782	import-venta-1790281569000-46-8	venta	\N	\N	2026-09-24 15:26:09-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13693	\N	activa	2026-10-06 07:28:07.081-05
+1781	V-001781	import-venta-1790281567000-89-1	venta	\N	\N	2026-09-24 15:26:07-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13692	\N	activa	2026-10-06 07:28:07.067-05
+1778	V-001778	import-venta-1790281564000-81-12	venta	\N	\N	2026-09-24 15:26:04-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 12.000000 por generacion de venta NP01-13690	\N	activa	2026-10-06 07:28:07.029-05
+1779	V-001779	import-venta-1790281564000-70-12	venta	\N	\N	2026-09-24 15:26:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 12.000000 por generacion de venta NP01-13690	\N	activa	2026-10-06 07:28:07.042-05
+1772	V-001772	import-venta-1790281560000-93-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.925-05
+1773	V-001773	import-venta-1790281560000-81-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.939-05
+1774	V-001774	import-venta-1790281560000-14-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.965-05
+1775	V-001775	import-venta-1790281560000-29-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:06.983-05
+1776	V-001776	import-venta-1790281560000-27-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:07.001-05
+1777	V-001777	import-venta-1790281560000-26-1	venta	\N	\N	2026-09-24 15:26:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7317	\N	activa	2026-10-06 07:28:07.016-05
+1769	V-001769	import-venta-1790281558000-20-1	venta	\N	\N	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX ABLANDA SAZON 11 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.886-05
+1770	V-001770	import-venta-1790281558000-46-1	venta	\N	\N	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.899-05
+1771	V-001771	import-venta-1790281558000-39-1	venta	\N	\N	2026-09-24 15:25:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13688	\N	activa	2026-10-06 07:28:06.912-05
+1760	V-001760	import-venta-1790281115000-28-1	venta	\N	\N	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13674	\N	activa	2026-10-06 07:28:06.775-05
+1761	V-001761	import-venta-1790281115000-14-1	venta	\N	\N	2026-09-24 15:18:35-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13674	\N	activa	2026-10-06 07:28:06.787-05
+1757	V-001757	import-venta-1790281112000-81-6	venta	\N	\N	2026-09-24 15:18:32-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13671	\N	activa	2026-10-06 07:28:06.737-05
+1758	V-001758	import-venta-1790281112000-70-6	venta	\N	\N	2026-09-24 15:18:32-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 6.000000 por generacion de venta NP01-13671	\N	activa	2026-10-06 07:28:06.75-05
+1545	V-001545	import-venta-1790024950000-77-1	venta	\N	\N	2026-09-21 16:09:10-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13411	\N	activa	2026-10-06 07:28:03.662-05
+1755	D-001755	import-devolucion-1790204025000-77-1	devolucion	\N	\N	2026-09-23 17:53:45-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PALILLO AMARILLITO ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:06.712-05
+1750	V-001750	import-venta-1790200645000-39-1	venta	\N	\N	2026-09-23 16:57:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13659	\N	activa	2026-10-06 07:28:06.652-05
+1751	V-001751	import-venta-1790200645000-29-1	venta	\N	\N	2026-09-23 16:57:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13659	\N	activa	2026-10-06 07:28:06.666-05
+1749	V-001749	import-venta-1790198432000-93-1	venta	\N	\N	2026-09-23 16:20:32-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13652	\N	activa	2026-10-06 07:28:06.641-05
+1748	V-001748	import-venta-1790197491000-67-1	venta	\N	\N	2026-09-23 16:04:51-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13643	\N	activa	2026-10-06 07:28:06.629-05
+1747	V-001747	import-venta-1790197490000-27-1	venta	\N	\N	2026-09-23 16:04:50-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13642	\N	activa	2026-10-06 07:28:06.617-05
+1743	V-001743	import-venta-1790197484000-25-1	venta	\N	\N	2026-09-23 16:04:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta F001-10160	\N	activa	2026-10-06 07:28:06.561-05
+1741	V-001741	import-venta-1790196743000-26-1	venta	\N	\N	2026-09-23 15:52:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7298	\N	activa	2026-10-06 07:28:06.53-05
+1742	V-001742	import-venta-1790196743000-16-1	venta	\N	\N	2026-09-23 15:52:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7298	\N	activa	2026-10-06 07:28:06.547-05
+1739	V-001739	import-venta-1790196741000-25-1	venta	\N	\N	2026-09-23 15:52:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13636	\N	activa	2026-10-06 07:28:06.499-05
+1740	V-001740	import-venta-1790196741000-96-3	venta	\N	\N	2026-09-23 15:52:21-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13636	\N	activa	2026-10-06 07:28:06.515-05
+1733	V-001733	import-venta-1790196727000-81-0.5	venta	\N	\N	2026-09-23 15:52:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10148	\N	activa	2026-10-06 07:28:06.403-05
+1732	V-001732	import-venta-1790196726000-70-1	venta	\N	\N	2026-09-23 15:52:06-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13629	\N	activa	2026-10-06 07:28:06.39-05
+1730	V-001730	import-venta-1790196724000-21-6	venta	\N	\N	2026-09-23 15:52:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7293	\N	activa	2026-10-06 07:28:06.364-05
+1731	V-001731	import-venta-1790196724000-29-1	venta	\N	\N	2026-09-23 15:52:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7293	\N	activa	2026-10-06 07:28:06.379-05
+1728	V-001728	import-venta-1790196440000-14-1	venta	\N	\N	2026-09-23 15:47:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13625	\N	activa	2026-10-06 07:28:06.338-05
+1727	V-001727	import-venta-1790196439000-70-0.5	venta	\N	\N	2026-09-23 15:47:19-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10143	\N	activa	2026-10-06 07:28:06.324-05
+1725	V-001725	import-venta-1790196436000-16-1	venta	\N	\N	2026-09-23 15:47:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13623	\N	activa	2026-10-06 07:28:06.295-05
+1726	V-001726	import-venta-1790196436000-46-8	venta	\N	\N	2026-09-23 15:47:16-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 8.000000 por generacion de venta NP01-13623	\N	activa	2026-10-06 07:28:06.31-05
+1724	V-001724	import-venta-1790196434000-27-1	venta	\N	\N	2026-09-23 15:47:14-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13622	\N	activa	2026-10-06 07:28:06.282-05
+1722	V-001722	import-venta-1790196433000-67-1	venta	\N	\N	2026-09-23 15:47:13-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13621	\N	activa	2026-10-06 07:28:06.256-05
+1723	V-001723	import-venta-1790196433000-76-1	venta	\N	\N	2026-09-23 15:47:13-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13621	\N	activa	2026-10-06 07:28:06.268-05
+1721	V-001721	import-venta-1790196427000-21-6	venta	\N	\N	2026-09-23 15:47:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13616	\N	activa	2026-10-06 07:28:06.243-05
+1720	V-001720	import-venta-1790196424000-67-1	venta	\N	\N	2026-09-23 15:47:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13614	\N	activa	2026-10-06 07:28:06.229-05
+1717	V-001717	import-venta-1790196422000-93-1	venta	\N	\N	2026-09-23 15:47:02-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13613	\N	activa	2026-10-06 07:28:06.188-05
+1718	V-001718	import-venta-1790196422000-67-1	venta	\N	\N	2026-09-23 15:47:02-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13613	\N	activa	2026-10-06 07:28:06.201-05
+1716	V-001716	import-venta-1790196420000-70-0.5	venta	\N	\N	2026-09-23 15:47:00-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13612	\N	activa	2026-10-06 07:28:06.175-05
+1715	V-001715	import-venta-1790196419000-15-1	venta	\N	\N	2026-09-23 15:46:59-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13611	\N	activa	2026-10-06 07:28:06.162-05
+1714	V-001714	import-venta-1790195808000-29-1	venta	\N	\N	2026-09-23 15:36:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13605	\N	activa	2026-10-06 07:28:06.147-05
+1713	V-001713	import-venta-1790195807000-87-3	venta	\N	\N	2026-09-23 15:36:47-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13604	\N	activa	2026-10-06 07:28:06.134-05
+1316	V-001316	import-venta-1789764282000-25-1	venta	\N	\N	2026-09-18 15:44:42-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta B001-7152	\N	activa	2026-10-06 07:27:59.913-05
+1317	V-001317	import-venta-1789764284000-16-1	venta	\N	\N	2026-09-18 15:44:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9952	\N	activa	2026-10-06 07:27:59.933-05
+1712	V-001712	import-venta-1790195806000-28-2	venta	\N	\N	2026-09-23 15:36:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13603	\N	activa	2026-10-06 07:28:06.121-05
+1710	V-001710	import-venta-1790195802000-87-12	venta	\N	\N	2026-09-23 15:36:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13600	\N	activa	2026-10-06 07:28:06.091-05
+1711	V-001711	import-venta-1790195802000-92-12	venta	\N	\N	2026-09-23 15:36:42-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13600	\N	activa	2026-10-06 07:28:06.103-05
+1708	V-001708	import-venta-1790195801000-89-1	venta	\N	\N	2026-09-23 15:36:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10135	\N	activa	2026-10-06 07:28:06.062-05
+1709	V-001709	import-venta-1790195801000-22-1	venta	\N	\N	2026-09-23 15:36:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CHIFA 12 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X48 TIRA(S) por la cantidad de 1.000000 por generacion de venta F001-10135	\N	activa	2026-10-06 07:28:06.077-05
+1707	V-001707	import-venta-1790195795000-79-1	venta	\N	\N	2026-09-23 15:36:35-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13595	\N	activa	2026-10-06 07:28:06.038-05
+1706	V-001706	import-venta-1790195791000-16-1	venta	\N	\N	2026-09-23 15:36:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7291	\N	activa	2026-10-06 07:28:06.023-05
+1705	V-001705	import-venta-1790195790000-89-0.5	venta	\N	\N	2026-09-23 15:36:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13590	\N	activa	2026-10-06 07:28:06.001-05
+1703	V-001703	import-venta-1790195788000-93-0.5	venta	\N	\N	2026-09-23 15:36:28-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13588	\N	activa	2026-10-06 07:28:05.976-05
+1704	V-001704	import-venta-1790195788000-89-0.5	venta	\N	\N	2026-09-23 15:36:28-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13588	\N	activa	2026-10-06 07:28:05.989-05
+1701	V-001701	import-venta-1790195782000-93-1	venta	\N	\N	2026-09-23 15:36:22-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13582	\N	activa	2026-10-06 07:28:05.951-05
+1702	V-001702	import-venta-1790195782000-28-1	venta	\N	\N	2026-09-23 15:36:22-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13582	\N	activa	2026-10-06 07:28:05.964-05
+1697	V-001697	import-venta-1790194891000-89-1	venta	\N	\N	2026-09-23 15:21:31-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13579	\N	activa	2026-10-06 07:28:05.899-05
+1698	V-001698	import-venta-1790194891000-28-1	venta	\N	\N	2026-09-23 15:21:31-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13579	\N	activa	2026-10-06 07:28:05.912-05
+1692	V-001692	import-venta-1790194889000-14-1	venta	\N	\N	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.837-05
+1693	V-001693	import-venta-1790194889000-15-1	venta	\N	\N	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.849-05
+1694	V-001694	import-venta-1790194889000-16-1	venta	\N	\N	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.86-05
+1695	V-001695	import-venta-1790194889000-89-1	venta	\N	\N	2026-09-23 15:21:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13577	\N	activa	2026-10-06 07:28:05.873-05
+1691	V-001691	import-venta-1790194887000-15-1	venta	\N	\N	2026-09-23 15:21:27-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7290	\N	activa	2026-10-06 07:28:05.825-05
+1690	V-001690	import-venta-1790194886000-26-1	venta	\N	\N	2026-09-23 15:21:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10132	\N	activa	2026-10-06 07:28:05.813-05
+1689	V-001689	import-venta-1790194885000-16-1	venta	\N	\N	2026-09-23 15:21:25-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13576	\N	activa	2026-10-06 07:28:05.8-05
+1687	V-001687	import-venta-1790194880000-16-1	venta	\N	\N	2026-09-23 15:21:20-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7287	\N	activa	2026-10-06 07:28:05.776-05
+1686	V-001686	import-venta-1790194878000-67-1	venta	\N	\N	2026-09-23 15:21:18-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10130	\N	activa	2026-10-06 07:28:05.764-05
+1683	V-001683	import-venta-1790194874000-81-1	venta	\N	\N	2026-09-23 15:21:14-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7284	\N	activa	2026-10-06 07:28:05.727-05
+1678	V-001678	import-venta-1790194873000-15-1	venta	\N	\N	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.65-05
+1679	V-001679	import-venta-1790194873000-14-1	venta	\N	\N	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.667-05
+1680	V-001680	import-venta-1790194873000-16-1	venta	\N	\N	2026-09-23 15:21:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7283	\N	activa	2026-10-06 07:28:05.684-05
+1676	V-001676	import-venta-1790194872000-92-3	venta	\N	\N	2026-09-23 15:21:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13569	\N	activa	2026-10-06 07:28:05.621-05
+1677	V-001677	import-venta-1790194872000-16-1	venta	\N	\N	2026-09-23 15:21:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13569	\N	activa	2026-10-06 07:28:05.634-05
+1674	V-001674	import-venta-1790194868000-67-1	venta	\N	\N	2026-09-23 15:21:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7282	\N	activa	2026-10-06 07:28:05.592-05
+1673	V-001673	import-venta-1790194863000-80-1	venta	\N	\N	2026-09-23 15:21:03-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13562	\N	activa	2026-10-06 07:28:05.577-05
+1672	V-001672	import-venta-1790194861000-89-0.5	venta	\N	\N	2026-09-23 15:21:01-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13560	\N	activa	2026-10-06 07:28:05.564-05
+1663	V-001663	import-venta-1790121147000-91-3	venta	\N	\N	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.447-05
+1664	V-001664	import-venta-1790121147000-96-3	venta	\N	\N	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.46-05
+1665	V-001665	import-venta-1790121147000-55-1	venta	\N	\N	2026-09-22 18:52:27-05	0.00	0.00	0.00	0.00	Salida de KETCHUP RICASA CAJA X250 SACHET POR 8 GR por la cantidad de 1.000000 por generacion de venta NP01-13552	\N	activa	2026-10-06 07:28:05.474-05
+1661	V-001661	import-venta-1790119012000-80-0.25	venta	\N	\N	2026-09-22 18:16:52-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13551	\N	activa	2026-10-06 07:28:05.422-05
+1662	V-001662	import-venta-1790119012000-69-0.25	venta	\N	\N	2026-09-22 18:16:52-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13551	\N	activa	2026-10-06 07:28:05.434-05
+1655	V-001655	import-venta-1790118660000-80-0.5	venta	\N	\N	2026-09-22 18:11:00-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10113	\N	activa	2026-10-06 07:28:05.347-05
+1656	V-001656	import-venta-1790118660000-69-0.5	venta	\N	\N	2026-09-22 18:11:00-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10113	\N	activa	2026-10-06 07:28:05.361-05
+1652	V-001652	import-venta-1790118658000-25-2	venta	\N	\N	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.309-05
+1653	V-001653	import-venta-1790118658000-69-0.5	venta	\N	\N	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.500000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.321-05
+1654	V-001654	import-venta-1790118658000-80-1	venta	\N	\N	2026-09-22 18:10:58-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10111	\N	activa	2026-10-06 07:28:05.335-05
+1646	V-001646	import-venta-1790118654000-80-1	venta	\N	\N	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.198-05
+1647	V-001647	import-venta-1790118654000-69-1	venta	\N	\N	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.231-05
+1648	V-001648	import-venta-1790118654000-103-6	venta	\N	\N	2026-09-22 18:10:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta F001-10108	\N	activa	2026-10-06 07:28:05.255-05
+1645	V-001645	import-venta-1790118653000-25-1	venta	\N	\N	2026-09-22 18:10:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13544	\N	activa	2026-10-06 07:28:05.164-05
+1641	V-001641	import-venta-1790118583000-96-1	venta	\N	\N	2026-09-22 18:09:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13543	\N	activa	2026-10-06 07:28:05.093-05
+1633	V-001633	import-venta-1790118164000-91-6	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.957-05
+1634	V-001634	import-venta-1790118164000-89-1	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.969-05
+1636	V-001636	import-venta-1790118164000-76-1	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:04.994-05
+1637	V-001637	import-venta-1790118164000-69-1	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.004-05
+1639	V-001639	import-venta-1790118164000-80-1	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.035-05
+1640	V-001640	import-venta-1790118164000-20-1	venta	\N	\N	2026-09-22 18:02:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13541	\N	activa	2026-10-06 07:28:05.065-05
+1626	V-001626	import-venta-1790118153000-89-1	venta	\N	\N	2026-09-22 18:02:33-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13532	\N	activa	2026-10-06 07:28:04.854-05
+1627	V-001627	import-venta-1790118153000-93-1	venta	\N	\N	2026-09-22 18:02:33-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13532	\N	activa	2026-10-06 07:28:04.868-05
+1625	V-001625	import-venta-1790114505000-14-1	venta	\N	\N	2026-09-22 17:01:45-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13523	\N	activa	2026-10-06 07:28:04.839-05
+1622	V-001622	import-venta-1790114503000-89-1	venta	\N	\N	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.798-05
+1623	V-001623	import-venta-1790114503000-87-1	venta	\N	\N	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.812-05
+1624	V-001624	import-venta-1790114503000-28-1	venta	\N	\N	2026-09-22 17:01:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10092	\N	activa	2026-10-06 07:28:04.825-05
+1621	V-001621	import-venta-1790114501000-15-1	venta	\N	\N	2026-09-22 17:01:41-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13521	\N	activa	2026-10-06 07:28:04.784-05
+1619	V-001619	import-venta-1790114498000-89-1	venta	\N	\N	2026-09-22 17:01:38-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13518	\N	activa	2026-10-06 07:28:04.759-05
+1617	V-001617	import-venta-1790114496000-101-3	venta	\N	\N	2026-09-22 17:01:36-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13517	\N	activa	2026-10-06 07:28:04.731-05
+1618	V-001618	import-venta-1790114496000-14-1	venta	\N	\N	2026-09-22 17:01:36-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13517	\N	activa	2026-10-06 07:28:04.745-05
+1613	V-001613	import-venta-1790114492000-96-12	venta	\N	\N	2026-09-22 17:01:32-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta F001-10091	\N	activa	2026-10-06 07:28:04.677-05
+1610	V-001610	import-venta-1790114486000-80-1	venta	\N	\N	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.64-05
+1608	V-001608	import-venta-1790114486000-26-1	venta	\N	\N	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.613-05
+1609	V-001609	import-venta-1790114486000-28-1	venta	\N	\N	2026-09-22 17:01:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7267	\N	activa	2026-10-06 07:28:04.626-05
+1606	V-001606	import-venta-1790114484000-27-1	venta	\N	\N	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13514	\N	activa	2026-10-06 07:28:04.585-05
+1607	V-001607	import-venta-1790114484000-76-1	venta	\N	\N	2026-09-22 17:01:24-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13514	\N	activa	2026-10-06 07:28:04.599-05
+1600	V-001600	import-venta-1790110667000-93-1	venta	\N	\N	2026-09-22 15:57:47-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10084	\N	activa	2026-10-06 07:28:04.507-05
+1597	V-001597	import-venta-1790110658000-48-1	venta	\N	\N	2026-09-22 15:57:38-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta F001-10081	\N	activa	2026-10-06 07:28:04.472-05
+1595	V-001595	import-venta-1790110655000-81-0.5	venta	\N	\N	2026-09-22 15:57:35-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10079	\N	activa	2026-10-06 07:28:04.446-05
+1591	V-001591	import-venta-1790109629000-81-1	venta	\N	\N	2026-09-22 15:40:29-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10071	\N	activa	2026-10-06 07:28:04.389-05
+1586	V-001586	import-venta-1790109616000-29-1	venta	\N	\N	2026-09-22 15:40:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13490	\N	activa	2026-10-06 07:28:04.305-05
+1587	V-001587	import-venta-1790109616000-28-1	venta	\N	\N	2026-09-22 15:40:16-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13490	\N	activa	2026-10-06 07:28:04.321-05
+1583	V-001583	import-venta-1790109613000-94-1	venta	\N	\N	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.251-05
+1584	V-001584	import-venta-1790109613000-89-1	venta	\N	\N	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.269-05
+1585	V-001585	import-venta-1790109613000-97-1	venta	\N	\N	2026-09-22 15:40:13-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13487	\N	activa	2026-10-06 07:28:04.287-05
+1582	V-001582	import-venta-1790109612000-67-1	venta	\N	\N	2026-09-22 15:40:12-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13486	\N	activa	2026-10-06 07:28:04.234-05
+1581	V-001581	import-venta-1790109611000-31-1	venta	\N	\N	2026-09-22 15:40:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13485	\N	activa	2026-10-06 07:28:04.211-05
+1579	V-001579	import-venta-1790109610000-89-1	venta	\N	\N	2026-09-22 15:40:10-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13484	\N	activa	2026-10-06 07:28:04.178-05
+1580	V-001580	import-venta-1790109610000-14-1	venta	\N	\N	2026-09-22 15:40:10-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13484	\N	activa	2026-10-06 07:28:04.194-05
+1578	V-001578	import-venta-1790109608000-46-4	venta	\N	\N	2026-09-22 15:40:08-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 4.000000 por generacion de venta B001-7256	\N	activa	2026-10-06 07:28:04.161-05
+1577	V-001577	import-venta-1790109604000-29-1	venta	\N	\N	2026-09-22 15:40:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7255	\N	activa	2026-10-06 07:28:04.139-05
+1574	V-001574	import-venta-1790108932000-25-3	venta	\N	\N	2026-09-22 15:28:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13471	\N	activa	2026-10-06 07:28:04.086-05
+1571	V-001571	import-venta-1790108878000-25-1	venta	\N	\N	2026-09-22 15:27:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13461	\N	activa	2026-10-06 07:28:04.045-05
+1572	V-001572	import-venta-1790108878000-93-1	venta	\N	\N	2026-09-22 15:27:58-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13461	\N	activa	2026-10-06 07:28:04.059-05
+1570	D-001570	import-devolucion-1790106441000-88-0.5	devolucion	\N	\N	2026-09-22 14:47:21-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE ECON X84 SOB 9.5 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.033-05
+1561	V-001561	import-venta-1790026631000-26-1	venta	\N	\N	2026-09-21 16:37:11-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13442	\N	activa	2026-10-06 07:28:03.922-05
+1559	V-001559	import-venta-1790026629000-46-2	venta	\N	\N	2026-09-21 16:37:09-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13441	\N	activa	2026-10-06 07:28:03.886-05
+1560	V-001560	import-venta-1790026629000-29-6	venta	\N	\N	2026-09-21 16:37:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 6.000000 por generacion de venta NP01-13441	\N	activa	2026-10-06 07:28:03.903-05
+1555	V-001555	import-venta-1790026620000-89-1	venta	\N	\N	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.818-05
+1556	V-001556	import-venta-1790026620000-92-6	venta	\N	\N	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.833-05
+1557	V-001557	import-venta-1790026620000-87-6	venta	\N	\N	2026-09-21 16:37:00-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13434	\N	activa	2026-10-06 07:28:03.852-05
+1547	V-001547	import-venta-1790024952000-39-1	venta	\N	\N	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.691-05
+1548	V-001548	import-venta-1790024952000-29-1	venta	\N	\N	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.707-05
+1549	V-001549	import-venta-1790024952000-23-6	venta	\N	\N	2026-09-21 16:09:12-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7240	\N	activa	2026-10-06 07:28:03.725-05
+1546	V-001546	import-venta-1790024951000-89-1	venta	\N	\N	2026-09-21 16:09:11-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta B001-7239	\N	activa	2026-10-06 07:28:03.677-05
+1541	V-001541	import-venta-1790023850000-80-0.25	venta	\N	\N	2026-09-21 15:50:50-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta NP01-13404	\N	activa	2026-10-06 07:28:03.601-05
+1542	V-001542	import-venta-1790023850000-94-1	venta	\N	\N	2026-09-21 15:50:50-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13404	\N	activa	2026-10-06 07:28:03.62-05
+1538	V-001538	import-venta-1790023836000-70-1	venta	\N	\N	2026-09-21 15:50:36-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7228	\N	activa	2026-10-06 07:28:03.551-05
+1537	V-001537	import-venta-1790023830000-39-1	venta	\N	\N	2026-09-21 15:50:30-05	0.00	0.00	0.00	0.00	Salida de GMS MAX SABOR 1 KG/SACO X25 UND por la cantidad de 1.000000 por generacion de venta NP01-13394	\N	activa	2026-10-06 07:28:03.538-05
+1532	V-001532	import-venta-1790023826000-101-6	venta	\N	\N	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.476-05
+1533	V-001533	import-venta-1790023826000-103-6	venta	\N	\N	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.489-05
+1534	V-001534	import-venta-1790023826000-29-4	venta	\N	\N	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 4.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.502-05
+1535	V-001535	import-venta-1790023826000-28-1	venta	\N	\N	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.515-05
+1536	V-001536	import-venta-1790023826000-89-1	venta	\N	\N	2026-09-21 15:50:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13392	\N	activa	2026-10-06 07:28:03.527-05
+1529	V-001529	import-venta-1790023824000-27-1	venta	\N	\N	2026-09-21 15:50:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7226	\N	activa	2026-10-06 07:28:03.427-05
+1530	V-001530	import-venta-1790023824000-26-1	venta	\N	\N	2026-09-21 15:50:24-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7226	\N	activa	2026-10-06 07:28:03.447-05
+1528	V-001528	import-venta-1790023823000-14-1	venta	\N	\N	2026-09-21 15:50:23-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13390	\N	activa	2026-10-06 07:28:03.409-05
+1524	V-001524	import-venta-1790023250000-79-1	venta	\N	\N	2026-09-21 15:40:50-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7221	\N	activa	2026-10-06 07:28:03.34-05
+1523	V-001523	import-venta-1790023247000-29-1	venta	\N	\N	2026-09-21 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13382	\N	activa	2026-10-06 07:28:03.325-05
+1522	V-001522	import-venta-1790023247000-39-1	venta	\N	\N	2026-09-21 15:40:47-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13382	\N	activa	2026-10-06 07:28:03.31-05
+1520	V-001520	import-venta-1790023244000-16-1	venta	\N	\N	2026-09-21 15:40:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13380	\N	activa	2026-10-06 07:28:03.277-05
+1521	V-001521	import-venta-1790023244000-15-1	venta	\N	\N	2026-09-21 15:40:44-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13380	\N	activa	2026-10-06 07:28:03.294-05
+1519	V-001519	import-venta-1790023243000-16-1	venta	\N	\N	2026-09-21 15:40:43-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10043	\N	activa	2026-10-06 07:28:03.261-05
+1518	V-001518	import-venta-1790023241000-87-12	venta	\N	\N	2026-09-21 15:40:41-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta B001-7218	\N	activa	2026-10-06 07:28:03.247-05
+1516	V-001516	import-venta-1790023238000-14-1	venta	\N	\N	2026-09-21 15:40:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13379	\N	activa	2026-10-06 07:28:03.215-05
+1517	V-001517	import-venta-1790023238000-16-1	venta	\N	\N	2026-09-21 15:40:38-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13379	\N	activa	2026-10-06 07:28:03.233-05
+1513	V-001513	import-venta-1790023233000-16-1	venta	\N	\N	2026-09-21 15:40:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13376	\N	activa	2026-10-06 07:28:03.151-05
+1512	V-001512	import-venta-1790023229000-99-3	venta	\N	\N	2026-09-21 15:40:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13374	\N	activa	2026-10-06 07:28:03.135-05
+1511	V-001511	import-venta-1790022838000-25-3	venta	\N	\N	2026-09-21 15:33:58-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta NP01-13369	\N	activa	2026-10-06 07:28:03.117-05
+1507	V-001507	import-venta-1790022774000-48-1	venta	\N	\N	2026-09-21 15:32:54-05	0.00	0.00	0.00	0.00	Salida de GLUTAMATO MONOSÓDICO NAKAMITO A GRANEL SACO X25 KILOS por la cantidad de 1.000000 por generacion de venta NP01-13358	\N	activa	2026-10-06 07:28:03.052-05
+1505	V-001505	import-venta-1790021908000-26-1	venta	\N	\N	2026-09-21 15:18:28-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-10037	\N	activa	2026-10-06 07:28:03.017-05
+1504	V-001504	import-venta-1790021906000-16-1	venta	\N	\N	2026-09-21 15:18:26-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13352	\N	activa	2026-10-06 07:28:03-05
+1501	V-001501	import-venta-1790021902000-87-6	venta	\N	\N	2026-09-21 15:18:22-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 6.000000 por generacion de venta F001-10035	\N	activa	2026-10-06 07:28:02.95-05
+1498	V-001498	import-venta-1790021901000-79-1	venta	\N	\N	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.905-05
+1499	V-001499	import-venta-1790021901000-29-1	venta	\N	\N	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.921-05
+1500	V-001500	import-venta-1790021901000-27-1	venta	\N	\N	2026-09-21 15:18:21-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13347	\N	activa	2026-10-06 07:28:02.936-05
+1497	V-001497	import-venta-1790021898000-28-1	venta	\N	\N	2026-09-21 15:18:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13343	\N	activa	2026-10-06 07:28:02.89-05
+1495	V-001495	import-venta-1790021895000-69-1	venta	\N	\N	2026-09-21 15:18:15-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7206	\N	activa	2026-10-06 07:28:02.858-05
+1496	V-001496	import-venta-1790021895000-79-1	venta	\N	\N	2026-09-21 15:18:15-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta B001-7206	\N	activa	2026-10-06 07:28:02.874-05
+1492	V-001492	import-venta-1790021888000-18-6	venta	\N	\N	2026-09-21 15:18:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta F001-10032	\N	activa	2026-10-06 07:28:02.812-05
+1488	V-001488	import-venta-1790021884000-23-6	venta	\N	\N	2026-09-21 15:18:04-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta B001-7202	\N	activa	2026-10-06 07:28:02.749-05
+1487	V-001487	import-venta-1790021882000-15-1	venta	\N	\N	2026-09-21 15:18:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7200	\N	activa	2026-10-06 07:28:02.731-05
+1484	V-001484	import-venta-1790008186000-18-6	venta	\N	\N	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.682-05
+1485	V-001485	import-venta-1790008186000-15-1	venta	\N	\N	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.698-05
+1486	V-001486	import-venta-1790008186000-16-1	venta	\N	\N	2026-09-21 11:29:46-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13335	\N	activa	2026-10-06 07:28:02.715-05
+1483	D-001483	import-devolucion-1789866302000-81-1	devolucion	\N	\N	2026-09-19 20:05:02-05	0.00	0.00	0.00	0.00	INGRESO DE SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:02.668-05
+1482	D-001482	import-devolucion-1789866258000-89-1	devolucion	\N	\N	2026-09-19 20:04:18-05	0.00	0.00	0.00	0.00	INGRESO DE SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:02.652-05
+1481	V-001481	import-venta-1789854607000-91-1	venta	\N	\N	2026-09-19 16:50:07-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13332	\N	activa	2026-10-06 07:28:02.636-05
+1477	V-001477	import-venta-1789854114000-29-1	venta	\N	\N	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 500 ML X6 UND/CAJA X4 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.582-05
+1479	V-001479	import-venta-1789854114000-19-6	venta	\N	\N	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO POLLO 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.604-05
+1480	V-001480	import-venta-1789854114000-18-6	venta	\N	\N	2026-09-19 16:41:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13331	\N	activa	2026-10-06 07:28:02.619-05
+1475	V-001475	import-venta-1789853838000-26-1	venta	\N	\N	2026-09-19 16:37:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13329	\N	activa	2026-10-06 07:28:02.552-05
+1476	V-001476	import-venta-1789853838000-31-1	venta	\N	\N	2026-09-19 16:37:18-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 500 GR/SACO X30 UND por la cantidad de 1.000000 por generacion de venta NP01-13329	\N	activa	2026-10-06 07:28:02.566-05
+1473	V-001473	import-venta-1789853837000-89-1	venta	\N	\N	2026-09-19 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13328	\N	activa	2026-10-06 07:28:02.523-05
+1474	V-001474	import-venta-1789853837000-94-1	venta	\N	\N	2026-09-19 16:37:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta NP01-13328	\N	activa	2026-10-06 07:28:02.537-05
+1472	V-001472	import-venta-1789852981000-29-1	venta	\N	\N	2026-09-19 16:23:01-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7198	\N	activa	2026-10-06 07:28:02.508-05
+1463	V-001463	import-venta-1789852970000-81-2	venta	\N	\N	2026-09-19 16:22:50-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 2.000000 por generacion de venta F001-10025	\N	activa	2026-10-06 07:28:02.365-05
+1459	V-001459	import-venta-1789851526000-80-1	venta	\N	\N	2026-09-19 15:58:46-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 1.000000 por generacion de venta NP01-13290	\N	activa	2026-10-06 07:28:02.303-05
+1457	V-001457	import-venta-1789851084000-81-1	venta	\N	\N	2026-09-19 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13279	\N	activa	2026-10-06 07:28:02.275-05
+1458	V-001458	import-venta-1789851084000-70-1	venta	\N	\N	2026-09-19 15:51:24-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13279	\N	activa	2026-10-06 07:28:02.289-05
+1321	V-001321	import-venta-1789764288000-25-1	venta	\N	\N	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 1.000000 por generacion de venta NP01-13195	\N	activa	2026-10-06 07:28:00.016-05
+1456	V-001456	import-venta-1789851081000-76-1	venta	\N	\N	2026-09-19 15:51:21-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10016	\N	activa	2026-10-06 07:28:02.26-05
+1455	V-001455	import-venta-1789851080000-93-1	venta	\N	\N	2026-09-19 15:51:20-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13277	\N	activa	2026-10-06 07:28:02.245-05
+1450	V-001450	import-venta-1789851078000-81-1	venta	\N	\N	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.169-05
+1451	V-001451	import-venta-1789851078000-70-1	venta	\N	\N	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.184-05
+1452	V-001452	import-venta-1789851078000-89-1	venta	\N	\N	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.199-05
+1453	V-001453	import-venta-1789851078000-79-1	venta	\N	\N	2026-09-19 15:51:18-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta F001-10015	\N	activa	2026-10-06 07:28:02.214-05
+1448	V-001448	import-venta-1789851076000-93-0.5	venta	\N	\N	2026-09-19 15:51:16-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13276	\N	activa	2026-10-06 07:28:02.14-05
+1449	V-001449	import-venta-1789851076000-70-0.5	venta	\N	\N	2026-09-19 15:51:16-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13276	\N	activa	2026-10-06 07:28:02.155-05
+1447	V-001447	import-venta-1789851073000-25-3	venta	\N	\N	2026-09-19 15:51:13-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 3.000000 por generacion de venta F001-10012	\N	activa	2026-10-06 07:28:02.125-05
+1446	V-001446	import-venta-1789851069000-25-4	venta	\N	\N	2026-09-19 15:51:09-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13271	\N	activa	2026-10-06 07:28:02.11-05
+1442	V-001442	import-venta-1789851067000-16-1	venta	\N	\N	2026-09-19 15:51:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-10010	\N	activa	2026-10-06 07:28:02.051-05
+1441	V-001441	import-venta-1789849508000-67-1	venta	\N	\N	2026-09-19 15:25:08-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO CON PIMIENTA ECON X66 SOB 5 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13268	\N	activa	2026-10-06 07:28:02.035-05
+1439	V-001439	import-venta-1789849507000-81-0.5	venta	\N	\N	2026-09-19 15:25:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta F001-10009	\N	activa	2026-10-06 07:28:02.002-05
+1440	V-001440	import-venta-1789849507000-79-0.5	venta	\N	\N	2026-09-19 15:25:07-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 0.500000 por generacion de venta F001-10009	\N	activa	2026-10-06 07:28:02.018-05
+1431	V-001431	import-venta-1789849500000-29-1	venta	\N	\N	2026-09-19 15:25:00-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13266	\N	activa	2026-10-06 07:28:01.881-05
+1429	V-001429	import-venta-1789849499000-81-1	venta	\N	\N	2026-09-19 15:24:59-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7187	\N	activa	2026-10-06 07:28:01.84-05
+1430	V-001430	import-venta-1789849499000-70-1	venta	\N	\N	2026-09-19 15:24:59-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7187	\N	activa	2026-10-06 07:28:01.867-05
+1427	V-001427	import-venta-1789849494000-29-1	venta	\N	\N	2026-09-19 15:24:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13264	\N	activa	2026-10-06 07:28:01.779-05
+1428	V-001428	import-venta-1789849494000-16-1	venta	\N	\N	2026-09-19 15:24:54-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13264	\N	activa	2026-10-06 07:28:01.81-05
+1422	V-001422	import-venta-1789849487000-81-1	venta	\N	\N	2026-09-19 15:24:47-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13257	\N	activa	2026-10-06 07:28:01.693-05
+1423	V-001423	import-venta-1789849487000-70-1	venta	\N	\N	2026-09-19 15:24:47-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13257	\N	activa	2026-10-06 07:28:01.709-05
+1418	V-001418	import-venta-1789849484000-80-0.25	venta	\N	\N	2026-09-19 15:24:44-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-10006	\N	activa	2026-10-06 07:28:01.627-05
+1416	V-001416	import-venta-1789848859000-19-1	venta	\N	\N	2026-09-19 15:14:19-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 9 GR X60 SOBRES (S/ 0.30)/SACO X22 PAQUETES por la cantidad de 1.000000 por generacion de venta B001-7180	\N	activa	2026-10-06 07:28:01.595-05
+1415	V-001415	import-venta-1789848857000-93-1	venta	\N	\N	2026-09-19 15:14:17-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13253	\N	activa	2026-10-06 07:28:01.576-05
+1406	V-001406	import-venta-1789848853000-89-0.5	venta	\N	\N	2026-09-19 15:14:13-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta NP01-13249	\N	activa	2026-10-06 07:28:01.428-05
+1403	V-001403	import-venta-1789848852000-46-2	venta	\N	\N	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 2.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.382-05
+1404	V-001404	import-venta-1789848852000-45-3	venta	\N	\N	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de DOÑA GUSTA CARNE 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) por la cantidad de 3.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.398-05
+1405	V-001405	import-venta-1789848852000-87-3	venta	\N	\N	2026-09-19 15:14:12-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13248	\N	activa	2026-10-06 07:28:01.413-05
+1398	V-001398	import-venta-1789848847000-80-0.5	venta	\N	\N	2026-09-19 15:14:07-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13247	\N	activa	2026-10-06 07:28:01.289-05
+2460	V-002460	import-venta-1791034857000-39-1	venta	\N	\N	2026-10-03 08:40:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-14561	\N	activa	2026-10-06 07:28:16.109-05
+1392	V-001392	import-venta-1789848452000-79-1	venta	\N	\N	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SIB PALILLO AMARILLITO GIG X42 SOB 32.4 GR/PAQUETE X12 DIPLAY por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.208-05
+1393	V-001393	import-venta-1789848452000-92-1	venta	\N	\N	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN ECON X84 SOB 8.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.219-05
+1394	V-001394	import-venta-1789848452000-97-1	venta	\N	\N	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.23-05
+1395	V-001395	import-venta-1789848452000-20-1	venta	\N	\N	2026-09-19 15:07:32-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 250 GR X5 SOBRES/SACO X12 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13241	\N	activa	2026-10-06 07:28:01.242-05
+1389	V-001389	import-venta-1789848450000-80-0.25	venta	\N	\N	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de PIMIENTA MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.168-05
+1390	V-001390	import-venta-1789848450000-89-0.5	venta	\N	\N	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 0.500000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.181-05
+1391	V-001391	import-venta-1789848450000-69-0.25	venta	\N	\N	2026-09-19 15:07:30-05	0.00	0.00	0.00	0.00	Salida de COMINO MOLIDO A GRANEL por la cantidad de 0.250000 por generacion de venta F001-9997	\N	activa	2026-10-06 07:28:01.194-05
+1382	V-001382	import-venta-1789848446000-79-1	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO GIG X50 SOB 7 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.085-05
+1383	V-001383	import-venta-1789848446000-89-1	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 125 ML X12 UND/PLANCHA X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.098-05
+1384	V-001384	import-venta-1789848446000-103-12	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO TINTO BOT 600 ML/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.109-05
+1385	V-001385	import-venta-1789848446000-94-1	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.12-05
+1386	V-001386	import-venta-1789848446000-101-12	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VENTURO BLANCO BOT 600 ML/CAJA X12 UND por la cantidad de 12.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.133-05
+1387	V-001387	import-venta-1789848446000-81-1	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB PIMIENTA GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.144-05
+1388	V-001388	import-venta-1789848446000-70-1	venta	\N	\N	2026-09-19 15:07:26-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7170	\N	activa	2026-10-06 07:28:01.156-05
+1381	V-001381	import-venta-1789848437000-94-1	venta	\N	\N	2026-09-19 15:07:17-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 125 ML X12 UND/PLANCH X4 PAQ por la cantidad de 1.000000 por generacion de venta B001-7167	\N	activa	2026-10-06 07:28:01.075-05
+1377	V-001377	import-venta-1789848430000-87-12	venta	\N	\N	2026-09-19 15:07:10-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13229	\N	activa	2026-10-06 07:28:01.023-05
+1378	V-001378	import-venta-1789848431000-92-12	venta	\N	\N	2026-09-19 15:07:11-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13229	\N	activa	2026-10-06 07:28:01.037-05
+1369	V-001369	import-venta-1789848423000-99-24	venta	\N	\N	2026-09-19 15:07:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE BL BOT 1 LT/PAQUETE X12 UND por la cantidad de 24.000000 por generacion de venta F001-9992	\N	activa	2026-10-06 07:28:00.907-05
+1370	V-001370	import-venta-1789848423000-100-12	venta	\N	\N	2026-09-19 15:07:03-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-9992	\N	activa	2026-10-06 07:28:00.922-05
+1368	V-001368	import-venta-1789848421000-100-3	venta	\N	\N	2026-09-19 15:07:01-05	0.00	0.00	0.00	0.00	Salida de VINAGRE VALLE VERDE TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 3.000000 por generacion de venta F001-9990	\N	activa	2026-10-06 07:28:00.894-05
+1365	D-001365	import-devolucion-1789846314000-93-1	devolucion	\N	\N	2026-09-19 14:31:54-05	0.00	0.00	0.00	0.00	INGRESO DE SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.859-05
+1364	D-001364	import-devolucion-1789846309000-70-1	devolucion	\N	\N	2026-09-19 14:31:49-05	0.00	0.00	0.00	0.00	INGRESO DE SIB COMINO GIG X50 SOB 10 GR/PAQUETE X12 DISPLAY POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.842-05
+1366	D-001366	import-devolucion-1789846317000-27-2	devolucion	\N	\N	2026-09-19 14:31:57-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.87-05
+1367	D-001367	import-devolucion-1789846320000-26-2	devolucion	\N	\N	2026-09-19 14:32:00-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.883-05
+1362	D-001362	import-devolucion-1789773494000-46-8	devolucion	\N	\N	2026-09-18 18:18:14-05	0.00	0.00	0.00	0.00	INGRESO DE DOÑA GUSTA GALLINA 7 GR X10 SOBRES/BLS X8 TIRA(S)/CAJA X80 TIRA(S) POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.812-05
+1359	V-001359	import-venta-1789772073000-25-2	venta	\N	\N	2026-09-18 17:54:33-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 2.000000 por generacion de venta F001-9976	\N	activa	2026-10-06 07:28:00.77-05
+1356	V-001356	import-venta-1789772069000-92-12	venta	\N	\N	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO BOT 1 LT/PAQUETE X12 UND por la cantidad de 12.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.733-05
+1357	V-001357	import-venta-1789772069000-89-2	venta	\N	\N	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de SIB SAZONADOR SIN PCTE GIG X42 SOB 32.4 GR/PAQUETE X12 DISLPLAY por la cantidad de 2.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.745-05
+1358	V-001358	import-venta-1789772069000-93-1	venta	\N	\N	2026-09-18 17:54:29-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 1.000000 por generacion de venta F001-9972	\N	activa	2026-10-06 07:28:00.756-05
+1322	V-001322	import-venta-1789764288000-76-1	venta	\N	\N	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de SIB OREGANO ECON X66 SOB 3.5 GR/PAQUETE X25 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13195	\N	activa	2026-10-06 07:28:00.038-05
+1353	V-001353	import-venta-1789772057000-25-10	venta	\N	\N	2026-09-18 17:54:17-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 10.000000 por generacion de venta F001-9965	\N	activa	2026-10-06 07:28:00.698-05
+1336	V-001336	import-venta-1789767427000-21-6	venta	\N	\N	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.317-05
+1337	V-001337	import-venta-1789767427000-23-6	venta	\N	\N	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.359-05
+1338	V-001338	import-venta-1789767427000-91-3	venta	\N	\N	2026-09-18 16:37:07-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13208	\N	activa	2026-10-06 07:28:00.413-05
+1339	V-001339	import-venta-1789767428000-21-6	venta	\N	\N	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.461-05
+1340	V-001340	import-venta-1789767428000-23-6	venta	\N	\N	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND por la cantidad de 6.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.49-05
+1341	V-001341	import-venta-1789767428000-91-3	venta	\N	\N	2026-09-18 16:37:08-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 3.000000 por generacion de venta NP01-13209	\N	activa	2026-10-06 07:28:00.511-05
+1349	D-001349	import-devolucion-1789769235000-21-6	devolucion	\N	\N	2026-09-18 17:07:15-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX APANADO X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.651-05
+1350	D-001350	import-devolucion-1789769241000-23-6	devolucion	\N	\N	2026-09-18 17:07:21-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MIX CROCANTE X96 GR/BLS X15 UND/CAJA X60 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.662-05
+1351	D-001351	import-devolucion-1789769259000-91-3	devolucion	\N	\N	2026-09-18 17:07:39-05	0.00	0.00	0.00	0.00	INGRESO DE VINAGRE DEL FIRME BLANCO SACHET 1.1 LT/CAJA X12 UND POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:00.673-05
+1335	V-001335	import-venta-1789767424000-69-1	venta	\N	\N	2026-09-18 16:37:04-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta NP01-13205	\N	activa	2026-10-06 07:28:00.268-05
+1331	V-001331	import-venta-1789767422000-16-1	venta	\N	\N	2026-09-18 16:37:02-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN POLLO 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9955	\N	activa	2026-10-06 07:28:00.175-05
+1330	V-001330	import-venta-1789766774000-96-1	venta	\N	\N	2026-09-18 16:26:14-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 1.000000 por generacion de venta NP01-13202	\N	activa	2026-10-06 07:28:00.163-05
+1318	V-001318	import-venta-1789764288000-18-12	venta	\N	\N	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN VASO GALLINA 50 GR X12 UND por la cantidad de 12.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.957-05
+1319	V-001319	import-venta-1789764288000-39-2	venta	\N	\N	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 280 ML X6 UND/CAJA X8 PAQUETES por la cantidad de 2.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.978-05
+1320	V-001320	import-venta-1789764288000-29-1	venta	\N	\N	2026-09-18 15:44:48-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-SILLAO BOTELLA 150 ML X6 UND/CAJA X16 PAQUETES por la cantidad de 1.000000 por generacion de venta NP01-13194	\N	activa	2026-10-06 07:27:59.995-05
+1951	V-001951	import-venta-1790454951000-93-0.5	venta	\N	\N	2026-09-26 15:35:51-05	0.00	0.00	0.00	0.00	Salida de SIB TUCO TALLARIN GIG X42 SOB 32.4 GR/PAQUETE X12 DISPLAY por la cantidad de 0.500000 por generacion de venta NP01-13918	\N	activa	2026-10-06 07:28:09.339-05
+1343	V-001343	import-venta-1789767433000-97-1	venta	\N	\N	2026-09-18 16:37:13-05	0.00	0.00	0.00	0.00	Salida de SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR por la cantidad de 1.000000 por generacion de venta NP01-13213	\N	activa	2026-10-06 07:28:00.549-05
+1569	D-001569	import-devolucion-1790106354000-97-1	devolucion	\N	\N	2026-09-22 14:45:54-05	0.00	0.00	0.00	0.00	INGRESO DE SILLAO TITO 85 ML X12 UND + 1 SOB SIB PANQUITA 31.2 GR POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:04.021-05
+1323	V-001323	import-venta-1789764292000-14-1	venta	\N	\N	2026-09-18 15:44:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta F001-9953	\N	activa	2026-10-06 07:28:00.06-05
+1328	V-001328	import-venta-1789764297000-15-1	venta	\N	\N	2026-09-18 15:44:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA PICANTE 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13201	\N	activa	2026-10-06 07:28:00.139-05
+1329	V-001329	import-venta-1789764297000-14-1	venta	\N	\N	2026-09-18 15:44:57-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta NP01-13201	\N	activa	2026-10-06 07:28:00.151-05
+1327	V-001327	import-venta-1789764295000-14-1	venta	\N	\N	2026-09-18 15:44:55-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MEN GALLINA 80 GR X24 SOBRES por la cantidad de 1.000000 por generacion de venta B001-7156	\N	activa	2026-10-06 07:28:00.126-05
+1326	V-001326	import-venta-1789764294000-96-6	venta	\N	\N	2026-09-18 15:44:54-05	0.00	0.00	0.00	0.00	Salida de VINAGRE DEL FIRME TINTO SACHET 1.1 LT/CAJA X12 UND por la cantidad de 6.000000 por generacion de venta NP01-13199	\N	activa	2026-10-06 07:28:00.111-05
+1325	V-001325	import-venta-1789764293000-25-4	venta	\N	\N	2026-09-18 15:44:53-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 1 KG/SACO X18 UND por la cantidad de 4.000000 por generacion de venta NP01-13198	\N	activa	2026-10-06 07:28:00.09-05
+1324	V-001324	import-venta-1789764292000-28-1	venta	\N	\N	2026-09-18 15:44:52-05	0.00	0.00	0.00	0.00	Salida de AJI-NO-MOTO GMS 16 GR X30 SOBRES (S/ 0.50)/SACO X24 PAQUETES por la cantidad de 1.000000 por generacion de venta F001-9953	\N	activa	2026-10-06 07:28:00.075-05
+1842	V-001842	import-venta-1790369077000-69-1	venta	\N	\N	2026-09-25 15:44:37-05	0.00	0.00	0.00	0.00	Salida de SIB COMINO ECON X50 SOB 3.6 GR/PAQUETE X24 DISPLAY por la cantidad de 1.000000 por generacion de venta B001-7342	\N	activa	2026-10-06 07:28:07.859-05
+2176	D-002176	import-devolucion-1790725241000-16-1	devolucion	\N	\N	2026-09-29 18:40:41-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MEN POLLO 80 GR X24 SOBRES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:12.266-05
+2551	D-002551	import-devolucion-1791070069000-27-1	devolucion	\N	\N	2026-10-03 18:27:49-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 53 GR X20 SOBRES (S/ 1.50)/SACO X12 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.297-05
+2552	D-002552	import-devolucion-1791070073000-26-1	devolucion	\N	\N	2026-10-03 18:27:53-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 34 GR X20 SOBRES (S/ 1.00)/SACO X20 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.309-05
+2553	D-002553	import-devolucion-1791070078000-38-1	devolucion	\N	\N	2026-10-03 18:27:58-05	0.00	0.00	0.00	0.00	INGRESO DE AJI-NO-MOTO GMS 90 GR X20 SOBRES/SACO X8 PAQUETES POR DEVOLUCIÓN DE VENTA	\N	activa	2026-10-06 07:28:17.319-05
 \.
 
 
 --
--- TOC entry 6024 (class 0 OID 23517)
+-- TOC entry 6026 (class 0 OID 23517)
 -- Dependencies: 266
 -- Data for Name: ordenes_reabastecimiento; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5229,7 +4663,7 @@ COPY public.ordenes_reabastecimiento (id, producto_id, cantidad_sugerida, cantid
 
 
 --
--- TOC entry 5997 (class 0 OID 23289)
+-- TOC entry 5999 (class 0 OID 23289)
 -- Dependencies: 239
 -- Data for Name: permisos; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5250,7 +4684,7 @@ COPY public.permisos (id, codigo, descripcion) FROM stdin;
 
 
 --
--- TOC entry 6040 (class 0 OID 39790)
+-- TOC entry 6042 (class 0 OID 39790)
 -- Dependencies: 283
 -- Data for Name: precio; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5260,7 +4694,7 @@ COPY public.precio (id, producto_id, preciolista, preciodescuento, vigente_desde
 
 
 --
--- TOC entry 6032 (class 0 OID 23589)
+-- TOC entry 6034 (class 0 OID 23589)
 -- Dependencies: 274
 -- Data for Name: preferencias_usuario; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5270,7 +4704,7 @@ COPY public.preferencias_usuario (id, usuario_id, clave, valor, fecha_actualizac
 
 
 --
--- TOC entry 6006 (class 0 OID 23350)
+-- TOC entry 6008 (class 0 OID 23350)
 -- Dependencies: 248
 -- Data for Name: presentaciones; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5290,7 +4724,7 @@ COPY public.presentaciones (id, nombre, descripcion) FROM stdin;
 
 
 --
--- TOC entry 6038 (class 0 OID 39763)
+-- TOC entry 6040 (class 0 OID 39763)
 -- Dependencies: 280
 -- Data for Name: producto_presentacion; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5300,17 +4734,18 @@ COPY public.producto_presentacion (id, producto_id, nivel, envase_id, cantidad) 
 
 
 --
--- TOC entry 6012 (class 0 OID 23379)
+-- TOC entry 6014 (class 0 OID 23379)
 -- Dependencies: 254
 -- Data for Name: productos; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.productos (id, codigo, nombre, descripcion, imagen, precio_venta, caracteristicas, activo, motivo_desactivacion, motivo_desactivacion_detalle, fecha_desactivacion, fecha_creacion, fecha_actualizacion, categoria_id, unidad_medida_id, presentacion_id, marca_id, es_bonificacion, contenido_valor, categoria_paquete_id, contenido_paquete_cantidad, contenido_paquete_envase_id) FROM stdin;
+1067	P-001	Producto	\N	\N	\N	{}	t	\N	\N	\N	2026-10-07 08:05:09.782-05	2026-10-07 08:05:09.782-05	602	529	\N	\N	f	\N	\N	\N	\N
 \.
 
 
 --
--- TOC entry 6030 (class 0 OID 23575)
+-- TOC entry 6032 (class 0 OID 23575)
 -- Dependencies: 272
 -- Data for Name: reportes_generados; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5320,7 +4755,7 @@ COPY public.reportes_generados (id, usuario_id, tipo, formato, parametros, ruta_
 
 
 --
--- TOC entry 5998 (class 0 OID 23299)
+-- TOC entry 6000 (class 0 OID 23299)
 -- Dependencies: 240
 -- Data for Name: rol_permisos; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5352,7 +4787,7 @@ COPY public.rol_permisos (rol_id, permiso_id) FROM stdin;
 
 
 --
--- TOC entry 5993 (class 0 OID 23260)
+-- TOC entry 5995 (class 0 OID 23260)
 -- Dependencies: 235
 -- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5367,55 +4802,27 @@ COPY public.roles (id, nombre, descripcion, fecha_creacion) FROM stdin;
 
 
 --
--- TOC entry 6036 (class 0 OID 39752)
+-- TOC entry 6038 (class 0 OID 39752)
 -- Dependencies: 278
 -- Data for Name: tipo_envase; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.tipo_envase (id, nombre, activo, creado_en) FROM stdin;
-1	SOBRE	t	2026-09-21 16:27:47.732776-05
-2	BOLSA	t	2026-09-21 16:27:47.732776-05
-3	TIRA	t	2026-09-21 16:27:47.732776-05
-4	CAJA	t	2026-09-21 16:27:47.732776-05
-5	BOTELLA	t	2026-09-21 16:27:47.732776-05
-6	SACO	t	2026-09-21 16:27:47.732776-05
-7	DISPLAY	t	2026-09-21 16:27:47.732776-05
-8	PAQUETE	t	2026-09-21 16:27:47.732776-05
-9	BALDE	t	2026-09-21 16:27:47.732776-05
-10	BIDON	t	2026-09-21 16:27:47.732776-05
-11	PLANCHA	t	2026-09-21 16:27:47.732776-05
-12	UND	t	2026-09-21 16:27:47.732776-05
-13	SACHET	t	2026-09-21 16:27:47.732776-05
 \.
 
 
 --
--- TOC entry 6000 (class 0 OID 23315)
+-- TOC entry 6002 (class 0 OID 23315)
 -- Dependencies: 242
 -- Data for Name: tokens_recuperacion; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.tokens_recuperacion (id, usuario_id, token, expira_en, usado, fecha_creacion, code_hash, intentos) FROM stdin;
-2	7	\N	2026-09-20 18:34:11.642-05	t	2026-09-20 18:24:11.643-05	4b4d8dab118a02c3e292fb15e5d24f8353ca40b755a5289576048d4d020fe940	0
-3	7	\N	2026-09-20 18:35:23.853-05	t	2026-09-20 18:25:23.853-05	f4c0556474a036444457f5015a6f677b4613d0adc76755a9611bcafb3bc04735	0
-4	7	\N	2026-09-20 18:35:45.442-05	t	2026-09-20 18:25:45.442-05	452579fadc9b83749cbe725e2c3475f496b64efd5c0b6ddcd5b71e3864be0df2	0
-5	7	\N	2026-09-20 18:38:20.319-05	t	2026-09-20 18:28:20.319-05	fb5841808a696baf236f95e60ce1c0adb725aa46e6dfeb06c3820ab10e86061d	0
-7	7	\N	2026-09-20 18:38:34.108-05	t	2026-09-20 18:28:34.108-05	74214548fe6928f60f7514c6e66400532b6b11df28de0a7ad8d3c6a25c9adcc7	0
-6	1	\N	2026-09-20 18:38:25.179-05	t	2026-09-20 18:28:25.179-05	b28b210a938717f6d23ef818f4f318992c09aca7e829bc322daba4b5c3bb328b	0
-8	7	\N	2026-09-20 19:16:20.695-05	t	2026-09-20 19:06:20.695-05	f2a77d92b7c78bcdc1869d0201989e3b632aeed574d3e866751d81fc472af704	1
-9	1	\N	2026-09-20 19:16:30.723-05	t	2026-09-20 19:06:30.723-05	b3b5fc8e06c37c12b04e3495adda5e154aac65900640d52bff3b97d25d0b203c	0
-10	1	\N	2026-09-20 19:18:17.401-05	f	2026-09-20 19:08:17.401-05	3cad7dbd27e82014c037493135036a8735306d0ba47c44c21bcba61cf1b1df8a	0
-11	9	\N	2026-09-22 06:50:26.926-05	f	2026-09-22 06:40:26.926-05	7fe2bcd711f74e89cabd72972ee340f78858170fb8ba0b621275553ce3f15a4f	0
-12	7	\N	2026-09-22 06:51:22.998-05	t	2026-09-22 06:41:22.998-05	b35664305810fb21a1b7416820fcfc87b05ffe107380d8287c35a102c2435b41	1
-13	7	\N	2026-09-28 07:26:30.761-05	t	2026-09-28 07:16:30.761-05	ad70f8a8b68b684e4eaed91514560a90e62c4ffdfbe5db65feca27844343189d	1
-14	4	\N	2026-09-28 09:12:10.547-05	t	2026-09-28 09:02:10.547-05	5e0a3487bdb2d8a2d4bf102dc6761bba4f4e4bec98d957cfffe173bf891be004	1
-15	10	\N	2026-09-30 06:18:18.682-05	t	2026-09-30 06:08:18.682-05	aaf3791470975dc101143dceea3ba8a0c2f1ecb55d23bfd24251fdce91fa75d8	1
-16	4	\N	2026-10-03 19:41:12.396-05	t	2026-10-03 19:31:12.397-05	550aa37e74c5ce9ecbd1f2d2c16956b6b57a131d7b1b6c0152b375115beb1ecd	1
 \.
 
 
 --
--- TOC entry 6022 (class 0 OID 23496)
+-- TOC entry 6024 (class 0 OID 23496)
 -- Dependencies: 264
 -- Data for Name: umbrales_configuracion; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5425,40 +4832,29 @@ COPY public.umbrales_configuracion (id, tipo, producto_id, valor, usuario_id, fe
 
 
 --
--- TOC entry 6004 (class 0 OID 23341)
+-- TOC entry 6006 (class 0 OID 23341)
 -- Dependencies: 246
 -- Data for Name: unidades_medida; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.unidades_medida (id, nombre, abreviatura) FROM stdin;
-1	Kilogramo	kg
-2	Gramo	gr
-3	Litro	lt
-4	Mililitro	ml
-5	Unidad	u
+529	Test UM	TU
 \.
 
 
 --
--- TOC entry 5995 (class 0 OID 23271)
+-- TOC entry 5997 (class 0 OID 23271)
 -- Dependencies: 237
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
 
 COPY public.usuarios (id, email, rol_id, activo, fecha_creacion, ultimo_acceso, is_staff, password_hash, nombres, apellidos, dni) FROM stdin;
-3	jararojasjose@gmail.com	2	t	2026-09-20 18:04:12.709-05	2026-09-25 05:33:22.781-05	f	$2b$10$ZmLhv.ao37bLq/B010lCROA6tNqCM7lwag.5Oqc5tX79D5oY70Nau	Jose Enrique Jara Rojas		\N
-10	jararojasjose604@gmail.com	1	t	2026-09-26 14:00:00.741-05	2026-10-05 23:41:13.237-05	f	$2b$10$UjdPH4R9K4ryhke9ztz/JukhsabBnmzI9f8Rm6aw/xfqVaW.dpmCy	Jose Admin		\N
-7	jaraj3449@gmail.com	1	t	2026-09-20 18:18:32.576-05	2026-10-06 08:46:39.93-05	f	$2b$10$ZmLhv.ao37bLq/B010lCROA6tNqCM7lwag.5Oqc5tX79D5oY70Nau	Enrique		\N
-1	jose@gmail.com	2	t	2026-09-20 17:18:01.997-05	2026-09-20 19:51:37.138-05	f	$2b$10$ZmLhv.ao37bLq/B010lCROA6tNqCM7lwag.5Oqc5tX79D5oY70Nau	Jose		\N
-8	pedroinventario@cliente.com	2	t	2026-09-18 08:23:31.435-05	2026-09-18 08:25:17.383-05	f	$2b$10$ZmLhv.ao37bLq/B010lCROA6tNqCM7lwag.5Oqc5tX79D5oY70Nau	Pedro Inventario		\N
-4	luffy200010m@gmail.com	2	t	2026-09-20 18:04:30.314-05	2026-10-04 08:09:36.859-05	f	$2b$10$bfe7OThizH7vfGsg744/TeJX5kDVCv6F8yCLefRYX7UJHMEFiQlu6	Luffy Monky		\N
-9	pedro@gmail.com	1	t	2026-09-16 08:05:00.831-05	2026-10-06 06:44:22.163-05	f	$2b$10$ZmLhv.ao37bLq/B010lCROA6tNqCM7lwag.5Oqc5tX79D5oY70Nau	Pedro		\N
-11	yvett.katterine@import.local	2	t	2026-10-06 07:06:40.715-05	\N	f	$2b$10$sE6eKtMkeuxlCe3ttK3/FevQYMspDtktbz/KatLK7cSZSucHFzYrC	YVETT KATTERINE	Importado	\N
+243	test@test.com	1	t	2026-10-07 08:05:09.722-05	\N	f	$2b$10$2ia5CLqH5AebnpdEFt5TZ.2k6TyV63vCuSGhwS1jxXI1Ny6sJyXhW	Test	User	\N
 \.
 
 
 --
--- TOC entry 6018 (class 0 OID 23456)
+-- TOC entry 6020 (class 0 OID 23456)
 -- Dependencies: 260
 -- Data for Name: ventas; Type: TABLE DATA; Schema: public; Owner: business_api_role
 --
@@ -5468,7 +4864,7 @@ COPY public.ventas (id, producto_id, lote_id, cantidad, precio_unitario, fecha_v
 
 
 --
--- TOC entry 6115 (class 0 OID 0)
+-- TOC entry 6118 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: anomalias_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5477,7 +4873,7 @@ SELECT pg_catalog.setval('ml.anomalias_id_seq', 1, false);
 
 
 --
--- TOC entry 6116 (class 0 OID 0)
+-- TOC entry 6119 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: conjuntos_datos_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5486,7 +4882,7 @@ SELECT pg_catalog.setval('ml.conjuntos_datos_id_seq', 1, false);
 
 
 --
--- TOC entry 6117 (class 0 OID 0)
+-- TOC entry 6120 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: entrenamientos_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5495,7 +4891,7 @@ SELECT pg_catalog.setval('ml.entrenamientos_id_seq', 1, false);
 
 
 --
--- TOC entry 6118 (class 0 OID 0)
+-- TOC entry 6121 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: modelos_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5504,7 +4900,7 @@ SELECT pg_catalog.setval('ml.modelos_id_seq', 1, false);
 
 
 --
--- TOC entry 6119 (class 0 OID 0)
+-- TOC entry 6122 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: predicciones_demanda_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5513,7 +4909,7 @@ SELECT pg_catalog.setval('ml.predicciones_demanda_id_seq', 1, false);
 
 
 --
--- TOC entry 6120 (class 0 OID 0)
+-- TOC entry 6123 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: recomendaciones_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5522,7 +4918,7 @@ SELECT pg_catalog.setval('ml.recomendaciones_id_seq', 1, false);
 
 
 --
--- TOC entry 6121 (class 0 OID 0)
+-- TOC entry 6124 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: riesgos_vencimiento_id_seq; Type: SEQUENCE SET; Schema: ml; Owner: postgres
 --
@@ -5531,7 +4927,7 @@ SELECT pg_catalog.setval('ml.riesgos_vencimiento_id_seq', 1, false);
 
 
 --
--- TOC entry 6122 (class 0 OID 0)
+-- TOC entry 6125 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: alertas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5540,7 +4936,7 @@ SELECT pg_catalog.setval('public.alertas_id_seq', 1, false);
 
 
 --
--- TOC entry 6123 (class 0 OID 0)
+-- TOC entry 6126 (class 0 OID 0)
 -- Dependencies: 275
 -- Name: auditoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5549,7 +4945,7 @@ SELECT pg_catalog.setval('public.auditoria_id_seq', 102, true);
 
 
 --
--- TOC entry 6124 (class 0 OID 0)
+-- TOC entry 6127 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: catalogo_marcas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5558,7 +4954,7 @@ SELECT pg_catalog.setval('public.catalogo_marcas_id_seq', 137, true);
 
 
 --
--- TOC entry 6125 (class 0 OID 0)
+-- TOC entry 6128 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: catalogo_valores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5567,25 +4963,25 @@ SELECT pg_catalog.setval('public.catalogo_valores_id_seq', 1, true);
 
 
 --
--- TOC entry 6126 (class 0 OID 0)
+-- TOC entry 6129 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: categorias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.categorias_id_seq', 36, true);
+SELECT pg_catalog.setval('public.categorias_id_seq', 602, true);
 
 
 --
--- TOC entry 6127 (class 0 OID 0)
+-- TOC entry 6130 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: clientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.clientes_id_seq', 566, true);
+SELECT pg_catalog.setval('public.clientes_id_seq', 587, true);
 
 
 --
--- TOC entry 6128 (class 0 OID 0)
+-- TOC entry 6131 (class 0 OID 0)
 -- Dependencies: 291
 -- Name: comprobantes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5594,7 +4990,7 @@ SELECT pg_catalog.setval('public.comprobantes_id_seq', 1234, true);
 
 
 --
--- TOC entry 6129 (class 0 OID 0)
+-- TOC entry 6132 (class 0 OID 0)
 -- Dependencies: 293
 -- Name: configuraciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5603,7 +4999,7 @@ SELECT pg_catalog.setval('public.configuraciones_id_seq', 1, true);
 
 
 --
--- TOC entry 6130 (class 0 OID 0)
+-- TOC entry 6133 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: importaciones_ventas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5612,25 +5008,25 @@ SELECT pg_catalog.setval('public.importaciones_ventas_id_seq', 1, false);
 
 
 --
--- TOC entry 6131 (class 0 OID 0)
+-- TOC entry 6134 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: lotes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.lotes_id_seq', 117, true);
+SELECT pg_catalog.setval('public.lotes_id_seq', 358, true);
 
 
 --
--- TOC entry 6132 (class 0 OID 0)
+-- TOC entry 6135 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: movimientos_inventario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.movimientos_inventario_id_seq', 1397, true);
+SELECT pg_catalog.setval('public.movimientos_inventario_id_seq', 1432, true);
 
 
 --
--- TOC entry 6133 (class 0 OID 0)
+-- TOC entry 6136 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: notificaciones_correo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5639,7 +5035,7 @@ SELECT pg_catalog.setval('public.notificaciones_correo_id_seq', 1, false);
 
 
 --
--- TOC entry 6134 (class 0 OID 0)
+-- TOC entry 6137 (class 0 OID 0)
 -- Dependencies: 289
 -- Name: operacion_detalles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5648,7 +5044,7 @@ SELECT pg_catalog.setval('public.operacion_detalles_id_seq', 2573, true);
 
 
 --
--- TOC entry 6135 (class 0 OID 0)
+-- TOC entry 6138 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: operaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5657,7 +5053,7 @@ SELECT pg_catalog.setval('public.operaciones_id_seq', 2571, true);
 
 
 --
--- TOC entry 6136 (class 0 OID 0)
+-- TOC entry 6139 (class 0 OID 0)
 -- Dependencies: 265
 -- Name: ordenes_reabastecimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5666,7 +5062,7 @@ SELECT pg_catalog.setval('public.ordenes_reabastecimiento_id_seq', 1, false);
 
 
 --
--- TOC entry 6137 (class 0 OID 0)
+-- TOC entry 6140 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: permisos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5675,7 +5071,7 @@ SELECT pg_catalog.setval('public.permisos_id_seq', 11, true);
 
 
 --
--- TOC entry 6138 (class 0 OID 0)
+-- TOC entry 6141 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: precio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5684,7 +5080,7 @@ SELECT pg_catalog.setval('public.precio_id_seq', 1, true);
 
 
 --
--- TOC entry 6139 (class 0 OID 0)
+-- TOC entry 6142 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: preferencias_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5693,7 +5089,7 @@ SELECT pg_catalog.setval('public.preferencias_usuario_id_seq', 1, false);
 
 
 --
--- TOC entry 6140 (class 0 OID 0)
+-- TOC entry 6143 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: presentaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5702,7 +5098,7 @@ SELECT pg_catalog.setval('public.presentaciones_id_seq', 10, true);
 
 
 --
--- TOC entry 6141 (class 0 OID 0)
+-- TOC entry 6144 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: producto_presentacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5711,16 +5107,16 @@ SELECT pg_catalog.setval('public.producto_presentacion_id_seq', 2, true);
 
 
 --
--- TOC entry 6142 (class 0 OID 0)
+-- TOC entry 6145 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: productos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.productos_id_seq', 127, true);
+SELECT pg_catalog.setval('public.productos_id_seq', 1067, true);
 
 
 --
--- TOC entry 6143 (class 0 OID 0)
+-- TOC entry 6146 (class 0 OID 0)
 -- Dependencies: 271
 -- Name: reportes_generados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5729,7 +5125,7 @@ SELECT pg_catalog.setval('public.reportes_generados_id_seq', 1, false);
 
 
 --
--- TOC entry 6144 (class 0 OID 0)
+-- TOC entry 6147 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5738,7 +5134,7 @@ SELECT pg_catalog.setval('public.roles_id_seq', 5, true);
 
 
 --
--- TOC entry 6145 (class 0 OID 0)
+-- TOC entry 6148 (class 0 OID 0)
 -- Dependencies: 277
 -- Name: tipo_envase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5747,7 +5143,7 @@ SELECT pg_catalog.setval('public.tipo_envase_id_seq', 14, true);
 
 
 --
--- TOC entry 6146 (class 0 OID 0)
+-- TOC entry 6149 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: tokens_recuperacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5756,7 +5152,7 @@ SELECT pg_catalog.setval('public.tokens_recuperacion_id_seq', 16, true);
 
 
 --
--- TOC entry 6147 (class 0 OID 0)
+-- TOC entry 6150 (class 0 OID 0)
 -- Dependencies: 263
 -- Name: umbrales_configuracion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
@@ -5765,34 +5161,34 @@ SELECT pg_catalog.setval('public.umbrales_configuracion_id_seq', 1, false);
 
 
 --
--- TOC entry 6148 (class 0 OID 0)
+-- TOC entry 6151 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: unidades_medida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.unidades_medida_id_seq', 10, true);
+SELECT pg_catalog.setval('public.unidades_medida_id_seq', 529, true);
 
 
 --
--- TOC entry 6149 (class 0 OID 0)
+-- TOC entry 6152 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.usuarios_id_seq', 11, true);
+SELECT pg_catalog.setval('public.usuarios_id_seq', 243, true);
 
 
 --
--- TOC entry 6150 (class 0 OID 0)
+-- TOC entry 6153 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: ventas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: business_api_role
 --
 
-SELECT pg_catalog.setval('public.ventas_id_seq', 51, true);
+SELECT pg_catalog.setval('public.ventas_id_seq', 241, true);
 
 
 --
--- TOC entry 5052 (class 2606 OID 23252)
+-- TOC entry 5053 (class 2606 OID 23252)
 -- Name: anomalias anomalias_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5801,7 +5197,7 @@ ALTER TABLE ONLY ml.anomalias
 
 
 --
--- TOC entry 5038 (class 2606 OID 23167)
+-- TOC entry 5039 (class 2606 OID 23167)
 -- Name: conjuntos_datos conjuntos_datos_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5810,7 +5206,7 @@ ALTER TABLE ONLY ml.conjuntos_datos
 
 
 --
--- TOC entry 5042 (class 2606 OID 23191)
+-- TOC entry 5043 (class 2606 OID 23191)
 -- Name: entrenamientos entrenamientos_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5819,7 +5215,7 @@ ALTER TABLE ONLY ml.entrenamientos
 
 
 --
--- TOC entry 5040 (class 2606 OID 23179)
+-- TOC entry 5041 (class 2606 OID 23179)
 -- Name: modelos modelos_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5828,7 +5224,7 @@ ALTER TABLE ONLY ml.modelos
 
 
 --
--- TOC entry 5045 (class 2606 OID 23205)
+-- TOC entry 5046 (class 2606 OID 23205)
 -- Name: predicciones_demanda predicciones_demanda_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5837,7 +5233,7 @@ ALTER TABLE ONLY ml.predicciones_demanda
 
 
 --
--- TOC entry 5050 (class 2606 OID 23237)
+-- TOC entry 5051 (class 2606 OID 23237)
 -- Name: recomendaciones recomendaciones_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5846,7 +5242,7 @@ ALTER TABLE ONLY ml.recomendaciones
 
 
 --
--- TOC entry 5048 (class 2606 OID 23223)
+-- TOC entry 5049 (class 2606 OID 23223)
 -- Name: riesgos_vencimiento riesgos_vencimiento_pkey; Type: CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -5855,7 +5251,7 @@ ALTER TABLE ONLY ml.riesgos_vencimiento
 
 
 --
--- TOC entry 5724 (class 2606 OID 23546)
+-- TOC entry 5726 (class 2606 OID 23546)
 -- Name: alertas alertas_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5864,7 +5260,7 @@ ALTER TABLE ONLY public.alertas
 
 
 --
--- TOC entry 5738 (class 2606 OID 23612)
+-- TOC entry 5740 (class 2606 OID 23612)
 -- Name: auditoria auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5873,7 +5269,7 @@ ALTER TABLE ONLY public.auditoria
 
 
 --
--- TOC entry 5547 (class 2606 OID 41281)
+-- TOC entry 5548 (class 2606 OID 41281)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5882,7 +5278,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5549 (class 2606 OID 41283)
+-- TOC entry 5550 (class 2606 OID 41283)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5891,7 +5287,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5551 (class 2606 OID 41271)
+-- TOC entry 5552 (class 2606 OID 41271)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5900,7 +5296,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5553 (class 2606 OID 41293)
+-- TOC entry 5554 (class 2606 OID 41293)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5909,7 +5305,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5555 (class 2606 OID 41269)
+-- TOC entry 5556 (class 2606 OID 41269)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5918,7 +5314,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5557 (class 2606 OID 41295)
+-- TOC entry 5558 (class 2606 OID 41295)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5927,7 +5323,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5559 (class 2606 OID 41267)
+-- TOC entry 5560 (class 2606 OID 41267)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5936,7 +5332,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5561 (class 2606 OID 41297)
+-- TOC entry 5562 (class 2606 OID 41297)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5945,7 +5341,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5563 (class 2606 OID 41265)
+-- TOC entry 5564 (class 2606 OID 41265)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5954,7 +5350,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5565 (class 2606 OID 41299)
+-- TOC entry 5566 (class 2606 OID 41299)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5963,7 +5359,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5567 (class 2606 OID 41263)
+-- TOC entry 5568 (class 2606 OID 41263)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5972,7 +5368,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5569 (class 2606 OID 41235)
+-- TOC entry 5570 (class 2606 OID 41235)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5981,7 +5377,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5571 (class 2606 OID 41285)
+-- TOC entry 5572 (class 2606 OID 41285)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5990,7 +5386,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5573 (class 2606 OID 41261)
+-- TOC entry 5574 (class 2606 OID 41261)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -5999,7 +5395,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5575 (class 2606 OID 41237)
+-- TOC entry 5576 (class 2606 OID 41237)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6008,7 +5404,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5577 (class 2606 OID 41259)
+-- TOC entry 5578 (class 2606 OID 41259)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6017,7 +5413,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5579 (class 2606 OID 41239)
+-- TOC entry 5580 (class 2606 OID 41239)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6026,7 +5422,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5581 (class 2606 OID 41257)
+-- TOC entry 5582 (class 2606 OID 41257)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6035,7 +5431,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5583 (class 2606 OID 41241)
+-- TOC entry 5584 (class 2606 OID 41241)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6044,7 +5440,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5585 (class 2606 OID 41255)
+-- TOC entry 5586 (class 2606 OID 41255)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6053,7 +5449,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5587 (class 2606 OID 41243)
+-- TOC entry 5588 (class 2606 OID 41243)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6062,7 +5458,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5589 (class 2606 OID 41253)
+-- TOC entry 5590 (class 2606 OID 41253)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6071,7 +5467,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5591 (class 2606 OID 41245)
+-- TOC entry 5592 (class 2606 OID 41245)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6080,7 +5476,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5593 (class 2606 OID 41279)
+-- TOC entry 5594 (class 2606 OID 41279)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6089,7 +5485,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5595 (class 2606 OID 41251)
+-- TOC entry 5596 (class 2606 OID 41251)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6098,7 +5494,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5597 (class 2606 OID 41247)
+-- TOC entry 5598 (class 2606 OID 41247)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6107,7 +5503,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5599 (class 2606 OID 41249)
+-- TOC entry 5600 (class 2606 OID 41249)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6116,7 +5512,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5601 (class 2606 OID 41233)
+-- TOC entry 5602 (class 2606 OID 41233)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6125,7 +5521,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5603 (class 2606 OID 41287)
+-- TOC entry 5604 (class 2606 OID 41287)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6134,7 +5530,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5605 (class 2606 OID 41277)
+-- TOC entry 5606 (class 2606 OID 41277)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6143,7 +5539,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5607 (class 2606 OID 41275)
+-- TOC entry 5608 (class 2606 OID 41275)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6152,7 +5548,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5609 (class 2606 OID 41289)
+-- TOC entry 5610 (class 2606 OID 41289)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6161,7 +5557,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5611 (class 2606 OID 41273)
+-- TOC entry 5612 (class 2606 OID 41273)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6170,7 +5566,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5613 (class 2606 OID 41291)
+-- TOC entry 5614 (class 2606 OID 41291)
 -- Name: catalogo_marcas catalogo_marcas_nombre_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6179,7 +5575,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5615 (class 2606 OID 23366)
+-- TOC entry 5616 (class 2606 OID 23366)
 -- Name: catalogo_marcas catalogo_marcas_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6188,7 +5584,7 @@ ALTER TABLE ONLY public.catalogo_marcas
 
 
 --
--- TOC entry 5617 (class 2606 OID 23375)
+-- TOC entry 5618 (class 2606 OID 23375)
 -- Name: catalogo_valores catalogo_valores_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6197,7 +5593,7 @@ ALTER TABLE ONLY public.catalogo_valores
 
 
 --
--- TOC entry 5619 (class 2606 OID 41303)
+-- TOC entry 5620 (class 2606 OID 41303)
 -- Name: catalogo_valores catalogo_valores_tipo_valor_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6206,7 +5602,7 @@ ALTER TABLE ONLY public.catalogo_valores
 
 
 --
--- TOC entry 5337 (class 2606 OID 41057)
+-- TOC entry 5338 (class 2606 OID 41057)
 -- Name: categorias categorias_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6215,7 +5611,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5339 (class 2606 OID 41059)
+-- TOC entry 5340 (class 2606 OID 41059)
 -- Name: categorias categorias_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6224,7 +5620,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5341 (class 2606 OID 41047)
+-- TOC entry 5342 (class 2606 OID 41047)
 -- Name: categorias categorias_nombre_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6233,7 +5629,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5343 (class 2606 OID 41069)
+-- TOC entry 5344 (class 2606 OID 41069)
 -- Name: categorias categorias_nombre_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6242,7 +5638,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5345 (class 2606 OID 41045)
+-- TOC entry 5346 (class 2606 OID 41045)
 -- Name: categorias categorias_nombre_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6251,7 +5647,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5347 (class 2606 OID 41071)
+-- TOC entry 5348 (class 2606 OID 41071)
 -- Name: categorias categorias_nombre_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6260,7 +5656,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5349 (class 2606 OID 41043)
+-- TOC entry 5350 (class 2606 OID 41043)
 -- Name: categorias categorias_nombre_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6269,7 +5665,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5351 (class 2606 OID 41073)
+-- TOC entry 5352 (class 2606 OID 41073)
 -- Name: categorias categorias_nombre_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6278,7 +5674,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5353 (class 2606 OID 41041)
+-- TOC entry 5354 (class 2606 OID 41041)
 -- Name: categorias categorias_nombre_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6287,7 +5683,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5355 (class 2606 OID 41075)
+-- TOC entry 5356 (class 2606 OID 41075)
 -- Name: categorias categorias_nombre_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6296,7 +5692,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5357 (class 2606 OID 41039)
+-- TOC entry 5358 (class 2606 OID 41039)
 -- Name: categorias categorias_nombre_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6305,7 +5701,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5359 (class 2606 OID 41077)
+-- TOC entry 5360 (class 2606 OID 41077)
 -- Name: categorias categorias_nombre_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6314,7 +5710,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5361 (class 2606 OID 41061)
+-- TOC entry 5362 (class 2606 OID 41061)
 -- Name: categorias categorias_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6323,7 +5719,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5363 (class 2606 OID 41037)
+-- TOC entry 5364 (class 2606 OID 41037)
 -- Name: categorias categorias_nombre_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6332,7 +5728,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5365 (class 2606 OID 41079)
+-- TOC entry 5366 (class 2606 OID 41079)
 -- Name: categorias categorias_nombre_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6341,7 +5737,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5367 (class 2606 OID 41035)
+-- TOC entry 5368 (class 2606 OID 41035)
 -- Name: categorias categorias_nombre_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6350,7 +5746,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5369 (class 2606 OID 41081)
+-- TOC entry 5370 (class 2606 OID 41081)
 -- Name: categorias categorias_nombre_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6359,7 +5755,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5371 (class 2606 OID 41033)
+-- TOC entry 5372 (class 2606 OID 41033)
 -- Name: categorias categorias_nombre_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6368,7 +5764,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5373 (class 2606 OID 41083)
+-- TOC entry 5374 (class 2606 OID 41083)
 -- Name: categorias categorias_nombre_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6377,7 +5773,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5375 (class 2606 OID 41031)
+-- TOC entry 5376 (class 2606 OID 41031)
 -- Name: categorias categorias_nombre_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6386,7 +5782,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5377 (class 2606 OID 41085)
+-- TOC entry 5378 (class 2606 OID 41085)
 -- Name: categorias categorias_nombre_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6395,7 +5791,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5379 (class 2606 OID 41029)
+-- TOC entry 5380 (class 2606 OID 41029)
 -- Name: categorias categorias_nombre_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6404,7 +5800,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5381 (class 2606 OID 41087)
+-- TOC entry 5382 (class 2606 OID 41087)
 -- Name: categorias categorias_nombre_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6413,7 +5809,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5383 (class 2606 OID 41055)
+-- TOC entry 5384 (class 2606 OID 41055)
 -- Name: categorias categorias_nombre_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6422,7 +5818,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5385 (class 2606 OID 41027)
+-- TOC entry 5386 (class 2606 OID 41027)
 -- Name: categorias categorias_nombre_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6431,7 +5827,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5387 (class 2606 OID 41089)
+-- TOC entry 5388 (class 2606 OID 41089)
 -- Name: categorias categorias_nombre_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6440,7 +5836,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5389 (class 2606 OID 41025)
+-- TOC entry 5390 (class 2606 OID 41025)
 -- Name: categorias categorias_nombre_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6449,7 +5845,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5391 (class 2606 OID 41023)
+-- TOC entry 5392 (class 2606 OID 41023)
 -- Name: categorias categorias_nombre_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6458,7 +5854,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5393 (class 2606 OID 41063)
+-- TOC entry 5394 (class 2606 OID 41063)
 -- Name: categorias categorias_nombre_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6467,7 +5863,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5395 (class 2606 OID 41053)
+-- TOC entry 5396 (class 2606 OID 41053)
 -- Name: categorias categorias_nombre_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6476,7 +5872,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5397 (class 2606 OID 41051)
+-- TOC entry 5398 (class 2606 OID 41051)
 -- Name: categorias categorias_nombre_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6485,7 +5881,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5399 (class 2606 OID 41065)
+-- TOC entry 5400 (class 2606 OID 41065)
 -- Name: categorias categorias_nombre_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6494,7 +5890,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5401 (class 2606 OID 41049)
+-- TOC entry 5402 (class 2606 OID 41049)
 -- Name: categorias categorias_nombre_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6503,7 +5899,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5403 (class 2606 OID 41067)
+-- TOC entry 5404 (class 2606 OID 41067)
 -- Name: categorias categorias_nombre_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6512,7 +5908,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5405 (class 2606 OID 23337)
+-- TOC entry 5406 (class 2606 OID 23337)
 -- Name: categorias categorias_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6521,7 +5917,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 5764 (class 2606 OID 41592)
+-- TOC entry 5766 (class 2606 OID 41592)
 -- Name: clientes clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6530,7 +5926,7 @@ ALTER TABLE ONLY public.clientes
 
 
 --
--- TOC entry 5783 (class 2606 OID 41670)
+-- TOC entry 5785 (class 2606 OID 41670)
 -- Name: comprobantes comprobantes_numero_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6539,7 +5935,7 @@ ALTER TABLE ONLY public.comprobantes
 
 
 --
--- TOC entry 5785 (class 2606 OID 41668)
+-- TOC entry 5787 (class 2606 OID 41668)
 -- Name: comprobantes comprobantes_operacion_id_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6548,7 +5944,7 @@ ALTER TABLE ONLY public.comprobantes
 
 
 --
--- TOC entry 5787 (class 2606 OID 41666)
+-- TOC entry 5789 (class 2606 OID 41666)
 -- Name: comprobantes comprobantes_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6557,7 +5953,7 @@ ALTER TABLE ONLY public.comprobantes
 
 
 --
--- TOC entry 5789 (class 2606 OID 41687)
+-- TOC entry 5791 (class 2606 OID 41687)
 -- Name: configuraciones configuraciones_clave_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6566,7 +5962,7 @@ ALTER TABLE ONLY public.configuraciones
 
 
 --
--- TOC entry 5791 (class 2606 OID 41685)
+-- TOC entry 5793 (class 2606 OID 41685)
 -- Name: configuraciones configuraciones_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6575,7 +5971,7 @@ ALTER TABLE ONLY public.configuraciones
 
 
 --
--- TOC entry 5712 (class 2606 OID 23489)
+-- TOC entry 5714 (class 2606 OID 23489)
 -- Name: importaciones_ventas importaciones_ventas_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6584,7 +5980,7 @@ ALTER TABLE ONLY public.importaciones_ventas
 
 
 --
--- TOC entry 5697 (class 2606 OID 23422)
+-- TOC entry 5698 (class 2606 OID 23422)
 -- Name: lotes lotes_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6593,7 +5989,7 @@ ALTER TABLE ONLY public.lotes
 
 
 --
--- TOC entry 5700 (class 2606 OID 41408)
+-- TOC entry 5701 (class 2606 OID 41408)
 -- Name: lotes lotes_producto_id_numero_lote_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6602,7 +5998,7 @@ ALTER TABLE ONLY public.lotes
 
 
 --
--- TOC entry 5704 (class 2606 OID 23442)
+-- TOC entry 5705 (class 2606 OID 23442)
 -- Name: movimientos_inventario movimientos_inventario_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6611,7 +6007,7 @@ ALTER TABLE ONLY public.movimientos_inventario
 
 
 --
--- TOC entry 5728 (class 2606 OID 23568)
+-- TOC entry 5730 (class 2606 OID 23568)
 -- Name: notificaciones_correo notificaciones_correo_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6620,7 +6016,7 @@ ALTER TABLE ONLY public.notificaciones_correo
 
 
 --
--- TOC entry 5779 (class 2606 OID 41638)
+-- TOC entry 5781 (class 2606 OID 41638)
 -- Name: operacion_detalles operacion_detalles_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6629,7 +6025,7 @@ ALTER TABLE ONLY public.operacion_detalles
 
 
 --
--- TOC entry 5768 (class 2606 OID 41610)
+-- TOC entry 5770 (class 2606 OID 41610)
 -- Name: operaciones operaciones_idempotency_key_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6638,7 +6034,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5771 (class 2606 OID 41608)
+-- TOC entry 5773 (class 2606 OID 41608)
 -- Name: operaciones operaciones_numero_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6647,7 +6043,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5774 (class 2606 OID 41606)
+-- TOC entry 5776 (class 2606 OID 41606)
 -- Name: operaciones operaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6656,7 +6052,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5721 (class 2606 OID 23524)
+-- TOC entry 5723 (class 2606 OID 23524)
 -- Name: ordenes_reabastecimiento ordenes_reabastecimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6665,7 +6061,7 @@ ALTER TABLE ONLY public.ordenes_reabastecimiento
 
 
 --
--- TOC entry 5195 (class 2606 OID 40928)
+-- TOC entry 5196 (class 2606 OID 40928)
 -- Name: permisos permisos_codigo_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6674,7 +6070,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5197 (class 2606 OID 40930)
+-- TOC entry 5198 (class 2606 OID 40930)
 -- Name: permisos permisos_codigo_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6683,7 +6079,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5199 (class 2606 OID 40918)
+-- TOC entry 5200 (class 2606 OID 40918)
 -- Name: permisos permisos_codigo_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6692,7 +6088,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5201 (class 2606 OID 40880)
+-- TOC entry 5202 (class 2606 OID 40880)
 -- Name: permisos permisos_codigo_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6701,7 +6097,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5203 (class 2606 OID 40916)
+-- TOC entry 5204 (class 2606 OID 40916)
 -- Name: permisos permisos_codigo_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6710,7 +6106,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5205 (class 2606 OID 40882)
+-- TOC entry 5206 (class 2606 OID 40882)
 -- Name: permisos permisos_codigo_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6719,7 +6115,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5207 (class 2606 OID 40914)
+-- TOC entry 5208 (class 2606 OID 40914)
 -- Name: permisos permisos_codigo_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6728,7 +6124,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5209 (class 2606 OID 40884)
+-- TOC entry 5210 (class 2606 OID 40884)
 -- Name: permisos permisos_codigo_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6737,7 +6133,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5211 (class 2606 OID 40904)
+-- TOC entry 5212 (class 2606 OID 40904)
 -- Name: permisos permisos_codigo_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6746,7 +6142,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5213 (class 2606 OID 40886)
+-- TOC entry 5214 (class 2606 OID 40886)
 -- Name: permisos permisos_codigo_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6755,7 +6151,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5215 (class 2606 OID 40902)
+-- TOC entry 5216 (class 2606 OID 40902)
 -- Name: permisos permisos_codigo_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6764,7 +6160,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5217 (class 2606 OID 40888)
+-- TOC entry 5218 (class 2606 OID 40888)
 -- Name: permisos permisos_codigo_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6773,7 +6169,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5219 (class 2606 OID 40932)
+-- TOC entry 5220 (class 2606 OID 40932)
 -- Name: permisos permisos_codigo_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6782,7 +6178,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5221 (class 2606 OID 40900)
+-- TOC entry 5222 (class 2606 OID 40900)
 -- Name: permisos permisos_codigo_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6791,7 +6187,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5223 (class 2606 OID 40890)
+-- TOC entry 5224 (class 2606 OID 40890)
 -- Name: permisos permisos_codigo_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6800,7 +6196,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5225 (class 2606 OID 40898)
+-- TOC entry 5226 (class 2606 OID 40898)
 -- Name: permisos permisos_codigo_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6809,7 +6205,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5227 (class 2606 OID 40892)
+-- TOC entry 5228 (class 2606 OID 40892)
 -- Name: permisos permisos_codigo_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6818,7 +6214,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5229 (class 2606 OID 40896)
+-- TOC entry 5230 (class 2606 OID 40896)
 -- Name: permisos permisos_codigo_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6827,7 +6223,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5231 (class 2606 OID 40894)
+-- TOC entry 5232 (class 2606 OID 40894)
 -- Name: permisos permisos_codigo_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6836,7 +6232,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5233 (class 2606 OID 40912)
+-- TOC entry 5234 (class 2606 OID 40912)
 -- Name: permisos permisos_codigo_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6845,7 +6241,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5235 (class 2606 OID 40906)
+-- TOC entry 5236 (class 2606 OID 40906)
 -- Name: permisos permisos_codigo_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6854,7 +6250,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5237 (class 2606 OID 40910)
+-- TOC entry 5238 (class 2606 OID 40910)
 -- Name: permisos permisos_codigo_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6863,7 +6259,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5239 (class 2606 OID 40908)
+-- TOC entry 5240 (class 2606 OID 40908)
 -- Name: permisos permisos_codigo_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6872,7 +6268,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5241 (class 2606 OID 40926)
+-- TOC entry 5242 (class 2606 OID 40926)
 -- Name: permisos permisos_codigo_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6881,7 +6277,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5243 (class 2606 OID 40878)
+-- TOC entry 5244 (class 2606 OID 40878)
 -- Name: permisos permisos_codigo_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6890,7 +6286,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5245 (class 2606 OID 40940)
+-- TOC entry 5246 (class 2606 OID 40940)
 -- Name: permisos permisos_codigo_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6899,7 +6295,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5247 (class 2606 OID 40876)
+-- TOC entry 5248 (class 2606 OID 40876)
 -- Name: permisos permisos_codigo_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6908,7 +6304,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5249 (class 2606 OID 40874)
+-- TOC entry 5250 (class 2606 OID 40874)
 -- Name: permisos permisos_codigo_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6917,7 +6313,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5251 (class 2606 OID 40934)
+-- TOC entry 5252 (class 2606 OID 40934)
 -- Name: permisos permisos_codigo_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6926,7 +6322,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5253 (class 2606 OID 40924)
+-- TOC entry 5254 (class 2606 OID 40924)
 -- Name: permisos permisos_codigo_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6935,7 +6331,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5255 (class 2606 OID 40922)
+-- TOC entry 5256 (class 2606 OID 40922)
 -- Name: permisos permisos_codigo_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6944,7 +6340,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5257 (class 2606 OID 40936)
+-- TOC entry 5258 (class 2606 OID 40936)
 -- Name: permisos permisos_codigo_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6953,7 +6349,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5259 (class 2606 OID 40920)
+-- TOC entry 5260 (class 2606 OID 40920)
 -- Name: permisos permisos_codigo_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6962,7 +6358,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5261 (class 2606 OID 40938)
+-- TOC entry 5262 (class 2606 OID 40938)
 -- Name: permisos permisos_codigo_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6971,7 +6367,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5263 (class 2606 OID 23296)
+-- TOC entry 5264 (class 2606 OID 23296)
 -- Name: permisos permisos_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6980,7 +6376,7 @@ ALTER TABLE ONLY public.permisos
 
 
 --
--- TOC entry 5759 (class 2606 OID 39799)
+-- TOC entry 5761 (class 2606 OID 39799)
 -- Name: precio precio_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6989,7 +6385,7 @@ ALTER TABLE ONLY public.precio
 
 
 --
--- TOC entry 5732 (class 2606 OID 23596)
+-- TOC entry 5734 (class 2606 OID 23596)
 -- Name: preferencias_usuario preferencias_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -6998,7 +6394,7 @@ ALTER TABLE ONLY public.preferencias_usuario
 
 
 --
--- TOC entry 5734 (class 2606 OID 41526)
+-- TOC entry 5736 (class 2606 OID 41526)
 -- Name: preferencias_usuario preferencias_usuario_usuario_id_clave_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7007,7 +6403,7 @@ ALTER TABLE ONLY public.preferencias_usuario
 
 
 --
--- TOC entry 5477 (class 2606 OID 41215)
+-- TOC entry 5478 (class 2606 OID 41215)
 -- Name: presentaciones presentaciones_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7016,7 +6412,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5479 (class 2606 OID 41217)
+-- TOC entry 5480 (class 2606 OID 41217)
 -- Name: presentaciones presentaciones_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7025,7 +6421,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5481 (class 2606 OID 41197)
+-- TOC entry 5482 (class 2606 OID 41197)
 -- Name: presentaciones presentaciones_nombre_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7034,7 +6430,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5483 (class 2606 OID 41219)
+-- TOC entry 5484 (class 2606 OID 41219)
 -- Name: presentaciones presentaciones_nombre_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7043,7 +6439,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5485 (class 2606 OID 41195)
+-- TOC entry 5486 (class 2606 OID 41195)
 -- Name: presentaciones presentaciones_nombre_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7052,7 +6448,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5487 (class 2606 OID 41221)
+-- TOC entry 5488 (class 2606 OID 41221)
 -- Name: presentaciones presentaciones_nombre_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7061,7 +6457,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5489 (class 2606 OID 41193)
+-- TOC entry 5490 (class 2606 OID 41193)
 -- Name: presentaciones presentaciones_nombre_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7070,7 +6466,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5491 (class 2606 OID 41175)
+-- TOC entry 5492 (class 2606 OID 41175)
 -- Name: presentaciones presentaciones_nombre_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7079,7 +6475,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5493 (class 2606 OID 41191)
+-- TOC entry 5494 (class 2606 OID 41191)
 -- Name: presentaciones presentaciones_nombre_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7088,7 +6484,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5495 (class 2606 OID 41177)
+-- TOC entry 5496 (class 2606 OID 41177)
 -- Name: presentaciones presentaciones_nombre_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7097,7 +6493,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5497 (class 2606 OID 41189)
+-- TOC entry 5498 (class 2606 OID 41189)
 -- Name: presentaciones presentaciones_nombre_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7106,7 +6502,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5499 (class 2606 OID 41179)
+-- TOC entry 5500 (class 2606 OID 41179)
 -- Name: presentaciones presentaciones_nombre_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7115,7 +6511,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5501 (class 2606 OID 41199)
+-- TOC entry 5502 (class 2606 OID 41199)
 -- Name: presentaciones presentaciones_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7124,7 +6520,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5503 (class 2606 OID 41187)
+-- TOC entry 5504 (class 2606 OID 41187)
 -- Name: presentaciones presentaciones_nombre_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7133,7 +6529,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5505 (class 2606 OID 41181)
+-- TOC entry 5506 (class 2606 OID 41181)
 -- Name: presentaciones presentaciones_nombre_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7142,7 +6538,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5507 (class 2606 OID 41185)
+-- TOC entry 5508 (class 2606 OID 41185)
 -- Name: presentaciones presentaciones_nombre_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7151,7 +6547,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5509 (class 2606 OID 41183)
+-- TOC entry 5510 (class 2606 OID 41183)
 -- Name: presentaciones presentaciones_nombre_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7160,7 +6556,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5511 (class 2606 OID 41173)
+-- TOC entry 5512 (class 2606 OID 41173)
 -- Name: presentaciones presentaciones_nombre_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7169,7 +6565,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5513 (class 2606 OID 41223)
+-- TOC entry 5514 (class 2606 OID 41223)
 -- Name: presentaciones presentaciones_nombre_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7178,7 +6574,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5515 (class 2606 OID 41171)
+-- TOC entry 5516 (class 2606 OID 41171)
 -- Name: presentaciones presentaciones_nombre_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7187,7 +6583,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5517 (class 2606 OID 41225)
+-- TOC entry 5518 (class 2606 OID 41225)
 -- Name: presentaciones presentaciones_nombre_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7196,7 +6592,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5519 (class 2606 OID 41169)
+-- TOC entry 5520 (class 2606 OID 41169)
 -- Name: presentaciones presentaciones_nombre_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7205,7 +6601,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5521 (class 2606 OID 41227)
+-- TOC entry 5522 (class 2606 OID 41227)
 -- Name: presentaciones presentaciones_nombre_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7214,7 +6610,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5523 (class 2606 OID 41213)
+-- TOC entry 5524 (class 2606 OID 41213)
 -- Name: presentaciones presentaciones_nombre_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7223,7 +6619,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5525 (class 2606 OID 41167)
+-- TOC entry 5526 (class 2606 OID 41167)
 -- Name: presentaciones presentaciones_nombre_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7232,7 +6628,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5527 (class 2606 OID 41229)
+-- TOC entry 5528 (class 2606 OID 41229)
 -- Name: presentaciones presentaciones_nombre_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7241,7 +6637,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5529 (class 2606 OID 41165)
+-- TOC entry 5530 (class 2606 OID 41165)
 -- Name: presentaciones presentaciones_nombre_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7250,7 +6646,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5531 (class 2606 OID 41163)
+-- TOC entry 5532 (class 2606 OID 41163)
 -- Name: presentaciones presentaciones_nombre_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7259,7 +6655,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5533 (class 2606 OID 41201)
+-- TOC entry 5534 (class 2606 OID 41201)
 -- Name: presentaciones presentaciones_nombre_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7268,7 +6664,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5535 (class 2606 OID 41211)
+-- TOC entry 5536 (class 2606 OID 41211)
 -- Name: presentaciones presentaciones_nombre_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7277,7 +6673,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5537 (class 2606 OID 41209)
+-- TOC entry 5538 (class 2606 OID 41209)
 -- Name: presentaciones presentaciones_nombre_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7286,7 +6682,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5539 (class 2606 OID 41203)
+-- TOC entry 5540 (class 2606 OID 41203)
 -- Name: presentaciones presentaciones_nombre_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7295,7 +6691,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5541 (class 2606 OID 41207)
+-- TOC entry 5542 (class 2606 OID 41207)
 -- Name: presentaciones presentaciones_nombre_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7304,7 +6700,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5543 (class 2606 OID 41205)
+-- TOC entry 5544 (class 2606 OID 41205)
 -- Name: presentaciones presentaciones_nombre_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7313,7 +6709,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5545 (class 2606 OID 23357)
+-- TOC entry 5546 (class 2606 OID 23357)
 -- Name: presentaciones presentaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7322,7 +6718,7 @@ ALTER TABLE ONLY public.presentaciones
 
 
 --
--- TOC entry 5752 (class 2606 OID 39770)
+-- TOC entry 5754 (class 2606 OID 39770)
 -- Name: producto_presentacion producto_presentacion_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7331,7 +6727,7 @@ ALTER TABLE ONLY public.producto_presentacion
 
 
 --
--- TOC entry 5756 (class 2606 OID 41550)
+-- TOC entry 5758 (class 2606 OID 41550)
 -- Name: producto_presentacion producto_presentacion_producto_id_nivel_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7340,7 +6736,7 @@ ALTER TABLE ONLY public.producto_presentacion
 
 
 --
--- TOC entry 5626 (class 2606 OID 41341)
+-- TOC entry 5627 (class 2606 OID 41341)
 -- Name: productos productos_codigo_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7349,7 +6745,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5628 (class 2606 OID 41343)
+-- TOC entry 5629 (class 2606 OID 41343)
 -- Name: productos productos_codigo_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7358,7 +6754,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5630 (class 2606 OID 41331)
+-- TOC entry 5631 (class 2606 OID 41331)
 -- Name: productos productos_codigo_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7367,7 +6763,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5632 (class 2606 OID 41353)
+-- TOC entry 5633 (class 2606 OID 41353)
 -- Name: productos productos_codigo_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7376,7 +6772,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5634 (class 2606 OID 41329)
+-- TOC entry 5635 (class 2606 OID 41329)
 -- Name: productos productos_codigo_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7385,7 +6781,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5636 (class 2606 OID 41355)
+-- TOC entry 5637 (class 2606 OID 41355)
 -- Name: productos productos_codigo_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7394,7 +6790,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5638 (class 2606 OID 41327)
+-- TOC entry 5639 (class 2606 OID 41327)
 -- Name: productos productos_codigo_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7403,7 +6799,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5640 (class 2606 OID 41357)
+-- TOC entry 5641 (class 2606 OID 41357)
 -- Name: productos productos_codigo_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7412,7 +6808,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5642 (class 2606 OID 41325)
+-- TOC entry 5643 (class 2606 OID 41325)
 -- Name: productos productos_codigo_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7421,7 +6817,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5644 (class 2606 OID 41359)
+-- TOC entry 5645 (class 2606 OID 41359)
 -- Name: productos productos_codigo_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7430,7 +6826,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5646 (class 2606 OID 41323)
+-- TOC entry 5647 (class 2606 OID 41323)
 -- Name: productos productos_codigo_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7439,7 +6835,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5648 (class 2606 OID 41361)
+-- TOC entry 5649 (class 2606 OID 41361)
 -- Name: productos productos_codigo_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7448,7 +6844,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5650 (class 2606 OID 41345)
+-- TOC entry 5651 (class 2606 OID 41345)
 -- Name: productos productos_codigo_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7457,7 +6853,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5652 (class 2606 OID 41321)
+-- TOC entry 5653 (class 2606 OID 41321)
 -- Name: productos productos_codigo_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7466,7 +6862,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5654 (class 2606 OID 41365)
+-- TOC entry 5655 (class 2606 OID 41365)
 -- Name: productos productos_codigo_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7475,7 +6871,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5656 (class 2606 OID 41319)
+-- TOC entry 5657 (class 2606 OID 41319)
 -- Name: productos productos_codigo_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7484,7 +6880,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5658 (class 2606 OID 41367)
+-- TOC entry 5659 (class 2606 OID 41367)
 -- Name: productos productos_codigo_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7493,7 +6889,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5660 (class 2606 OID 41317)
+-- TOC entry 5661 (class 2606 OID 41317)
 -- Name: productos productos_codigo_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7502,7 +6898,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5662 (class 2606 OID 41369)
+-- TOC entry 5663 (class 2606 OID 41369)
 -- Name: productos productos_codigo_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7511,7 +6907,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5664 (class 2606 OID 41315)
+-- TOC entry 5665 (class 2606 OID 41315)
 -- Name: productos productos_codigo_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7520,7 +6916,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5666 (class 2606 OID 41363)
+-- TOC entry 5667 (class 2606 OID 41363)
 -- Name: productos productos_codigo_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7529,7 +6925,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5668 (class 2606 OID 41313)
+-- TOC entry 5669 (class 2606 OID 41313)
 -- Name: productos productos_codigo_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7538,7 +6934,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5670 (class 2606 OID 41371)
+-- TOC entry 5671 (class 2606 OID 41371)
 -- Name: productos productos_codigo_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7547,7 +6943,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5672 (class 2606 OID 41339)
+-- TOC entry 5673 (class 2606 OID 41339)
 -- Name: productos productos_codigo_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7556,7 +6952,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5674 (class 2606 OID 41311)
+-- TOC entry 5675 (class 2606 OID 41311)
 -- Name: productos productos_codigo_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7565,7 +6961,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5676 (class 2606 OID 41373)
+-- TOC entry 5677 (class 2606 OID 41373)
 -- Name: productos productos_codigo_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7574,7 +6970,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5678 (class 2606 OID 41309)
+-- TOC entry 5679 (class 2606 OID 41309)
 -- Name: productos productos_codigo_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7583,7 +6979,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5680 (class 2606 OID 41307)
+-- TOC entry 5681 (class 2606 OID 41307)
 -- Name: productos productos_codigo_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7592,7 +6988,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5682 (class 2606 OID 41347)
+-- TOC entry 5683 (class 2606 OID 41347)
 -- Name: productos productos_codigo_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7601,7 +6997,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5684 (class 2606 OID 41337)
+-- TOC entry 5685 (class 2606 OID 41337)
 -- Name: productos productos_codigo_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7610,7 +7006,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5686 (class 2606 OID 41335)
+-- TOC entry 5687 (class 2606 OID 41335)
 -- Name: productos productos_codigo_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7619,7 +7015,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5688 (class 2606 OID 41349)
+-- TOC entry 5689 (class 2606 OID 41349)
 -- Name: productos productos_codigo_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7628,7 +7024,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5690 (class 2606 OID 41333)
+-- TOC entry 5691 (class 2606 OID 41333)
 -- Name: productos productos_codigo_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7637,7 +7033,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5692 (class 2606 OID 41351)
+-- TOC entry 5693 (class 2606 OID 41351)
 -- Name: productos productos_codigo_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7646,7 +7042,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5694 (class 2606 OID 23388)
+-- TOC entry 5695 (class 2606 OID 23388)
 -- Name: productos productos_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7655,7 +7051,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5730 (class 2606 OID 23582)
+-- TOC entry 5732 (class 2606 OID 23582)
 -- Name: reportes_generados reportes_generados_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7664,7 +7060,7 @@ ALTER TABLE ONLY public.reportes_generados
 
 
 --
--- TOC entry 5265 (class 2606 OID 23303)
+-- TOC entry 5266 (class 2606 OID 23303)
 -- Name: rol_permisos rol_permisos_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7673,7 +7069,7 @@ ALTER TABLE ONLY public.rol_permisos
 
 
 --
--- TOC entry 5054 (class 2606 OID 40715)
+-- TOC entry 5055 (class 2606 OID 40715)
 -- Name: roles roles_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7682,7 +7078,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5056 (class 2606 OID 40717)
+-- TOC entry 5057 (class 2606 OID 40717)
 -- Name: roles roles_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7691,7 +7087,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5058 (class 2606 OID 40707)
+-- TOC entry 5059 (class 2606 OID 40707)
 -- Name: roles roles_nombre_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7700,7 +7096,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5060 (class 2606 OID 40729)
+-- TOC entry 5061 (class 2606 OID 40729)
 -- Name: roles roles_nombre_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7709,7 +7105,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5062 (class 2606 OID 40705)
+-- TOC entry 5063 (class 2606 OID 40705)
 -- Name: roles roles_nombre_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7718,7 +7114,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5064 (class 2606 OID 40731)
+-- TOC entry 5065 (class 2606 OID 40731)
 -- Name: roles roles_nombre_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7727,7 +7123,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5066 (class 2606 OID 40703)
+-- TOC entry 5067 (class 2606 OID 40703)
 -- Name: roles roles_nombre_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7736,7 +7132,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5068 (class 2606 OID 40733)
+-- TOC entry 5069 (class 2606 OID 40733)
 -- Name: roles roles_nombre_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7745,7 +7141,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5070 (class 2606 OID 40701)
+-- TOC entry 5071 (class 2606 OID 40701)
 -- Name: roles roles_nombre_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7754,7 +7150,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5072 (class 2606 OID 40735)
+-- TOC entry 5073 (class 2606 OID 40735)
 -- Name: roles roles_nombre_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7763,7 +7159,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5074 (class 2606 OID 40699)
+-- TOC entry 5075 (class 2606 OID 40699)
 -- Name: roles roles_nombre_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7772,7 +7168,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5076 (class 2606 OID 40737)
+-- TOC entry 5077 (class 2606 OID 40737)
 -- Name: roles roles_nombre_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7781,7 +7177,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5078 (class 2606 OID 40719)
+-- TOC entry 5079 (class 2606 OID 40719)
 -- Name: roles roles_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7790,7 +7186,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5080 (class 2606 OID 40697)
+-- TOC entry 5081 (class 2606 OID 40697)
 -- Name: roles roles_nombre_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7799,7 +7195,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5082 (class 2606 OID 40739)
+-- TOC entry 5083 (class 2606 OID 40739)
 -- Name: roles roles_nombre_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7808,7 +7204,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5084 (class 2606 OID 40695)
+-- TOC entry 5085 (class 2606 OID 40695)
 -- Name: roles roles_nombre_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7817,7 +7213,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5086 (class 2606 OID 40741)
+-- TOC entry 5087 (class 2606 OID 40741)
 -- Name: roles roles_nombre_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7826,7 +7222,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5088 (class 2606 OID 40693)
+-- TOC entry 5089 (class 2606 OID 40693)
 -- Name: roles roles_nombre_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7835,7 +7231,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5090 (class 2606 OID 40691)
+-- TOC entry 5091 (class 2606 OID 40691)
 -- Name: roles roles_nombre_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7844,7 +7240,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5092 (class 2606 OID 40689)
+-- TOC entry 5093 (class 2606 OID 40689)
 -- Name: roles roles_nombre_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7853,7 +7249,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5094 (class 2606 OID 40687)
+-- TOC entry 5095 (class 2606 OID 40687)
 -- Name: roles roles_nombre_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7862,7 +7258,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5096 (class 2606 OID 40685)
+-- TOC entry 5097 (class 2606 OID 40685)
 -- Name: roles roles_nombre_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7871,7 +7267,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5098 (class 2606 OID 40743)
+-- TOC entry 5099 (class 2606 OID 40743)
 -- Name: roles roles_nombre_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7880,7 +7276,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5100 (class 2606 OID 40713)
+-- TOC entry 5101 (class 2606 OID 40713)
 -- Name: roles roles_nombre_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7889,7 +7285,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5102 (class 2606 OID 40683)
+-- TOC entry 5103 (class 2606 OID 40683)
 -- Name: roles roles_nombre_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7898,7 +7294,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5104 (class 2606 OID 40745)
+-- TOC entry 5105 (class 2606 OID 40745)
 -- Name: roles roles_nombre_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7907,7 +7303,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5106 (class 2606 OID 40681)
+-- TOC entry 5107 (class 2606 OID 40681)
 -- Name: roles roles_nombre_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7916,7 +7312,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5108 (class 2606 OID 40679)
+-- TOC entry 5109 (class 2606 OID 40679)
 -- Name: roles roles_nombre_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7925,7 +7321,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5110 (class 2606 OID 40721)
+-- TOC entry 5111 (class 2606 OID 40721)
 -- Name: roles roles_nombre_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7934,7 +7330,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5112 (class 2606 OID 40723)
+-- TOC entry 5113 (class 2606 OID 40723)
 -- Name: roles roles_nombre_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7943,7 +7339,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5114 (class 2606 OID 40711)
+-- TOC entry 5115 (class 2606 OID 40711)
 -- Name: roles roles_nombre_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7952,7 +7348,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5116 (class 2606 OID 40725)
+-- TOC entry 5117 (class 2606 OID 40725)
 -- Name: roles roles_nombre_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7961,7 +7357,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5118 (class 2606 OID 40709)
+-- TOC entry 5119 (class 2606 OID 40709)
 -- Name: roles roles_nombre_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7970,7 +7366,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5120 (class 2606 OID 40727)
+-- TOC entry 5121 (class 2606 OID 40727)
 -- Name: roles roles_nombre_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7979,7 +7375,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5122 (class 2606 OID 23267)
+-- TOC entry 5123 (class 2606 OID 23267)
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7988,7 +7384,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 5741 (class 2606 OID 41539)
+-- TOC entry 5743 (class 2606 OID 41539)
 -- Name: tipo_envase tipo_envase_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -7997,7 +7393,7 @@ ALTER TABLE ONLY public.tipo_envase
 
 
 --
--- TOC entry 5743 (class 2606 OID 41541)
+-- TOC entry 5745 (class 2606 OID 41541)
 -- Name: tipo_envase tipo_envase_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8006,7 +7402,7 @@ ALTER TABLE ONLY public.tipo_envase
 
 
 --
--- TOC entry 5745 (class 2606 OID 41537)
+-- TOC entry 5747 (class 2606 OID 41537)
 -- Name: tipo_envase tipo_envase_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8015,7 +7411,7 @@ ALTER TABLE ONLY public.tipo_envase
 
 
 --
--- TOC entry 5747 (class 2606 OID 39759)
+-- TOC entry 5749 (class 2606 OID 39759)
 -- Name: tipo_envase tipo_envase_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8024,7 +7420,7 @@ ALTER TABLE ONLY public.tipo_envase
 
 
 --
--- TOC entry 5267 (class 2606 OID 23321)
+-- TOC entry 5268 (class 2606 OID 23321)
 -- Name: tokens_recuperacion tokens_recuperacion_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8033,7 +7429,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5269 (class 2606 OID 40983)
+-- TOC entry 5270 (class 2606 OID 40983)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8042,7 +7438,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5271 (class 2606 OID 40985)
+-- TOC entry 5272 (class 2606 OID 40985)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8051,7 +7447,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5273 (class 2606 OID 40973)
+-- TOC entry 5274 (class 2606 OID 40973)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8060,7 +7456,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5275 (class 2606 OID 40995)
+-- TOC entry 5276 (class 2606 OID 40995)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8069,7 +7465,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5277 (class 2606 OID 40971)
+-- TOC entry 5278 (class 2606 OID 40971)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8078,7 +7474,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5279 (class 2606 OID 40997)
+-- TOC entry 5280 (class 2606 OID 40997)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8087,7 +7483,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5281 (class 2606 OID 40969)
+-- TOC entry 5282 (class 2606 OID 40969)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8096,7 +7492,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5283 (class 2606 OID 40999)
+-- TOC entry 5284 (class 2606 OID 40999)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8105,7 +7501,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5285 (class 2606 OID 40967)
+-- TOC entry 5286 (class 2606 OID 40967)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8114,7 +7510,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5287 (class 2606 OID 41001)
+-- TOC entry 5288 (class 2606 OID 41001)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8123,7 +7519,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5289 (class 2606 OID 40965)
+-- TOC entry 5290 (class 2606 OID 40965)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8132,7 +7528,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5291 (class 2606 OID 41003)
+-- TOC entry 5292 (class 2606 OID 41003)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8141,7 +7537,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5293 (class 2606 OID 40987)
+-- TOC entry 5294 (class 2606 OID 40987)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8150,7 +7546,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5295 (class 2606 OID 40963)
+-- TOC entry 5296 (class 2606 OID 40963)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8159,7 +7555,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5297 (class 2606 OID 41005)
+-- TOC entry 5298 (class 2606 OID 41005)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8168,7 +7564,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5299 (class 2606 OID 40961)
+-- TOC entry 5300 (class 2606 OID 40961)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8177,7 +7573,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5301 (class 2606 OID 41007)
+-- TOC entry 5302 (class 2606 OID 41007)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8186,7 +7582,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5303 (class 2606 OID 40959)
+-- TOC entry 5304 (class 2606 OID 40959)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8195,7 +7591,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5305 (class 2606 OID 41009)
+-- TOC entry 5306 (class 2606 OID 41009)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8204,7 +7600,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5307 (class 2606 OID 40957)
+-- TOC entry 5308 (class 2606 OID 40957)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8213,7 +7609,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5309 (class 2606 OID 41011)
+-- TOC entry 5310 (class 2606 OID 41011)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8222,7 +7618,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5311 (class 2606 OID 40955)
+-- TOC entry 5312 (class 2606 OID 40955)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8231,7 +7627,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5313 (class 2606 OID 41013)
+-- TOC entry 5314 (class 2606 OID 41013)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8240,7 +7636,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5315 (class 2606 OID 40981)
+-- TOC entry 5316 (class 2606 OID 40981)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8249,7 +7645,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5317 (class 2606 OID 40953)
+-- TOC entry 5318 (class 2606 OID 40953)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8258,7 +7654,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5319 (class 2606 OID 41015)
+-- TOC entry 5320 (class 2606 OID 41015)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8267,7 +7663,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5321 (class 2606 OID 40951)
+-- TOC entry 5322 (class 2606 OID 40951)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8276,7 +7672,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5323 (class 2606 OID 40949)
+-- TOC entry 5324 (class 2606 OID 40949)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8285,7 +7681,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5325 (class 2606 OID 40989)
+-- TOC entry 5326 (class 2606 OID 40989)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8294,7 +7690,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5327 (class 2606 OID 40979)
+-- TOC entry 5328 (class 2606 OID 40979)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8303,7 +7699,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5329 (class 2606 OID 40977)
+-- TOC entry 5330 (class 2606 OID 40977)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8312,7 +7708,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5331 (class 2606 OID 40991)
+-- TOC entry 5332 (class 2606 OID 40991)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8321,7 +7717,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5333 (class 2606 OID 40975)
+-- TOC entry 5334 (class 2606 OID 40975)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8330,7 +7726,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5335 (class 2606 OID 40993)
+-- TOC entry 5336 (class 2606 OID 40993)
 -- Name: tokens_recuperacion tokens_recuperacion_token_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8339,7 +7735,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5714 (class 2606 OID 23501)
+-- TOC entry 5716 (class 2606 OID 23501)
 -- Name: umbrales_configuracion umbrales_configuracion_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8348,7 +7744,7 @@ ALTER TABLE ONLY public.umbrales_configuracion
 
 
 --
--- TOC entry 5718 (class 2606 OID 41463)
+-- TOC entry 5720 (class 2606 OID 41463)
 -- Name: umbrales_configuracion umbrales_configuracion_tipo_producto_id_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8357,7 +7753,7 @@ ALTER TABLE ONLY public.umbrales_configuracion
 
 
 --
--- TOC entry 5407 (class 2606 OID 41127)
+-- TOC entry 5408 (class 2606 OID 41127)
 -- Name: unidades_medida unidades_medida_nombre_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8366,7 +7762,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5409 (class 2606 OID 41129)
+-- TOC entry 5410 (class 2606 OID 41129)
 -- Name: unidades_medida unidades_medida_nombre_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8375,7 +7771,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5411 (class 2606 OID 41117)
+-- TOC entry 5412 (class 2606 OID 41117)
 -- Name: unidades_medida unidades_medida_nombre_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8384,7 +7780,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5413 (class 2606 OID 41139)
+-- TOC entry 5414 (class 2606 OID 41139)
 -- Name: unidades_medida unidades_medida_nombre_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8393,7 +7789,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5415 (class 2606 OID 41115)
+-- TOC entry 5416 (class 2606 OID 41115)
 -- Name: unidades_medida unidades_medida_nombre_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8402,7 +7798,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5417 (class 2606 OID 41141)
+-- TOC entry 5418 (class 2606 OID 41141)
 -- Name: unidades_medida unidades_medida_nombre_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8411,7 +7807,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5419 (class 2606 OID 41113)
+-- TOC entry 5420 (class 2606 OID 41113)
 -- Name: unidades_medida unidades_medida_nombre_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8420,7 +7816,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5421 (class 2606 OID 41143)
+-- TOC entry 5422 (class 2606 OID 41143)
 -- Name: unidades_medida unidades_medida_nombre_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8429,7 +7825,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5423 (class 2606 OID 41111)
+-- TOC entry 5424 (class 2606 OID 41111)
 -- Name: unidades_medida unidades_medida_nombre_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8438,7 +7834,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5425 (class 2606 OID 41145)
+-- TOC entry 5426 (class 2606 OID 41145)
 -- Name: unidades_medida unidades_medida_nombre_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8447,7 +7843,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5427 (class 2606 OID 41109)
+-- TOC entry 5428 (class 2606 OID 41109)
 -- Name: unidades_medida unidades_medida_nombre_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8456,7 +7852,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5429 (class 2606 OID 41147)
+-- TOC entry 5430 (class 2606 OID 41147)
 -- Name: unidades_medida unidades_medida_nombre_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8465,7 +7861,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5431 (class 2606 OID 41131)
+-- TOC entry 5432 (class 2606 OID 41131)
 -- Name: unidades_medida unidades_medida_nombre_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8474,7 +7870,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5433 (class 2606 OID 41107)
+-- TOC entry 5434 (class 2606 OID 41107)
 -- Name: unidades_medida unidades_medida_nombre_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8483,7 +7879,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5435 (class 2606 OID 41149)
+-- TOC entry 5436 (class 2606 OID 41149)
 -- Name: unidades_medida unidades_medida_nombre_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8492,7 +7888,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5437 (class 2606 OID 41105)
+-- TOC entry 5438 (class 2606 OID 41105)
 -- Name: unidades_medida unidades_medida_nombre_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8501,7 +7897,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5439 (class 2606 OID 41151)
+-- TOC entry 5440 (class 2606 OID 41151)
 -- Name: unidades_medida unidades_medida_nombre_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8510,7 +7906,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5441 (class 2606 OID 41103)
+-- TOC entry 5442 (class 2606 OID 41103)
 -- Name: unidades_medida unidades_medida_nombre_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8519,7 +7915,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5443 (class 2606 OID 41153)
+-- TOC entry 5444 (class 2606 OID 41153)
 -- Name: unidades_medida unidades_medida_nombre_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8528,7 +7924,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5445 (class 2606 OID 41101)
+-- TOC entry 5446 (class 2606 OID 41101)
 -- Name: unidades_medida unidades_medida_nombre_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8537,7 +7933,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5447 (class 2606 OID 41155)
+-- TOC entry 5448 (class 2606 OID 41155)
 -- Name: unidades_medida unidades_medida_nombre_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8546,7 +7942,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5449 (class 2606 OID 41099)
+-- TOC entry 5450 (class 2606 OID 41099)
 -- Name: unidades_medida unidades_medida_nombre_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8555,7 +7951,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5451 (class 2606 OID 41157)
+-- TOC entry 5452 (class 2606 OID 41157)
 -- Name: unidades_medida unidades_medida_nombre_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8564,7 +7960,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5453 (class 2606 OID 41125)
+-- TOC entry 5454 (class 2606 OID 41125)
 -- Name: unidades_medida unidades_medida_nombre_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8573,7 +7969,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5455 (class 2606 OID 41097)
+-- TOC entry 5456 (class 2606 OID 41097)
 -- Name: unidades_medida unidades_medida_nombre_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8582,7 +7978,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5457 (class 2606 OID 41159)
+-- TOC entry 5458 (class 2606 OID 41159)
 -- Name: unidades_medida unidades_medida_nombre_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8591,7 +7987,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5459 (class 2606 OID 41095)
+-- TOC entry 5460 (class 2606 OID 41095)
 -- Name: unidades_medida unidades_medida_nombre_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8600,7 +7996,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5461 (class 2606 OID 41093)
+-- TOC entry 5462 (class 2606 OID 41093)
 -- Name: unidades_medida unidades_medida_nombre_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8609,7 +8005,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5463 (class 2606 OID 41133)
+-- TOC entry 5464 (class 2606 OID 41133)
 -- Name: unidades_medida unidades_medida_nombre_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8618,7 +8014,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5465 (class 2606 OID 41123)
+-- TOC entry 5466 (class 2606 OID 41123)
 -- Name: unidades_medida unidades_medida_nombre_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8627,7 +8023,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5467 (class 2606 OID 41121)
+-- TOC entry 5468 (class 2606 OID 41121)
 -- Name: unidades_medida unidades_medida_nombre_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8636,7 +8032,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5469 (class 2606 OID 41135)
+-- TOC entry 5470 (class 2606 OID 41135)
 -- Name: unidades_medida unidades_medida_nombre_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8645,7 +8041,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5471 (class 2606 OID 41119)
+-- TOC entry 5472 (class 2606 OID 41119)
 -- Name: unidades_medida unidades_medida_nombre_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8654,7 +8050,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5473 (class 2606 OID 41137)
+-- TOC entry 5474 (class 2606 OID 41137)
 -- Name: unidades_medida unidades_medida_nombre_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8663,7 +8059,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5475 (class 2606 OID 23346)
+-- TOC entry 5476 (class 2606 OID 23346)
 -- Name: unidades_medida unidades_medida_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8672,7 +8068,7 @@ ALTER TABLE ONLY public.unidades_medida
 
 
 --
--- TOC entry 5125 (class 2606 OID 40791)
+-- TOC entry 5126 (class 2606 OID 40791)
 -- Name: usuarios usuarios_email_key; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8681,7 +8077,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5127 (class 2606 OID 40793)
+-- TOC entry 5128 (class 2606 OID 40793)
 -- Name: usuarios usuarios_email_key1; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8690,7 +8086,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5129 (class 2606 OID 40781)
+-- TOC entry 5130 (class 2606 OID 40781)
 -- Name: usuarios usuarios_email_key10; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8699,7 +8095,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5131 (class 2606 OID 40779)
+-- TOC entry 5132 (class 2606 OID 40779)
 -- Name: usuarios usuarios_email_key11; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8708,7 +8104,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5133 (class 2606 OID 40775)
+-- TOC entry 5134 (class 2606 OID 40775)
 -- Name: usuarios usuarios_email_key12; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8717,7 +8113,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5135 (class 2606 OID 40801)
+-- TOC entry 5136 (class 2606 OID 40801)
 -- Name: usuarios usuarios_email_key13; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8726,7 +8122,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5137 (class 2606 OID 40773)
+-- TOC entry 5138 (class 2606 OID 40773)
 -- Name: usuarios usuarios_email_key14; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8735,7 +8131,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5139 (class 2606 OID 40803)
+-- TOC entry 5140 (class 2606 OID 40803)
 -- Name: usuarios usuarios_email_key15; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8744,7 +8140,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5141 (class 2606 OID 40771)
+-- TOC entry 5142 (class 2606 OID 40771)
 -- Name: usuarios usuarios_email_key16; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8753,7 +8149,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5143 (class 2606 OID 40765)
+-- TOC entry 5144 (class 2606 OID 40765)
 -- Name: usuarios usuarios_email_key17; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8762,7 +8158,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5145 (class 2606 OID 40769)
+-- TOC entry 5146 (class 2606 OID 40769)
 -- Name: usuarios usuarios_email_key18; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8771,7 +8167,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5147 (class 2606 OID 40767)
+-- TOC entry 5148 (class 2606 OID 40767)
 -- Name: usuarios usuarios_email_key19; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8780,7 +8176,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5149 (class 2606 OID 40795)
+-- TOC entry 5150 (class 2606 OID 40795)
 -- Name: usuarios usuarios_email_key2; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8789,7 +8185,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5151 (class 2606 OID 40763)
+-- TOC entry 5152 (class 2606 OID 40763)
 -- Name: usuarios usuarios_email_key20; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8798,7 +8194,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5153 (class 2606 OID 40805)
+-- TOC entry 5154 (class 2606 OID 40805)
 -- Name: usuarios usuarios_email_key21; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8807,7 +8203,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5155 (class 2606 OID 40761)
+-- TOC entry 5156 (class 2606 OID 40761)
 -- Name: usuarios usuarios_email_key22; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8816,7 +8212,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5157 (class 2606 OID 40807)
+-- TOC entry 5158 (class 2606 OID 40807)
 -- Name: usuarios usuarios_email_key23; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8825,7 +8221,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5159 (class 2606 OID 40759)
+-- TOC entry 5160 (class 2606 OID 40759)
 -- Name: usuarios usuarios_email_key24; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8834,7 +8230,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5161 (class 2606 OID 40809)
+-- TOC entry 5162 (class 2606 OID 40809)
 -- Name: usuarios usuarios_email_key25; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8843,7 +8239,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5163 (class 2606 OID 40757)
+-- TOC entry 5164 (class 2606 OID 40757)
 -- Name: usuarios usuarios_email_key26; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8852,7 +8248,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5165 (class 2606 OID 40811)
+-- TOC entry 5166 (class 2606 OID 40811)
 -- Name: usuarios usuarios_email_key27; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8861,7 +8257,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5167 (class 2606 OID 40755)
+-- TOC entry 5168 (class 2606 OID 40755)
 -- Name: usuarios usuarios_email_key28; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8870,7 +8266,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5169 (class 2606 OID 40813)
+-- TOC entry 5170 (class 2606 OID 40813)
 -- Name: usuarios usuarios_email_key29; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8879,7 +8275,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5171 (class 2606 OID 40789)
+-- TOC entry 5172 (class 2606 OID 40789)
 -- Name: usuarios usuarios_email_key3; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8888,7 +8284,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5173 (class 2606 OID 40753)
+-- TOC entry 5174 (class 2606 OID 40753)
 -- Name: usuarios usuarios_email_key30; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8897,7 +8293,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5175 (class 2606 OID 40815)
+-- TOC entry 5176 (class 2606 OID 40815)
 -- Name: usuarios usuarios_email_key31; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8906,7 +8302,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5177 (class 2606 OID 40751)
+-- TOC entry 5178 (class 2606 OID 40751)
 -- Name: usuarios usuarios_email_key32; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8915,7 +8311,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5179 (class 2606 OID 40749)
+-- TOC entry 5180 (class 2606 OID 40749)
 -- Name: usuarios usuarios_email_key33; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8924,7 +8320,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5181 (class 2606 OID 40797)
+-- TOC entry 5182 (class 2606 OID 40797)
 -- Name: usuarios usuarios_email_key4; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8933,7 +8329,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5183 (class 2606 OID 40787)
+-- TOC entry 5184 (class 2606 OID 40787)
 -- Name: usuarios usuarios_email_key5; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8942,7 +8338,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5185 (class 2606 OID 40785)
+-- TOC entry 5186 (class 2606 OID 40785)
 -- Name: usuarios usuarios_email_key6; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8951,7 +8347,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5187 (class 2606 OID 40799)
+-- TOC entry 5188 (class 2606 OID 40799)
 -- Name: usuarios usuarios_email_key7; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8960,7 +8356,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5189 (class 2606 OID 40783)
+-- TOC entry 5190 (class 2606 OID 40783)
 -- Name: usuarios usuarios_email_key8; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8969,7 +8365,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5191 (class 2606 OID 40777)
+-- TOC entry 5192 (class 2606 OID 40777)
 -- Name: usuarios usuarios_email_key9; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8978,7 +8374,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5193 (class 2606 OID 23280)
+-- TOC entry 5194 (class 2606 OID 23280)
 -- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8987,7 +8383,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5709 (class 2606 OID 23462)
+-- TOC entry 5710 (class 2606 OID 23462)
 -- Name: ventas ventas_pkey; Type: CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -8996,7 +8392,7 @@ ALTER TABLE ONLY public.ventas
 
 
 --
--- TOC entry 5043 (class 1259 OID 23211)
+-- TOC entry 5044 (class 1259 OID 23211)
 -- Name: idx_predicciones_producto; Type: INDEX; Schema: ml; Owner: postgres
 --
 
@@ -9004,7 +8400,7 @@ CREATE INDEX idx_predicciones_producto ON ml.predicciones_demanda USING btree (p
 
 
 --
--- TOC entry 5046 (class 1259 OID 23224)
+-- TOC entry 5047 (class 1259 OID 23224)
 -- Name: idx_riesgos_producto; Type: INDEX; Schema: ml; Owner: postgres
 --
 
@@ -9012,7 +8408,7 @@ CREATE INDEX idx_riesgos_producto ON ml.riesgos_vencimiento USING btree (product
 
 
 --
--- TOC entry 5722 (class 1259 OID 41505)
+-- TOC entry 5724 (class 1259 OID 41505)
 -- Name: alertas_estado; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9020,7 +8416,7 @@ CREATE INDEX alertas_estado ON public.alertas USING btree (estado);
 
 
 --
--- TOC entry 5725 (class 1259 OID 23557)
+-- TOC entry 5727 (class 1259 OID 23557)
 -- Name: alertas_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9028,7 +8424,7 @@ CREATE INDEX alertas_producto_id ON public.alertas USING btree (producto_id);
 
 
 --
--- TOC entry 5726 (class 1259 OID 41502)
+-- TOC entry 5728 (class 1259 OID 41502)
 -- Name: alertas_severidad; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9036,7 +8432,7 @@ CREATE INDEX alertas_severidad ON public.alertas USING btree (severidad);
 
 
 --
--- TOC entry 5735 (class 1259 OID 41532)
+-- TOC entry 5737 (class 1259 OID 41532)
 -- Name: auditoria_entidad; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9044,7 +8440,7 @@ CREATE INDEX auditoria_entidad ON public.auditoria USING btree (entidad);
 
 
 --
--- TOC entry 5736 (class 1259 OID 41533)
+-- TOC entry 5738 (class 1259 OID 41533)
 -- Name: auditoria_fecha; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9052,7 +8448,7 @@ CREATE INDEX auditoria_fecha ON public.auditoria USING btree (fecha);
 
 
 --
--- TOC entry 5739 (class 1259 OID 23619)
+-- TOC entry 5741 (class 1259 OID 23619)
 -- Name: auditoria_usuario_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9060,7 +8456,7 @@ CREATE INDEX auditoria_usuario_id ON public.auditoria USING btree (usuario_id);
 
 
 --
--- TOC entry 5761 (class 1259 OID 41594)
+-- TOC entry 5763 (class 1259 OID 41594)
 -- Name: clientes_activo; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9068,7 +8464,7 @@ CREATE INDEX clientes_activo ON public.clientes USING btree (activo);
 
 
 --
--- TOC entry 5762 (class 1259 OID 41593)
+-- TOC entry 5764 (class 1259 OID 41593)
 -- Name: clientes_nombre; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9076,7 +8472,7 @@ CREATE INDEX clientes_nombre ON public.clientes USING btree (nombre);
 
 
 --
--- TOC entry 5781 (class 1259 OID 41676)
+-- TOC entry 5783 (class 1259 OID 41676)
 -- Name: comprobantes_numero; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9084,7 +8480,7 @@ CREATE INDEX comprobantes_numero ON public.comprobantes USING btree (numero);
 
 
 --
--- TOC entry 5757 (class 1259 OID 39805)
+-- TOC entry 5759 (class 1259 OID 39805)
 -- Name: idx_precio_producto; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9092,7 +8488,7 @@ CREATE INDEX idx_precio_producto ON public.precio USING btree (producto_id);
 
 
 --
--- TOC entry 5748 (class 1259 OID 39784)
+-- TOC entry 5750 (class 1259 OID 39784)
 -- Name: idx_productopresentacion_envase; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9100,7 +8496,7 @@ CREATE INDEX idx_productopresentacion_envase ON public.producto_presentacion USI
 
 
 --
--- TOC entry 5749 (class 1259 OID 39783)
+-- TOC entry 5751 (class 1259 OID 39783)
 -- Name: idx_productopresentacion_producto; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9108,7 +8504,7 @@ CREATE INDEX idx_productopresentacion_producto ON public.producto_presentacion U
 
 
 --
--- TOC entry 5620 (class 1259 OID 41577)
+-- TOC entry 5621 (class 1259 OID 41577)
 -- Name: idx_productos_categoria_paquete; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9116,7 +8512,7 @@ CREATE INDEX idx_productos_categoria_paquete ON public.productos USING btree (ca
 
 
 --
--- TOC entry 5621 (class 1259 OID 41578)
+-- TOC entry 5622 (class 1259 OID 41578)
 -- Name: idx_productos_contenido_envase; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9124,7 +8520,7 @@ CREATE INDEX idx_productos_contenido_envase ON public.productos USING btree (con
 
 
 --
--- TOC entry 5123 (class 1259 OID 41584)
+-- TOC entry 5124 (class 1259 OID 41584)
 -- Name: idx_usuarios_dni; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9132,7 +8528,15 @@ CREATE UNIQUE INDEX idx_usuarios_dni ON public.usuarios USING btree (dni) WHERE 
 
 
 --
--- TOC entry 5695 (class 1259 OID 41413)
+-- TOC entry 5712 (class 1259 OID 41712)
+-- Name: importaciones_ventas_hash_archivo_uidx; Type: INDEX; Schema: public; Owner: business_api_role
+--
+
+CREATE UNIQUE INDEX importaciones_ventas_hash_archivo_uidx ON public.importaciones_ventas USING btree (hash_archivo) WHERE (hash_archivo IS NOT NULL);
+
+
+--
+-- TOC entry 5696 (class 1259 OID 41413)
 -- Name: lotes_fecha_vencimiento; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9140,7 +8544,7 @@ CREATE INDEX lotes_fecha_vencimiento ON public.lotes USING btree (fecha_vencimie
 
 
 --
--- TOC entry 5698 (class 1259 OID 23430)
+-- TOC entry 5699 (class 1259 OID 23430)
 -- Name: lotes_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9148,7 +8552,7 @@ CREATE INDEX lotes_producto_id ON public.lotes USING btree (producto_id);
 
 
 --
--- TOC entry 5701 (class 1259 OID 41432)
+-- TOC entry 5702 (class 1259 OID 41432)
 -- Name: movimientos_inventario_fecha; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9156,7 +8560,7 @@ CREATE INDEX movimientos_inventario_fecha ON public.movimientos_inventario USING
 
 
 --
--- TOC entry 5702 (class 1259 OID 23453)
+-- TOC entry 5703 (class 1259 OID 23453)
 -- Name: movimientos_inventario_lote_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9164,7 +8568,7 @@ CREATE INDEX movimientos_inventario_lote_id ON public.movimientos_inventario USI
 
 
 --
--- TOC entry 5776 (class 1259 OID 41656)
+-- TOC entry 5778 (class 1259 OID 41656)
 -- Name: operacion_detalles_lote_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9172,7 +8576,7 @@ CREATE INDEX operacion_detalles_lote_id ON public.operacion_detalles USING btree
 
 
 --
--- TOC entry 5777 (class 1259 OID 41654)
+-- TOC entry 5779 (class 1259 OID 41654)
 -- Name: operacion_detalles_operacion_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9180,7 +8584,7 @@ CREATE INDEX operacion_detalles_operacion_id ON public.operacion_detalles USING 
 
 
 --
--- TOC entry 5780 (class 1259 OID 41655)
+-- TOC entry 5782 (class 1259 OID 41655)
 -- Name: operacion_detalles_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9188,7 +8592,7 @@ CREATE INDEX operacion_detalles_producto_id ON public.operacion_detalles USING b
 
 
 --
--- TOC entry 5765 (class 1259 OID 41627)
+-- TOC entry 5767 (class 1259 OID 41627)
 -- Name: operaciones_cliente_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9196,7 +8600,7 @@ CREATE INDEX operaciones_cliente_id ON public.operaciones USING btree (cliente_i
 
 
 --
--- TOC entry 5766 (class 1259 OID 41628)
+-- TOC entry 5768 (class 1259 OID 41628)
 -- Name: operaciones_fecha; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9204,7 +8608,7 @@ CREATE INDEX operaciones_fecha ON public.operaciones USING btree (fecha);
 
 
 --
--- TOC entry 5769 (class 1259 OID 41626)
+-- TOC entry 5771 (class 1259 OID 41626)
 -- Name: operaciones_numero; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9212,7 +8616,7 @@ CREATE INDEX operaciones_numero ON public.operaciones USING btree (numero);
 
 
 --
--- TOC entry 5772 (class 1259 OID 41630)
+-- TOC entry 5774 (class 1259 OID 41630)
 -- Name: operaciones_operacion_origen_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9220,7 +8624,7 @@ CREATE INDEX operaciones_operacion_origen_id ON public.operaciones USING btree (
 
 
 --
--- TOC entry 5775 (class 1259 OID 41629)
+-- TOC entry 5777 (class 1259 OID 41629)
 -- Name: operaciones_tipo; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9228,7 +8632,7 @@ CREATE INDEX operaciones_tipo ON public.operaciones USING btree (tipo);
 
 
 --
--- TOC entry 5719 (class 1259 OID 41482)
+-- TOC entry 5721 (class 1259 OID 41482)
 -- Name: ordenes_reabastecimiento_estado; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9236,7 +8640,7 @@ CREATE INDEX ordenes_reabastecimiento_estado ON public.ordenes_reabastecimiento 
 
 
 --
--- TOC entry 5760 (class 1259 OID 41563)
+-- TOC entry 5762 (class 1259 OID 41563)
 -- Name: precio_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9244,7 +8648,7 @@ CREATE INDEX precio_producto_id ON public.precio USING btree (producto_id);
 
 
 --
--- TOC entry 5750 (class 1259 OID 41561)
+-- TOC entry 5752 (class 1259 OID 41561)
 -- Name: producto_presentacion_envase_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9252,7 +8656,7 @@ CREATE INDEX producto_presentacion_envase_id ON public.producto_presentacion USI
 
 
 --
--- TOC entry 5753 (class 1259 OID 41560)
+-- TOC entry 5755 (class 1259 OID 41560)
 -- Name: producto_presentacion_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9260,7 +8664,7 @@ CREATE INDEX producto_presentacion_producto_id ON public.producto_presentacion U
 
 
 --
--- TOC entry 5754 (class 1259 OID 41562)
+-- TOC entry 5756 (class 1259 OID 41562)
 -- Name: producto_presentacion_producto_id_nivel; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9268,7 +8672,7 @@ CREATE UNIQUE INDEX producto_presentacion_producto_id_nivel ON public.producto_p
 
 
 --
--- TOC entry 5622 (class 1259 OID 41379)
+-- TOC entry 5623 (class 1259 OID 41379)
 -- Name: productos_activo; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9276,7 +8680,7 @@ CREATE INDEX productos_activo ON public.productos USING btree (activo);
 
 
 --
--- TOC entry 5623 (class 1259 OID 23412)
+-- TOC entry 5624 (class 1259 OID 23412)
 -- Name: productos_categoria_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9284,7 +8688,7 @@ CREATE INDEX productos_categoria_id ON public.productos USING btree (categoria_i
 
 
 --
--- TOC entry 5624 (class 1259 OID 41374)
+-- TOC entry 5625 (class 1259 OID 41374)
 -- Name: productos_codigo; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9292,7 +8696,7 @@ CREATE INDEX productos_codigo ON public.productos USING btree (codigo);
 
 
 --
--- TOC entry 5705 (class 1259 OID 41698)
+-- TOC entry 5706 (class 1259 OID 41698)
 -- Name: public_ventas_operacion_id_idx; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9300,7 +8704,7 @@ CREATE INDEX public_ventas_operacion_id_idx ON public.ventas USING btree (operac
 
 
 --
--- TOC entry 5715 (class 1259 OID 23515)
+-- TOC entry 5717 (class 1259 OID 23515)
 -- Name: umbrales_configuracion_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9308,7 +8712,7 @@ CREATE INDEX umbrales_configuracion_producto_id ON public.umbrales_configuracion
 
 
 --
--- TOC entry 5716 (class 1259 OID 41464)
+-- TOC entry 5718 (class 1259 OID 41464)
 -- Name: umbrales_configuracion_tipo; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9316,7 +8720,7 @@ CREATE INDEX umbrales_configuracion_tipo ON public.umbrales_configuracion USING 
 
 
 --
--- TOC entry 5706 (class 1259 OID 41443)
+-- TOC entry 5707 (class 1259 OID 41443)
 -- Name: ventas_fecha_venta; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9324,7 +8728,7 @@ CREATE INDEX ventas_fecha_venta ON public.ventas USING btree (fecha_venta);
 
 
 --
--- TOC entry 5707 (class 1259 OID 41704)
+-- TOC entry 5708 (class 1259 OID 41704)
 -- Name: ventas_operacion_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9332,7 +8736,7 @@ CREATE INDEX ventas_operacion_id ON public.ventas USING btree (operacion_id);
 
 
 --
--- TOC entry 5710 (class 1259 OID 23478)
+-- TOC entry 5711 (class 1259 OID 23478)
 -- Name: ventas_producto_id; Type: INDEX; Schema: public; Owner: business_api_role
 --
 
@@ -9340,7 +8744,7 @@ CREATE INDEX ventas_producto_id ON public.ventas USING btree (producto_id);
 
 
 --
--- TOC entry 5792 (class 2606 OID 23192)
+-- TOC entry 5794 (class 2606 OID 23192)
 -- Name: entrenamientos entrenamientos_modelo_id_fkey; Type: FK CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -9349,7 +8753,7 @@ ALTER TABLE ONLY ml.entrenamientos
 
 
 --
--- TOC entry 5793 (class 2606 OID 23206)
+-- TOC entry 5795 (class 2606 OID 23206)
 -- Name: predicciones_demanda predicciones_demanda_modelo_id_fkey; Type: FK CONSTRAINT; Schema: ml; Owner: postgres
 --
 
@@ -9358,7 +8762,7 @@ ALTER TABLE ONLY ml.predicciones_demanda
 
 
 --
--- TOC entry 5815 (class 2606 OID 41495)
+-- TOC entry 5817 (class 2606 OID 41495)
 -- Name: alertas alertas_lote_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9367,7 +8771,7 @@ ALTER TABLE ONLY public.alertas
 
 
 --
--- TOC entry 5816 (class 2606 OID 41490)
+-- TOC entry 5818 (class 2606 OID 41490)
 -- Name: alertas alertas_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9376,7 +8780,7 @@ ALTER TABLE ONLY public.alertas
 
 
 --
--- TOC entry 5820 (class 2606 OID 41527)
+-- TOC entry 5822 (class 2606 OID 41527)
 -- Name: auditoria auditoria_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9385,7 +8789,7 @@ ALTER TABLE ONLY public.auditoria
 
 
 --
--- TOC entry 5830 (class 2606 OID 41671)
+-- TOC entry 5832 (class 2606 OID 41671)
 -- Name: comprobantes comprobantes_operacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9394,7 +8798,7 @@ ALTER TABLE ONLY public.comprobantes
 
 
 --
--- TOC entry 5810 (class 2606 OID 41451)
+-- TOC entry 5812 (class 2606 OID 41451)
 -- Name: importaciones_ventas importaciones_ventas_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9403,7 +8807,7 @@ ALTER TABLE ONLY public.importaciones_ventas
 
 
 --
--- TOC entry 5804 (class 2606 OID 41402)
+-- TOC entry 5806 (class 2606 OID 41402)
 -- Name: lotes lotes_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9412,7 +8816,7 @@ ALTER TABLE ONLY public.lotes
 
 
 --
--- TOC entry 5805 (class 2606 OID 41414)
+-- TOC entry 5807 (class 2606 OID 41414)
 -- Name: movimientos_inventario movimientos_inventario_lote_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9421,7 +8825,7 @@ ALTER TABLE ONLY public.movimientos_inventario
 
 
 --
--- TOC entry 5806 (class 2606 OID 41427)
+-- TOC entry 5808 (class 2606 OID 41427)
 -- Name: movimientos_inventario movimientos_inventario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9430,7 +8834,7 @@ ALTER TABLE ONLY public.movimientos_inventario
 
 
 --
--- TOC entry 5817 (class 2606 OID 41506)
+-- TOC entry 5819 (class 2606 OID 41506)
 -- Name: notificaciones_correo notificaciones_correo_alerta_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9439,7 +8843,7 @@ ALTER TABLE ONLY public.notificaciones_correo
 
 
 --
--- TOC entry 5827 (class 2606 OID 41649)
+-- TOC entry 5829 (class 2606 OID 41649)
 -- Name: operacion_detalles operacion_detalles_lote_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9448,7 +8852,7 @@ ALTER TABLE ONLY public.operacion_detalles
 
 
 --
--- TOC entry 5828 (class 2606 OID 41639)
+-- TOC entry 5830 (class 2606 OID 41639)
 -- Name: operacion_detalles operacion_detalles_operacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9457,7 +8861,7 @@ ALTER TABLE ONLY public.operacion_detalles
 
 
 --
--- TOC entry 5829 (class 2606 OID 41644)
+-- TOC entry 5831 (class 2606 OID 41644)
 -- Name: operacion_detalles operacion_detalles_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9466,7 +8870,7 @@ ALTER TABLE ONLY public.operacion_detalles
 
 
 --
--- TOC entry 5824 (class 2606 OID 41611)
+-- TOC entry 5826 (class 2606 OID 41611)
 -- Name: operaciones operaciones_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9475,7 +8879,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5825 (class 2606 OID 41621)
+-- TOC entry 5827 (class 2606 OID 41621)
 -- Name: operaciones operaciones_operacion_origen_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9484,7 +8888,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5826 (class 2606 OID 41616)
+-- TOC entry 5828 (class 2606 OID 41616)
 -- Name: operaciones operaciones_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9493,7 +8897,7 @@ ALTER TABLE ONLY public.operaciones
 
 
 --
--- TOC entry 5813 (class 2606 OID 41475)
+-- TOC entry 5815 (class 2606 OID 41475)
 -- Name: ordenes_reabastecimiento ordenes_reabastecimiento_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9502,7 +8906,7 @@ ALTER TABLE ONLY public.ordenes_reabastecimiento
 
 
 --
--- TOC entry 5814 (class 2606 OID 41485)
+-- TOC entry 5816 (class 2606 OID 41485)
 -- Name: ordenes_reabastecimiento ordenes_reabastecimiento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9511,7 +8915,7 @@ ALTER TABLE ONLY public.ordenes_reabastecimiento
 
 
 --
--- TOC entry 5823 (class 2606 OID 39800)
+-- TOC entry 5825 (class 2606 OID 39800)
 -- Name: precio precio_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9520,7 +8924,7 @@ ALTER TABLE ONLY public.precio
 
 
 --
--- TOC entry 5819 (class 2606 OID 41520)
+-- TOC entry 5821 (class 2606 OID 41520)
 -- Name: preferencias_usuario preferencias_usuario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9529,7 +8933,7 @@ ALTER TABLE ONLY public.preferencias_usuario
 
 
 --
--- TOC entry 5821 (class 2606 OID 41552)
+-- TOC entry 5823 (class 2606 OID 41552)
 -- Name: producto_presentacion producto_presentacion_envase_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9538,7 +8942,7 @@ ALTER TABLE ONLY public.producto_presentacion
 
 
 --
--- TOC entry 5822 (class 2606 OID 41544)
+-- TOC entry 5824 (class 2606 OID 41544)
 -- Name: producto_presentacion producto_presentacion_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9547,7 +8951,7 @@ ALTER TABLE ONLY public.producto_presentacion
 
 
 --
--- TOC entry 5798 (class 2606 OID 41380)
+-- TOC entry 5800 (class 2606 OID 41380)
 -- Name: productos productos_categoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9556,7 +8960,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5799 (class 2606 OID 41565)
+-- TOC entry 5801 (class 2606 OID 41565)
 -- Name: productos productos_categoria_paquete_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9565,7 +8969,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5800 (class 2606 OID 41571)
+-- TOC entry 5802 (class 2606 OID 41571)
 -- Name: productos productos_contenido_paquete_envase_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9574,7 +8978,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5801 (class 2606 OID 41395)
+-- TOC entry 5803 (class 2606 OID 41395)
 -- Name: productos productos_marca_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9583,7 +8987,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5802 (class 2606 OID 41390)
+-- TOC entry 5804 (class 2606 OID 41390)
 -- Name: productos productos_presentacion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9592,7 +8996,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5803 (class 2606 OID 41385)
+-- TOC entry 5805 (class 2606 OID 41385)
 -- Name: productos productos_unidad_medida_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9601,7 +9005,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 5818 (class 2606 OID 41515)
+-- TOC entry 5820 (class 2606 OID 41515)
 -- Name: reportes_generados reportes_generados_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9610,7 +9014,7 @@ ALTER TABLE ONLY public.reportes_generados
 
 
 --
--- TOC entry 5795 (class 2606 OID 23309)
+-- TOC entry 5797 (class 2606 OID 23309)
 -- Name: rol_permisos rol_permisos_permiso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9619,7 +9023,7 @@ ALTER TABLE ONLY public.rol_permisos
 
 
 --
--- TOC entry 5796 (class 2606 OID 23304)
+-- TOC entry 5798 (class 2606 OID 23304)
 -- Name: rol_permisos rol_permisos_rol_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9628,7 +9032,7 @@ ALTER TABLE ONLY public.rol_permisos
 
 
 --
--- TOC entry 5797 (class 2606 OID 40941)
+-- TOC entry 5799 (class 2606 OID 40941)
 -- Name: tokens_recuperacion tokens_recuperacion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9637,7 +9041,7 @@ ALTER TABLE ONLY public.tokens_recuperacion
 
 
 --
--- TOC entry 5811 (class 2606 OID 41465)
+-- TOC entry 5813 (class 2606 OID 41465)
 -- Name: umbrales_configuracion umbrales_configuracion_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9646,7 +9050,7 @@ ALTER TABLE ONLY public.umbrales_configuracion
 
 
 --
--- TOC entry 5812 (class 2606 OID 41470)
+-- TOC entry 5814 (class 2606 OID 41470)
 -- Name: umbrales_configuracion umbrales_configuracion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9655,7 +9059,7 @@ ALTER TABLE ONLY public.umbrales_configuracion
 
 
 --
--- TOC entry 5794 (class 2606 OID 40816)
+-- TOC entry 5796 (class 2606 OID 40816)
 -- Name: usuarios usuarios_rol_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9664,7 +9068,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 5807 (class 2606 OID 41438)
+-- TOC entry 5809 (class 2606 OID 41438)
 -- Name: ventas ventas_lote_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9673,7 +9077,7 @@ ALTER TABLE ONLY public.ventas
 
 
 --
--- TOC entry 5808 (class 2606 OID 41433)
+-- TOC entry 5810 (class 2606 OID 41433)
 -- Name: ventas ventas_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9682,7 +9086,7 @@ ALTER TABLE ONLY public.ventas
 
 
 --
--- TOC entry 5809 (class 2606 OID 41446)
+-- TOC entry 5811 (class 2606 OID 41446)
 -- Name: ventas ventas_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: business_api_role
 --
 
@@ -9691,7 +9095,7 @@ ALTER TABLE ONLY public.ventas
 
 
 --
--- TOC entry 6056 (class 0 OID 0)
+-- TOC entry 6058 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: SCHEMA ml; Type: ACL; Schema: -; Owner: postgres
 --
@@ -9700,7 +9104,7 @@ GRANT ALL ON SCHEMA ml TO ml_service_role;
 
 
 --
--- TOC entry 6057 (class 0 OID 0)
+-- TOC entry 6059 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: SCHEMA public; Type: ACL; Schema: -; Owner: pg_database_owner
 --
@@ -9709,7 +9113,7 @@ GRANT ALL ON SCHEMA public TO business_api_role;
 
 
 --
--- TOC entry 6059 (class 0 OID 0)
+-- TOC entry 6061 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: TABLE anomalias; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9718,7 +9122,7 @@ GRANT ALL ON TABLE ml.anomalias TO ml_service_role;
 
 
 --
--- TOC entry 6061 (class 0 OID 0)
+-- TOC entry 6063 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: SEQUENCE anomalias_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9727,7 +9131,7 @@ GRANT ALL ON SEQUENCE ml.anomalias_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6063 (class 0 OID 0)
+-- TOC entry 6065 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: TABLE conjuntos_datos; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9736,7 +9140,7 @@ GRANT ALL ON TABLE ml.conjuntos_datos TO ml_service_role;
 
 
 --
--- TOC entry 6065 (class 0 OID 0)
+-- TOC entry 6067 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: SEQUENCE conjuntos_datos_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9745,7 +9149,7 @@ GRANT ALL ON SEQUENCE ml.conjuntos_datos_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6067 (class 0 OID 0)
+-- TOC entry 6069 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: TABLE entrenamientos; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9754,7 +9158,7 @@ GRANT ALL ON TABLE ml.entrenamientos TO ml_service_role;
 
 
 --
--- TOC entry 6069 (class 0 OID 0)
+-- TOC entry 6071 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: SEQUENCE entrenamientos_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9763,7 +9167,7 @@ GRANT ALL ON SEQUENCE ml.entrenamientos_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6071 (class 0 OID 0)
+-- TOC entry 6073 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: TABLE modelos; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9772,7 +9176,7 @@ GRANT ALL ON TABLE ml.modelos TO ml_service_role;
 
 
 --
--- TOC entry 6073 (class 0 OID 0)
+-- TOC entry 6075 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: SEQUENCE modelos_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9781,7 +9185,7 @@ GRANT ALL ON SEQUENCE ml.modelos_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6075 (class 0 OID 0)
+-- TOC entry 6077 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: TABLE predicciones_demanda; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9790,7 +9194,7 @@ GRANT ALL ON TABLE ml.predicciones_demanda TO ml_service_role;
 
 
 --
--- TOC entry 6077 (class 0 OID 0)
+-- TOC entry 6079 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: SEQUENCE predicciones_demanda_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9799,7 +9203,7 @@ GRANT ALL ON SEQUENCE ml.predicciones_demanda_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6079 (class 0 OID 0)
+-- TOC entry 6081 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: TABLE recomendaciones; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9808,7 +9212,7 @@ GRANT ALL ON TABLE ml.recomendaciones TO ml_service_role;
 
 
 --
--- TOC entry 6081 (class 0 OID 0)
+-- TOC entry 6083 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: SEQUENCE recomendaciones_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9817,7 +9221,7 @@ GRANT ALL ON SEQUENCE ml.recomendaciones_id_seq TO ml_service_role;
 
 
 --
--- TOC entry 6083 (class 0 OID 0)
+-- TOC entry 6085 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: TABLE riesgos_vencimiento; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9826,7 +9230,7 @@ GRANT ALL ON TABLE ml.riesgos_vencimiento TO ml_service_role;
 
 
 --
--- TOC entry 6085 (class 0 OID 0)
+-- TOC entry 6087 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: SEQUENCE riesgos_vencimiento_id_seq; Type: ACL; Schema: ml; Owner: postgres
 --
@@ -9850,11 +9254,11 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA ml GRANT ALL ON SEQUENCES T
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA ml GRANT ALL ON TABLES TO ml_service_role;
 
 
--- Completed on 2026-10-06 19:51:34
+-- Completed on 2026-10-07 13:48:50
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 9q3m77ZtSahmCxemux4U7cto2JkBP8Qom9YA61yrhHVQm1zajfCVT0vl0G38aon
+\unrestrict s6QX8NiesUWF6LDCfTpxcldDgeJOigubdReG1VJJa8F6XGB0Wpnx6QGTXwZtumP
 

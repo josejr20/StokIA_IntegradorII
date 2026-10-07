@@ -90,6 +90,7 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
   // HU8.2: Optimización - si el nuevo movimiento es posterior o igual al último,
   // recalcular solo desde el último; si es retroactivo, recalcular todo.
   const ultimoMovimiento = await MovimientoInventario.findOne({
+    where: { id: { [Op.ne]: movimiento.id } },
     include: [{
       model: Lote,
       as: 'lote',

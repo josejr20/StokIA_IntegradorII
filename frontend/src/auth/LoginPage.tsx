@@ -13,7 +13,7 @@ import { useAuth } from './AuthContext'
 
 // HU12: inicio de sesión
 const esquema = z.object({
-  identifier: z.string().trim().min(1, 'Ingresa tu correo o nombre'),
+  identifier: z.string().trim().min(1, 'Ingresa tu correo'),
   password: z.string().min(1, 'Ingresa tu contraseña'),
 })
 type FormValues = z.infer<typeof esquema>
@@ -85,8 +85,8 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
             <div className="space-y-1.5">
-              <Label htmlFor="identifier">Correo o nombre</Label>
-              <Input id="identifier" type="text" autoComplete="username" placeholder="correo@gmail.com o nombre" {...register('identifier')} />
+              <Label htmlFor="identifier">Correo</Label>
+              <Input id="identifier" type="text" autoComplete="username" placeholder="correo@dominio.com" {...register('identifier')} />
               {errors.identifier && <p className="text-xs text-destructive">{errors.identifier.message}</p>}
             </div>
 

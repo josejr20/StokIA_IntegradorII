@@ -116,7 +116,7 @@ const actualizar = async (req, res, next) => {
     await lote.update(data);
     res.json({ data: LoteDto.fromModel(lote) });
   } catch (error) {
-    if (error instanceof UniqueConstraintError && error.fields?.numero_lote) {
+    if (error instanceof UniqueConstraintError) {
       return res.status(409).json({ error: 'El número de lote ya existe para este producto' });
     }
     next(error);

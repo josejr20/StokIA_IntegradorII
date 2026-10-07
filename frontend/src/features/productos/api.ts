@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
-import type { Producto, Categorie, UnidadMedida, Presentacion, CatalogoMarca, CatalogoValor, MotivoDesactivacion, TipoEnvase, ProductoPresentacion } from '@/types'
+import type { Producto, Categorie, UnidadMedida, Presentacion, CatalogoMarca, CatalogoValor, MotivoDesactivacion, TipoEnvase, ProductoPresentacion, Paginado } from '@/types'
 
 export type { Producto, MotivoDesactivacion } from '@/types'
 
@@ -27,12 +27,33 @@ function useDatos<T>(path: string, queryKey: string, params?: URLSearchParams) {
   })
 }
 
-export function useProductos(filtros: { search?: string; categoria?: string; marca?: string }) {
+export function useProductos(filtros: { search?: string; categoria?: string; marca?: string; page?: number; pageSize?: number }) {
   const params = new URLSearchParams()
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.categoria) params.set('categoria_id', filtros.categoria)
   if (filtros.marca) params.set('marca_id', filtros.marca)
-  return useDatos<Producto>('/productos', 'productos', params)
+  const usarPaginacion = filtros.page !== undefined
+  if (usarPaginacion) {
+    if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+    params.set('page_size', String(filtros.pageSize || 10))
+  }
+
+  return useQuery({
+    queryKey: ['productos', filtros.search, filtros.categoria, filtros.marca, filtros.page, filtros.pageSize],
+    queryFn: async () => {
+      const qs = params.toString()
+      const respuesta = await api.get<{ data: Producto[] } & Partial<Paginado<Producto>>>(`/productos/?${qs}`)
+      if (usarPaginacion) {
+        return {
+          results: respuesta.data,
+          count: respuesta.count ?? respuesta.data.length,
+          previous: respuesta.previous ?? false,
+          next: respuesta.next ?? false,
+        }
+      }
+      return { results: respuesta.data }
+    },
+  })
 }
 
 export function useCategorias() {
@@ -203,10 +224,16 @@ export function useIngresoProducto() {
 export function useDesactivarProducto() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, motivo, detalle }: { id: number; motivo: MotivoDesactivacion; detalle?: string }) =>
+    mutationFn: ({ id, motivo, detalle, confirmarStock }: {
+      id: number
+      motivo: MotivoDesactivacion
+      detalle?: string
+      confirmarStock?: boolean
+    }) =>
       api.patch<{ data: Producto }>(`/productos/${id}/desactivar`, {
         motivo_desactivacion: motivo,
         motivo_desactivacion_detalle: detalle,
+        confirmar_stock: confirmarStock === true,
       }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['productos'] }),
   })

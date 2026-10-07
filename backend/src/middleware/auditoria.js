@@ -20,9 +20,8 @@ const registrarAuditoria = async (req, res, next) => {
 
 const crearAuditoria = async (usuarioId, accion, entidad, entidadId, detalle) => {
   try {
-    if (!usuarioId) return;
     await Auditoria.create({
-      usuario_id: usuarioId,
+      usuario_id: usuarioId ?? null,
       accion,
       entidad,
       entidad_id: entidadId || null,

@@ -14,9 +14,30 @@ jobs:
   backend:
     name: Backend - tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: stokia
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d stokia"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
     defaults:
       run:
         working-directory: backend
+    env:
+      DB_HOST: localhost
+      DB_NAME: stokia
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: test-secret
+      PORT: 3000
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,8 +52,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cargar esquema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          PGPASSWORD=postgres psql -h localhost -U postgres -d stokia -f postgresql/BackupStokIAV3.sql || true
+          PGPASSWORD=postgres psql -h localhost -U postgres -d stokia -f postgresql/manual/05_importaciones_ventas.sql || true
+
       - name: Run tests
-        run: npm test
+        run: npm test -- --test-force-exit
 
   frontend:
     name: Frontend - lint y build

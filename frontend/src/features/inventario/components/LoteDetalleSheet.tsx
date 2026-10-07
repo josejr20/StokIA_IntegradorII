@@ -1,4 +1,4 @@
-import { ArrowDownCircle, ArrowUpCircle, RefreshCcw } from 'lucide-react'
+import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react'
 
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription,
@@ -11,7 +11,6 @@ import { useHistorialProductos, type TipoMovimiento } from '../api'
 const ICONO_TIPO: Record<TipoMovimiento, typeof ArrowDownCircle> = {
   ingreso: ArrowDownCircle,
   salida: ArrowUpCircle,
-  ajuste: RefreshCcw,
 }
 
 const formatoMoneda = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' })

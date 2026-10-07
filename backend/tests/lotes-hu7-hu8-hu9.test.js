@@ -125,8 +125,8 @@ test('HU7: crear - lote válido sin fecha_vencimiento → 201 con estado VIGENTE
   assert.equal(res.getStatus(), 201);
   const body = res.getBody();
   assert.ok(body.data);
-  assert.equal(body.data.cantidad_inicial, 100);
-  assert.equal(body.data.cantidad_actual, 100);
+  assert.equal(Number(body.data.cantidad_inicial), 100);
+  assert.equal(Number(body.data.cantidad_actual), 100);
   assert.equal(body.data.estado, 'VIGENTE');
   assert.ok(body.data.numero_lote.startsWith('LT-'));
 });
@@ -150,42 +150,45 @@ test('HU8: registrarMovimientoCtrl - ajuste positivo (ingreso + origen ajuste)',
   const cat = await Categoria.create({ nombre: 'Cat Test', descripcion: 'Test', vida_util_dias: 365 });
   const um = await UnidadMedida.create({ nombre: 'Test UM', abreviatura: 'TU' });
   const prod = await Producto.create({ codigo: 'P-001', nombre: 'Producto', categoria_id: cat.id, unidad_medida_id: um.id });
-  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 100, fecha_ingreso: new Date() });
-  
+  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 0, fecha_ingreso: new Date() });
+  await registrarMovimiento(lote.id, 'ingreso', 100, 'inicial', 'Ingreso inicial del lote', null, testUser.id);
+
   const { req, res } = mockReqRes({ tipo: 'ingreso', cantidad: 10, origen: 'ajuste', motivo: 'Ajuste por inventario físico' }, { id: lote.id }, {}, userMock());
   await registrarMovimientoCtrl(req, res, () => {});
-  
+
   assert.equal(res.getStatus(), 200);
   const updated = await Lote.findByPk(lote.id);
-  assert.equal(updated.cantidad_actual, 110);
+  assert.equal(Number(updated.cantidad_actual), 110);
 });
 
 test('HU8: registrarMovimientoCtrl - ajuste negativo (salida + origen ajuste)', async () => {
   const cat = await Categoria.create({ nombre: 'Cat Test', descripcion: 'Test', vida_util_dias: 365 });
   const um = await UnidadMedida.create({ nombre: 'Test UM', abreviatura: 'TU' });
   const prod = await Producto.create({ codigo: 'P-001', nombre: 'Producto', categoria_id: cat.id, unidad_medida_id: um.id });
-  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 100, fecha_ingreso: new Date() });
-  
+  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 0, fecha_ingreso: new Date() });
+  await registrarMovimiento(lote.id, 'ingreso', 100, 'inicial', 'Ingreso inicial del lote', null, testUser.id);
+
   const { req, res } = mockReqRes({ tipo: 'salida', cantidad: 10, origen: 'ajuste', motivo: 'Ajuste por mermas' }, { id: lote.id }, {}, userMock());
   await registrarMovimientoCtrl(req, res, () => {});
-  
+
   assert.equal(res.getStatus(), 200);
   const updated = await Lote.findByPk(lote.id);
-  assert.equal(updated.cantidad_actual, 90);
+  assert.equal(Number(updated.cantidad_actual), 90);
 });
 
 test('HU8: registrarMovimientoCtrl - tipo "ajuste" legacy se mapea a salida', async () => {
   const cat = await Categoria.create({ nombre: 'Cat Test', descripcion: 'Test', vida_util_dias: 365 });
   const um = await UnidadMedida.create({ nombre: 'Test UM', abreviatura: 'TU' });
   const prod = await Producto.create({ codigo: 'P-001', nombre: 'Producto', categoria_id: cat.id, unidad_medida_id: um.id });
-  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 100, fecha_ingreso: new Date() });
-  
+  const lote = await Lote.create({ producto_id: prod.id, numero_lote: 'LT-000001', cantidad_inicial: 100, cantidad_actual: 0, fecha_ingreso: new Date() });
+  await registrarMovimiento(lote.id, 'ingreso', 100, 'inicial', 'Ingreso inicial del lote', null, testUser.id);
+
   const { req, res } = mockReqRes({ tipo: 'ajuste', cantidad: 10, motivo: 'Ajuste legacy' }, { id: lote.id }, {}, userMock());
   await registrarMovimientoCtrl(req, res, () => {});
-  
+
   assert.equal(res.getStatus(), 200);
   const updated = await Lote.findByPk(lote.id);
-  assert.equal(updated.cantidad_actual, 90);
+  assert.equal(Number(updated.cantidad_actual), 90);
 });
 
 test('HU9: listar - filtro fecha_desde y fecha_hasta', async () => {
@@ -209,7 +212,7 @@ test('HU9: listar - filtro fecha_desde y fecha_hasta', async () => {
   
   const data = res.getBody().data;
   assert.equal(data.length, 1);
-  assert.equal(data[0].cantidad_inicial, 20);
+  assert.equal(Number(data[0].cantidad_inicial), 20);
 });
 
 test('HU9: listar - filtro estado=agotado', async () => {
@@ -225,7 +228,7 @@ test('HU9: listar - filtro estado=agotado', async () => {
   
   const data = res.getBody().data;
   assert.equal(data.length, 1);
-  assert.equal(data[0].cantidad_actual, 0);
+  assert.equal(Number(data[0].cantidad_actual), 0);
 });
 
 test('HU9: listar - filtro estado=con_stock', async () => {
@@ -241,7 +244,7 @@ test('HU9: listar - filtro estado=con_stock', async () => {
   
   const data = res.getBody().data;
   assert.equal(data.length, 1);
-  assert.equal(data[0].cantidad_actual, 10);
+  assert.equal(Number(data[0].cantidad_actual), 10);
 });
 
 test('HU9: listar - orden ingreso_asc', async () => {
