@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -56,8 +56,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
-          PGPASSWORD=postgres psql -h localhost -U postgres -d stokia -f postgresql/BackupStokIAV3.sql || true
-          PGPASSWORD=postgres psql -h localhost -U postgres -d stokia -f postgresql/manual/05_importaciones_ventas.sql || true
+          export PGPASSWORD=postgres
+          psql -h localhost -U postgres -d stokia -c "CREATE ROLE business_api_role; CREATE ROLE ml_service_role;"
+          psql -h localhost -U postgres -d stokia -v ON_ERROR_STOP=1 -f postgresql/BackupStokIAV3.sql
+          psql -h localhost -U postgres -d stokia -v ON_ERROR_STOP=1 -f postgresql/manual/05_importaciones_ventas.sql
 
       - name: Run tests
         run: npm test -- --test-force-exit
