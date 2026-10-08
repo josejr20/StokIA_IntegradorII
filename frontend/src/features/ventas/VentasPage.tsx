@@ -11,6 +11,13 @@ import { ImportarVentasModal } from './ImportarVentasModal'
 
 const formatoMoneda = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' })
 
+const ORIGEN_VENTA: Record<string, string> = {
+  manual: 'Manual',
+  importado: 'Importado',
+  devolucion: 'Devolución',
+  anulacion: 'Anulación',
+}
+
 export default function VentasPage() {
   const { tienePermiso } = useAuth()
   const [importarAbierto, setImportarAbierto] = useState(false)
@@ -80,7 +87,7 @@ export default function VentasPage() {
                   <td className="p-4">{new Date(venta.fecha_venta).toLocaleDateString('es-PE')}</td>
                   <td className="p-4 font-medium">{venta.producto_nombre ?? 'Sin producto'}</td>
                   <td className="p-4">{venta.cantidad}</td>
-                  <td className="p-4 text-muted-foreground">{venta.origen === 'manual' ? 'Manual' : venta.origen === 'importacion' ? 'Importación' : venta.origen}</td>
+                  <td className="p-4 text-muted-foreground">{ORIGEN_VENTA[venta.origen] ?? venta.origen}</td>
                 </tr>
               ))}
               {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}

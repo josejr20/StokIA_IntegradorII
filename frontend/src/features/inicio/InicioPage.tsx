@@ -23,11 +23,11 @@ export default function InicioPage() {
       {kpis && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[
-            'Productos activos', kpis.productos_activos,
-            'Ventas del mes', kpis.ventas_mes_actual,
-            'Alertas activas', kpis.alertas_activas,
-            'Alertas críticas', kpis.alertas_criticas,
-            'Órdenes pendientes', kpis.ordenes_pendientes,
+            ['Productos activos', kpis.productos_activos],
+            ['Ventas del mes', kpis.ventas_mes_actual],
+            ['Alertas activas', kpis.alertas_activas],
+            ['Alertas críticas', kpis.alertas_criticas],
+            ['Órdenes pendientes', kpis.ordenes_pendientes],
           ].map(([etiqueta, valor]) => (
             <div key={etiqueta} className="rounded-xl border bg-white p-4">
               <p className="text-sm text-muted-foreground">{etiqueta}</p>
@@ -43,7 +43,7 @@ export default function InicioPage() {
             {data.alertas_recientes.length === 0 && <p className="py-3 text-sm text-muted-foreground">No hay alertas activas.</p>}
             {data.alertas_recientes.map((alerta) => (
               <div key={alerta.id} className="flex items-center justify-between gap-4 py-3 text-sm">
-                <span>{alerta.mensagem}</span>
+                <span>{alerta.mensaje}</span>
                 <span className="text-muted-foreground">{ETIQUETAS_SEVERIDAD[alerta.severidad] ?? alerta.severidad}</span>
               </div>
             ))}

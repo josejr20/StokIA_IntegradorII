@@ -106,7 +106,7 @@ export function DesactivarProductoDialog({
               </div>
               <DialogTitle>¿Confirmas la desactivación?</DialogTitle>
               <DialogDescription>
-                {producto?.nombre} dejará de aparecer en el catálogo activo y no se venderá ni recibir movimientos. Se conservará
+                {producto?.nombre} dejará de aparecer en el catálogo activo y no podrá venderse ni recibir movimientos. Se conservará
                 su historial. Motivo registrado: <strong>{motivoLabel}</strong>.
               </DialogDescription>
             </DialogHeader>
