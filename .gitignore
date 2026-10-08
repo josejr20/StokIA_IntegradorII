@@ -4,3 +4,5 @@ venv/
 /logs/
 .logs/
 .vscode/
+.idea/
+logs/*.log
