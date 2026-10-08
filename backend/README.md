@@ -53,9 +53,9 @@ Ejecuta `src/utils/seed.js` que a su vez invoca `seedService.seedInicial()` para
 
 Para una base nueva, usar este orden real de carga:
 
-1. `postgresql/BackupStokIAV3.sql` — esquema base y datos principales
-2. `postgresql/manual/05_importaciones_ventas.sql` — permisos y soporte de importación de ventas
-3. `npm run seed` — permisos, roles y catálogos base del sistema
+1. `postgresql/BackupStokIAV3.sql` - esquema base y datos principales
+2. `postgresql/manual/05_importaciones_ventas.sql` - permisos y soporte de importación de ventas
+3. `npm run seed` - permisos, roles y catálogos base del sistema
 
 > **Nota:** Este orden es el que deja la base compatible con el código actual. Si se ejecuta solo el dump, faltarán columnas/permisos requeridos por `POST /api/ventas/importar` y por el bootstrap del módulo de ventas.
 
@@ -70,16 +70,16 @@ Para una base nueva, usar este orden real de carga:
 
 ## Endpoints principales
 
-- `POST /api/auth/login` — Login, devuelve access + refresh token (cookies HttpOnly)
-- `POST /api/auth/refresh` — Renueva access token
-- `GET /api/productos` — Listar productos (paginado, filtros)
-- `POST /api/productos` — Crear producto
-- `GET /api/lotes` — Listar lotes con stock
-- `POST /api/operaciones` — Registrar operación (entrada/salida/ajuste/devolución)
-- `GET /api/kardex/:productoId` — Kardex de un producto
-- `POST /api/importar-kardex` — Importar kardex histórico desde Excel
-- `GET /api/reportes/*` — Reportes y KPIs
-- `GET /api/alertas` — Alertas de stock bajo / vencimiento
+- `POST /api/auth/login` - Login, devuelve access + refresh token (cookies HttpOnly)
+- `POST /api/auth/refresh` - Renueva access token
+- `GET /api/productos` - Listar productos (paginado, filtros)
+- `POST /api/productos` - Crear producto
+- `GET /api/lotes` - Listar lotes con stock
+- `POST /api/operaciones` - Registrar operación (entrada/salida/ajuste/devolución)
+- `GET /api/kardex/:productoId` - Kardex de un producto
+- `POST /api/importar-kardex` - Importar kardex histórico desde Excel
+- `GET /api/reportes/*` - Reportes y KPIs
+- `GET /api/alertas` - Alertas de stock bajo / vencimiento
 
 Documentación completa en Swagger UI: `http://localhost:3000/api-docs`
 

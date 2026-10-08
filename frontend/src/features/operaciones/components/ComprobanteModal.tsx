@@ -227,7 +227,7 @@ export function ComprobanteModal({
 </head>
 <body>
   <header>
-    <div class="muted">StockIA — VLAG</div>
+    <div class="muted">StockIA - VLAG</div>
     <h1>${ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}</h1>
     <strong>N° ${escaparHtml(normalizados.numero_comprobante)}</strong>
     <span class="muted"> · Operación ${escaparHtml(normalizados.numero_operacion)}</span>
@@ -270,7 +270,7 @@ export function ComprobanteModal({
           <div className="flex items-start justify-between border-b pb-4">
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                StockIA — VLAG
+                StockIA - VLAG
               </p>
               <h2 className="text-xl font-bold">
                 {ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}

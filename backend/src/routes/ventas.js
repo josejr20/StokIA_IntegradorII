@@ -82,7 +82,7 @@ router.use(autenticar);
  *         in: query
  *         schema:
  *           type: boolean
- *         description: Incluir devoluciones y anulaciones en totales (default: false)
+ *         description: "Incluir devoluciones y anulaciones en totales (default: false)"
  *     responses:
  *       '200':
  *         description: Totales del periodo

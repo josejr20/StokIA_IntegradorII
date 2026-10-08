@@ -1,6 +1,5 @@
 /**
  * Import kardex operations from Excel file
- * Handles historical operations with proper stock management
  */
 const XLSX = require('xlsx');
 const { validationResult } = require('express-validator');

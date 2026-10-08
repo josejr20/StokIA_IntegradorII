@@ -34,7 +34,7 @@ export function useProductos(filtros: { search?: string; categoria?: string; mar
   if (filtros.marca) params.set('marca_id', filtros.marca)
   const usarPaginacion = filtros.page !== undefined
   if (usarPaginacion) {
-    if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+    params.set('page', String(filtros.page))
     params.set('page_size', String(filtros.pageSize || 10))
   }
 
@@ -82,7 +82,7 @@ export function useCatalogoValores() {
   return useDatos<CatalogoValor>('/catalogo-valores', 'catalogo-valores')
 }
 
-// HU02: datos del formulario de alta — solo la ficha del producto
+// HU02: datos del formulario de alta - solo la ficha del producto
 export interface NuevoProductoInput {
   nombre: string
   categoria: string
@@ -201,7 +201,7 @@ export function useActivarProducto() {
   })
 }
 
-// Ingreso de stock para un producto ya existente — el que refleja en el kardex
+// Ingreso de stock para un producto ya existente - el que refleja en el kardex
 export interface IngresoInput {
   id: number
   cantidad: string

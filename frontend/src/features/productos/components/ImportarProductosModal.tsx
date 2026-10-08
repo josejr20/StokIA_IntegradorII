@@ -382,7 +382,7 @@ function PasoArchivo({
           <>
             <span className="text-sm font-medium">{archivo.name}</span>
             <span className="text-xs text-muted-foreground">
-              {(archivo.size / 1024).toFixed(0)} KB — haz clic para elegir otro
+              {(archivo.size / 1024).toFixed(0)} KB - haz clic para elegir otro
             </span>
           </>
         ) : (
@@ -468,7 +468,7 @@ function PasoRevision({
           <ul className="mt-1 space-y-0.5">
             {columnas.faltantes.map((columna) => (
               <li key={columna.clave}>
-                <code className="font-mono font-semibold">{columna.etiqueta}</code> — {columna.ayuda}
+                <code className="font-mono font-semibold">{columna.etiqueta}</code> - {columna.ayuda}
               </li>
             ))}
           </ul>
@@ -560,9 +560,9 @@ function TablaMuestra({ filas }: { filas: ResultadoRevision['validas'] }) {
               <TableRow key={fila.numero}>
                 <TableCell className="text-muted-foreground">{fila.numero}</TableCell>
                 <TableCell className="font-medium">{fila.nombre}</TableCell>
-                <TableCell>{fila.categoria || '—'}</TableCell>
-                <TableCell>{fila.unidad || '—'}</TableCell>
-                <TableCell>{fila.categoriaPaquete || '—'}</TableCell>
+                <TableCell>{fila.categoria || '-'}</TableCell>
+                <TableCell>{fila.unidad || '-'}</TableCell>
+                <TableCell>{fila.categoriaPaquete || '-'}</TableCell>
               </TableRow>
             ))}
           </TableBody>

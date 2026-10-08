@@ -65,7 +65,7 @@ export function DesactivarProductoDialog({
           <>
             <DialogHeader>
               <DialogTitle>Desactivar producto</DialogTitle>
-              <DialogDescription>{producto?.nombre} — indica el motivo antes de continuar.</DialogDescription>
+              <DialogDescription>{producto?.nombre} - indica el motivo antes de continuar.</DialogDescription>
             </DialogHeader>
 
             <div className="space-y-1.5">
@@ -106,8 +106,8 @@ export function DesactivarProductoDialog({
               </div>
               <DialogTitle>¿Confirmas la desactivación?</DialogTitle>
               <DialogDescription>
-                {producto?.nombre} dejará de aparecer en el catálogo activo y no podrá venderse. Se conservará
-                su historial de movimientos. Motivo registrado: <strong>{motivoLabel}</strong>.
+                {producto?.nombre} dejará de aparecer en el catálogo activo y no se venderá ni recibir movimientos. Se conservará
+                su historial. Motivo registrado: <strong>{motivoLabel}</strong>.
               </DialogDescription>
             </DialogHeader>
 
@@ -120,7 +120,7 @@ export function DesactivarProductoDialog({
             <DialogFooter>
               <Button variant="outline" onClick={() => setPaso(1)}>Volver</Button>
               <Button variant="destructive" disabled={desactivar.isPending} onClick={confirmar}>
-                {desactivar.isPending ? 'Desactivando…' : 'Sí, desactivar definitivamente'}
+                {desactivar.isPending ? 'Desactivando…' : 'Sí, desactivar'}
               </Button>
             </DialogFooter>
           </>

@@ -15,7 +15,7 @@ export function Topbar({ titulo }: { titulo: string }) {
       <div className="min-w-0">
         <h1 className="truncate text-lg font-semibold">{titulo}</h1>
         <p className="truncate text-xs text-muted-foreground">
-          Bienvenido, {usuario?.nombres ?? 'usuario'} · Su rol es: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
+          Bienvenido, {usuario?.nombres ?? 'usuario'} · Rol: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
         </p>
       </div>
 

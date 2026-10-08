@@ -33,9 +33,9 @@ export function LoteDetalleSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="sm:max-w-2xl">
         <SheetHeader>
-          <SheetTitle>Historial del lote</SheetTitle>
+          <SheetTitle>Historial del producto</SheetTitle>
           <SheetDescription>
-            {productoNombre} · movimientos registrados en sus lotes.
+            {productoNombre} · movimientos registrados en todos sus lotes.
           </SheetDescription>
         </SheetHeader>
 

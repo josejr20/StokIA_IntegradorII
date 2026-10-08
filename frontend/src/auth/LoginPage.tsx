@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -24,6 +25,7 @@ export default function LoginPage() {
   const [enviando, setEnviando] = useState(false)
   const [bloqueoHasta, setBloqueoHasta] = useState<number | null>(null)
   const [segundosRestantes, setSegundosRestantes] = useState(0)
+  const [mostrarPassword, setMostrarPassword] = useState(false)
 
   const {
     register,
@@ -92,7 +94,17 @@ export default function LoginPage() {
 
             <div className="space-y-1.5">
               <Label htmlFor="password">Clave</Label>
-              <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register('password')} />
+              <div className="relative">
+                <Input id="password" type={mostrarPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="••••••••" {...register('password')} className="pr-10" />
+                <button
+                  type="button"
+                  onClick={() => setMostrarPassword(!mostrarPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                >
+                  {mostrarPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
             </div>
 

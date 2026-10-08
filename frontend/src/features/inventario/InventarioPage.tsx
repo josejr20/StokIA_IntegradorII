@@ -13,7 +13,7 @@ import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from '@/components/ui/select'
 import { useProductos } from '@/features/productos/api'
-import { useLotes, type Lote } from './api'
+import { useLotes, type EstadoFiltroLote, type Lote } from './api'
 import { NuevoLoteModal } from './components/NuevoLoteModal'
 import { LoteDetalleSheet } from './components/LoteDetalleSheet'
 import { RegistrarMovimientoModal } from './components/RegistrarMovimientoModal'
@@ -55,13 +55,20 @@ export default function InventarioPage() {
   const [productoClave, setProductoClave] = useState('')
   const [pageSize, setPageSize] = useState(10)
   const [pagina, setPagina] = useState(1)
+  const [fechaDesde, setFechaDesde] = useState('')
+  const [fechaHasta, setFechaHasta] = useState('')
+  const [estadoFiltro, setEstadoFiltro] = useState<EstadoFiltroLote>('')
 
   const [modalNuevo, setModalNuevo] = useState(false)
   const [grupoDetalle, setGrupoDetalle] = useState<GrupoLotes | null>(null)
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null)
 
   const { data: productos } = useProductos({})
-  const { data, isLoading } = useLotes()
+  const { data, isLoading } = useLotes({
+    fecha_desde: fechaDesde,
+    fecha_hasta: fechaHasta,
+    estado: estadoFiltro,
+  })
 
   function codigoDelLote(lote: Lote): string {
     return productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? ''
@@ -106,7 +113,7 @@ export default function InventarioPage() {
 
   return (
     <div className="space-y-6">
-      {/* Toolbar: HU06 — buscar/filtrar lotes por producto y lote + crear lote */}
+      {/* Toolbar: HU06 - buscar/filtrar lotes por producto y lote + crear lote */}
       <div className="space-y-3 rounded-xl border bg-white p-4">
         <div className="flex flex-wrap items-center gap-3">
           <Select value={productoClave || 'todos'} onValueChange={(v) => { setProductoClave(v === 'todos' ? '' : v); setPagina(1) }}>
@@ -130,6 +137,39 @@ export default function InventarioPage() {
               className="pl-9 w-56"
               value={busqueda}
               onChange={(e) => { setBusqueda(e.target.value); setPagina(1) }}
+            />
+          </div>
+
+          <Select
+            value={estadoFiltro || 'todos'}
+            onValueChange={(v) => { setEstadoFiltro(v === 'todos' ? '' : (v as EstadoFiltroLote)); setPagina(1) }}
+          >
+            <SelectTrigger className="w-44"><SelectValue placeholder="Estado" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Estado: Todos</SelectItem>
+              <SelectItem value="con_stock">Con stock</SelectItem>
+              <SelectItem value="agotado">Agotado</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>Ingreso</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso desde"
+              className="w-40"
+              value={fechaDesde}
+              max={fechaHasta || undefined}
+              onChange={(e) => { setFechaDesde(e.target.value); setPagina(1) }}
+            />
+            <span>a</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso hasta"
+              className="w-40"
+              value={fechaHasta}
+              min={fechaDesde || undefined}
+              onChange={(e) => { setFechaHasta(e.target.value); setPagina(1) }}
             />
           </div>
 
@@ -166,7 +206,7 @@ export default function InventarioPage() {
                 <TableHead>Último ingreso</TableHead>
                 <TableHead className="text-right">Cant. Inicial</TableHead>
                 <TableHead className="text-right">Cant. Actual</TableHead>
-                <TableHead>Próximo vencimiento / lote</TableHead>
+                <TableHead>Próximo vencimiento</TableHead>
                 <TableHead>Estado</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
@@ -179,7 +219,7 @@ export default function InventarioPage() {
                   </TableCell>
                 </TableRow>
               )}
-              {!isLoading && lotes.length === 0 && (
+              {!isLoading && grupos.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={8} className="text-center text-muted-foreground">
                     No hay lotes para los filtros seleccionados.
@@ -220,11 +260,11 @@ export default function InventarioPage() {
                           <div>{formatoFecha.format(new Date(loteProximo.fecha_vencimiento))}</div>
                           <div className="text-xs">{loteProximo.numero_lote} · #{loteProximo.id}</div>
                         </>
-                      ) : 'Pendiente ML'}
+                      ) : '-'}
                     </TableCell>
                     <TableCell>
                       <Badge variant={loteProximo?.fecha_vencimiento ? variante : 'outline'}>
-                        {loteProximo?.fecha_vencimiento ? texto : 'Pendiente ML'}
+                        {loteProximo?.fecha_vencimiento ? texto : 'Sin vencimiento'}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -232,7 +272,7 @@ export default function InventarioPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Ver historial"
+                          title="Ver historial de movimientos"
                           onClick={() => setGrupoDetalle(grupo)}
                         >
                           <Eye className="size-4" />
@@ -240,7 +280,7 @@ export default function InventarioPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          title={`Movimiento de stock · ${loteAccion.numero_lote}`}
+                          title={`Registrar movimiento · ${loteAccion.numero_lote}`}
                           onClick={() => setLoteMovimiento(loteAccion)}
                         >
                           <PackagePlus className="size-4" />

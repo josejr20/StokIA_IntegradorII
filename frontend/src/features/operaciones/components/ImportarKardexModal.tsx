@@ -76,7 +76,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
           <DialogTitle>Importar Kardex desde Excel</DialogTitle>
           <DialogDescription>
             Sube el archivo kardex_presentaciones.xlsx para registrar las operaciones históricas
-            (entradas por devolución, salidas por venta) con sus fechas, empleados, clientes,
+            (entradas por devolución, salidas por venta) con sus fechas, clientes,
             presentaciones, observaciones y motivos.
           </DialogDescription>
         </DialogHeader>
@@ -100,7 +100,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                   <>
                     <span className="text-sm font-medium">{archivo.name}</span>
                     <span className="text-xs text-muted-foreground">
-                      {(archivo.size / 1024).toFixed(0)} KB — haz clic para elegir otro
+                      {(archivo.size / 1024).toFixed(0)} KB - haz clic para elegir otro
                     </span>
                   </>
                 ) : (
@@ -128,11 +128,11 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                   <div className="space-y-1">
                     <p className="font-semibold">Notas importantes:</p>
                     <ul className="list-disc ml-4 space-y-0.5 text-xs">
-                      <li>El archivo debe tener las columnas: N°, fcreacion, empleado, cliente, presentacion, observaciones, motivo, cantidad</li>
+                      <li>El archivo debe tener las columnas: N°, fcreacion, cliente, presentacion, observaciones, motivo, cantidad</li>
                       <li>Los motivos válidos son: "Ingreso por devolucion en una venta" y "Salida por generacion de pedido a venta"</li>
                       <li>Las cantidades negativas en salidas se convierten a positivas automáticamente</li>
                       <li>Si falta stock para una salida histórica, se registra como apertura inicial únicamente la cantidad faltante</li>
-                      <li>Se crean clientes y empleados nuevos si no existen</li>
+                      <li>Se crean clientes nuevos si no existen</li>
                     </ul>
                   </div>
                 </div>
