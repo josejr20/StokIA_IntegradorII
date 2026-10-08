@@ -1,8 +1,13 @@
+# Entornos virtuales
 venv/
 .venv/
-/backend/venv/
-/logs/
+backend/venv/
+
+# Logs
+logs/
 .logs/
+*.log
+
+# IDEs y editores
 .vscode/
 .idea/
-logs/*.log
