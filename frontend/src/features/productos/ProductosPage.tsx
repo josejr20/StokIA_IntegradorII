@@ -143,7 +143,7 @@ export default function ProductosPage() {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{producto.categoria_nombre ?? '—'}</TableCell>
+                <TableCell>{producto.categoria_nombre ?? '-'}</TableCell>
                 <TableCell>
                   {producto.stock_total}
                   {producto.stock_total === 0 && (

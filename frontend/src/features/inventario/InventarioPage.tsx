@@ -113,7 +113,7 @@ export default function InventarioPage() {
 
   return (
     <div className="space-y-6">
-      {/* Toolbar: HU06 — buscar/filtrar lotes por producto y lote + crear lote */}
+      {/* Toolbar: HU06 - buscar/filtrar lotes por producto y lote + crear lote */}
       <div className="space-y-3 rounded-xl border bg-white p-4">
         <div className="flex flex-wrap items-center gap-3">
           <Select value={productoClave || 'todos'} onValueChange={(v) => { setProductoClave(v === 'todos' ? '' : v); setPagina(1) }}>
@@ -206,7 +206,7 @@ export default function InventarioPage() {
                 <TableHead>Último ingreso</TableHead>
                 <TableHead className="text-right">Cant. Inicial</TableHead>
                 <TableHead className="text-right">Cant. Actual</TableHead>
-                <TableHead>Próximo vencimiento / lote</TableHead>
+                <TableHead>Próximo vencimiento</TableHead>
                 <TableHead>Estado</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
@@ -260,11 +260,11 @@ export default function InventarioPage() {
                           <div>{formatoFecha.format(new Date(loteProximo.fecha_vencimiento))}</div>
                           <div className="text-xs">{loteProximo.numero_lote} · #{loteProximo.id}</div>
                         </>
-                      ) : 'Pendiente ML'}
+                      ) : '-'}
                     </TableCell>
                     <TableCell>
                       <Badge variant={loteProximo?.fecha_vencimiento ? variante : 'outline'}>
-                        {loteProximo?.fecha_vencimiento ? texto : 'Pendiente ML'}
+                        {loteProximo?.fecha_vencimiento ? texto : 'Sin vencimiento'}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -272,7 +272,7 @@ export default function InventarioPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Ver historial"
+                          title="Ver historial de movimientos"
                           onClick={() => setGrupoDetalle(grupo)}
                         >
                           <Eye className="size-4" />
@@ -280,7 +280,7 @@ export default function InventarioPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          title={`Movimiento de stock · ${loteAccion.numero_lote}`}
+                          title={`Registrar movimiento · ${loteAccion.numero_lote}`}
                           onClick={() => setLoteMovimiento(loteAccion)}
                         >
                           <PackagePlus className="size-4" />

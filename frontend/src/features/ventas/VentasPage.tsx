@@ -51,7 +51,7 @@ export default function VentasPage() {
             <div className="flex items-center gap-2">
               <Badge variant="secondary">
                 <TrendingUp className="size-4" />
-                Total ventas
+                Total vendido
               </Badge>
               <strong className="text-lg">{formatoMoneda.format(resumen.total_monto)}</strong>
             </div>
@@ -80,7 +80,7 @@ export default function VentasPage() {
                   <td className="p-4">{new Date(venta.fecha_venta).toLocaleDateString('es-PE')}</td>
                   <td className="p-4 font-medium">{venta.producto_nombre ?? 'Sin producto'}</td>
                   <td className="p-4">{venta.cantidad}</td>
-                  <td className="p-4 text-muted-foreground">{venta.origen}</td>
+                  <td className="p-4 text-muted-foreground">{venta.origen === 'manual' ? 'Manual' : venta.origen === 'importacion' ? 'Importación' : venta.origen}</td>
                 </tr>
               ))}
               {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}

@@ -82,7 +82,7 @@ export function useCatalogoValores() {
   return useDatos<CatalogoValor>('/catalogo-valores', 'catalogo-valores')
 }
 
-// HU02: datos del formulario de alta — solo la ficha del producto
+// HU02: datos del formulario de alta - solo la ficha del producto
 export interface NuevoProductoInput {
   nombre: string
   categoria: string
@@ -201,7 +201,7 @@ export function useActivarProducto() {
   })
 }
 
-// Ingreso de stock para un producto ya existente — el que refleja en el kardex
+// Ingreso de stock para un producto ya existente - el que refleja en el kardex
 export interface IngresoInput {
   id: number
   cantidad: string

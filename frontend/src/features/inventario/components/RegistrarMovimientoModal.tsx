@@ -109,7 +109,7 @@ export function RegistrarMovimientoModal({
         <DialogHeader>
           <DialogTitle>Movimiento de inventario</DialogTitle>
           <DialogDescription>
-            {productoNombre} · {productoCodigo} · Lote {loteNumero} — stock actual: {stockActual}
+            {productoNombre} · {productoCodigo} · Lote {loteNumero} - stock actual: {stockActual}
           </DialogDescription>
         </DialogHeader>
 
@@ -193,14 +193,8 @@ export function RegistrarMovimientoModal({
             </div>
           )}
 
-          <div className="flex items-start gap-2 rounded-lg border border-dashed p-3 text-xs text-muted-foreground">
-            <Info className="mt-0.5 size-3.5 shrink-0" />
-            El saldo del producto se actualiza con promedio ponderado. Para salidas y ajustes se usa el
-            costo promedio vigente.
-          </div>
-
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={cerrar}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={cerrar}>Eliminar</Button>
             <Button type="submit" disabled={registrar.isPending}>
               {registrar.isPending ? 'Registrando…' : 'Registrar movimiento'}
             </Button>

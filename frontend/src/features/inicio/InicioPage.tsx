@@ -1,5 +1,13 @@
 import { useResumenInicio } from '@/features/dashboard/api'
 
+const ETIQUETAS_SEVERIDAD: Record<string, string> = {
+  critica: 'Crítica',
+  alta: 'Alta',
+  media: 'Media',
+  baja: 'Baja',
+  info: 'Información',
+}
+
 export default function InicioPage() {
   const { data, isLoading, isError } = useResumenInicio()
   const kpis = data?.kpis
@@ -15,11 +23,11 @@ export default function InicioPage() {
       {kpis && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[
-            ['Productos activos', kpis.productos_activos],
-            ['Ventas del mes', kpis.ventas_mes_actual],
-            ['Alertas activas', kpis.alertas_activas],
-            ['Alertas críticas', kpis.alertas_criticas],
-            ['Órdenes pendientes', kpis.ordenes_pendientes],
+            'Productos activos', kpis.productos_activos,
+            'Ventas del mes', kpis.ventas_mes_actual,
+            'Alertas activas', kpis.alertas_activas,
+            'Alertas críticas', kpis.alertas_criticas,
+            'Órdenes pendientes', kpis.ordenes_pendientes,
           ].map(([etiqueta, valor]) => (
             <div key={etiqueta} className="rounded-xl border bg-white p-4">
               <p className="text-sm text-muted-foreground">{etiqueta}</p>
@@ -35,8 +43,8 @@ export default function InicioPage() {
             {data.alertas_recientes.length === 0 && <p className="py-3 text-sm text-muted-foreground">No hay alertas activas.</p>}
             {data.alertas_recientes.map((alerta) => (
               <div key={alerta.id} className="flex items-center justify-between gap-4 py-3 text-sm">
-                <span>{alerta.mensaje}</span>
-                <span className="text-muted-foreground">{alerta.severidad}</span>
+                <span>{alerta.mensagem}</span>
+                <span className="text-muted-foreground">{ETIQUETAS_SEVERIDAD[alerta.severidad] ?? alerta.severidad}</span>
               </div>
             ))}
           </div>

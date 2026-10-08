@@ -101,7 +101,7 @@ export function ImportarVentasModal({
                       {resultado.errores.map((error) => (
                         <TableRow key={`${error.fila}-${error.codigo}`}>
                           <TableCell>{error.fila}</TableCell>
-                          <TableCell>{error.codigo || '—'}</TableCell>
+                          <TableCell>{error.codigo || '-'}</TableCell>
                           <TableCell>{error.motivo}</TableCell>
                         </TableRow>
                       ))}

@@ -15,7 +15,7 @@ const options = {
     info: {
       title: 'StockIA API',
       version: '1.0.0',
-      description: 'API de gestión de inventario — Node.js + Express + Sequelize + PostgreSQL',
+      description: 'API de gestión de inventario - Node.js + Express + Sequelize + PostgreSQL',
       contact: {
         name: 'StockIA Team'
       },

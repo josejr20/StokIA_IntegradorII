@@ -148,7 +148,7 @@ export default function ClientesPage() {
                     {cliente.nombre}
                   </button>
                 </td>
-                <td className="p-4">{cliente.documento ?? '—'}</td>
+                <td className="p-4">{cliente.documento ?? '-'}</td>
                 <td className="p-4">
                   {cliente.activo ? (
                     <span className="rounded-full bg-secondary/15 px-2 py-0.5 text-xs font-medium text-secondary-foreground">
@@ -247,7 +247,7 @@ export default function ClientesPage() {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <p className="text-xs uppercase text-muted-foreground">Documento</p>
-                  <p>{detalle.documento ?? '—'}</p>
+                  <p>{detalle.documento ?? '-'}</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase text-muted-foreground">Estado</p>

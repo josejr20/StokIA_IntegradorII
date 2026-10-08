@@ -698,11 +698,11 @@ function HistorialOperaciones() {
                   </span>
                 </td>
                 <td className="p-4">{new Date(operacion.fecha).toLocaleString('es-PE')}</td>
-                <td className="p-4">{operacion.cliente?.nombre ?? '—'}</td>
+                <td className="p-4">{operacion.cliente?.nombre ?? '-'}</td>
                 <td className="p-4">
                   {operacion.detalles
                     ? `${operacion.detalles.length} ${operacion.detalles.length === 1 ? 'producto' : 'productos'}`
-                    : '—'}
+                    : '-'}
                 </td>
                 <td className="p-4 text-right font-medium">{formatearMoneda(operacion.total)}</td>
                 <td className="p-4">
@@ -784,11 +784,11 @@ function HistorialOperaciones() {
                 </div>
                 <div>
                   <p className="text-xs uppercase text-muted-foreground">Cliente</p>
-                  <p>{detalle.cliente?.nombre ?? '—'}</p>
+                  <p>{detalle.cliente?.nombre ?? '-'}</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase text-muted-foreground">Vendedor</p>
-                  <p>{detalle.usuario_nombre ?? '—'}</p>
+                  <p>{detalle.usuario_nombre ?? '-'}</p>
                 </div>
                 {detalle.operacion_origen_numero && (
                   <div>
@@ -946,7 +946,7 @@ export default function OperacionesPage() {
             disabled={importarKardex.isPending}
           >
             <Upload className="size-4" />
-            Importar Kardex
+            Importar kardex histórico
           </Button>
           <div className="flex rounded-lg border p-1">
             {(['nueva', 'historial'] as const).map((p) => (

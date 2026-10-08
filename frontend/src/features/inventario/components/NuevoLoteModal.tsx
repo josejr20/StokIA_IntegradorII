@@ -135,10 +135,6 @@ export function NuevoLoteModal({
                     {producto.stock_total} {producto.unidad_medida_simbolo ?? ''}
                   </p>
                 </div>
-                <div className="col-span-2">
-                  <p className="text-xs text-muted-foreground">Producto</p>
-                  <p className="font-medium">{producto.nombre}</p>
-                </div>
               </div>
 
               <div className="space-y-1.5">
