@@ -194,7 +194,7 @@ export function RegistrarMovimientoModal({
           )}
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={cerrar}>Eliminar</Button>
+            <Button type="button" variant="outline" onClick={cerrar}>Cancelar</Button>
             <Button type="submit" disabled={registrar.isPending}>
               {registrar.isPending ? 'Registrando…' : 'Registrar movimiento'}
             </Button>

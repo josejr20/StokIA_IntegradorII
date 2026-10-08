@@ -142,7 +142,7 @@ export function EditarProductoModal({
         <DialogHeader>
           <DialogTitle>Editar producto</DialogTitle>
           <DialogDescription>
-            {producto?.codigo} · {producto?.nombre}.
+            {producto?.codigo} · {producto?.nombre}
           </DialogDescription>
         </DialogHeader>
 

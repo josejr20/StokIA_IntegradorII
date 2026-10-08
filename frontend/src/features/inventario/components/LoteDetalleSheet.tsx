@@ -42,7 +42,7 @@ export function LoteDetalleSheet({
         <div className="mt-4 space-y-3">
           {isLoading && <p className="text-sm text-muted-foreground">Cargando…</p>}
           {!isLoading && (!historial || historial.length === 0) && (
-            <p className="text-sm text-muted-foreground">No hay movimientos para este lote.</p>
+            <p className="text-sm text-muted-foreground">No hay movimientos para este producto.</p>
           )}
           {historial && historial.length > 0 && (
             <Table>
