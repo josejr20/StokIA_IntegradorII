@@ -62,7 +62,7 @@ jobs:
           psql -h localhost -U postgres -d stokia -v ON_ERROR_STOP=1 -f postgresql/manual/05_importaciones_ventas.sql
 
       - name: Run tests
-        run: npm test -- --test-force-exit
+        run: npm test
 
   frontend:
     name: Frontend - lint y build
