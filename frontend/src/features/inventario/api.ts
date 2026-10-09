@@ -4,13 +4,22 @@ import { api } from '@/lib/api'
 import type { Paginado } from '@/types'
 
 // Tipos y constantes compartidas con el módulo de kardex (una sola fuente de verdad).
-export type TipoMovimiento = 'ingreso' | 'salida' | 'ajuste'
-export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'otro'
+// HU8.1: los ajustes se expresan como ingreso/salida con origen='ajuste'.
+export type TipoMovimiento = 'ingreso' | 'salida'
+export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'devolucion' | 'anulacion' | 'otro'
 
-export const TIPOS_MOVIMIENTO: { value: TipoMovimiento; label: string }[] = [
-  { value: 'ingreso', label: 'Ingreso' },
-  { value: 'salida', label: 'Salida' },
-  { value: 'ajuste', label: 'Ajuste' },
+export interface TipoMovimientoItem {
+  key: string
+  value: TipoMovimiento
+  label: string
+  origen: OrigenMovimiento
+}
+
+export const TIPOS_MOVIMIENTO: TipoMovimientoItem[] = [
+  { key: 'ingreso', value: 'ingreso', label: 'Ingreso', origen: 'compra' },
+  { key: 'salida', value: 'salida', label: 'Salida', origen: 'venta' },
+  { key: 'ajuste-pos', value: 'ingreso', label: 'Ajuste +', origen: 'ajuste' },
+  { key: 'ajuste-neg', value: 'salida', label: 'Ajuste −', origen: 'ajuste' },
 ]
 
 export const ORIGENES_MOVIMIENTO: { value: OrigenMovimiento; label: string }[] = [
@@ -18,6 +27,8 @@ export const ORIGENES_MOVIMIENTO: { value: OrigenMovimiento; label: string }[] =
   { value: 'venta', label: 'Venta' },
   { value: 'inicial', label: 'Registro inicial' },
   { value: 'ajuste', label: 'Ajuste de inventario' },
+  { value: 'devolucion', label: 'Devolución' },
+  { value: 'anulacion', label: 'Anulación de venta' },
   { value: 'otro', label: 'Otro' },
 ]
 
@@ -29,7 +40,7 @@ export interface Lote {
   cantidad_inicial: number
   cantidad_actual: number
   fecha_ingreso: string
-  fecha_vencimiento: string
+  fecha_vencimiento: string | null
   fecha_creacion: string
   estado?: 'AGOTADO' | 'VENCIDO' | 'POR_VENCER' | 'VIGENTE'
   dias_para_vencer?: number | null
@@ -38,6 +49,7 @@ export interface Lote {
 export interface MovimientoInventario {
   id: number
   lote: number
+  lote_id: number
   lote_numero: string
   producto_id: number
   producto_nombre: string
@@ -58,9 +70,14 @@ export interface MovimientoInventario {
   fecha: string
 }
 
+export type EstadoFiltroLote = '' | 'con_stock' | 'agotado'
+
 export interface FiltrosLotes {
   search?: string
   producto?: string
+  fecha_desde?: string
+  fecha_hasta?: string
+  estado?: EstadoFiltroLote
   page?: number
   pageSize?: number
 }
@@ -79,20 +96,32 @@ export interface FiltrosMovimientos {
 
 export function useLotes(filtros: FiltrosLotes = {}) {
   const params = new URLSearchParams()
-  if (filtros.search) params.set('search', filtros.search)
+  if (filtros.search) params.set('numero_lote', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
-  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
-  params.set('page_size', String(filtros.pageSize || 10))
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.estado) params.set('estado', filtros.estado)
 
   return useQuery({
     queryKey: ['lotes', filtros],
     queryFn: async () => {
-      const respuesta = await api.get<Paginado<Lote>>(`/lotes/${params.toString() ? `?${params.toString()}` : ''}`)
+      const pageSize = filtros.pageSize || 100
+      const resultados: Lote[] = []
+      let pagina = filtros.page || 1
+      let hayMas = true
+
+      while (hayMas) {
+        const respuesta = await api.get<Paginado<Lote>>(`/lotes/?page=${pagina}&page_size=${pageSize}&${params.toString()}`)
+        resultados.push(...respuesta.data)
+        hayMas = respuesta.next ?? false
+        pagina += 1
+      }
+
       return {
-        results: respuesta.data,
-        count: respuesta.count ?? respuesta.data.length,
-        previous: respuesta.previous ?? false,
-        next: respuesta.next ?? false,
+        results: resultados,
+        count: resultados.length,
+        previous: false,
+        next: false,
       }
     },
   })
@@ -135,23 +164,26 @@ export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
   })
 }
 
-export function useHistorialLote(loteId: number) {
+export function useHistorialProductos(productoIds: number[]) {
+  const ids = [...new Set(productoIds)].sort((a, b) => a - b)
+  const idsQuery = ids.join(',')
   return useQuery({
-    queryKey: ['lotes', loteId, 'historial'],
+    queryKey: ['lotes', 'historial-productos', idsQuery],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: MovimientoInventario[] }>(`/lotes/${loteId}/historial/`)
+      const respuesta = await api.get<{ data: MovimientoInventario[] }>(
+        `/lotes/historial-productos/?producto_ids=${idsQuery}`,
+      )
       return respuesta.data
     },
-    enabled: !!loteId,
+    enabled: ids.length > 0,
   })
 }
 
 export interface CrearLoteInput {
   producto: number
-  numero_lote: string
+  numero_lote?: string
   cantidad_inicial: string
   fecha_ingreso: string
-  fecha_vencimiento: string
 }
 
 export function useCreatorLote() {
@@ -161,13 +193,15 @@ export function useCreatorLote() {
       ...datos,
       producto_id: datos.producto,
     }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['lotes'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['lotes'] })
+      queryClient.invalidateQueries({ queryKey: ['productos'] })
+    },
   })
 }
 
 export interface ActualizarLoteInput {
   numero_lote?: string
-  cantidad_inicial?: string
   fecha_vencimiento?: string
 }
 

@@ -27,9 +27,20 @@ test('seleccionarLotesFEFO excluye agotados y vencidos y ordena por vencimiento'
   assert.deepEqual(seleccionados.map((lote) => lote.id), [4, 2]);
 });
 
-test('validarLoteParaCreacion devuelve cantidad y fecha normalizadas', () => {
+test('validarLoteParaCreacion devuelve cantidad normalizada', () => {
+  assert.deepEqual(
+    validarLoteParaCreacion({ cantidad_inicial: '12.5' }),
+    { cantidad_inicial: 12.5 },
+  );
+});
+
+test('validarLoteParaCreacion ignora fecha_vencimiento y solo valida cantidad', () => {
   assert.deepEqual(
     validarLoteParaCreacion({ cantidad_inicial: '12.5', fecha_vencimiento: '2099-01-02' }),
-    { cantidad_inicial: 12.5, fecha_vencimiento: '2099-01-02' },
+    { cantidad_inicial: 12.5 },
+  );
+  assert.deepEqual(
+    validarLoteParaCreacion({ cantidad_inicial: '12.5', fecha_vencimiento: null }),
+    { cantidad_inicial: 12.5 },
   );
 });

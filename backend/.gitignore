@@ -5,4 +5,5 @@ logs/
 /run.err
 /run.log
 /scripts/
-/README.md
+/uploads/
+/upload/

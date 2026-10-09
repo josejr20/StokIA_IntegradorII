@@ -1,4 +1,4 @@
-# StockIA — VLAG Integrador II
+# StockIA - VLAG Integrador II
 
 [![GitHub](https://img.shields.io/badge/GitHub-repositorio-181717?logo=github)](https://github.com/josejr20/VLAG_IntegradorII)
 [![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)](https://github.com/josejr20/VLAG_IntegradorII)
@@ -49,7 +49,7 @@ cd frontend && npm install && npm run dev
 
 ## Recursos
 
-- [Prototipo Figma — ProyectoHU](https://www.figma.com/design/HpMUPCclEz1rkwwlTXlLeM/ProyectoHU)
+- [Prototipo Figma - ProyectoHU](https://www.figma.com/design/HpMUPCclEz1rkwwlTXlLeM/ProyectoHU)
 - [Repositorio GitHub](https://github.com/josejr20/VLAG_IntegradorII)
 
 ---

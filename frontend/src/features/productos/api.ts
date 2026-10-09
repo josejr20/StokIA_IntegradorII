@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
-import type { Producto, Categorie, UnidadMedida, Presentacion, CatalogoMarca, CatalogoValor, MotivoDesactivacion, TipoEnvase, ProductoPresentacion } from '@/types'
+import type { Producto, Categorie, UnidadMedida, Presentacion, CatalogoMarca, CatalogoValor, MotivoDesactivacion, TipoEnvase, ProductoPresentacion, Paginado } from '@/types'
 
 export type { Producto, MotivoDesactivacion } from '@/types'
 
@@ -27,12 +27,33 @@ function useDatos<T>(path: string, queryKey: string, params?: URLSearchParams) {
   })
 }
 
-export function useProductos(filtros: { search?: string; categoria?: string; marca?: string }) {
+export function useProductos(filtros: { search?: string; categoria?: string; marca?: string; page?: number; pageSize?: number }) {
   const params = new URLSearchParams()
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.categoria) params.set('categoria_id', filtros.categoria)
   if (filtros.marca) params.set('marca_id', filtros.marca)
-  return useDatos<Producto>('/productos', 'productos', params)
+  const usarPaginacion = filtros.page !== undefined
+  if (usarPaginacion) {
+    params.set('page', String(filtros.page))
+    params.set('page_size', String(filtros.pageSize || 10))
+  }
+
+  return useQuery({
+    queryKey: ['productos', filtros.search, filtros.categoria, filtros.marca, filtros.page, filtros.pageSize],
+    queryFn: async () => {
+      const qs = params.toString()
+      const respuesta = await api.get<{ data: Producto[] } & Partial<Paginado<Producto>>>(`/productos/?${qs}`)
+      if (usarPaginacion) {
+        return {
+          results: respuesta.data,
+          count: respuesta.count ?? respuesta.data.length,
+          previous: respuesta.previous ?? false,
+          next: respuesta.next ?? false,
+        }
+      }
+      return { results: respuesta.data }
+    },
+  })
 }
 
 export function useCategorias() {
@@ -61,7 +82,7 @@ export function useCatalogoValores() {
   return useDatos<CatalogoValor>('/catalogo-valores', 'catalogo-valores')
 }
 
-// HU02: datos del formulario de alta — solo la ficha del producto
+// HU02: datos del formulario de alta - solo la ficha del producto
 export interface NuevoProductoInput {
   nombre: string
   categoria: string
@@ -129,6 +150,39 @@ export function useCreacionProducto() {
   })
 }
 
+/**
+ * Carga masiva desde CSV/Excel. Las filas llegan ya validadas y con los ids de
+ * catálogo resueltos (ver importacion/validacion.ts); el backend vuelve a
+ * validarlas y las inserta todas en una sola transacción.
+ */
+export interface ProductoImportable {
+  fila: number
+  nombre: string
+  categoria_id: number
+  unidad_medida_id: number
+  categoria_paquete_id: number
+  marca_id?: number
+  contenido_valor?: number
+  contenido_paquete_cantidad?: number
+  contenido_paquete_envase_id?: number
+  precio_venta?: string
+  descripcion?: string
+}
+
+export interface ResultadoImportacion {
+  creados: number
+  codigos: string[]
+}
+
+export function useImportarProductos() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (productos: ProductoImportable[]) =>
+      api.post<{ data: ResultadoImportacion }>('/productos/importar', { productos }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['productos'] }),
+  })
+}
+
 export function useActualizaProducto() {
   const queryClient = useQueryClient()
   return useMutation({
@@ -147,7 +201,7 @@ export function useActivarProducto() {
   })
 }
 
-// Ingreso de stock para un producto ya existente — el que refleja en el kardex
+// Ingreso de stock para un producto ya existente - el que refleja en el kardex
 export interface IngresoInput {
   id: number
   cantidad: string
@@ -170,10 +224,16 @@ export function useIngresoProducto() {
 export function useDesactivarProducto() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, motivo, detalle }: { id: number; motivo: MotivoDesactivacion; detalle?: string }) =>
+    mutationFn: ({ id, motivo, detalle, confirmarStock }: {
+      id: number
+      motivo: MotivoDesactivacion
+      detalle?: string
+      confirmarStock?: boolean
+    }) =>
       api.patch<{ data: Producto }>(`/productos/${id}/desactivar`, {
         motivo_desactivacion: motivo,
         motivo_desactivacion_detalle: detalle,
+        confirmar_stock: confirmarStock === true,
       }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['productos'] }),
   })

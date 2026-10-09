@@ -13,6 +13,8 @@ import ProductosPage from '@/features/productos/ProductosPage'
 import InventarioPage from '@/features/inventario/InventarioPage'
 import KardexPage from '@/features/kardex/KardexPage'
 import VentasPage from '@/features/ventas/VentasPage'
+import OperacionesPage from '@/features/operaciones/OperacionesPage'
+import ClientesPage from '@/features/clientes/ClientesPage'
 import PrediccionPage from '@/features/prediccion/PrediccionPage'
 import ModeloMLPage from '@/features/modelo-ml/ModeloMLPage'
 import ConfiguracionPage from '@/features/configuracion/ConfiguracionPage'
@@ -34,6 +36,8 @@ export default function App() {
           <Route element={<RutaConPermiso permiso="gestionar_productos" />}><Route path="productos" element={<ProductosPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_inventario" />}><Route path="inventario" element={<InventarioPage />} /><Route path="kardex" element={<KardexPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="ventas" element={<VentasPage />} /></Route>
+          <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="operaciones" element={<OperacionesPage />} /></Route>
+          <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="clientes" element={<ClientesPage />} /></Route>
           <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="prediccion" element={<PrediccionPage />} /><Route path="modelo-ml" element={<ModeloMLPage />} /></Route>
           <Route element={<RutaConPermiso permiso="configurar_umbrales" />}><Route path="configuracion" element={<ConfiguracionPage />} /></Route>
           <Route element={<RutaSoloAdministrador />}><Route path="usuarios" element={<UsuariosPage />} /></Route>

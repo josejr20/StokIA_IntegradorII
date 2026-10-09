@@ -1,6 +1,8 @@
 const DIAS_ALERTA_VENCIMIENTO = 30;
 const TIMEZONE_LIMA = 'America/Lima';
 
+class ErrorLote extends Error {}
+
 function fechaEnLima(dateLike = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: TIMEZONE_LIMA,
@@ -49,25 +51,17 @@ function generarCodigoLote(numero = 1) {
   return `LT-${String(Math.max(1, valor)).padStart(6, '0')}`;
 }
 
-function validarLoteParaCreacion({ cantidad_inicial, fecha_vencimiento } = {}) {
+function validarLoteParaCreacion({ cantidad_inicial } = {}) {
   const cantidad = Number(cantidad_inicial);
   if (!Number.isFinite(cantidad) || cantidad <= 0) {
-    throw new Error('La cantidad inicial del lote debe ser mayor a 0');
+    throw new ErrorLote('La cantidad inicial del lote debe ser mayor a 0');
   }
-
-  const fecha = normalizarFecha(fecha_vencimiento, true);
-  if (!fecha) {
-    throw new Error('La fecha de vencimiento es inválida');
-  }
-
-  const hoy = normalizarFecha(new Date(), true);
-  if (String(fecha) <= String(hoy)) {
-    throw new Error('La fecha de vencimiento debe ser posterior a hoy');
+  if (Math.round(cantidad * 100) !== cantidad * 100) {
+    throw new ErrorLote('La cantidad inicial admite hasta 2 decimales');
   }
 
   return {
     cantidad_inicial: cantidad,
-    fecha_vencimiento: fecha,
   };
 }
 
@@ -101,6 +95,7 @@ function seleccionarLotesFEFO(lotes = [], hoy = new Date()) {
 
 module.exports = {
   DIAS_ALERTA_VENCIMIENTO,
+  ErrorLote,
   diasHastaVencimiento,
   generarCodigoLote,
   validarLoteParaCreacion,

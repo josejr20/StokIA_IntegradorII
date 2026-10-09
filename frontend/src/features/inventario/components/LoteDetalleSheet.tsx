@@ -1,4 +1,4 @@
-import { ArrowDownCircle, ArrowUpCircle, RefreshCcw } from 'lucide-react'
+import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react'
 
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription,
@@ -6,48 +6,50 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 
-import { useHistorialLote, type TipoMovimiento } from '../api'
+import { useHistorialProductos, type TipoMovimiento } from '../api'
 
 const ICONO_TIPO: Record<TipoMovimiento, typeof ArrowDownCircle> = {
   ingreso: ArrowDownCircle,
   salida: ArrowUpCircle,
-  ajuste: RefreshCcw,
 }
 
 const formatoMoneda = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' })
 const formatoFecha = new Intl.DateTimeFormat('es-PE', { dateStyle: 'medium', timeStyle: 'short' })
 
 export function LoteDetalleSheet({
-  loteId,
+  productoNombre,
+  productoIds,
   open,
   onOpenChange,
 }: {
-  loteId: number | null
+  productoNombre: string
+  productoIds: number[]
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { data: historial, isLoading } = useHistorialLote(loteId ?? 0)
+  const { data: historial, isLoading } = useHistorialProductos(productoIds)
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-lg">
+      <SheetContent className="sm:max-w-2xl">
         <SheetHeader>
-          <SheetTitle>Historial del lote</SheetTitle>
+          <SheetTitle>Historial del producto</SheetTitle>
           <SheetDescription>
-            Lote {loteId} · movimientos registrados en el kardex.
+            {productoNombre} · movimientos registrados en todos sus lotes.
           </SheetDescription>
         </SheetHeader>
 
         <div className="mt-4 space-y-3">
           {isLoading && <p className="text-sm text-muted-foreground">Cargando…</p>}
           {!isLoading && (!historial || historial.length === 0) && (
-            <p className="text-sm text-muted-foreground">No hay movimientos para este lote.</p>
+            <p className="text-sm text-muted-foreground">No hay movimientos para este producto.</p>
           )}
           {historial && historial.length > 0 && (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Fecha</TableHead>
+                  <TableHead>ID / Lote</TableHead>
                   <TableHead>Tipo</TableHead>
                   <TableHead className="text-right">Cant.</TableHead>
                   <TableHead className="text-right">Saldo</TableHead>
@@ -61,6 +63,9 @@ export function LoteDetalleSheet({
                     <TableRow key={mov.id}>
                       <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                         {formatoFecha.format(new Date(mov.fecha))}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-xs">
+                        {mov.lote_numero ?? 'Sin código'} · #{mov.lote_id}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1.5">

@@ -41,15 +41,22 @@ export function DesactivarProductoDialog({
   async function confirmar() {
     if (!producto || !motivo) return
     try {
-      await desactivar.mutateAsync({ id: producto.id, motivo, detalle: detalle || undefined })
+      await desactivar.mutateAsync({
+        id: producto.id,
+        motivo,
+        detalle: detalle || undefined,
+        confirmarStock: producto.stock_total > 0,
+      })
       toast.success('Producto desactivado')
       onOpenChange(false)
     } catch (error) {
-      toast.error(error instanceof ApiError ? error.message : 'No se pudo desactivar el producto')
+      const mensaje = error instanceof ApiError ? error.message : 'No se pudo desactivar el producto'
+      toast.error(mensaje)
     }
   }
 
   const motivoLabel = MOTIVOS_DESACTIVACION.find((m) => m.value === motivo)?.label
+  const tieneStock = (producto?.stock_total ?? 0) > 0
 
   return (
     <Dialog open={!!producto} onOpenChange={onOpenChange}>
@@ -58,7 +65,7 @@ export function DesactivarProductoDialog({
           <>
             <DialogHeader>
               <DialogTitle>Desactivar producto</DialogTitle>
-              <DialogDescription>{producto?.nombre} — indica el motivo antes de continuar.</DialogDescription>
+              <DialogDescription>{producto?.nombre} - indica el motivo antes de continuar.</DialogDescription>
             </DialogHeader>
 
             <div className="space-y-1.5">
@@ -99,14 +106,21 @@ export function DesactivarProductoDialog({
               </div>
               <DialogTitle>¿Confirmas la desactivación?</DialogTitle>
               <DialogDescription>
-                {producto?.nombre} dejará de aparecer en el catálogo activo y no podrá venderse. Se conservará
-                su historial de movimientos. Motivo registrado: <strong>{motivoLabel}</strong>.
+                {producto?.nombre} dejará de aparecer en el catálogo activo y no podrá venderse ni recibir movimientos. Se conservará
+                su historial. Motivo registrado: <strong>{motivoLabel}</strong>.
               </DialogDescription>
             </DialogHeader>
+
+            {tieneStock && (
+              <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                Este producto tiene {producto?.stock_total ?? 0} unidades en stock. Si lo desactivas, no podrá venderse ni recibir movimientos.
+              </div>
+            )}
+
             <DialogFooter>
               <Button variant="outline" onClick={() => setPaso(1)}>Volver</Button>
               <Button variant="destructive" disabled={desactivar.isPending} onClick={confirmar}>
-                {desactivar.isPending ? 'Desactivando…' : 'Sí, desactivar definitivamente'}
+                {desactivar.isPending ? 'Desactivando…' : 'Sí, desactivar'}
               </Button>
             </DialogFooter>
           </>

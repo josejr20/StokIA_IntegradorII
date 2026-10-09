@@ -2,9 +2,41 @@ const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
 const { uploadProducto } = require('../middleware/uploadProducto');
-const { listar, obtener, crear, actualizar, desactivar, activar, ingreso } = require('../controllers/productoController');
+const { listar, obtener, crear, actualizar, importar, desactivar, activar, ingreso } = require('../controllers/productoController');
+const { body, validationResult } = require('express-validator');
 const router = Router();
 router.use(autenticar);
+
+const validarProducto = [
+  body('nombre').trim().notEmpty().withMessage('El nombre es obligatorio')
+    .isLength({ max: 200 }).withMessage('Máximo 200 caracteres'),
+  body('categoria_id').isInt({ min: 1 }).withMessage('La categoría es obligatoria'),
+  body('unidad_medida_id').isInt({ min: 1 }).withMessage('La unidad de medida es obligatoria'),
+];
+
+const validarProductoActualizar = [
+  body('nombre').optional().trim().notEmpty().withMessage('El nombre no puede estar vacío')
+    .isLength({ max: 200 }).withMessage('Máximo 200 caracteres'),
+  body('categoria_id').optional().isInt({ min: 1 }).withMessage('La categoría debe ser un entero positivo'),
+  body('unidad_medida_id').optional().isInt({ min: 1 }).withMessage('La unidad de medida debe ser un entero positivo'),
+];
+
+const validarResultado = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
+  next();
+};
+
+const validarCodigoNoModificado = async (req, res, next) => {
+  if (req.body.codigo !== undefined) {
+    const { Producto } = require('../models');
+    const producto = await Producto.findByPk(req.params.id);
+    if (producto && req.body.codigo !== producto.codigo) {
+      return res.status(400).json({ error: 'El código del producto no se puede modificar' });
+    }
+  }
+  next();
+};
 
 /**
  * @openapi
@@ -185,11 +217,76 @@ router.use(autenticar);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Producto'
+ * /api/productos/importar:
+ *   post:
+ *     summary: Importar productos desde CSV/Excel
+ *     description: >-
+ *       Carga masiva todo-o-nada. Recibe las filas ya validadas por el frontend
+ *       con los ids de catálogo resueltos. Si alguna fila es inválida no se
+ *       inserta nada y se devuelve 400 con el detalle por fila.
+ *     tags: [Productos]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [productos]
+ *             properties:
+ *               productos:
+ *                 type: array
+ *                 maxItems: 500
+ *                 items:
+ *                   type: object
+ *                   required: [nombre, categoria_id, unidad_medida_id, categoria_paquete_id]
+ *                   properties:
+ *                     fila: { type: integer, description: Número de fila en el archivo, para reportar errores }
+ *                     nombre: { type: string, maxLength: 200 }
+ *                     categoria_id: { type: integer }
+ *                     unidad_medida_id: { type: integer }
+ *                     categoria_paquete_id: { type: integer }
+ *                     marca_id: { type: integer }
+ *                     contenido_valor: { type: number }
+ *                     contenido_paquete_cantidad: { type: number }
+ *                     contenido_paquete_envase_id: { type: integer }
+ *                     precio_venta: { type: string }
+ *                     descripcion: { type: string }
+ *     responses:
+ *       '201':
+ *         description: Productos importados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     creados: { type: integer }
+ *                     codigos: { type: array, items: { type: string } }
+ *       '400':
+ *         description: Ningún producto se importó por datos inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error: { type: string }
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       fila: { type: integer }
+ *                       msg: { type: string }
  */
 router.get('/', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), listar);
+router.post('/importar', verificarPermiso('gestionar_productos'), importar);
 router.get('/:id', verificarPermiso(['gestionar_productos', 'gestionar_inventario']), obtener);
-router.post('/', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), crear);
-router.put('/:id', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), actualizar);
+router.post('/', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), validarProducto, validarResultado, crear);
+router.put('/:id', verificarPermiso('gestionar_productos'), uploadProducto.single('imagen'), validarProductoActualizar, validarResultado, validarCodigoNoModificado, actualizar);
 router.patch('/:id/desactivar', verificarPermiso('gestionar_productos'), desactivar);
 router.patch('/:id/activar', verificarPermiso('gestionar_productos'), activar);
 router.post('/:id/ingreso', verificarPermiso('gestionar_productos'), ingreso);

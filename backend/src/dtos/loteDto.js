@@ -31,8 +31,10 @@ class LoteDto {
       producto_id: body.producto_id,
       numero_lote: body.numero_lote,
       cantidad_inicial: cantidadInicial,
-      cantidad_actual: body.cantidad_actual !== undefined ? Number(body.cantidad_actual) : cantidadInicial,
-      fecha_vencimiento: body.fecha_vencimiento,
+      cantidad_actual: 0,
+      fecha_vencimiento: typeof body.fecha_vencimiento === 'string'
+        ? body.fecha_vencimiento.trim() || null
+        : body.fecha_vencimiento ?? null,
       fecha_ingreso: body.fecha_ingreso || new Date()
     };
   }
@@ -40,9 +42,6 @@ class LoteDto {
   static fromUpdate(body) {
     const data = {};
     if (body.numero_lote !== undefined) data.numero_lote = body.numero_lote;
-    if (body.cantidad_inicial !== undefined) data.cantidad_inicial = body.cantidad_inicial;
-    if (body.cantidad_actual !== undefined) data.cantidad_actual = body.cantidad_actual;
-    if (body.fecha_vencimiento !== undefined) data.fecha_vencimiento = body.fecha_vencimiento;
     return data;
   }
 }

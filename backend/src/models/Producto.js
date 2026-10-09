@@ -23,12 +23,19 @@ module.exports = (sequelize) => {
   }, {
     tableName: 'productos',
     timestamps: false,
+    hooks: {
+      beforeUpdate: (producto) => { producto.fecha_actualizacion = new Date(); },
+    },
     indexes: [
       { fields: ['codigo'] },
       { fields: ['categoria_id'] },
       { fields: ['activo'] }
     ]
   });
+
+  // HU5.3: Los servicios de predicción ML (Sprint 2) deben filtrar `activo = true`
+  // para excluir productos desactivados de nuevas predicciones.
+  // Ventas, lotes y movimientos ya bloquean productos inactivos en sus respectivos controladores.
 
   return Producto;
 };
