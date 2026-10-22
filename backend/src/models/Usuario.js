@@ -13,6 +13,7 @@ module.exports = (sequelize) => {
     activo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
     fecha_creacion: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
     ultimo_acceso: { type: DataTypes.DATE, allowNull: true },
+    ip_address: { type: DataTypes.STRING(45), allowNull: true },
     is_staff: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   }, {
     tableName: 'usuarios',

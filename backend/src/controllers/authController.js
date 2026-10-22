@@ -15,6 +15,17 @@ const { cumplePoliticaPassword } = require('../utils/passwordPolicy');
 const codigoHash = (codigo) => crypto.createHash('sha256').update(codigo).digest('hex');
 const correoNormalizado = (email) => email.trim().toLowerCase();
 
+function obtenerIP(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  let ip = req.ip || req.socket.remoteAddress || '';
+  if (ip === '::1') return '127.0.0.1';
+  if (ip.startsWith('::ffff:')) return ip.substring(7);
+  return ip;
+}
+
 const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -22,8 +33,9 @@ const login = async (req, res) => {
   }
 
   const { identifier, password } = LoginDto.fromBody(req.body);
+  const ip = (req.body && typeof req.body.ip_address === 'string' && req.body.ip_address) || obtenerIP(req);
   try {
-    const { usuario, token, refreshToken } = await authService.login(identifier, password);
+    const { usuario, token, refreshToken } = await authService.login(identifier, password, ip);
     setAuthCookies(res, token, refreshToken);
     return res.json({
       usuario,
@@ -36,7 +48,7 @@ const login = async (req, res) => {
       await crearAuditoria(null, 'login_fallido', 'auth', null, {
         identifier: typeof identifier === 'string' ? identifier.trim() : null,
         motivo: error.message || 'Credenciales incorrectas',
-        ip: req.ip || null,
+        ip: ip,
         user_agent: req.get('user-agent') || null,
       });
     } catch (auditError) {
