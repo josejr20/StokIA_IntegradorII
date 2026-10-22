@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 
 import { api } from '@/lib/api'
+import { obtenerIP } from '@/lib/ip'
 export type PermisoCodigo =
   | 'gestionar_productos'
   | 'gestionar_inventario'
@@ -60,13 +61,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (cargaInicial.current) return
     cargaInicial.current = true
+    void obtenerIP()
     cargarUsuario()
   }, [])
 
   async function iniciarSesion(identifier: string, password: string) {
+    const ip = await obtenerIP()
     await api.post<{ usuario: Usuario }>(
       '/auth/login',
-      { identifier, password },
+      { identifier, password, ip_address: ip },
     )
     await cargarUsuario()
   }

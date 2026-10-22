@@ -45,11 +45,19 @@ app.use('/api', require('./routes'));
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+const { testLocalConnection } = require('./config/database');
+
 const start = async () => {
   const connected = await testConnection();
   if (!connected) {
     logger.error('No se pudo conectar a la base de datos. Abortando.');
     process.exit(1);
+  }
+  try {
+    await testLocalConnection();
+    console.log('Conexión de manera local establecida correctamente');
+  } catch (err) {
+    // no abortar
   }
   try {
     await require('./models').sequelize.sync({ alter: false });
@@ -59,7 +67,7 @@ const start = async () => {
     console.error(err);
   }
 
-  app.listen(process.env.PORT || 3000, () => {
+  app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
     logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
     logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
   });

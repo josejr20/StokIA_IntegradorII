@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Pencil, Plus, Search, UserRound, UserX } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Loader2, Pencil, Plus, Search, UserRound, UserX } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -26,21 +26,102 @@ import {
   useHistorialCliente,
   useClientes,
 } from '@/features/operaciones/api'
+import {
+  buscarPersonaPorDni,
+  buscarPersonasPorNombre,
+  type PersonaReniec,
+} from '@/features/clientes/reniec'
+import { buscarEmpresaPorRuc } from '@/features/clientes/ruc'
 import type { Cliente } from '@/types'
+
+// Solo se usa en pantalla: en Supabase todo se guarda en "nombre" y "documento".
+type TipoPersona = 'natural' | 'juridica'
 
 interface EdicionCliente {
   id: number | null // null = nuevo
-  nombre: string
+  tipo_persona: TipoPersona
+  nombres: string
+  apellido_paterno: string
+  apellido_materno: string
+  razon_social: string
   documento: string
 }
 
-const VACIO: EdicionCliente = { id: null, nombre: '', documento: '' }
+const VACIO: EdicionCliente = {
+  id: null,
+  tipo_persona: 'natural',
+  nombres: '',
+  apellido_paterno: '',
+  apellido_materno: '',
+  razon_social: '',
+  documento: '',
+}
+
+// Como Supabase no guarda el tipo, se deduce: RUC de 11 dígitos o
+// marcas típicas de razón social en el nombre.
+const MARCAS_EMPRESA =
+  /S\.A\.C|E\.I\.R\.L|S\.R\.L|SOCIEDAD ANONIMA|SUCESION|^GRUPO |^INVERSIONES |CORPORACION|REPRESENTACIONES|NEGOCIOS|CONCESIONARIO|RESTAURANT|CEVICHERIA|COMPANY|&/i
+
+function esEmpresa(cliente: Pick<Cliente, 'nombre' | 'documento'>): boolean {
+  return (cliente.documento ?? '').length === 11 || MARCAS_EMPRESA.test(cliente.nombre)
+}
+
+// Une nombres y apellidos (o devuelve la razón social) para guardar en "nombre".
+function armarNombre(e: EdicionCliente): string {
+  if (e.tipo_persona === 'juridica') return e.razon_social.trim().toUpperCase()
+
+  return [e.nombres, e.apellido_paterno, e.apellido_materno]
+    .map((parte) => parte.trim())
+    .filter(Boolean)
+    .join(' ')
+    .toUpperCase()
+}
+
+// Clientes antiguos: solo tienen "nombre". Se propone una separación
+// (últimas dos palabras = apellidos) que la persona puede corregir.
+function separarNombre(nombre: string) {
+  const palabras = nombre.trim().split(/\s+/).filter(Boolean)
+
+  if (palabras.length >= 3) {
+    return {
+      nombres: palabras.slice(0, -2).join(' '),
+      apellido_paterno: palabras[palabras.length - 2],
+      apellido_materno: palabras[palabras.length - 1],
+    }
+  }
+
+  return { nombres: nombre.trim(), apellido_paterno: '', apellido_materno: '' }
+}
+
+function desdeCliente(cliente: Cliente): EdicionCliente {
+  if (esEmpresa(cliente)) {
+    return {
+      ...VACIO,
+      id: cliente.id,
+      tipo_persona: 'juridica',
+      razon_social: cliente.nombre,
+      documento: cliente.documento ?? '',
+    }
+  }
+
+  return {
+    ...VACIO,
+    id: cliente.id,
+    tipo_persona: 'natural',
+    ...separarNombre(cliente.nombre),
+    documento: cliente.documento ?? '',
+  }
+}
 
 export default function ClientesPage() {
   const [buscar, setBuscar] = useState('')
   const [debounce, setDebounce] = useState('')
   const [edicion, setEdicion] = useState<EdicionCliente | null>(null)
   const [detalleId, setDetalleId] = useState<number | null>(null)
+  const [consultando, setConsultando] = useState<'dni' | 'nombre' | 'ruc' | null>(null)
+  const [candidatos, setCandidatos] = useState<PersonaReniec[]>([])
+  // Último RUC consultado, para no repetir la consulta automática.
+  const ultimoRuc = useRef('')
 
   useEffect(() => {
     const t = setTimeout(() => setDebounce(buscar), 250)
@@ -53,31 +134,181 @@ export default function ClientesPage() {
   const { data: historial } = useHistorialCliente(detalleId)
 
   const detalle = clientes?.find((c) => c.id === detalleId) ?? null
+  const esNatural = edicion?.tipo_persona === 'natural'
+
+  function abrirEdicion(valor: EdicionCliente | null) {
+    ultimoRuc.current = ''
+    setCandidatos([])
+    setConsultando(null)
+    setEdicion(valor)
+  }
+
+  function aplicarPersona(persona: PersonaReniec) {
+    setEdicion((actual) =>
+      actual
+        ? {
+            ...actual,
+            documento: persona.dni,
+            nombres: persona.nombres,
+            apellido_paterno: persona.apellido_paterno,
+            apellido_materno: persona.apellido_materno,
+          }
+        : actual
+    )
+    setCandidatos([])
+  }
+
+  // DNI  ->  nombres y apellidos
+  async function consultarPorDni() {
+    if (!edicion) return
+
+    const dni = edicion.documento.trim()
+    if (!/^\d{8}$/.test(dni)) {
+      toast.error('Escribe un DNI de 8 dígitos')
+      return
+    }
+
+    setConsultando('dni')
+    try {
+      const persona = await buscarPersonaPorDni(dni)
+      aplicarPersona(persona)
+      toast.success('Datos completados desde RENIEC')
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : 'No se pudo consultar el DNI')
+    } finally {
+      setConsultando(null)
+    }
+  }
+
+  // RUC  ->  razón social
+  async function consultarPorRuc() {
+    if (!edicion) return
+
+    const ruc = edicion.documento.trim()
+    if (!/^\d{11}$/.test(ruc)) {
+      toast.error('Escribe un RUC de 11 dígitos')
+      return
+    }
+
+    ultimoRuc.current = ruc
+    setConsultando('ruc')
+    try {
+      const empresa = await buscarEmpresaPorRuc(ruc)
+
+      setEdicion((actual) =>
+        actual ? { ...actual, razon_social: empresa.razon_social } : actual
+      )
+
+      const observado =
+        (empresa.estado && empresa.estado !== 'ACTIVO') ||
+        (empresa.condicion && empresa.condicion !== 'HABIDO')
+
+      if (observado) {
+        toast.warning(
+          `Razón social completada, pero el RUC figura como ${empresa.estado} / ${empresa.condicion}`
+        )
+      } else {
+        toast.success('RUC válido, razón social completada')
+      }
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : 'No se pudo consultar el RUC')
+    } finally {
+      setConsultando(null)
+    }
+  }
+
+  // Al completar los 11 dígitos del RUC: validar y traer la razón social.
+  // Solo se lanza si la razón social está vacía, para no pisar lo escrito.
+  useEffect(() => {
+    if (!edicion || edicion.tipo_persona !== 'juridica') return
+
+    const ruc = edicion.documento
+
+    if (ruc.length < 11) {
+      ultimoRuc.current = ''
+      return
+    }
+
+    if (ruc.length === 11 && ruc !== ultimoRuc.current && !edicion.razon_social.trim()) {
+      consultarPorRuc()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [edicion?.documento, edicion?.tipo_persona])
+
+  // Nombres y apellidos  ->  DNI
+  async function consultarPorNombre() {
+    if (!edicion) return
+
+    if (!edicion.nombres.trim() || !edicion.apellido_paterno.trim()) {
+      toast.error('Escribe al menos los nombres y el apellido paterno')
+      return
+    }
+
+    setConsultando('nombre')
+    setCandidatos([])
+    try {
+      const personas = await buscarPersonasPorNombre({
+        nombres: edicion.nombres,
+        apellido_paterno: edicion.apellido_paterno,
+        apellido_materno: edicion.apellido_materno,
+      })
+
+      if (personas.length === 0) {
+        toast.error('No se encontró a nadie con esos datos')
+      } else if (personas.length === 1) {
+        aplicarPersona(personas[0])
+        toast.success('DNI encontrado')
+      } else {
+        setCandidatos(personas)
+        toast.info(`Hay ${personas.length} coincidencias, elige una`)
+      }
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : 'No se pudo consultar RENIEC')
+    } finally {
+      setConsultando(null)
+    }
+  }
 
   async function guardar() {
     if (!edicion) return
-    if (!edicion.nombre.trim()) {
-      toast.error('El nombre del cliente es obligatorio')
-      return
+
+    const documento = edicion.documento.trim()
+
+    if (edicion.tipo_persona === 'natural') {
+      if (!edicion.nombres.trim() || !edicion.apellido_paterno.trim()) {
+        toast.error('Los nombres y el apellido paterno son obligatorios')
+        return
+      }
+      if (documento && !/^\d{8}$/.test(documento)) {
+        toast.error('El DNI debe tener 8 dígitos')
+        return
+      }
+    } else {
+      if (!edicion.razon_social.trim()) {
+        toast.error('La razón social es obligatoria')
+        return
+      }
+      if (documento && !/^\d{11}$/.test(documento)) {
+        toast.error('El RUC debe tener 11 dígitos')
+        return
+      }
     }
+
+    // En Supabase solo se guardan estas dos columnas.
+    const datos = {
+      nombre: armarNombre(edicion),
+      documento: documento || null,
+    }
+
     try {
       if (edicion.id === null) {
-        await crearCliente.mutateAsync({
-          nombre: edicion.nombre.trim(),
-          documento: edicion.documento.trim() || null,
-        })
+        await crearCliente.mutateAsync(datos)
         toast.success('Cliente registrado')
       } else {
-        await actualizarCliente.mutateAsync({
-          id: edicion.id,
-          datos: {
-            nombre: edicion.nombre.trim(),
-            documento: edicion.documento.trim() || null,
-          },
-        })
+        await actualizarCliente.mutateAsync({ id: edicion.id, datos })
         toast.success('Cliente actualizado')
       }
-      setEdicion(null)
+      abrirEdicion(null)
     } catch (error) {
       toast.error(error instanceof ApiError ? error.message : 'No se pudo guardar el cliente')
     }
@@ -95,6 +326,8 @@ export default function ClientesPage() {
     }
   }
 
+  const guardando = crearCliente.isPending || actualizarCliente.isPending
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -104,7 +337,7 @@ export default function ClientesPage() {
             Los clientes se asocian a cada venta, devolución y ajuste relacionado.
           </p>
         </div>
-        <Button onClick={() => setEdicion(VACIO)}>
+        <Button onClick={() => abrirEdicion(VACIO)}>
           <Plus className="size-4" />
           Nuevo cliente
         </Button>
@@ -147,6 +380,9 @@ export default function ClientesPage() {
                   >
                     {cliente.nombre}
                   </button>
+                  {esEmpresa(cliente) && (
+                    <span className="ml-2 text-xs text-muted-foreground">Empresa</span>
+                  )}
                 </td>
                 <td className="p-4">{cliente.documento ?? '-'}</td>
                 <td className="p-4">
@@ -166,7 +402,7 @@ export default function ClientesPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => setEdicion({ id: cliente.id, nombre: cliente.nombre, documento: cliente.documento ?? '' })}
+                      onClick={() => abrirEdicion(desdeCliente(cliente))}
                     >
                       <Pencil className="size-4" />
                       Editar
@@ -199,38 +435,203 @@ export default function ClientesPage() {
       </div>
 
       {/* Crear / editar */}
-      <Dialog open={edicion !== null} onOpenChange={(abierto) => !abierto && setEdicion(null)}>
+      <Dialog open={edicion !== null} onOpenChange={(abierto) => !abierto && abrirEdicion(null)}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{edicion?.id === null ? 'Nuevo cliente' : 'Editar cliente'}</DialogTitle>
           </DialogHeader>
           {edicion && (
             <div className="space-y-4">
-              <div className="space-y-2">
-                <Label>
-                  Nombre <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  autoFocus
-                  value={edicion.nombre}
-                  onChange={(e) => setEdicion({ ...edicion, nombre: e.target.value })}
-                  placeholder="Nombre completo o razón social"
-                />
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  type="button"
+                  variant={esNatural ? 'default' : 'outline'}
+                  onClick={() => {
+                    setCandidatos([])
+                    setEdicion({ ...edicion, tipo_persona: 'natural' })
+                  }}
+                >
+                  Persona
+                </Button>
+                <Button
+                  type="button"
+                  variant={!esNatural ? 'default' : 'outline'}
+                  onClick={() => {
+                    setCandidatos([])
+                    setEdicion({ ...edicion, tipo_persona: 'juridica' })
+                  }}
+                >
+                  Empresa
+                </Button>
               </div>
-              <div className="space-y-2">
-                <Label>Documento</Label>
-                <Input
-                  value={edicion.documento}
-                  onChange={(e) => setEdicion({ ...edicion, documento: e.target.value })}
-                  placeholder="RUC / DNI (opcional)"
-                />
-              </div>
+
+              {esNatural ? (
+                <>
+                  <div className="space-y-2">
+                    <Label>DNI</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        inputMode="numeric"
+                        maxLength={8}
+                        value={edicion.documento}
+                        onChange={(e) =>
+                          setEdicion({ ...edicion, documento: e.target.value.replace(/\D/g, '') })
+                        }
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            consultarPorDni()
+                          }
+                        }}
+                        placeholder="8 dígitos (opcional)"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={consultarPorDni}
+                        disabled={consultando !== null}
+                        title="Completar nombres y apellidos desde el DNI"
+                      >
+                        {consultando === 'dni' ? (
+                          <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                          <Search className="size-4" />
+                        )}
+                        Buscar nombres
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>
+                      Nombres <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      autoFocus
+                      className="uppercase"
+                      value={edicion.nombres}
+                      onChange={(e) => setEdicion({ ...edicion, nombres: e.target.value })}
+                      placeholder="Ej. JUDITH MERCEDES"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>
+                        Apellido paterno <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        className="uppercase"
+                        value={edicion.apellido_paterno}
+                        onChange={(e) => setEdicion({ ...edicion, apellido_paterno: e.target.value })}
+                        placeholder="Ej. GUTIERREZ"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Apellido materno</Label>
+                      <Input
+                        className="uppercase"
+                        value={edicion.apellido_materno}
+                        onChange={(e) => setEdicion({ ...edicion, apellido_materno: e.target.value })}
+                        placeholder="Ej. RIVERA"
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={consultarPorNombre}
+                    disabled={consultando !== null}
+                  >
+                    {consultando === 'nombre' ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <Search className="size-4" />
+                    )}
+                    Buscar DNI por nombres y apellidos
+                  </Button>
+
+                  {candidatos.length > 0 && (
+                    <div className="space-y-1 rounded-md border p-2">
+                      <p className="px-1 text-xs text-muted-foreground">
+                        Elige la persona correcta:
+                      </p>
+                      {candidatos.map((persona) => (
+                        <button
+                          key={persona.dni}
+                          type="button"
+                          onClick={() => aplicarPersona(persona)}
+                          className="flex w-full cursor-pointer items-center justify-between rounded px-2 py-1.5 text-left text-sm hover:bg-muted"
+                        >
+                          <span>
+                            {persona.nombres} {persona.apellido_paterno} {persona.apellido_materno}
+                          </span>
+                          <span className="font-mono text-xs text-muted-foreground">
+                            {persona.dni}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <Label>RUC</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        autoFocus
+                        inputMode="numeric"
+                        maxLength={11}
+                        value={edicion.documento}
+                        onChange={(e) =>
+                          setEdicion({ ...edicion, documento: e.target.value.replace(/\D/g, '') })
+                        }
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            consultarPorRuc()
+                          }
+                        }}
+                        placeholder="11 dígitos (opcional)"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={consultarPorRuc}
+                        disabled={consultando !== null}
+                        title="Validar el RUC y traer la razón social"
+                      >
+                        {consultando === 'ruc' ? (
+                          <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                          <Search className="size-4" />
+                        )}
+                        Validar y buscar
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>
+                      Razón social <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      className="uppercase"
+                      value={edicion.razon_social}
+                      onChange={(e) => setEdicion({ ...edicion, razon_social: e.target.value })}
+                      placeholder="Nombre de la empresa"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEdicion(null)}>Cancelar</Button>
-            <Button onClick={guardar} disabled={crearCliente.isPending || actualizarCliente.isPending}>
-              {crearCliente.isPending || actualizarCliente.isPending ? 'Guardando...' : 'Guardar'}
+            <Button variant="outline" onClick={() => abrirEdicion(null)}>Cancelar</Button>
+            <Button onClick={guardar} disabled={guardando}>
+              {guardando ? 'Guardando...' : 'Guardar'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -246,7 +647,9 @@ export default function ClientesPage() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <p className="text-xs uppercase text-muted-foreground">Documento</p>
+                  <p className="text-xs uppercase text-muted-foreground">
+                    {esEmpresa(detalle) ? 'RUC' : 'Documento'}
+                  </p>
                   <p>{detalle.documento ?? '-'}</p>
                 </div>
                 <div>
