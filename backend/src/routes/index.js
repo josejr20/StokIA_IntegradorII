@@ -22,6 +22,7 @@ const presentacionRoutes = require('./presentaciones');
     const tiposEnvaseRoutes = require('./tiposEnvase');
     const productoPresentacionRoutes = require('./productoPresentacion');
     const precioRoutes = require('./precio');
+    const prediccionRoutes = require('./predicciones');
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
@@ -46,5 +47,6 @@ Router.use('/preferencias', preferenciaRoutes);
     Router.use('/tipos-envase', tiposEnvaseRoutes);
     Router.use('/presentaciones-niveles', productoPresentacionRoutes);
     Router.use('/precios', precioRoutes);
+    Router.use('/predicciones', prediccionRoutes);
 
     module.exports = Router;
