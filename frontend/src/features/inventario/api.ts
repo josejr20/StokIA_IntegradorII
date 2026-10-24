@@ -51,6 +51,7 @@ export interface MovimientoInventario {
   lote: number
   lote_id: number
   lote_numero: string
+  lote_fecha_vencimiento?: string | null
   producto_id: number
   producto_nombre: string
   producto_codigo: string
@@ -232,6 +233,18 @@ export function useRegistrarMovimiento() {
       queryClient.invalidateQueries({ queryKey: ['lotes'] })
       queryClient.invalidateQueries({ queryKey: ['movimientos-inventario'] })
       queryClient.invalidateQueries({ queryKey: ['movimientos'] })
+    },
+  })
+}
+
+export function useActualizarFechasVencimiento() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => api.post<{ message: string; actualizados: number }>('/lotes/actualizar-fechas-vencimiento'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['lotes'] })
+      queryClient.invalidateQueries({ queryKey: ['lotes', 'historial-productos'] })
+      queryClient.invalidateQueries({ queryKey: ['productos'] })
     },
   })
 }

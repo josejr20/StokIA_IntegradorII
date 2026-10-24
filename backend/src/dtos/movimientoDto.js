@@ -3,6 +3,7 @@ class MovimientoDto {
     this.id = data.id;
     this.lote_id = data.lote_id;
     this.lote_numero = data.lote_numero || null;
+    this.lote_fecha_vencimiento = data.lote_fecha_vencimiento || null;
     this.producto_id = data.producto_id || null;
     this.producto_nombre = data.producto_nombre || null;
     this.producto_codigo = data.producto_codigo || null;
@@ -31,6 +32,7 @@ class MovimientoDto {
     return new MovimientoDto({
       ...data,
       lote_numero: lote.numero_lote || null,
+      lote_fecha_vencimiento: lote.fecha_vencimiento || null,
       producto_id: producto.id || null,
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,

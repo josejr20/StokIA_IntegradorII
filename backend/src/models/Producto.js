@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
     categoria_paquete_id: { type: DataTypes.INTEGER, allowNull: true },
     contenido_paquete_cantidad: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
     contenido_paquete_envase_id: { type: DataTypes.INTEGER, allowNull: true },
+    vida_util_dias: { type: DataTypes.INTEGER, allowNull: true },
   }, {
     tableName: 'productos',
     timestamps: false,

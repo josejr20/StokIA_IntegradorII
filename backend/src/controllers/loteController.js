@@ -2,7 +2,7 @@ const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
 const { MovimientoDto } = require('../dtos/movimientoDto');
 const { ErrorKardex, registrarMovimiento } = require('../services/kardexService');
-const { ErrorLote, generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
+const { ErrorLote, generarCodigoLote, validarLoteParaCreacion, calcularFechaVencimiento } = require('../services/loteService');
 const logger = require('../utils/logger');
 const { Op } = require('sequelize');
 const { UniqueConstraintError } = require('sequelize');
@@ -71,11 +71,18 @@ const crear = async (req, res, next) => {
     validarLoteParaCreacion({ cantidad_inicial: cantidadInicial });
 
     const siguienteNumero = (await Lote.max('id', { where: { producto_id: productoId } }) || 0) + 1;
+    let fechaVencimiento = req.body.fecha_vencimiento;
+    if ((fechaVencimiento === undefined || fechaVencimiento === null || fechaVencimiento === '') && producto.vida_util_dias) {
+      const fechaIngreso = req.body.fecha_ingreso || new Date();
+      fechaVencimiento = calcularFechaVencimiento(fechaIngreso, producto.vida_util_dias);
+    }
+
     const data = LoteDto.fromCreate({
       ...req.body,
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
       cantidad_actual: 0,
+      fecha_vencimiento: fechaVencimiento || null,
     });
 
     transaction = await Lote.sequelize.transaction();
@@ -217,4 +224,34 @@ const registrarMovimientoCtrl = async (req, res, next) => {
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl };
+const actualizarFechasVencimiento = async (req, res, next) => {
+  try {
+    const { sequelize } = require('../models');
+    const [resultados] = await sequelize.query(`
+      UPDATE lotes l
+      SET fecha_vencimiento = l.fecha_ingreso + p.vida_util_dias
+      FROM productos p
+      WHERE l.producto_id = p.id
+        AND l.fecha_vencimiento IS NULL
+        AND p.vida_util_dias IS NOT NULL
+        AND p.vida_util_dias > 0
+        AND EXISTS (
+          SELECT 1
+          FROM movimientos_inventario m
+          WHERE m.lote_id = l.id
+            AND m.tipo = 'ingreso'
+        )
+      RETURNING l.id, l.numero_lote, l.producto_id, l.fecha_ingreso, l.fecha_vencimiento
+    `);
+
+    res.json({
+      message: `Se actualizaron ${resultados.length} lote(s) con fecha de vencimiento calculada`,
+      actualizados: resultados.length,
+      lotes: resultados
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento };
