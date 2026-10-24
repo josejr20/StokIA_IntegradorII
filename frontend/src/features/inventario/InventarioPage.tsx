@@ -70,13 +70,6 @@ function claveNombre(nombre: string | null | undefined): string {
     .toLocaleLowerCase("es");
 }
 
-function hoyISO(): string {
-  const hoy = new Date();
-  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
-  const dia = String(hoy.getDate()).padStart(2, "0");
-  return `${hoy.getFullYear()}-${mes}-${dia}`;
-}
-
 export default function InventarioPage() {
   const [busqueda, setBusqueda] = useState("");
   const [productoClave, setProductoClave] = useState("");
@@ -150,7 +143,6 @@ export default function InventarioPage() {
     pagina * pageSize,
   );
   const paginasTotales = Math.ceil(grupos.length / pageSize);
-  const fechaHoy = hoyISO();
 
   const productosUnicos = [
     ...new Map(
