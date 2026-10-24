@@ -27,6 +27,7 @@ test('ProductoDto.fromCreate construye un producto con valores por defecto', () 
     imagen: null,
     descripcion: null,
     activo: true,
+    vida_util_dias: null,
   });
 });
 
