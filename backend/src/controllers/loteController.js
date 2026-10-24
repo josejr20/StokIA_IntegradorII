@@ -6,12 +6,13 @@ const { ErrorLote, generarCodigoLote, validarLoteParaCreacion, calcularFechaVenc
 const logger = require('../utils/logger');
 const { Op } = require('sequelize');
 const { UniqueConstraintError } = require('sequelize');
+const ws = require('../services/wsService');
 
 const listar = async (req, res, next) => {
   try {
     const { producto, numero_lote, fecha_desde, fecha_hasta, estado, orden } = req.query;
     const page = Math.max(1, Number(req.query.page) || 1);
-    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const pageSize = Math.min(10000, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
     if (producto) where.producto_id = producto;
     if (numero_lote) where.numero_lote = { [Op.iLike]: `%${numero_lote}%` };
