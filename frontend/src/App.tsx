@@ -18,6 +18,7 @@ import ModeloMLPage from '@/features/modelo-ml/ModeloMLPage'
 import ConfiguracionPage from '@/features/configuracion/ConfiguracionPage'
 import UsuariosPage from '@/features/usuarios/UsuariosPage'
 import AuditoriaPage from '@/features/auditoria/AuditoriaPage'
+import RiesgoVencimientoPage from '@/features/riesgo/RiesgoVencimientoPage'
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           <Route element={<RutaConPermiso permiso="gestionar_inventario" />}><Route path="inventario" element={<InventarioPage />} /><Route path="kardex" element={<KardexPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="ventas" element={<VentasPage />} /></Route>
           <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="prediccion" element={<PrediccionPage />} /><Route path="modelo-ml" element={<ModeloMLPage />} /></Route>
+          <Route element={<RutaConPermiso permiso="ver_alertas" />}><Route path="riesgo-vencimiento" element={<RiesgoVencimientoPage />} /></Route>
           <Route element={<RutaConPermiso permiso="configurar_umbrales" />}><Route path="configuracion" element={<ConfiguracionPage />} /></Route>
           <Route element={<RutaSoloAdministrador />}><Route path="usuarios" element={<UsuariosPage />} /></Route>
           <Route element={<RutaConPermiso permiso="ver_auditoria" />}><Route path="auditoria" element={<AuditoriaPage />} /></Route>

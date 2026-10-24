@@ -13,6 +13,7 @@ const TITULOS: Record<string, string> = {
   '/kardex': 'Kardex',
   '/ventas': 'Ventas',
   '/prediccion': 'Predicción y riesgo',
+  '/riesgo-vencimiento': 'Riesgo de vencimiento',
   '/modelo-ml': 'Modelo ML',
   '/configuracion': 'Configuración',
   '/usuarios': 'Usuarios',
