@@ -62,7 +62,7 @@ const start = async () => {
   try {
     await require('./models').sequelize.sync({ alter: false });
     logger.info('Modelos sincronizados');
-  }  catch (err) {
+  } catch (err) {
     logger.error(`Error sincronizando modelos: ${err.message}`);
     console.error(err);
   }
@@ -70,6 +70,19 @@ const start = async () => {
   app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
     logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
     logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
+
+    // HU-133: tarea programada de reabastecimiento.
+    // Desactivada por defecto. Solo ejecuta simulaciones.
+    if (process.env.REABASTECIMIENTO_CRON_ENABLED === 'true') {
+      const {
+        iniciarReabastecimientoCron
+      } = require('./services/reabastecimientoCron');
+
+      iniciarReabastecimientoCron();
+      logger.info('[HU-133] Cron de simulación habilitado');
+    } else {
+      logger.info('[HU-133] Cron de simulación desactivado');
+    }
   });
 };
 
