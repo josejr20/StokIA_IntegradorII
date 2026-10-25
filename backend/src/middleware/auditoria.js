@@ -28,7 +28,7 @@ const crearAuditoria = async (usuarioId, accion, entidad, entidadId, detalle) =>
       detalle: detalle || null
     });
   } catch (error) {
-    logger.error('Error al crear auditoría:', error.message);
+    logger.error(`Error al crear auditoría: ${error.message}`);
   }
 };
 

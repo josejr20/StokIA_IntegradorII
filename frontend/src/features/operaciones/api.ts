@@ -219,6 +219,58 @@ export interface ImportarKardexResultado {
   error_details: Array<{ row?: number; presentacion?: string; reason?: string; error?: string }>
 }
 
+export interface KardexPreviewFila {
+  fila: number | string
+  fecha: string | null
+  empleado: string
+  cliente: string
+  presentacion: string
+  observaciones: string
+  motivo: string
+  cantidad: string | number
+  tipo: 'venta' | 'devolucion' | null
+  productoId: number | null
+  estado: 'OK' | 'ERROR'
+  errores: string[]
+  clienteNuevo?: boolean
+}
+
+export interface KardexPreviewResultado {
+  previewId: string
+  total: number
+  validas: number
+  conError: number
+  devoluciones: number
+  ventas: number
+  clientesNuevos: string[]
+  productosNoMapeados: string[]
+  filas: KardexPreviewFila[]
+}
+
+export function usePrevisualizarKardex() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (archivo: File) => {
+      const formData = new FormData()
+      formData.append('archivo', archivo)
+      const respuesta = await api.postForm<{ data: KardexPreviewResultado }>('/importar-kardex/kardex/previsualizar', formData)
+      return respuesta.data
+    },
+    onSuccess: invalidarOperacion(queryClient),
+  })
+}
+
+export function useConfirmarKardex() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (previewId: string) => {
+      const respuesta = await api.post<{ data: ImportarKardexResultado }>('/importar-kardex/kardex/confirmar', { previewId })
+      return respuesta.data
+    },
+    onSuccess: invalidarOperacion(queryClient),
+  })
+}
+
 export function useImportarKardex() {
   const queryClient = useQueryClient()
   return useMutation({

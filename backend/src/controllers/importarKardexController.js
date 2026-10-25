@@ -30,6 +30,11 @@ const upload = multer({
   }
 });
 
+const PREVIEW_DIR = path.join(__dirname, '../../uploads/kardex-preview');
+if (!fs.existsSync(PREVIEW_DIR)) {
+  fs.mkdirSync(PREVIEW_DIR, { recursive: true });
+}
+
 async function findOrCreateClient(nombre, transaction) {
   const trimmed = nombre.trim();
   let cliente = await Cliente.findOne({ where: { nombre: trimmed }, transaction });
@@ -148,6 +153,212 @@ async function processRow(row, transaction, usuarioImportadorId) {
   });
 }
 
+const previsualizarKardex = async (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se recibió archivo' });
+  }
+
+  const filePath = req.file.path;
+  let wb;
+
+  try {
+    wb = XLSX.readFile(filePath);
+  } catch (e) {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    return res.status(400).json({ error: 'Archivo Excel inválido' });
+  }
+
+  const sheetName = wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+  const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+  if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+  if (rows.length <= 1) {
+    return res.status(400).json({ error: 'El archivo no tiene datos' });
+  }
+
+  const dataRows = rows.slice(1).filter(r => r[0]);
+  dataRows.sort((a, b) => fechaDesdeExcel(a[1]).getTime() - fechaDesdeExcel(b[1]).getTime());
+
+  const previewRows = [];
+  const clientesSet = new Set();
+  const productosNoMapeados = new Set();
+
+  for (let idx = 0; idx < dataRows.length; idx++) {
+    const row = dataRows[idx];
+    const [, fcreacion, empleado, clienteNombre, presentacion, observaciones, motivo, cantidad] = row;
+    const filaNumero = row[0] || idx + 2;
+    const item = {
+      fila: filaNumero,
+      fecha: null,
+      empleado: empleado ? String(empleado).trim() : '',
+      cliente: clienteNombre ? String(clienteNombre).trim() : '',
+      presentacion: presentacion ? String(presentacion).trim() : '',
+      observaciones: observaciones ? String(observaciones).trim() : '',
+      motivo: motivo ? String(motivo).trim() : '',
+      cantidad: cantidad,
+      tipo: null,
+      productoId: null,
+      estado: 'OK',
+      errores: [],
+      clienteNuevo: false
+    };
+
+    try {
+      const fecha = fechaDesdeExcel(fcreacion);
+      if (Number.isNaN(fecha.getTime())) {
+        throw new Error('La fecha de la fila no es válida');
+      }
+      item.fecha = fecha.toISOString();
+
+      const cantidadOperacion = Math.abs(Number(cantidad));
+      if (!Number.isFinite(cantidadOperacion) || cantidadOperacion <= 0) {
+        throw new Error('La cantidad de la fila debe ser mayor a 0');
+      }
+
+      const productoId = PRESENTATION_TO_PRODUCT[presentacion];
+      if (productoId === null || productoId === undefined) {
+        productosNoMapeados.add(String(presentacion).trim());
+        throw new Error('Presentación no mapeada a ningún producto');
+      }
+      item.productoId = productoId;
+
+      const motivoNormalizado = String(motivo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
+      const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
+      if (!esDevolucion && !esVenta) {
+        throw new Error('El motivo de la fila no identifica una salida de venta ni un ingreso por devolución');
+      }
+      item.tipo = esDevolucion ? 'devolucion' : 'venta';
+
+      if (item.cliente) {
+        clientesSet.add(item.cliente);
+      } else {
+        throw new Error('Cliente es obligatorio');
+      }
+    } catch (error) {
+      item.estado = 'ERROR';
+      item.errores.push(error.message);
+    }
+
+    previewRows.push(item);
+  }
+
+  let clientesExistentes = [];
+  if (clientesSet.size > 0) {
+    const nombres = Array.from(clientesSet);
+    const existentes = await Cliente.findAll({
+      where: { nombre: nombres },
+      attributes: ['nombre']
+    });
+    clientesExistentes = existentes.map(c => c.nombre.trim());
+  }
+
+  const clientesNuevos = Array.from(clientesSet).filter(c => !clientesExistentes.includes(c));
+
+  for (const pr of previewRows) {
+    if (pr.cliente && clientesNuevos.includes(pr.cliente)) {
+      pr.clienteNuevo = true;
+    }
+  }
+
+  const total = previewRows.length;
+  const validas = previewRows.filter(r => r.estado === 'OK').length;
+  const conError = previewRows.filter(r => r.estado === 'ERROR').length;
+  const devoluciones = previewRows.filter(r => r.estado === 'OK' && r.tipo === 'devolucion').length;
+  const ventas = previewRows.filter(r => r.estado === 'OK' && r.tipo === 'venta').length;
+
+  const previewId = crypto.randomUUID();
+  const previewPath = path.join(PREVIEW_DIR, `${previewId}.json`);
+  fs.writeFileSync(previewPath, JSON.stringify({
+    usuarioId: req.user.id,
+    createdAt: new Date().toISOString(),
+    rows: dataRows,
+    previewRows
+  }, null, 2));
+
+  res.json({
+    data: {
+      previewId,
+      total,
+      validas,
+      conError,
+      devoluciones,
+      ventas,
+      clientesNuevos,
+      productosNoMapeados: Array.from(productosNoMapeados),
+      filas: previewRows
+    }
+  });
+};
+
+const confirmarKardex = async (req, res, next) => {
+  const { previewId } = req.body;
+  if (!previewId) {
+    return res.status(400).json({ error: 'Falta previewId para confirmar la importación' });
+  }
+
+  const previewPath = path.join(PREVIEW_DIR, `${previewId}.json`);
+  if (!fs.existsSync(previewPath)) {
+    return res.status(404).json({ error: 'Previsualización no encontrada o expirada' });
+  }
+
+  let previewData;
+  try {
+    previewData = JSON.parse(fs.readFileSync(previewPath, 'utf8'));
+  } catch (e) {
+    return res.status(400).json({ error: 'Previsualización inválida' });
+  }
+
+  if (previewData.usuarioId !== req.user.id) {
+    return res.status(403).json({ error: 'No autorizado para confirmar esta importación' });
+  }
+
+  const dataRows = previewData.rows || [];
+  let created = 0, skipped = 0, errors = 0;
+  const errorDetails = [];
+
+  for (const row of dataRows) {
+    const transaction = await sequelize.transaction();
+    try {
+      const result = await processRow(row, transaction, req.user.id);
+      await transaction.commit();
+
+      if (result.skipped) {
+        skipped++;
+        errorDetails.push({ row: row[0], presentacion: result.presentacion, reason: result.reason });
+      } else if (result.repetida) {
+        skipped++;
+        errorDetails.push({ row: row[0], reason: 'already_imported' });
+      } else {
+        created++;
+      }
+    } catch (error) {
+      await transaction.rollback();
+      errors++;
+      errorDetails.push({ row: row[0], error: error.message });
+      logger.error(`Row ${row[0]} ERROR: ${error.message}`);
+    }
+  }
+
+  try {
+    fs.unlinkSync(previewPath);
+  } catch (e) {
+    // ignore
+  }
+
+  res.json({
+    data: {
+      total_rows: dataRows.length,
+      created,
+      skipped,
+      errors,
+      error_details: errorDetails.slice(0, 50)
+    }
+  });
+};
+
 const importarKardex = async (req, res, next) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No se recibió archivo' });
@@ -159,7 +370,7 @@ const importarKardex = async (req, res, next) => {
   try {
     wb = XLSX.readFile(filePath);
   } catch (e) {
-    fs.unlinkSync(filePath);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     return res.status(400).json({ error: 'Archivo Excel inválido' });
   }
 
@@ -167,7 +378,7 @@ const importarKardex = async (req, res, next) => {
   const ws = wb.Sheets[sheetName];
   const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
   
-  fs.unlinkSync(filePath);
+  if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   
   if (rows.length <= 1) {
     return res.status(400).json({ error: 'El archivo no tiene datos' });
@@ -214,4 +425,4 @@ const importarKardex = async (req, res, next) => {
   });
 };
 
-module.exports = { importarKardex, upload };
+module.exports = { importarKardex, previsualizarKardex, confirmarKardex, upload };
