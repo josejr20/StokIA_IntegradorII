@@ -138,8 +138,8 @@ const historial = async (req, res, next) => {
     const movimientos = await MovimientoInventario.findAll({
       where: { lote_id: lote.id },
       include: [
-        { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
-        { model: Usuario, as: 'usuario' },
+        { model: Lote, as: 'lote', attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'], include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }] },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -162,10 +162,11 @@ const historialProductos = async (req, res, next) => {
         {
           model: Lote,
           as: 'lote',
+          attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'],
           where: { producto_id: { [Op.in]: [...new Set(productoIds)] } },
-          include: [{ model: Producto, as: 'producto' }],
+          include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }],
         },
-        { model: Usuario, as: 'usuario' },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });

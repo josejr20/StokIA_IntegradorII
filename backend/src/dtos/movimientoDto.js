@@ -42,13 +42,13 @@ class MovimientoDto {
     return new MovimientoDto({
       ...data,
       lote_numero: lote.numero_lote || null,
-      lote_fecha_vencimiento: lote.fecha_vencimiento || null,
-      producto_id: producto.id || null,
+      lote_fecha_vencimiento: lote.fecha_vencimiento || data.lote_fecha_vencimiento || null,
+      producto_id: producto.id || lote.producto_id || null,
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,
       precio_unitario: precioUnitario,
       precio_total: precioTotal,
-      usuario_nombre: usuario.nombres || null,
+      usuario_nombre: usuario.nombres || usuario.nombre || null,
       tipo_display: MovimientoDto.tipoDisplay(data.tipo),
       origen_display: MovimientoDto.origenDisplay(data.origen)
     });

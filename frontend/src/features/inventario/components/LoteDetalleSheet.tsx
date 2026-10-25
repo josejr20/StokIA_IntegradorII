@@ -32,7 +32,7 @@ export function LoteDetalleSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-3xl flex flex-col">
+      <SheetContent className="sm:max-w-4xl flex flex-col">
         <SheetHeader>
           <SheetTitle>Historial del producto</SheetTitle>
           <SheetDescription>
@@ -54,7 +54,8 @@ export function LoteDetalleSheet({
                   <TableHead>F. Vencimiento</TableHead>
                   <TableHead>Tipo</TableHead>
                   <TableHead className="text-right">Cant.</TableHead>
-                  <TableHead className="text-right">Saldo</TableHead>
+                  <TableHead className="text-right">P. unitario</TableHead>
+                  <TableHead className="text-right">P. total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -84,9 +85,8 @@ export function LoteDetalleSheet({
                       <TableCell className={`text-right font-medium ${esIngreso ? 'text-secondary' : 'text-destructive'}`}>
                         {esIngreso ? '+' : '-'}{mov.cantidad}
                       </TableCell>
-                      <TableCell className="text-right text-sm">
-                        {mov.saldo_cantidad} · {formatoMoneda.format(mov.saldo_valorizado)}
-                      </TableCell>
+                      <TableCell className="text-right text-sm">{mov.precio_unitario != null ? formatoMoneda.format(mov.precio_unitario) : '-'}</TableCell>
+                      <TableCell className="text-right text-sm">{mov.precio_total != null ? formatoMoneda.format(mov.precio_total) : '-'}</TableCell>
                     </TableRow>
                   )
                 })}
