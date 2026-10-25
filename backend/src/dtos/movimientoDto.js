@@ -29,6 +29,16 @@ class MovimientoDto {
     const lote = data.lote || {};
     const producto = lote.producto || {};
     const usuario = data.usuario || {};
+
+    const precioUnitario =
+      data.precio_unitario != null && Number(data.precio_unitario) > 0
+        ? Number(data.precio_unitario)
+        : producto.precio_venta != null && Number(producto.precio_venta) > 0
+          ? Number(producto.precio_venta)
+          : null;
+    const precioTotal =
+      precioUnitario != null ? Number(precioUnitario) * Number(data.cantidad) : null;
+
     return new MovimientoDto({
       ...data,
       lote_numero: lote.numero_lote || null,
@@ -36,6 +46,8 @@ class MovimientoDto {
       producto_id: producto.id || null,
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,
+      precio_unitario: precioUnitario,
+      precio_total: precioTotal,
       usuario_nombre: usuario.nombres || null,
       tipo_display: MovimientoDto.tipoDisplay(data.tipo),
       origen_display: MovimientoDto.origenDisplay(data.origen)

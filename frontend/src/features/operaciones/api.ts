@@ -24,6 +24,7 @@ export function useOperaciones(filtros: FiltrosOperaciones = {}) {
   if (filtros.buscar) params.set('buscar', filtros.buscar)
   if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
   if (filtros.pageSize) params.set('page_size', String(filtros.pageSize))
+  const qs = params.toString()
 
   return useQuery({
     queryKey: ['operaciones', qs],

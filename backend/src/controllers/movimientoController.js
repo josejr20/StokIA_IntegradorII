@@ -24,7 +24,11 @@ const listar = async (req, res, next) => {
       {
         model: Lote,
         as: 'lote',
-        include: [{ model: Producto, as: 'producto' }],
+        include: [{
+          model: Producto,
+          as: 'producto',
+          attributes: ['id', 'codigo', 'nombre', 'precio_venta'],
+        }],
       },
       { model: Usuario, as: 'usuario' },
     ];
