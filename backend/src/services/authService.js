@@ -15,20 +15,26 @@ const login = async (identifier, password, ip = null) => {
 
   const [usuario] = usuarios;
   if (!usuario.activo) {
-    usuario.ip_address = ip;
-    await usuario.save({ fields: ['ip_address'] });
+    if (typeof usuario.save === 'function') {
+      usuario.ip_address = ip;
+      await usuario.save({ fields: ['ip_address'] });
+    }
     throw new Error('Usuario inactivo');
   }
   const valida = await usuario.validarPassword(password);
   if (!valida) {
-    usuario.ip_address = ip;
-    await usuario.save({ fields: ['ip_address'] });
-    throw new Error('Correo o contraseÃ±a incorrectos.');
+    if (typeof usuario.save === 'function') {
+      usuario.ip_address = ip;
+      await usuario.save({ fields: ['ip_address'] });
+    }
+    throw new Error('Correo o contraseña incorrectos.');
   }
 
   usuario.ultimo_acceso = new Date();
   usuario.ip_address = ip;
-  await usuario.save({ fields: ['ultimo_acceso', 'ip_address'] });
+  if (typeof usuario.save === 'function') {
+    await usuario.save({ fields: ['ultimo_acceso', 'ip_address'] });
+  }
 
   const token = generarToken(usuario);
   const refreshToken = generarRefreshToken(usuario);

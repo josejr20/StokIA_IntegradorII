@@ -60,7 +60,7 @@ const start = async () => {
     // no abortar
   }
   try {
-    await require('./models').sequelize.sync({ alter: false });
+    await require('./models').sequelize.sync({ alter: true });
     logger.info('Modelos sincronizados');
   } catch (err) {
     logger.error(`Error sincronizando modelos: ${err.message}`);
