@@ -83,7 +83,7 @@ export default function VentasPage() {
               <tr><th className="p-4">Fecha</th><th className="p-4">Producto</th><th className="p-4">Cantidad</th><th className="p-4">Origen</th></tr>
             </thead>
             <tbody className="divide-y">
-              {data.map((venta) => (
+              {ventas.map((venta) => (
                 <tr key={venta.id}>
                   <td className="p-4">{new Date(venta.fecha_venta).toLocaleDateString('es-PE')}</td>
                   <td className="p-4 font-medium">{venta.productoNombre ?? 'Sin producto'}</td>
@@ -91,7 +91,7 @@ export default function VentasPage() {
                   <td className="p-4 text-muted-foreground">{ORIGEN_VENTA[venta.origen] ?? venta.origen}</td>
                 </tr>
               ))}
-              {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}
+              {ventas.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}
             </tbody>
           </table>
         </div>
