@@ -61,8 +61,18 @@ async function resolveEmployee(nombre, transaction, usuarioImportadorId) {
   return usuarioImportador;
 }
 
+function tipoMotivo(row) {
+  const motivo = String(row[6] || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (motivo.includes('devolucion') && motivo.includes('ingreso')) return 1;
+  return 0;
+}
+const sortRows = (a, b) => {
+  const diff = fechaDesdeExcel(a[1]).getTime() - fechaDesdeExcel(b[1]).getTime();
+  if (diff !== 0) return diff;
+  return tipoMotivo(a) - tipoMotivo(b);
+};
+
 function fechaDesdeExcel(valor) {
-  if (valor instanceof Date) return new Date(valor);
   if (typeof valor === 'number') {
     const partes = XLSX.SSF.parse_date_code(valor);
     if (!partes) return new Date(Number.NaN);
@@ -85,6 +95,9 @@ async function processRow(row, transaction, usuarioImportadorId) {
     throw new Error('La cantidad de la fila debe ser mayor a 0');
   }
   const motivoNormalizado = String(motivo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (motivoNormalizado.includes('disponible')) {
+    return { skipped: true, reason: 'stock_intake_not_supported', presentacion };
+  }
   const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
   const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
   if (!esDevolucion && !esVenta) {
@@ -179,7 +192,7 @@ const previsualizarKardex = async (req, res, next) => {
   }
 
   const dataRows = rows.slice(1).filter(r => r[0]);
-  dataRows.sort((a, b) => fechaDesdeExcel(a[1]).getTime() - fechaDesdeExcel(b[1]).getTime());
+  dataRows.sort(sortRows);
 
   const previewRows = [];
   const clientesSet = new Set();
@@ -386,7 +399,7 @@ const importarKardex = async (req, res, next) => {
   
   // Process by effective date so opening stock and returns follow ledger chronology.
   const dataRows = rows.slice(1).filter(r => r[0]);
-  dataRows.sort((a, b) => fechaDesdeExcel(a[1]).getTime() - fechaDesdeExcel(b[1]).getTime());
+  dataRows.sort(sortRows);
   
   let created = 0, skipped = 0, errors = 0;
   const errorDetails = [];
