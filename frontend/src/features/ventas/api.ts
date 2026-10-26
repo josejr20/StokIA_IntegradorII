@@ -9,6 +9,7 @@ export interface Venta {
   lote_id: number | null
   cantidad: number
   precio_unitario: number | null
+  precio_total: number | null
   fecha_venta: string
   origen: string
   fecha_creacion: string
@@ -51,18 +52,35 @@ export function useVentasResumen(filtros: { producto?: string; fecha_desde?: str
   })
 }
 
-export function useVentas(filtros: { producto?: string; fecha_desde?: string; fecha_hasta?: string } = {}) {
+export interface FiltrosVentas {
+  producto?: string
+  fecha_desde?: string
+  fecha_hasta?: string
+  page?: number
+  pageSize?: number
+}
+
+export function useVentas(filtros: FiltrosVentas = {}) {
   const params = new URLSearchParams()
   if (filtros.producto) params.set('producto', filtros.producto)
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
   if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+  params.set('page_size', String(filtros.pageSize || 10))
 
   return useQuery({
     queryKey: ['ventas', filtros],
     queryFn: async () => {
       const qs = params.toString()
-      const respuesta = await api.get<{ data: Venta[] }>(qs ? `/ventas?${qs}` : '/ventas')
-      return respuesta.data
+      const respuesta = await api.get<{ data: Venta[]; count?: number; next?: boolean; previous?: boolean }>(
+        qs ? `/ventas?${qs}` : '/ventas'
+      )
+      return {
+        results: respuesta.data,
+        count: respuesta.count ?? respuesta.data.length,
+        previous: respuesta.previous ?? false,
+        next: respuesta.next ?? false,
+      }
     },
   })
 }

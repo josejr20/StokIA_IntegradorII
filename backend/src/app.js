@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
       usuarios: '/api/usuarios',
       roles: '/api/roles',
       permisos: '/api/permisos',
-      categorias: '/api/categorias',
+      categorias: '/api/categoria',
       productos: '/api/productos',
       lotes: '/api/lotes',
       movimientos: '/api/movimientos',
@@ -60,17 +60,12 @@ const start = async () => {
     // no abortar
   }
   try {
-    await require('./models').sequelize.sync({ alter: false });
+    await require('./models').sequelize.sync({ alter: true });
     logger.info('Modelos sincronizados');
-  }  catch (err) {
+  } catch (err) {
     logger.error(`Error sincronizando modelos: ${err.message}`);
     console.error(err);
   }
-
-  app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-    logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
-    logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
-  });
 };
 
 module.exports = { app, start };

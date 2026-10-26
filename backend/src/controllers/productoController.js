@@ -73,7 +73,7 @@ const listar = async (req, res, next) => {
 
     const paginar = req.query.page !== undefined;
     const page = Math.max(1, Number(req.query.page) || 1);
-    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const pageSize = Math.min(10000, Math.max(1, Number(req.query.page_size) || 10));
 
     const include = [
       { model: Producto.sequelize.models.Categoria, as: 'categoria' },

@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
-const { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl } = require('../controllers/loteController');
+const { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento } = require('../controllers/loteController');
 const router = Router();
 router.use(autenticar);
+
+router.post('/actualizar-fechas-vencimiento', verificarPermiso('gestionar_inventario'), actualizarFechasVencimiento);
 
 /**
  * @openapi

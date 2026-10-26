@@ -2,16 +2,17 @@ const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
 const { MovimientoDto } = require('../dtos/movimientoDto');
 const { ErrorKardex, registrarMovimiento } = require('../services/kardexService');
-const { ErrorLote, generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
+const { ErrorLote, generarCodigoLote, validarLoteParaCreacion, calcularFechaVencimiento } = require('../services/loteService');
 const logger = require('../utils/logger');
 const { Op } = require('sequelize');
 const { UniqueConstraintError } = require('sequelize');
+const ws = require('../services/wsService');
 
 const listar = async (req, res, next) => {
   try {
     const { producto, numero_lote, fecha_desde, fecha_hasta, estado, orden } = req.query;
     const page = Math.max(1, Number(req.query.page) || 1);
-    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const pageSize = Math.min(10000, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
     if (producto) where.producto_id = producto;
     if (numero_lote) where.numero_lote = { [Op.iLike]: `%${numero_lote}%` };
@@ -71,11 +72,18 @@ const crear = async (req, res, next) => {
     validarLoteParaCreacion({ cantidad_inicial: cantidadInicial });
 
     const siguienteNumero = (await Lote.max('id', { where: { producto_id: productoId } }) || 0) + 1;
+    let fechaVencimiento = req.body.fecha_vencimiento;
+    if ((fechaVencimiento === undefined || fechaVencimiento === null || fechaVencimiento === '') && producto.vida_util_dias) {
+      const fechaIngreso = req.body.fecha_ingreso || new Date();
+      fechaVencimiento = calcularFechaVencimiento(fechaIngreso, producto.vida_util_dias);
+    }
+
     const data = LoteDto.fromCreate({
       ...req.body,
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
       cantidad_actual: 0,
+      fecha_vencimiento: fechaVencimiento || null,
     });
 
     transaction = await Lote.sequelize.transaction();
@@ -130,8 +138,8 @@ const historial = async (req, res, next) => {
     const movimientos = await MovimientoInventario.findAll({
       where: { lote_id: lote.id },
       include: [
-        { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
-        { model: Usuario, as: 'usuario' },
+        { model: Lote, as: 'lote', attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'], include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }] },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -154,10 +162,11 @@ const historialProductos = async (req, res, next) => {
         {
           model: Lote,
           as: 'lote',
+          attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'],
           where: { producto_id: { [Op.in]: [...new Set(productoIds)] } },
-          include: [{ model: Producto, as: 'producto' }],
+          include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }],
         },
-        { model: Usuario, as: 'usuario' },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -217,4 +226,34 @@ const registrarMovimientoCtrl = async (req, res, next) => {
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl };
+const actualizarFechasVencimiento = async (req, res, next) => {
+  try {
+    const { sequelize } = require('../models');
+    const [resultados] = await sequelize.query(`
+      UPDATE lotes l
+      SET fecha_vencimiento = l.fecha_ingreso + p.vida_util_dias
+      FROM productos p
+      WHERE l.producto_id = p.id
+        AND l.fecha_vencimiento IS NULL
+        AND p.vida_util_dias IS NOT NULL
+        AND p.vida_util_dias > 0
+        AND EXISTS (
+          SELECT 1
+          FROM movimientos_inventario m
+          WHERE m.lote_id = l.id
+            AND m.tipo = 'ingreso'
+        )
+      RETURNING l.id, l.numero_lote, l.producto_id, l.fecha_ingreso, l.fecha_vencimiento
+    `);
+
+    res.json({
+      message: `Se actualizaron ${resultados.length} lote(s) con fecha de vencimiento calculada`,
+      actualizados: resultados.length,
+      lotes: resultados
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento };

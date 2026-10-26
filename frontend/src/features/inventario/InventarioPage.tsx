@@ -6,7 +6,9 @@ import {
   ChevronRight,
   Eye,
   PackagePlus,
+  CalendarClock,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,7 +29,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useProductos } from "@/features/productos/api";
-import { useLotes, type EstadoFiltroLote, type Lote } from "./api";
+import { useLotes, type EstadoFiltroLote, type Lote, useActualizarFechasVencimiento } from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
@@ -68,13 +70,6 @@ function claveNombre(nombre: string | null | undefined): string {
     .toLocaleLowerCase("es");
 }
 
-function hoyISO(): string {
-  const hoy = new Date();
-  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
-  const dia = String(hoy.getDate()).padStart(2, "0");
-  return `${hoy.getFullYear()}-${mes}-${dia}`;
-}
-
 export default function InventarioPage() {
   const [busqueda, setBusqueda] = useState("");
   const [productoClave, setProductoClave] = useState("");
@@ -94,6 +89,7 @@ export default function InventarioPage() {
     fecha_hasta: fechaHasta,
     estado: estadoFiltro,
   });
+  const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
 
   const codigoDelLote = useCallback(
     (lote: Lote): string => {
@@ -147,7 +143,6 @@ export default function InventarioPage() {
     pagina * pageSize,
   );
   const paginasTotales = Math.ceil(grupos.length / pageSize);
-  const fechaHoy = hoyISO();
 
   const productosUnicos = [
     ...new Map(
@@ -247,6 +242,20 @@ export default function InventarioPage() {
             <Plus className="size-4" /> Nuevo lote
           </Button>
 
+          <Button
+            variant="outline"
+            onClick={() => {
+              actualizarFechasVencimiento(undefined, {
+                onSuccess: (res: any) => toast.success(res?.message || `Se actualizaron ${res?.actualizados || 0} lote(s)`),
+                onError: () => toast.error('Error al actualizar fechas de vencimiento')
+              })
+            }}
+            disabled={actualizandoFechas}
+          >
+            <CalendarClock className="size-4" />
+            {actualizandoFechas ? 'Actualizando...' : 'Calcular fechas de vencimiento faltantes'}
+          </Button>
+
           <div className="ml-auto flex items-center gap-2 text-sm text-muted-foreground">
             <span>Mostrar</span>
             <Select
@@ -319,12 +328,7 @@ export default function InventarioPage() {
                       String(b.fecha_vencimiento),
                     ),
                   );
-                const loteProximo =
-                  lotesConVencimiento.find(
-                    (lote) => String(lote.fecha_vencimiento) >= fechaHoy,
-                  ) ??
-                  lotesConVencimiento[0] ??
-                  null;
+                const loteProximo = lotesConVencimiento[0] ?? null;
                 const loteAccion =
                   loteProximo ?? lotesConStock[0] ?? grupo.lotes[0];
                 const ultimoIngreso = [...grupo.lotes].sort((a, b) =>
