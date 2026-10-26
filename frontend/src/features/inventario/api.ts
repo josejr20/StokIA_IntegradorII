@@ -139,27 +139,52 @@ export function useLote(id: number) {
   })
 }
 
-export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
+export function useMovimientosInventario(filtros: FiltrosMovimientos = {}){
   const params = new URLSearchParams()
+
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
   if (filtros.tipo) params.set('tipo', filtros.tipo)
   if (filtros.origen) params.set('origen', filtros.origen)
-  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
-  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
-  if (filtros.desdeUltimoIngreso) params.set('desde_ultimo_ingreso', 'true')
-  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
-  params.set('page_size', String(filtros.pageSize || 10))
+  if (filtros.fecha_desde) {
+    params.set('fecha_desde', filtros.fecha_desde)
+  }
+  if (filtros.fecha_hasta) {
+    params.set('fecha_hasta', filtros.fecha_hasta)
+  }
+  if (filtros.desdeUltimoIngreso) {
+    params.set('desde_ultimo_ingreso', 'true')
+  }
 
   return useQuery({
     queryKey: ['movimientos-inventario', filtros],
+
     queryFn: async () => {
-      const respuesta = await api.get<Paginado<MovimientoInventario>>(`/movimientos/?${params.toString()}`)
+      const resultados: MovimientoInventario[] = []
+      let pagina = filtros.page || 1
+      let hayMas = true
+
+      while (hayMas) {
+        const consulta = new URLSearchParams(params)
+        consulta.set('page', String(pagina))
+        consulta.set('page_size', String(filtros.pageSize || 100))
+
+        const respuesta =
+          await api.get<Paginado<MovimientoInventario>>(
+            `/movimientos/?${consulta.toString()}`
+          )
+
+        resultados.push(...respuesta.data)
+
+        hayMas = Boolean(respuesta.next)
+        pagina += 1
+      }
+
       return {
-        results: respuesta.data,
-        count: respuesta.count ?? respuesta.data.length,
-        previous: respuesta.previous ?? false,
-        next: respuesta.next ?? false,
+        results: resultados,
+        count: resultados.length,
+        previous: false,
+        next: false,
       }
     },
   })
