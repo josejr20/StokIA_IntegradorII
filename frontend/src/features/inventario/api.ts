@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+﻿import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import type { Paginado } from '@/types'
@@ -139,52 +139,27 @@ export function useLote(id: number) {
   })
 }
 
-export function useMovimientosInventario(filtros: FiltrosMovimientos = {}){
+export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
   const params = new URLSearchParams()
-
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
   if (filtros.tipo) params.set('tipo', filtros.tipo)
   if (filtros.origen) params.set('origen', filtros.origen)
-  if (filtros.fecha_desde) {
-    params.set('fecha_desde', filtros.fecha_desde)
-  }
-  if (filtros.fecha_hasta) {
-    params.set('fecha_hasta', filtros.fecha_hasta)
-  }
-  if (filtros.desdeUltimoIngreso) {
-    params.set('desde_ultimo_ingreso', 'true')
-  }
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.desdeUltimoIngreso) params.set('desde_ultimo_ingreso', 'true')
+  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+  params.set('page_size', String(filtros.pageSize || 10))
 
   return useQuery({
     queryKey: ['movimientos-inventario', filtros],
-
     queryFn: async () => {
-      const resultados: MovimientoInventario[] = []
-      let pagina = filtros.page || 1
-      let hayMas = true
-
-      while (hayMas) {
-        const consulta = new URLSearchParams(params)
-        consulta.set('page', String(pagina))
-        consulta.set('page_size', String(filtros.pageSize || 100))
-
-        const respuesta =
-          await api.get<Paginado<MovimientoInventario>>(
-            `/movimientos/?${consulta.toString()}`
-          )
-
-        resultados.push(...respuesta.data)
-
-        hayMas = Boolean(respuesta.next)
-        pagina += 1
-      }
-
+      const respuesta = await api.get<Paginado<MovimientoInventario>>(`/movimientos/?${params.toString()}`)
       return {
-        results: resultados,
-        count: resultados.length,
-        previous: false,
-        next: false,
+        results: respuesta.data,
+        count: respuesta.count ?? respuesta.data.length,
+        previous: respuesta.previous ?? false,
+        next: respuesta.next ?? false,
       }
     },
   })
@@ -259,6 +234,46 @@ export function useRegistrarMovimiento() {
       queryClient.invalidateQueries({ queryKey: ['movimientos-inventario'] })
       queryClient.invalidateQueries({ queryKey: ['movimientos'] })
     },
+  })
+}
+
+export interface GrupoLotes {
+  key: string
+  nombre: string
+  productoIds: number[]
+  lotes: Lote[]
+}
+
+export interface FiltrosLotesAgrupados {
+  search?: string
+  producto_clave?: string
+  fecha_desde?: string
+  fecha_hasta?: string
+  estado?: EstadoFiltroLote
+  page?: number
+  pageSize?: number
+}
+
+export function useLotesAgrupados(filtros: FiltrosLotesAgrupados = {}) {
+  const params = new URLSearchParams()
+  if (filtros.search) params.set('search', filtros.search)
+  if (filtros.producto_clave) params.set('producto_clave', filtros.producto_clave)
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.estado) params.set('estado', filtros.estado)
+  params.set('page', String(filtros.page ?? 1))
+  params.set('page_size', String(filtros.pageSize ?? 10))
+
+  return useQuery({
+    // Empieza con 'lotes', así las invalidaciones existentes también la refrescan.
+    queryKey: ['lotes', 'agrupados', filtros],
+    queryFn: async () => {
+      const r = await api.get<{
+        data: GrupoLotes[]; count: number; total_pages: number; previous: boolean; next: boolean
+      }>(`/lotes/agrupados?${params.toString()}`)
+      return { results: r.data, count: r.count, totalPages: r.total_pages, previous: r.previous, next: r.next }
+    },
+    placeholderData: keepPreviousData,
   })
 }
 

@@ -80,6 +80,7 @@ class OperacionDto {
       : null;
     this.operacion_origen_numero = data.operacion_origen_numero || null;
     this.estado = data.estado;
+    this.productos_count = data.productos_count !== undefined ? Number(data.productos_count) : undefined;
     this.fecha_creacion = data.fecha_creacion;
     this.detalles = data.detalles !== undefined
       ? (data.detalles || []).map((d) => OperacionDetalleDto.fromModel(d))
@@ -94,9 +95,11 @@ class OperacionDto {
     const data = operacion.toJSON ? operacion.toJSON() : operacion;
     const usuario = data.usuario || {};
     const origen = data.operacionOrigen || {};
+    const clienteSnapshot = data.comprobante?.datos?.cliente;
     return new OperacionDto({
       ...data,
-      usuario_nombre: usuario.nombres || usuario.email || null,
+      cliente: data.cliente ?? (clienteSnapshot ? { activo: true, ...clienteSnapshot } : data.cliente),
+      usuario_nombre: [usuario.nombres, usuario.apellidos].filter(Boolean).join(' ') || usuario.email || null,
       operacion_origen_numero: origen.numero || null,
     });
   }

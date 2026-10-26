@@ -6,6 +6,7 @@ export interface Venta {
   id: number
   producto_id: number
   producto_nombre: string | null
+  producto_codigo: string | null
   lote_id: number | null
   cantidad: number
   precio_unitario: number | null
