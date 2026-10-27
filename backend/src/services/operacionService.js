@@ -962,6 +962,11 @@ async function listarOperaciones({ tipo, cliente_id, fecha_desde, fecha_hasta, b
       { model: Cliente, as: 'cliente' },
       { model: Usuario, as: 'usuario' },
       { model: Comprobante, as: 'comprobante' },
+      {
+        model: require('../models').OperacionDetalle,
+        as: 'detalles',
+        include: [{ model: require('../models').Producto, as: 'producto', attributes: ['id', 'codigo', 'nombre'] }],
+      },
     ],
     order: [['fecha', 'DESC'], ['id', 'DESC']],
   });
