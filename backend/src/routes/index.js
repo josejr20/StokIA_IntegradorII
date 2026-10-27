@@ -1,4 +1,5 @@
 const Router = require('express').Router();
+const recomendacionesRoutes = require('./recomendaciones');
 const authRoutes = require('./auth');
 const usuarioRoutes = require('./usuarios');
 const rolRoutes = require('./roles');
@@ -50,6 +51,7 @@ Router.use('/importaciones-ventas', importacionVentaRoutes);
     Router.use('/umbrales', umbralRoutes);
 Router.use('/ordenes-reabastecimiento', ordenReabastecimientoRoutes);
 Router.use('/alertas', alertaRoutes);
+Router.use('/recomendaciones', recomendacionesRoutes);
 Router.use('/reportes', reporteRoutes);
 Router.use('/preferencias', preferenciaRoutes);
     Router.use('/auditoria', auditoriaRoutes);

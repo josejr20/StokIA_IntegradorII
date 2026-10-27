@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -35,6 +35,8 @@ import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
 
 const formatoFecha = new Intl.DateTimeFormat("es-PE", { dateStyle: "short" });
+
+type GrupoLotes = NonNullable<ReturnType<typeof useLotesAgrupados>['data']>['results'][number]
 
 type BadgeVariante =
   | "default"
@@ -96,6 +98,11 @@ export default function InventarioPage() {
   const grupos = data?.results ?? [];
   const paginasTotales = data?.totalPages ?? 1;
   const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
+
+  // Código asociado al producto del lote. No modifica el inventario.
+  function codigoDelLote(lote: Lote): string {
+    return productos?.results.find((producto) => producto.id === lote.producto_id)?.codigo ?? "";
+  }
 
   const productosUnicos = [
     ...new Map(
