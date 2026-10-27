@@ -4,6 +4,7 @@ const {
   ErrorOperacion,
   crearOperacion,
   obtenerOperacion,
+  obtenerOperacionCompleta,
   obtenerComprobanteOperacion,
   listarOperaciones,
   anularOperacion,
@@ -33,7 +34,7 @@ const listar = async (req, res, next) => {
 
 const obtener = async (req, res, next) => {
   try {
-    const operacion = await obtenerOperacion(req.params.id);
+    const operacion = await obtenerOperacionCompleta(req.params.id);
     if (!operacion) return res.status(404).json({ error: 'Operación no encontrada' });
     res.json({ data: OperacionDto.fromModel(operacion) });
   } catch (error) { next(error); }

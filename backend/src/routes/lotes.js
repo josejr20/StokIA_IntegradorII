@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
-const { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento } = require('../controllers/loteController');
+const { listar, listarAgrupados, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento } = require('../controllers/loteController');
 const router = Router();
 router.use(autenticar);
 
@@ -150,6 +150,7 @@ router.post('/actualizar-fechas-vencimiento', verificarPermiso('gestionar_invent
  *               $ref: '#/components/schemas/MovimientoInventario'
  */
 router.get('/', verificarPermiso('gestionar_inventario'), listar);
+router.get('/agrupados', verificarPermiso('gestionar_inventario'), listarAgrupados);
 router.get('/historial-productos', verificarPermiso('gestionar_inventario'), historialProductos);
 router.get('/:id', verificarPermiso('gestionar_inventario'), obtener);
 router.post('/', verificarPermiso('gestionar_inventario'), crear);

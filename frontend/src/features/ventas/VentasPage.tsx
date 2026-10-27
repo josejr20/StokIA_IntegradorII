@@ -86,7 +86,12 @@ export default function VentasPage() {
               {ventas.map((venta) => (
                 <tr key={venta.id}>
                   <td className="p-4">{new Date(venta.fecha_venta).toLocaleDateString('es-PE')}</td>
-                  <td className="p-4 font-medium">{venta.productoNombre ?? 'Sin producto'}</td>
+                  <td className="p-4">
+                    <div className="font-medium">{venta.producto_nombre ?? 'Sin producto'}</div>
+                    {venta.producto_codigo && (
+                      <div className="text-xs text-muted-foreground">{venta.producto_codigo}</div>
+                    )}
+                  </td>
                   <td className="p-4">{venta.cantidad}</td>
                   <td className="p-4 text-muted-foreground">{ORIGEN_VENTA[venta.origen] ?? venta.origen}</td>
                 </tr>

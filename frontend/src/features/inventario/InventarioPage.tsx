@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -29,7 +29,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useProductos } from "@/features/productos/api";
-import { useLotes, type EstadoFiltroLote, type Lote, useActualizarFechasVencimiento } from "./api";
+import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type Lote } from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
@@ -43,12 +43,6 @@ type BadgeVariante =
   | "alto"
   | "medio"
   | "bajo";
-type GrupoLotes = {
-  key: string;
-  nombre: string;
-  productoIds: number[];
-  lotes: Lote[];
-};
 
 const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> =
   {
@@ -84,65 +78,24 @@ export default function InventarioPage() {
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null);
 
   const { data: productos } = useProductos({});
-  const { data, isLoading } = useLotes({
+  const [busquedaDebounce, setBusquedaDebounce] = useState("");
+  useEffect(() => {
+    const t = setTimeout(() => setBusquedaDebounce(busqueda), 300);
+    return () => clearTimeout(t);
+  }, [busqueda]);
+
+  const { data, isLoading } = useLotesAgrupados({
+    search: busquedaDebounce,
+    producto_clave: productoClave,
     fecha_desde: fechaDesde,
     fecha_hasta: fechaHasta,
     estado: estadoFiltro,
+    page: pagina,
+    pageSize,
   });
+  const grupos = data?.results ?? [];
+  const paginasTotales = data?.totalPages ?? 1;
   const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
-
-  const codigoDelLote = useCallback(
-    (lote: Lote): string => {
-      return (
-        productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? ""
-      );
-    },
-    [productos],
-  );
-
-  const lotes = useMemo(() => data?.results ?? [], [data]);
-  const grupos = useMemo(() => {
-    const agrupados = new Map<string, GrupoLotes>();
-    for (const lote of lotes) {
-      const nombre =
-        lote.producto_nombre?.trim() || `Producto ${lote.producto_id}`;
-      const key = claveNombre(nombre) || `producto-${lote.producto_id}`;
-      const grupo = agrupados.get(key) ?? {
-        key,
-        nombre,
-        productoIds: [],
-        lotes: [],
-      };
-      if (!grupo.productoIds.includes(lote.producto_id))
-        grupo.productoIds.push(lote.producto_id);
-      grupo.lotes.push(lote);
-      agrupados.set(key, grupo);
-    }
-
-    const textoBusqueda = busqueda.trim().toLocaleLowerCase("es");
-    return [...agrupados.values()]
-      .filter((grupo) => !productoClave || grupo.key === productoClave)
-      .filter(
-        (grupo) =>
-          !textoBusqueda ||
-          grupo.nombre.toLocaleLowerCase("es").includes(textoBusqueda) ||
-          grupo.lotes.some(
-            (lote) =>
-              lote.numero_lote
-                .toLocaleLowerCase("es")
-                .includes(textoBusqueda) ||
-              codigoDelLote(lote)
-                .toLocaleLowerCase("es")
-                .includes(textoBusqueda),
-          ),
-      )
-      .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
-  }, [lotes, busqueda, productoClave, codigoDelLote])
-  const gruposVisibles = grupos.slice(
-    (pagina - 1) * pageSize,
-    pagina * pageSize,
-  );
-  const paginasTotales = Math.ceil(grupos.length / pageSize);
 
   const productosUnicos = [
     ...new Map(
@@ -317,7 +270,7 @@ export default function InventarioPage() {
                   </TableCell>
                 </TableRow>
               )}
-              {gruposVisibles.map((grupo) => {
+              {grupos.map((grupo) => {
                 const lotesConStock = grupo.lotes.filter(
                   (lote) => aNumero(lote.cantidad_actual) > 0,
                 );
@@ -416,27 +369,17 @@ export default function InventarioPage() {
           </Table>
         </div>
 
-        {data && grupos.length > 0 && (
+        {data && data.count > 0 && (
           <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
             <span>
-              {grupos.length} producto{grupos.length === 1 ? "" : "s"} agrupado
-              {grupos.length === 1 ? "" : "s"}
+              {data.count} producto{data.count === 1 ? "" : "s"} agrupado{data.count === 1 ? "" : "s"}
+              {" · "}Página {pagina} de {paginasTotales}
             </span>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={pagina <= 1}
-                onClick={() => setPagina((p) => p - 1)}
-              >
+              <Button variant="outline" size="sm" disabled={!data.previous} onClick={() => setPagina((p) => p - 1)}>
                 <ChevronLeft className="size-4" /> Anterior
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={pagina >= paginasTotales}
-                onClick={() => setPagina((p) => p + 1)}
-              >
+              <Button variant="outline" size="sm" disabled={!data.next} onClick={() => setPagina((p) => p + 1)}>
                 Siguiente <ChevronRight className="size-4" />
               </Button>
             </div>
