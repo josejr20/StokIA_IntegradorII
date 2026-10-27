@@ -6,7 +6,7 @@ const logger = require('../utils/logger');
 
 const listar = async (req, res, next) => {
   try {
-    const { buscar, activo } = req.query;
+    const { buscar, activo, conDocumento } = req.query;
     const where = {};
     if (buscar) {
       where[Op.or] = [
@@ -15,6 +15,7 @@ const listar = async (req, res, next) => {
       ];
     }
     if (activo !== undefined) where.activo = activo === 'true' || activo === '1';
+    if (conDocumento === 'true') where.documento = { [Op.ne]: null };
     const clientes = await Cliente.findAll({
       where,
       order: [['nombre', 'ASC']],

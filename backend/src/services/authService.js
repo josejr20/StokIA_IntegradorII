@@ -2,7 +2,7 @@ const { Op, col, fn, where } = require('sequelize');
 const { Usuario, Rol, Permiso } = require('../models');
 const { generarToken, generarRefreshToken } = require('../utils/jwt');
 
-const login = async (identifier, password) => {
+const login = async (identifier, password, ip = null) => {
   const valor = typeof identifier === 'string' ? identifier.trim().toLowerCase() : '';
   if (!valor) throw new Error('Credenciales incorrectas');
 
@@ -14,12 +14,27 @@ const login = async (identifier, password) => {
   if (usuarios.length !== 1) throw new Error('Credenciales incorrectas');
 
   const [usuario] = usuarios;
-  if (!usuario.activo) throw new Error('Usuario inactivo');
+  if (!usuario.activo) {
+    if (typeof usuario.save === 'function') {
+      usuario.ip_address = ip;
+      await usuario.save({ fields: ['ip_address'] });
+    }
+    throw new Error('Usuario inactivo');
+  }
   const valida = await usuario.validarPassword(password);
-  if (!valida) throw new Error('Correo o contraseña incorrectos.');
+  if (!valida) {
+    if (typeof usuario.save === 'function') {
+      usuario.ip_address = ip;
+      await usuario.save({ fields: ['ip_address'] });
+    }
+    throw new Error('Correo o contraseña incorrectos.');
+  }
 
   usuario.ultimo_acceso = new Date();
-  await usuario.save({ fields: ['ultimo_acceso'] });
+  usuario.ip_address = ip;
+  if (typeof usuario.save === 'function') {
+    await usuario.save({ fields: ['ultimo_acceso', 'ip_address'] });
+  }
 
   const token = generarToken(usuario);
   const refreshToken = generarRefreshToken(usuario);

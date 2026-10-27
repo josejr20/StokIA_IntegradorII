@@ -2,16 +2,17 @@ const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
 const { MovimientoDto } = require('../dtos/movimientoDto');
 const { ErrorKardex, registrarMovimiento } = require('../services/kardexService');
-const { ErrorLote, generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
+const { ErrorLote, generarCodigoLote, validarLoteParaCreacion, calcularFechaVencimiento } = require('../services/loteService');
 const logger = require('../utils/logger');
-const { Op } = require('sequelize');
+const { Op, QueryTypes } = require('sequelize');
 const { UniqueConstraintError } = require('sequelize');
+const ws = require('../services/wsService');
 
 const listar = async (req, res, next) => {
   try {
     const { producto, numero_lote, fecha_desde, fecha_hasta, estado, orden } = req.query;
     const page = Math.max(1, Number(req.query.page) || 1);
-    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const pageSize = Math.min(10000, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
     if (producto) where.producto_id = producto;
     if (numero_lote) where.numero_lote = { [Op.iLike]: `%${numero_lote}%` };
@@ -24,9 +25,14 @@ const listar = async (req, res, next) => {
     if (estado === 'agotado') where.cantidad_actual = 0;
     if (estado === 'con_stock') where.cantidad_actual = { [Op.gt]: 0 };
     // Los estados 'vencido' / 'por_vencer' se agregan en el Sprint 2, cuando ML defina la fecha de vencimiento.
-    const order = orden === 'ingreso_asc'
-      ? [['fecha_ingreso', 'ASC']]
-      : [['fecha_ingreso', 'DESC']];
+    // Ordenamiento estable: producto_id ASC, luego fecha_ingreso (según parámetro), luego ID DESC.
+    // Esto asegura que los lotes del mismo producto aparezcan consecutivos y la paginación sea estable.
+    const fechaIngresoOrder = orden === 'ingreso_asc' ? 'ASC' : 'DESC';
+    const order = [
+      ['producto_id', 'ASC'],
+      ['fecha_ingreso', fechaIngresoOrder],
+      ['id', 'DESC'],
+    ];
     const resultado = await Lote.findAndCountAll({
       where,
       include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],
@@ -71,11 +77,18 @@ const crear = async (req, res, next) => {
     validarLoteParaCreacion({ cantidad_inicial: cantidadInicial });
 
     const siguienteNumero = (await Lote.max('id', { where: { producto_id: productoId } }) || 0) + 1;
+    let fechaVencimiento = req.body.fecha_vencimiento;
+    if ((fechaVencimiento === undefined || fechaVencimiento === null || fechaVencimiento === '') && producto.vida_util_dias) {
+      const fechaIngreso = req.body.fecha_ingreso || new Date();
+      fechaVencimiento = calcularFechaVencimiento(fechaIngreso, producto.vida_util_dias);
+    }
+
     const data = LoteDto.fromCreate({
       ...req.body,
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
       cantidad_actual: 0,
+      fecha_vencimiento: fechaVencimiento || null,
     });
 
     transaction = await Lote.sequelize.transaction();
@@ -130,8 +143,8 @@ const historial = async (req, res, next) => {
     const movimientos = await MovimientoInventario.findAll({
       where: { lote_id: lote.id },
       include: [
-        { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
-        { model: Usuario, as: 'usuario' },
+        { model: Lote, as: 'lote', attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'], include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }] },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -154,10 +167,11 @@ const historialProductos = async (req, res, next) => {
         {
           model: Lote,
           as: 'lote',
+          attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'],
           where: { producto_id: { [Op.in]: [...new Set(productoIds)] } },
-          include: [{ model: Producto, as: 'producto' }],
+          include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }],
         },
-        { model: Usuario, as: 'usuario' },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -217,4 +231,112 @@ const registrarMovimientoCtrl = async (req, res, next) => {
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl };
+const actualizarFechasVencimiento = async (req, res, next) => {
+  try {
+    const { sequelize } = require('../models');
+    const [resultados] = await sequelize.query(`
+      UPDATE lotes l
+      SET fecha_vencimiento = l.fecha_ingreso + p.vida_util_dias
+      FROM productos p
+      WHERE l.producto_id = p.id
+        AND l.fecha_vencimiento IS NULL
+        AND p.vida_util_dias IS NOT NULL
+        AND p.vida_util_dias > 0
+        AND EXISTS (
+          SELECT 1
+          FROM movimientos_inventario m
+          WHERE m.lote_id = l.id
+            AND m.tipo = 'ingreso'
+        )
+      RETURNING l.id, l.numero_lote, l.producto_id, l.fecha_ingreso, l.fecha_vencimiento
+    `);
+
+    res.json({
+      message: `Se actualizaron ${resultados.length} lote(s) con fecha de vencimiento calculada`,
+      actualizados: resultados.length,
+      lotes: resultados
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Misma normalización que claveNombre() del frontend: minúsculas, sin tildes, sin espacios sobrantes.
+const CLAVE_SQL = `translate(lower(btrim(p.nombre)), 'áéíóúüñàèìòùâêîôûäëïö', 'aeiouunaeiouaeiouaeio')`;
+
+const normalizarClave = (texto) => String(texto || '')
+  .trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('es');
+
+const listarAgrupados = async (req, res, next) => {
+  try {
+    const { search, producto_clave, fecha_desde, fecha_hasta, estado } = req.query;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+
+    const where = [];
+    const replacements = { limit: pageSize, offset: (page - 1) * pageSize };
+    if (fecha_desde) { where.push('l.fecha_ingreso >= :fecha_desde'); replacements.fecha_desde = fecha_desde; }
+    if (fecha_hasta) { where.push('l.fecha_ingreso <= :fecha_hasta'); replacements.fecha_hasta = fecha_hasta; }
+    if (estado === 'agotado') where.push('l.cantidad_actual = 0');
+    if (estado === 'con_stock') where.push('l.cantidad_actual > 0');
+    if (producto_clave) {
+      where.push(`${CLAVE_SQL} = :clave`);
+      replacements.clave = normalizarClave(producto_clave);
+    }
+
+    let having = '';
+    if (search && String(search).trim()) {
+      having = `HAVING (MIN(p.nombre) ILIKE :q OR bool_or(l.numero_lote ILIKE :q OR p.codigo ILIKE :q))`;
+      replacements.q = `%${String(search).trim().replace(/[\\%_]/g, '\\$&')}%`;
+    }
+
+    const agrupado = `
+      SELECT ${CLAVE_SQL} AS clave,
+             MIN(p.nombre) AS nombre,
+             array_agg(DISTINCT p.id) AS producto_ids,
+             array_agg(l.id) AS lote_ids
+      FROM lotes l
+      JOIN productos p ON p.id = l.producto_id
+      ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
+      GROUP BY ${CLAVE_SQL}
+      ${having}`;
+
+    const [{ total }] = await Lote.sequelize.query(
+      `SELECT COUNT(*)::int AS total FROM (${agrupado}) g`,
+      { replacements, type: QueryTypes.SELECT },
+    );
+    const grupos = await Lote.sequelize.query(
+      `${agrupado} ORDER BY 2 ASC, 1 ASC LIMIT :limit OFFSET :offset`,
+      { replacements, type: QueryTypes.SELECT },
+    );
+
+    // Solo se cargan los lotes de los grupos de esta página.
+    const ids = grupos.flatMap((g) => g.lote_ids);
+    const lotes = ids.length
+      ? await Lote.findAll({
+        where: { id: { [Op.in]: ids } },
+        include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],
+        order: [['fecha_ingreso', 'DESC'], ['id', 'DESC']],
+      })
+      : [];
+    const lotesPorId = new Map(lotes.map((lote) => [lote.id, LoteDto.fromModel(lote)]));
+
+    const totalPaginas = Math.max(1, Math.ceil(total / pageSize));
+    res.json({
+      data: grupos.map((g) => ({
+        key: g.clave,
+        nombre: g.nombre,
+        productoIds: g.producto_ids,
+        lotes: g.lote_ids.map((id) => lotesPorId.get(id)).filter(Boolean),
+      })),
+      count: total,
+      page,
+      page_size: pageSize,
+      total_pages: totalPaginas,
+      previous: page > 1,
+      next: page < totalPaginas,
+    });
+  } catch (error) { next(error); }
+};
+
+module.exports = { listar, listarAgrupados, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento };

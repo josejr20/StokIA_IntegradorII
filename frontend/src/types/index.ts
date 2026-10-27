@@ -233,4 +233,5 @@ export interface Operacion {
   fecha_creacion: string
   detalles?: OperacionDetalle[]
   comprobante?: Comprobante | null
+  productos_count?: number
 }

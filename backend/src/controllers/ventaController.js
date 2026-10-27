@@ -31,8 +31,34 @@ const listar = async (req, res, next) => {
       where.fecha_venta = fecha_venta;
     }
     if (origen) where.origen = origen;
-    const ventas = await Venta.findAll({ where, include: [{ model: Producto, as: 'producto' }], order: [['fecha_venta', 'DESC']] });
-    res.json({ data: ventas.map(v => VentaDto.fromModel(v)) });
+
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const paginar = req.query.page !== undefined;
+
+    const options = {
+      where,
+      include: [{ model: Producto, as: 'producto' }],
+      order: [['fecha_venta', 'DESC']],
+    };
+
+    if (paginar) {
+      options.limit = pageSize;
+      options.offset = (page - 1) * pageSize;
+    }
+
+    if (paginar) {
+      const { rows, count } = await Venta.findAndCountAll(options);
+      res.json({
+        data: rows.map(v => VentaDto.fromModel(v)),
+        count,
+        next: page * pageSize < count,
+        previous: page > 1,
+      });
+    } else {
+      const ventas = await Venta.findAll(options);
+      res.json({ data: ventas.map(v => VentaDto.fromModel(v)) });
+    }
   } catch (error) { next(error); }
 };
 

@@ -25,6 +25,7 @@ export default function VentasPage() {
   const [fechaHasta, setFechaHasta] = useState('')
 
   const { data, isLoading, isError } = useVentas({ fecha_desde: fechaDesde, fecha_hasta: fechaHasta })
+  const ventas = data?.results ?? []
 
   const { data: resumen } = useVentasResumen({ fecha_desde: fechaDesde, fecha_hasta: fechaHasta })
 
@@ -75,22 +76,27 @@ export default function VentasPage() {
 
       {isLoading && <p className="text-muted-foreground">Cargando ventas...</p>}
       {isError && <p className="text-destructive">No se pudieron cargar las ventas.</p>}
-      {data && (
+      {ventas.length > 0 && (
         <div className="overflow-x-auto rounded-xl border bg-white">
           <table className="w-full text-sm">
             <thead className="border-b text-left text-muted-foreground">
               <tr><th className="p-4">Fecha</th><th className="p-4">Producto</th><th className="p-4">Cantidad</th><th className="p-4">Origen</th></tr>
             </thead>
             <tbody className="divide-y">
-              {data.map((venta) => (
+              {ventas.map((venta) => (
                 <tr key={venta.id}>
                   <td className="p-4">{new Date(venta.fecha_venta).toLocaleDateString('es-PE')}</td>
-                  <td className="p-4 font-medium">{venta.producto_nombre ?? 'Sin producto'}</td>
+                  <td className="p-4">
+                    <div className="font-medium">{venta.producto_nombre ?? 'Sin producto'}</div>
+                    {venta.producto_codigo && (
+                      <div className="text-xs text-muted-foreground">{venta.producto_codigo}</div>
+                    )}
+                  </td>
                   <td className="p-4">{venta.cantidad}</td>
                   <td className="p-4 text-muted-foreground">{ORIGEN_VENTA[venta.origen] ?? venta.origen}</td>
                 </tr>
               ))}
-              {data.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}
+              {ventas.length === 0 && <tr><td className="p-4 text-muted-foreground" colSpan={4}>{fechaDesde || fechaHasta ? 'No hay ventas en el periodo seleccionado.' : 'No hay ventas registradas.'}</td></tr>}
             </tbody>
           </table>
         </div>

@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
       usuarios: '/api/usuarios',
       roles: '/api/roles',
       permisos: '/api/permisos',
-      categorias: '/api/categorias',
+      categorias: '/api/categoria',
       productos: '/api/productos',
       lotes: '/api/lotes',
       movimientos: '/api/movimientos',
@@ -45,6 +45,8 @@ app.use('/api', require('./routes'));
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+const { testLocalConnection } = require('./config/database');
+
 const start = async () => {
   const connected = await testConnection();
   if (!connected) {
@@ -52,17 +54,18 @@ const start = async () => {
     process.exit(1);
   }
   try {
-    await require('./models').sequelize.sync({ alter: false });
+    await testLocalConnection();
+    console.log('Conexión de manera local establecida correctamente');
+  } catch (err) {
+    // no abortar
+  }
+  try {
+    await require('./models').sequelize.sync({ alter: true });
     logger.info('Modelos sincronizados');
-  }  catch (err) {
+  } catch (err) {
     logger.error(`Error sincronizando modelos: ${err.message}`);
     console.error(err);
   }
-
-  app.listen(process.env.PORT || 3000, () => {
-    logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
-    logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
-  });
 };
 
 module.exports = { app, start };

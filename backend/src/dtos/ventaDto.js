@@ -3,6 +3,7 @@ class VentaDto {
     this.id = data.id;
     this.producto_id = data.producto_id;
     this.producto_nombre = data.producto_nombre || null;
+    this.producto_codigo = data.producto_codigo || null;
     this.lote_id = data.lote_id;
     this.cantidad = data.cantidad;
     this.precio_unitario = data.precio_unitario;
@@ -16,7 +17,11 @@ class VentaDto {
     if (!venta) return null;
     const data = venta.toJSON ? venta.toJSON() : venta;
     const producto = data.producto || {};
-    return new VentaDto({ ...data, producto_nombre: producto.nombre || null });
+    return new VentaDto({
+      ...data,
+      producto_nombre: producto.nombre || null,
+      producto_codigo: producto.codigo || null,
+    });
   }
 
   static fromCreate(body) {

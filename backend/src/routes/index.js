@@ -26,6 +26,8 @@ const presentacionRoutes = require('./presentaciones');
     const tiposEnvaseRoutes = require('./tiposEnvase');
     const productoPresentacionRoutes = require('./productoPresentacion');
     const precioRoutes = require('./precio');
+    const reniecRoutes = require('./reniec.routes');
+    const rucRoutes = require('./ruc.routes');
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
@@ -42,6 +44,8 @@ Router.use('/movimientos', movimientoRoutes);
 Router.use('/ventas', ventaRoutes);
 Router.use('/operaciones', operacionRoutes);
 Router.use('/clientes', clienteRoutes);
+Router.use('/reniec', reniecRoutes);
+Router.use('/ruc', rucRoutes);
 Router.use('/importaciones-ventas', importacionVentaRoutes);
     Router.use('/importar-kardex', importarKardexRoutes);
     Router.use('/umbrales', umbralRoutes);
