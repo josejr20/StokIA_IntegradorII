@@ -938,39 +938,42 @@ async function obtenerComprobanteOperacion(id) {
   };
 }
 
-async function listarOperaciones({ tipo, cliente_id, fecha_desde, fecha_hasta, buscar } = {}) {
+async function listarOperaciones({
+  tipo, cliente_id, fecha_desde, fecha_hasta, buscar, page = 1, pageSize = 10,
+} = {}) {
   const where = {};
   if (tipo) where.tipo = tipo;
   if (cliente_id) where.cliente_id = cliente_id;
   if (fecha_desde || fecha_hasta) {
     where.fecha = {};
-    if (fecha_desde) where.fecha[Op.gte] = fecha_desde;
-    if (fecha_hasta) where.fecha[Op.lte] = fecha_hasta;
+    if (fecha_desde) where.fecha[Op.gte] = new Date(`${fecha_desde}T00:00:00.000-05:00`);
+    if (fecha_hasta) where.fecha[Op.lte] = new Date(`${fecha_hasta}T23:59:59.999-05:00`);
   }
   if (buscar) where.numero = { [Op.iLike]: `%${buscar}%` };
-  const operaciones = await Operacion.findAll({
-    where,
-    attributes: {
-      include: [[
-        Operacion.sequelize.literal(
-          '(SELECT COUNT(DISTINCT d.producto_id) FROM operacion_detalles d WHERE d.operacion_id = "Operacion".id)',
-        ),
-        'productos_count',
-      ]],
-    },
-    include: [
-      { model: Cliente, as: 'cliente' },
-      { model: Usuario, as: 'usuario' },
-      { model: Comprobante, as: 'comprobante' },
-      {
-        model: require('../models').OperacionDetalle,
-        as: 'detalles',
-        include: [{ model: require('../models').Producto, as: 'producto', attributes: ['id', 'codigo', 'nombre'] }],
+
+  const [count, operaciones] = await Promise.all([
+    Operacion.count({ where }),
+    Operacion.findAll({
+      where,
+      attributes: {
+        include: [[
+          Operacion.sequelize.literal(
+            '(SELECT COUNT(DISTINCT d.producto_id) FROM operacion_detalles d WHERE d.operacion_id = "Operacion".id)',
+          ),
+          'productos_count',
+        ]],
       },
-    ],
-    order: [['fecha', 'DESC'], ['id', 'DESC']],
-  });
-  return completarListado(operaciones);
+      include: [
+        { model: Cliente, as: 'cliente' },
+        { model: Usuario, as: 'usuario' },
+        { model: Comprobante, as: 'comprobante' },
+      ],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    }),
+  ]);
+  return { rows: await completarListado(operaciones), count };
 }
 
 /**

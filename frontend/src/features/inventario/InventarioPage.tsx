@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -29,7 +29,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useProductos } from "@/features/productos/api";
-import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type Lote } from "./api";
+import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type GrupoLotes, type Lote } from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
@@ -78,6 +78,8 @@ export default function InventarioPage() {
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null);
 
   const { data: productos } = useProductos({});
+  const codigoDelLote = (lote: Lote) =>
+    productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? "";
   const [busquedaDebounce, setBusquedaDebounce] = useState("");
   useEffect(() => {
     const t = setTimeout(() => setBusquedaDebounce(busqueda), 300);

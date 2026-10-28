@@ -21,14 +21,28 @@ const listar = async (req, res, next) => {
     if (tipo && !TIPOS_VALIDOS.includes(tipo)) {
       return res.status(400).json({ error: 'Tipo de operación inválido' });
     }
-    const operaciones = await listarOperaciones({
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+
+    const { rows, count } = await listarOperaciones({
       tipo,
       cliente_id: cliente_id ? Number(cliente_id) : undefined,
       fecha_desde,
       fecha_hasta,
       buscar,
+      page,
+      pageSize,
     });
-    res.json({ data: operaciones.map((o) => OperacionDto.fromModel(o)) });
+    const totalPaginas = Math.max(1, Math.ceil(count / pageSize));
+    res.json({
+      data: rows.map((o) => OperacionDto.fromModel(o)),
+      count,
+      page,
+      page_size: pageSize,
+      total_pages: totalPaginas,
+      previous: page > 1,
+      next: page < totalPaginas,
+    });
   } catch (error) { next(error); }
 };
 
