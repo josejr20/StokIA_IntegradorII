@@ -59,12 +59,18 @@ const start = async () => {
   } catch (err) {
     // no abortar
   }
-  try {
-    await require('./models').sequelize.sync({ alter: false });
-    logger.info('Modelos sincronizados');
-  } catch (err) {
-    logger.error(`Error sincronizando modelos: ${err.message}`);
-    console.error(err);
+  // No modificar automáticamente el esquema de la BD compartida.
+  // Habilitar únicamente en un entorno controlado.
+  if (process.env.DB_SYNC_ENABLED === 'true') {
+    try {
+      await require('./models').sequelize.sync({ alter: false });
+      logger.info('Sincronización de modelos completada');
+    } catch (err) {
+      logger.error(`Error sincronizando modelos: ${err.message}`);
+      console.error(err);
+    }
+  } else {
+    logger.info('Sincronización automática de modelos desactivada');
   }
   // HU-133: tarea programada de reabastecimiento.
   // Desactivada por defecto. Solo ejecuta simulaciones.
