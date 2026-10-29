@@ -9,7 +9,7 @@ export async function obtenerIP(): Promise<string | null> {
   }
 
   try {
-    const res = await fetch('https://api.ipify.org?format=json')
+    const res = await fetch('https://api.ipify.org/?format=json')
     if (res.ok) {
       const data = (await res.json()) as { ip?: string }
       if (data.ip) {
@@ -22,7 +22,7 @@ export async function obtenerIP(): Promise<string | null> {
       }
     }
   } catch {
-    // sin conexion o bloqueado por CORS
+    // sin conexion o bloqueado
   }
   return null
 }

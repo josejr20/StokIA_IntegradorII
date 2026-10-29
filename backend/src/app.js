@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
       usuarios: '/api/usuarios',
       roles: '/api/roles',
       permisos: '/api/permisos',
-      categorias: '/api/categorias',
+      categorias: '/api/categoria',
       productos: '/api/productos',
       lotes: '/api/lotes',
       movimientos: '/api/movimientos',
@@ -66,24 +66,18 @@ const start = async () => {
     logger.error(`Error sincronizando modelos: ${err.message}`);
     console.error(err);
   }
+  // HU-133: tarea programada de reabastecimiento.
+  // Desactivada por defecto. Solo ejecuta simulaciones.
+  if (process.env.REABASTECIMIENTO_CRON_ENABLED === 'true') {
+    const {
+      iniciarReabastecimientoCron
+    } = require('./services/reabastecimientoCron');
 
-  app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-    logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
-    logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
-
-    // HU-133: tarea programada de reabastecimiento.
-    // Desactivada por defecto. Solo ejecuta simulaciones.
-    if (process.env.REABASTECIMIENTO_CRON_ENABLED === 'true') {
-      const {
-        iniciarReabastecimientoCron
-      } = require('./services/reabastecimientoCron');
-
-      iniciarReabastecimientoCron();
-      logger.info('[HU-133] Cron de simulación habilitado');
-    } else {
-      logger.info('[HU-133] Cron de simulación desactivado');
-    }
-  });
+    iniciarReabastecimientoCron();
+    logger.info('[HU-133] Cron de simulación habilitado');
+  } else {
+    logger.info('[HU-133] Cron de simulación desactivado');
+  }
 };
 
 module.exports = { app, start };

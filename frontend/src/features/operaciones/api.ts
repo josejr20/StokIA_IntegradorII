@@ -11,6 +11,8 @@ export interface FiltrosOperaciones {
   fecha_desde?: string
   fecha_hasta?: string
   buscar?: string
+  page?: number
+  pageSize?: number
 }
 
 export function useOperaciones(filtros: FiltrosOperaciones = {}) {
@@ -20,6 +22,8 @@ export function useOperaciones(filtros: FiltrosOperaciones = {}) {
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
   if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
   if (filtros.buscar) params.set('buscar', filtros.buscar)
+  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
+  if (filtros.pageSize) params.set('page_size', String(filtros.pageSize))
   const qs = params.toString()
 
   return useQuery({
@@ -132,13 +136,16 @@ export function useConfigurarImpuesto() {
 
 // ============ Clientes ============
 
-export function useClientes(buscar = '') {
+export function useClientes(buscar = '', page?: number, pageSize?: number) {
+  const params = new URLSearchParams()
+  if (buscar) params.set('buscar', buscar)
+  if (page && page > 1) params.set('page', String(page))
+  if (pageSize) params.set('page_size', String(pageSize))
+  const qs = params.toString()
   return useQuery({
-    queryKey: ['clientes', buscar],
+    queryKey: ['clientes', buscar, page, pageSize],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: Cliente[] }>(
-        buscar ? `/clientes?buscar=${encodeURIComponent(buscar)}` : '/clientes',
-      )
+      const respuesta = await api.get<{ data: Cliente[] }>(`/clientes${qs ? `?${qs}` : ''}`)
       return respuesta.data
     },
   })
@@ -164,11 +171,15 @@ export interface HistorialCliente {
   estado: string
 }
 
-export function useHistorialCliente(id: number | null) {
+export function useHistorialCliente(id: number | null, page?: number, pageSize?: number) {
+  const params = new URLSearchParams()
+  if (page && page > 1) params.set('page', String(page))
+  if (pageSize) params.set('page_size', String(pageSize))
+  const qs = params.toString()
   return useQuery({
-    queryKey: ['clientes', id, 'historial'],
+    queryKey: ['clientes', id, 'historial', page, pageSize],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: HistorialCliente[] }>(`/clientes/${id}/historial`)
+      const respuesta = await api.get<{ data: HistorialCliente[] }>(`/clientes/${id}/historial${qs ? `?${qs}` : ''}`)
       return respuesta.data
     },
     enabled: id !== null,
@@ -206,6 +217,58 @@ export interface ImportarKardexResultado {
   skipped: number
   errors: number
   error_details: Array<{ row?: number; presentacion?: string; reason?: string; error?: string }>
+}
+
+export interface KardexPreviewFila {
+  fila: number | string
+  fecha: string | null
+  empleado: string
+  cliente: string
+  presentacion: string
+  observaciones: string
+  motivo: string
+  cantidad: string | number
+  tipo: 'venta' | 'devolucion' | null
+  productoId: number | null
+  estado: 'OK' | 'ERROR'
+  errores: string[]
+  clienteNuevo?: boolean
+}
+
+export interface KardexPreviewResultado {
+  previewId: string
+  total: number
+  validas: number
+  conError: number
+  devoluciones: number
+  ventas: number
+  clientesNuevos: string[]
+  productosNoMapeados: string[]
+  filas: KardexPreviewFila[]
+}
+
+export function usePrevisualizarKardex() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (archivo: File) => {
+      const formData = new FormData()
+      formData.append('archivo', archivo)
+      const respuesta = await api.postForm<{ data: KardexPreviewResultado }>('/importar-kardex/kardex/previsualizar', formData)
+      return respuesta.data
+    },
+    onSuccess: invalidarOperacion(queryClient),
+  })
+}
+
+export function useConfirmarKardex() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (previewId: string) => {
+      const respuesta = await api.post<{ data: ImportarKardexResultado }>('/importar-kardex/kardex/confirmar', { previewId })
+      return respuesta.data
+    },
+    onSuccess: invalidarOperacion(queryClient),
+  })
 }
 
 export function useImportarKardex() {

@@ -24,7 +24,11 @@ const listar = async (req, res, next) => {
       {
         model: Lote,
         as: 'lote',
-        include: [{ model: Producto, as: 'producto' }],
+        include: [{
+          model: Producto,
+          as: 'producto',
+          attributes: ['id', 'codigo', 'nombre', 'precio_venta'],
+        }],
       },
       { model: Usuario, as: 'usuario' },
     ];
@@ -35,6 +39,8 @@ const listar = async (req, res, next) => {
       include[0].where = {
         [Op.or]: [
           { numero_lote: { [Op.iLike]: `%${search}%` } },
+          { '$lote.producto.nombre$': { [Op.iLike]: `%${search}%` } },
+          { '$lote.producto.codigo$': { [Op.iLike]: `%${search}%` } },
         ],
       };
     }
@@ -50,25 +56,20 @@ const listar = async (req, res, next) => {
       }
     }
 
-    const movimientos = await MovimientoInventario.findAll({
+    const { rows: movimientos, count } = await MovimientoInventario.findAndCountAll({
       where,
       include,
       order: [['fecha', 'DESC'], ['id', 'DESC']],
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+      distinct: true,
     });
-
-    const listado = movimientos.filter((mov) => {
-      if (!search) return true;
-      const texto = `${mov.lote?.producto?.nombre || ''} ${mov.lote?.producto?.codigo || ''} ${mov.lote?.numero_lote || ''}`.toLowerCase();
-      return texto.includes(String(search).toLowerCase());
-    });
-    const inicio = (page - 1) * pageSize;
-    const pagina = listado.slice(inicio, inicio + pageSize);
 
     res.json({
-      data: pagina.map((movimiento) => MovimientoDto.fromModel(movimiento)),
-      count: listado.length,
+      data: movimientos.map((movimiento) => MovimientoDto.fromModel(movimiento)),
+      count,
       previous: page > 1,
-      next: inicio + pageSize < listado.length,
+      next: page * pageSize < count,
     });
   } catch (error) { next(error); }
 };
