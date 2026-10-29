@@ -1,6 +1,7 @@
 'use strict';
 
 const {
+    sequelize,
     Producto,
     Lote,
     UmbralConfiguracion,
@@ -48,13 +49,13 @@ async function buscarOrdenPendiente(productoId) {
 }
 
 // Guardar una orden automática.
-async function crearOrden(datos) {
+async function crearOrden(datos, transaction = null) {
     return OrdenReabastecimiento.create({
         producto_id: datos.producto_id,
         cantidad_sugerida: datos.cantidad_sugerida,
         generado_por: 'automatico',
         estado: 'pendiente',
-    });
+    }, { transaction });
 }
 
 /**
@@ -65,7 +66,7 @@ async function crearAlertaReabastecimiento({
     productoId,
     ordenId,
     cantidadSugerida,
-}) {
+}, transaction = null) {
     const { Alerta } = require('../models');
 
     return Alerta.create({
@@ -80,8 +81,18 @@ async function crearAlertaReabastecimiento({
             origen: 'reabastecimiento_automatico',
             orden_id: ordenId,
         },
+    }, { transaction });
+}
+
+
+// Ejecutar operaciones dentro de una transacción.
+// Si alguna falla, Sequelize revierte todos los cambios.
+async function ejecutarEnTransaccion(operacion) {
+    return sequelize.transaction(async (transaction) => {
+        return operacion(transaction);
     });
 }
+
 
 module.exports = {
     obtenerProductosActivos,
@@ -90,4 +101,5 @@ module.exports = {
     buscarOrdenPendiente,
     crearOrden,
     crearAlertaReabastecimiento,
+    ejecutarEnTransaccion,
 };

@@ -93,29 +93,42 @@ async function generarOrdenAutomatica({
         };
     }
 
-    // TC-01 y TC-05: registrar la orden sugerida.
-    const orden = await repositorio.crearOrden({
-        producto_id: productoId,
-        cantidad_sugerida: calculo.cantidadSugerida,
-        generado_por: 'automatico',
-        estado: 'pendiente',
-    });
+    // TC-01, TC-05 y TC-06:
+    // Crear la orden y su alerta en una misma transacción.
+    const guardarOrdenYAlerta = async (transaction = null) => {
+        const orden = await repositorio.crearOrden({
+            producto_id: productoId,
+            cantidad_sugerida: calculo.cantidadSugerida,
+            generado_por: 'automatico',
+            estado: 'pendiente',
+        }, transaction);
 
-    // TC-06: registrar una alerta cuando se genera una orden.
-    if (typeof repositorio.crearAlertaReabastecimiento === 'function') {
+        // La alerta es obligatoria cuando se genera una orden.
+        if (typeof repositorio.crearAlertaReabastecimiento !== 'function') {
+            throw new Error('No está disponible el registro de alertas');
+        }
+
         await repositorio.crearAlertaReabastecimiento({
             productoId,
             ordenId: orden.id,
             cantidadSugerida: calculo.cantidadSugerida,
-        });
+        }, transaction);
+
+        return {
+            generada: true,
+            motivo: 'orden_generada',
+            orden,
+            ...calculo,
+        };
+    };
+
+    if (typeof repositorio.ejecutarEnTransaccion === 'function') {
+        return repositorio.ejecutarEnTransaccion(guardarOrdenYAlerta);
     }
 
-    return {
-        generada: true,
-        motivo: 'orden_generada',
-        orden,
-        ...calculo,
-    };
+    // Compatibilidad temporal con repositorios simulados.
+    return guardarOrdenYAlerta();
+
 }
 
 /**

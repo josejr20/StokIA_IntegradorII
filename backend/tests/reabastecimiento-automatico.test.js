@@ -38,6 +38,7 @@ test('TC-05: no genera una orden duplicada si ya existe una pendiente', async ()
 
 test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () => {
     const ordenesCreadas = [];
+    const alertasCreadas = [];
 
     const repositorio = {
         buscarOrdenPendiente: async () => null,
@@ -46,6 +47,11 @@ test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () =>
             const orden = { id: 20, ...datos };
             ordenesCreadas.push(orden);
             return orden;
+        },
+
+        crearAlertaReabastecimiento: async (datos) => {
+            alertasCreadas.push(datos);
+            return { id: 1, ...datos };
         },
     };
 
@@ -61,6 +67,7 @@ test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () =>
     assert.equal(resultado.motivo, 'orden_generada');
     assert.equal(ordenesCreadas.length, 1);
     assert.equal(ordenesCreadas[0].producto_id, 1);
+    assert.equal(alertasCreadas[0].ordenId, 20);
     assert.equal(ordenesCreadas[0].cantidad_sugerida, 25);
     assert.equal(ordenesCreadas[0].generado_por, 'automatico');
     assert.equal(ordenesCreadas[0].estado, 'pendiente');
