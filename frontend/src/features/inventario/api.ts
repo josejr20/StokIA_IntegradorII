@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+﻿import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import type { Paginado } from '@/types'
@@ -51,6 +51,7 @@ export interface MovimientoInventario {
   lote: number
   lote_id: number
   lote_numero: string
+  lote_fecha_vencimiento?: string | null
   producto_id: number
   producto_nombre: string
   producto_codigo: string
@@ -232,6 +233,58 @@ export function useRegistrarMovimiento() {
       queryClient.invalidateQueries({ queryKey: ['lotes'] })
       queryClient.invalidateQueries({ queryKey: ['movimientos-inventario'] })
       queryClient.invalidateQueries({ queryKey: ['movimientos'] })
+    },
+  })
+}
+
+export interface GrupoLotes {
+  key: string
+  nombre: string
+  productoIds: number[]
+  lotes: Lote[]
+}
+
+export interface FiltrosLotesAgrupados {
+  search?: string
+  producto_clave?: string
+  fecha_desde?: string
+  fecha_hasta?: string
+  estado?: EstadoFiltroLote
+  page?: number
+  pageSize?: number
+}
+
+export function useLotesAgrupados(filtros: FiltrosLotesAgrupados = {}) {
+  const params = new URLSearchParams()
+  if (filtros.search) params.set('search', filtros.search)
+  if (filtros.producto_clave) params.set('producto_clave', filtros.producto_clave)
+  if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
+  if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
+  if (filtros.estado) params.set('estado', filtros.estado)
+  params.set('page', String(filtros.page ?? 1))
+  params.set('page_size', String(filtros.pageSize ?? 10))
+
+  return useQuery({
+    // Empieza con 'lotes', así las invalidaciones existentes también la refrescan.
+    queryKey: ['lotes', 'agrupados', filtros],
+    queryFn: async () => {
+      const r = await api.get<{
+        data: GrupoLotes[]; count: number; total_pages: number; previous: boolean; next: boolean
+      }>(`/lotes/agrupados?${params.toString()}`)
+      return { results: r.data, count: r.count, totalPages: r.total_pages, previous: r.previous, next: r.next }
+    },
+    placeholderData: keepPreviousData,
+  })
+}
+
+export function useActualizarFechasVencimiento() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => api.post<{ message: string; actualizados: number }>('/lotes/actualizar-fechas-vencimiento'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['lotes'] })
+      queryClient.invalidateQueries({ queryKey: ['lotes', 'historial-productos'] })
+      queryClient.invalidateQueries({ queryKey: ['productos'] })
     },
   })
 }

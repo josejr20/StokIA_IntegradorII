@@ -28,35 +28,38 @@ export function LoteDetalleSheet({
   onOpenChange: (open: boolean) => void
 }) {
   const { data: historial, isLoading } = useHistorialProductos(productoIds)
+  const ingresos = (historial || []).filter((mov) => mov.tipo === 'ingreso')
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-2xl">
+      <SheetContent className="sm:max-w-4xl flex flex-col">
         <SheetHeader>
           <SheetTitle>Historial del producto</SheetTitle>
           <SheetDescription>
-            {productoNombre} · movimientos registrados en todos sus lotes.
+            {productoNombre} · solo ingresos registrados en todos sus lotes.
           </SheetDescription>
         </SheetHeader>
 
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 flex-1 overflow-y-auto">
           {isLoading && <p className="text-sm text-muted-foreground">Cargando…</p>}
-          {!isLoading && (!historial || historial.length === 0) && (
-            <p className="text-sm text-muted-foreground">No hay movimientos para este producto.</p>
+          {!isLoading && ingresos.length === 0 && (
+            <p className="text-sm text-muted-foreground">No hay ingresos para este producto.</p>
           )}
-          {historial && historial.length > 0 && (
+          {ingresos.length > 0 && (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Fecha</TableHead>
                   <TableHead>ID / Lote</TableHead>
+                  <TableHead>F. Vencimiento</TableHead>
                   <TableHead>Tipo</TableHead>
                   <TableHead className="text-right">Cant.</TableHead>
-                  <TableHead className="text-right">Saldo</TableHead>
+                  <TableHead className="text-right">P. unitario</TableHead>
+                  <TableHead className="text-right">P. total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {historial.map((mov) => {
+                {ingresos.map((mov) => {
                   const Icono = ICONO_TIPO[mov.tipo]
                   const esIngreso = mov.tipo === 'ingreso'
                   return (
@@ -66,6 +69,9 @@ export function LoteDetalleSheet({
                       </TableCell>
                       <TableCell className="whitespace-nowrap text-xs">
                         {mov.lote_numero ?? 'Sin código'} · #{mov.lote_id}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
+                        {mov.lote_fecha_vencimiento ? String(mov.lote_fecha_vencimiento).slice(0, 10) : 'Sin fecha'}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1.5">
@@ -79,9 +85,8 @@ export function LoteDetalleSheet({
                       <TableCell className={`text-right font-medium ${esIngreso ? 'text-secondary' : 'text-destructive'}`}>
                         {esIngreso ? '+' : '-'}{mov.cantidad}
                       </TableCell>
-                      <TableCell className="text-right text-sm">
-                        {mov.saldo_cantidad} · {formatoMoneda.format(mov.saldo_valorizado)}
-                      </TableCell>
+                      <TableCell className="text-right text-sm">{mov.precio_unitario != null ? formatoMoneda.format(mov.precio_unitario) : '-'}</TableCell>
+                      <TableCell className="text-right text-sm">{mov.precio_total != null ? formatoMoneda.format(mov.precio_total) : '-'}</TableCell>
                     </TableRow>
                   )
                 })}

@@ -36,6 +36,8 @@ export function useProductos(filtros: { search?: string; categoria?: string; mar
   if (usarPaginacion) {
     params.set('page', String(filtros.page))
     params.set('page_size', String(filtros.pageSize || 10))
+  } else {
+    params.set('page_size', '20')
   }
 
   return useQuery({

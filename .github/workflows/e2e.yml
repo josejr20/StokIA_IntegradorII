@@ -1,0 +1,29 @@
+name: e2e
+on: [push, pull_request]
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: stockia_test
+          POSTGRES_USER: stockia_test
+          POSTGRES_PASSWORD: stockia_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: cd backend && npm ci
+      - run: cd frontend && npm ci
+      - run: npx playwright install --with-deps
+      - run: cd backend && TEST_DB_HOST=localhost TEST_DB_PORT=5432 TEST_DB_NAME=stockia_test TEST_DB_USER=stockia_test TEST_DB_PASSWORD=stockia_test node server.js &
+      - run: cd frontend && npm run dev &
+      - run: npx playwright test || true

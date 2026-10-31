@@ -948,15 +948,111 @@ async function listarOperaciones({ tipo, cliente_id, fecha_desde, fecha_hasta, b
     if (fecha_hasta) where.fecha[Op.lte] = fecha_hasta;
   }
   if (buscar) where.numero = { [Op.iLike]: `%${buscar}%` };
-  return Operacion.findAll({
+  const operaciones = await Operacion.findAll({
     where,
+    attributes: {
+      include: [[
+        Operacion.sequelize.literal(
+          '(SELECT COUNT(DISTINCT d.producto_id) FROM operacion_detalles d WHERE d.operacion_id = "Operacion".id)',
+        ),
+        'productos_count',
+      ]],
+    },
     include: [
       { model: Cliente, as: 'cliente' },
-      { model: require('../models').Usuario, as: 'usuario' },
+      { model: Usuario, as: 'usuario' },
       { model: Comprobante, as: 'comprobante' },
+      {
+        model: require('../models').OperacionDetalle,
+        as: 'detalles',
+        include: [{ model: require('../models').Producto, as: 'producto', attributes: ['id', 'codigo', 'nombre'] }],
+      },
     ],
     order: [['fecha', 'DESC'], ['id', 'DESC']],
   });
+  return completarListado(operaciones);
+}
+
+/**
+ * Detalle de una operación con respaldo: si es una operación histórica sin
+ * detalles, cliente o vendedor propios, se completan con lo que ya reconstruye
+ * el comprobante (la misma fuente que usa la pantalla del comprobante).
+ */
+async function obtenerOperacionCompleta(id) {
+  const operacion = await obtenerOperacion(id);
+  if (!operacion) return null;
+  if (operacion.detalles?.length && operacion.cliente && operacion.usuario) return operacion;
+
+  const { comprobante } = await obtenerComprobanteOperacion(id);
+  const datos = comprobante?.datos;
+  if (!datos) return operacion;
+
+  const base = operacion.toJSON ? operacion.toJSON() : operacion;
+  const vendedor = datos.vendedor;
+  return {
+    ...base,
+    cliente: base.cliente ?? (datos.cliente
+      ? { activo: true, ...datos.cliente }
+      : null),
+    usuario: base.usuario ?? (vendedor
+      ? { id: vendedor.id, email: vendedor.email, nombres: `${vendedor.nombres || ''} ${vendedor.apellidos || ''}`.trim() }
+      : null),
+    detalles: base.detalles?.length
+      ? base.detalles
+      : (datos.items || []).map((item, indice) => ({
+        id: indice + 1,
+        operacion_id: base.id,
+        producto_id: item.producto_id,
+        lote_id: item.lote_id ?? null,
+        cantidad: item.cantidad,
+        precio_unitario: item.precio_unitario,
+        subtotal: item.subtotal,
+        producto: { codigo: item.codigo, nombre: item.producto },
+        lote: {},
+      })),
+  };
+}
+
+/**
+ * Completa en bloque (una sola consulta) el vendedor y la cantidad de
+ * productos de las operaciones del listado que no los tienen guardados.
+ */
+async function completarListado(operaciones) {
+  const pendientes = operaciones.filter(
+    (op) => !op.usuario || !Number(op.get('productos_count')),
+  );
+  if (!pendientes.length) return operaciones;
+
+  const ventas = await Venta.findAll({
+    where: { operacion_id: { [Op.in]: pendientes.map((op) => op.id) } },
+    attributes: ['operacion_id', 'producto_id', 'usuario_id'],
+    raw: true,
+  });
+  const porOperacion = new Map();
+  for (const venta of ventas) {
+    const clave = Number(venta.operacion_id);
+    const grupo = porOperacion.get(clave) || { productos: new Set(), usuarioId: null };
+    grupo.productos.add(Number(venta.producto_id));
+    if (!grupo.usuarioId && venta.usuario_id) grupo.usuarioId = venta.usuario_id;
+    porOperacion.set(clave, grupo);
+  }
+
+  const idsUsuario = [...new Set([...porOperacion.values()].map((g) => g.usuarioId).filter(Boolean))];
+  const usuarios = idsUsuario.length
+    ? await Usuario.findAll({
+      where: { id: { [Op.in]: idsUsuario } },
+      attributes: ['id', 'nombres', 'apellidos', 'email'],
+    })
+    : [];
+  const usuariosPorId = new Map(usuarios.map((u) => [u.id, u]));
+
+  for (const op of pendientes) {
+    const grupo = porOperacion.get(Number(op.id));
+    if (!grupo) continue;
+    if (!op.usuario && grupo.usuarioId) op.setDataValue('usuario', usuariosPorId.get(grupo.usuarioId) || null);
+    if (!Number(op.get('productos_count'))) op.setDataValue('productos_count', grupo.productos.size);
+  }
+  return operaciones;
 }
 
 async function anularOperacion(id, usuario_id) {
@@ -1124,6 +1220,7 @@ module.exports = {
   ErrorOperacion,
   crearOperacion,
   obtenerOperacion,
+  obtenerOperacionCompleta,
   obtenerComprobanteOperacion,
   reconstruirDatosComprobante,
   listarOperaciones,

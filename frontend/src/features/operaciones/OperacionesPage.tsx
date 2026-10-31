@@ -700,9 +700,12 @@ function HistorialOperaciones() {
                 <td className="p-4">{new Date(operacion.fecha).toLocaleString('es-PE')}</td>
                 <td className="p-4">{operacion.cliente?.nombre ?? '-'}</td>
                 <td className="p-4">
-                  {operacion.detalles
-                    ? `${operacion.detalles.length} ${operacion.detalles.length === 1 ? 'producto' : 'productos'}`
-                    : '-'}
+                  {(() => {
+                    const cantidad = operacion.productos_count ?? operacion.detalles?.length ?? 0
+                    return cantidad > 0
+                      ? `${cantidad} ${cantidad === 1 ? 'producto' : 'productos'}`
+                      : '-'
+                  })()}
                 </td>
                 <td className="p-4 text-right font-medium">{formatearMoneda(operacion.total)}</td>
                 <td className="p-4">

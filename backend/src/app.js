@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
       usuarios: '/api/usuarios',
       roles: '/api/roles',
       permisos: '/api/permisos',
-      categorias: '/api/categorias',
+      categorias: '/api/categoria',
       productos: '/api/productos',
       lotes: '/api/lotes',
       movimientos: '/api/movimientos',
@@ -59,18 +59,31 @@ const start = async () => {
   } catch (err) {
     // no abortar
   }
-  try {
-    await require('./models').sequelize.sync({ alter: false });
-    logger.info('Modelos sincronizados');
-  }  catch (err) {
-    logger.error(`Error sincronizando modelos: ${err.message}`);
-    console.error(err);
+  // No modificar automáticamente el esquema de la BD compartida.
+  // Habilitar únicamente en un entorno controlado.
+  if (process.env.DB_SYNC_ENABLED === 'true') {
+    try {
+      await require('./models').sequelize.sync({ alter: false });
+      logger.info('Sincronización de modelos completada');
+    } catch (err) {
+      logger.error(`Error sincronizando modelos: ${err.message}`);
+      console.error(err);
+    }
+  } else {
+    logger.info('Sincronización automática de modelos desactivada');
   }
+  // HU-133: tarea programada de reabastecimiento.
+  // Desactivada por defecto. Solo ejecuta simulaciones.
+  if (process.env.REABASTECIMIENTO_CRON_ENABLED === 'true') {
+    const {
+      iniciarReabastecimientoCron
+    } = require('./services/reabastecimientoCron');
 
-  app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-    logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
-    logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
-  });
+    iniciarReabastecimientoCron();
+    logger.info('[HU-133] Cron de simulación habilitado');
+  } else {
+    logger.info('[HU-133] Cron de simulación desactivado');
+  }
 };
 
 module.exports = { app, start };

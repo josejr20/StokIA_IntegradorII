@@ -93,6 +93,18 @@ function seleccionarLotesFEFO(lotes = [], hoy = new Date()) {
     });
 }
 
+function calcularFechaVencimiento(fechaIngreso, vidaUtilDias) {
+  const dias = Number(vidaUtilDias);
+  if (!Number.isFinite(dias) || dias <= 0) return null;
+  const fecha = new Date(fechaIngreso);
+  if (Number.isNaN(fecha.getTime())) return null;
+  fecha.setDate(fecha.getDate() + dias);
+  const y = fecha.getFullYear();
+  const m = String(fecha.getMonth() + 1).padStart(2, '0');
+  const d = String(fecha.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 module.exports = {
   DIAS_ALERTA_VENCIMIENTO,
   ErrorLote,
@@ -101,4 +113,5 @@ module.exports = {
   validarLoteParaCreacion,
   calcularEstadoLote,
   seleccionarLotesFEFO,
+  calcularFechaVencimiento,
 };
