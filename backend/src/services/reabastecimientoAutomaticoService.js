@@ -60,6 +60,7 @@ function calcularReabastecimiento({
  * HU-133 / US-26
  * Genera una orden sugerida cuando el producto requiere reposición.
  */
+
 async function generarOrdenAutomatica({
     productoId,
     stockActual,
@@ -82,20 +83,33 @@ async function generarOrdenAutomatica({
         };
     }
 
-    // Evitar generar otra orden si ya existe una pendiente.
-    const ordenExistente = await repositorio.buscarOrdenPendiente(productoId);
-
-    if (ordenExistente) {
-        return {
-            generada: false,
-            motivo: 'orden_pendiente_existente',
-            orden: ordenExistente,
-        };
-    }
-
-    // TC-01, TC-05 y TC-06:
-    // Crear la orden y su alerta en una misma transacción.
+    // La comprobación de duplicados y la creación deben
+    // ejecutarse dentro de la misma transacción.
     const guardarOrdenYAlerta = async (transaction = null) => {
+
+        // Bloquear el producto para evitar que dos procesos
+        // automáticos operen simultáneamente sobre él.
+        if (transaction) {
+            await repositorio.bloquearProducto(productoId, transaction);
+        }
+
+        // Verificar si existe una orden pendiente
+        // utilizando la misma transacción.
+        const ordenExistente = await repositorio.buscarOrdenPendiente(
+            productoId,
+            transaction
+        );
+
+        if (ordenExistente) {
+            return {
+                generada: false,
+                motivo: 'orden_pendiente_existente',
+                orden: ordenExistente,
+            };
+        }
+
+        // TC-01, TC-05 y TC-06:
+        // Crear la orden y su alerta en una misma transacción.
         const orden = await repositorio.crearOrden({
             producto_id: productoId,
             cantidad_sugerida: calculo.cantidadSugerida,
@@ -128,8 +142,8 @@ async function generarOrdenAutomatica({
 
     // Compatibilidad temporal con repositorios simulados.
     return guardarOrdenYAlerta();
-
 }
+
 
 /**
  * Calcula el stock utilizable de un producto,

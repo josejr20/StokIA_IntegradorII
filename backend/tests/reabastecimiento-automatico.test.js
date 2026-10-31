@@ -72,3 +72,67 @@ test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () =>
     assert.equal(ordenesCreadas[0].generado_por, 'automatico');
     assert.equal(ordenesCreadas[0].estado, 'pendiente');
 });
+
+
+test('TC-08: evita órdenes duplicadas durante ejecuciones simultáneas', async () => {
+    const ordenes = [];
+    const alertas = [];
+    let bloqueo = Promise.resolve();
+
+    // Simula que las transacciones del mismo producto
+    // se ejecutan una después de otra.
+    const repositorio = {
+        ejecutarEnTransaccion: async (operacion) => {
+            const anterior = bloqueo;
+            let liberar;
+
+            bloqueo = new Promise((resolve) => {
+                liberar = resolve;
+            });
+
+            await anterior;
+
+            try {
+                return await operacion({ id: 'transaccion_simulada' });
+            } finally {
+                liberar();
+            }
+        },
+
+        bloquearProducto: async () => ({ id: 1 }),
+
+        buscarOrdenPendiente: async () =>
+            ordenes.find((orden) => orden.estado === 'pendiente') ?? null,
+
+        crearOrden: async (datos) => {
+            const orden = { id: ordenes.length + 1, ...datos };
+            ordenes.push(orden);
+            return orden;
+        },
+
+        crearAlertaReabastecimiento: async (datos) => {
+            alertas.push(datos);
+        },
+    };
+
+    const parametros = {
+        productoId: 1,
+        stockActual: 5,
+        stockMinimo: 10,
+        demandaEstimada: 20,
+        repositorio,
+    };
+
+    const resultados = await Promise.all([
+        generarOrdenAutomatica(parametros),
+        generarOrdenAutomatica(parametros),
+    ]);
+
+    assert.equal(ordenes.length, 1);
+    assert.equal(alertas.length, 1);
+    assert.equal(resultados.filter((r) => r.generada).length, 1);
+    assert.equal(
+        resultados.filter((r) => r.motivo === 'orden_pendiente_existente').length,
+        1
+    );
+});

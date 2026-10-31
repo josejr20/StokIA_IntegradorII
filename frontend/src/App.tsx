@@ -11,6 +11,7 @@ import InicioPage from '@/features/inicio/InicioPage'
 import DashboardPage from '@/features/dashboard/DashboardPage'
 import ProductosPage from '@/features/productos/ProductosPage'
 import InventarioPage from '@/features/inventario/InventarioPage'
+import ReabastecimientoPage from '@/features/reabastecimiento/ReabastecimientoPage'
 import KardexPage from '@/features/kardex/KardexPage'
 import VentasPage from '@/features/ventas/VentasPage'
 import OperacionesPage from '@/features/operaciones/OperacionesPage'
@@ -35,6 +36,7 @@ export default function App() {
           <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="dashboard" element={<DashboardPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_productos" />}><Route path="productos" element={<ProductosPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_inventario" />}><Route path="inventario" element={<InventarioPage />} /><Route path="kardex" element={<KardexPage />} /></Route>
+          <Route element={<RutaConPermiso permiso="gestionar_reabastecimiento" />}><Route path="reabastecimiento" element={<ReabastecimientoPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="ventas" element={<VentasPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="operaciones" element={<OperacionesPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="clientes" element={<ClientesPage />} /></Route>

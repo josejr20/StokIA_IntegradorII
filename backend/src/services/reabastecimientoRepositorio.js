@@ -38,13 +38,34 @@ async function obtenerUmbrales() {
     });
 }
 
+// Bloquear el producto durante la generación de una orden automática.
+// Evita que dos procesos que utilicen este bloqueo operen
+// simultáneamente sobre el mismo producto.
+async function bloquearProducto(productoId, transaction) {
+    if (!transaction) {
+        throw new Error('Se requiere una transacción para bloquear el producto');
+    }
+
+    const producto = await Producto.findByPk(productoId, {
+        transaction,
+        lock: transaction.LOCK.UPDATE,
+    });
+
+    if (!producto) {
+        throw new Error(`No existe el producto ${productoId}`);
+    }
+
+    return producto;
+}
+
 // Verificar si ya existe una orden pendiente.
-async function buscarOrdenPendiente(productoId) {
+async function buscarOrdenPendiente(productoId, transaction = null) {
     return OrdenReabastecimiento.findOne({
         where: {
             producto_id: productoId,
             estado: 'pendiente',
         },
+        transaction,
     });
 }
 
@@ -98,6 +119,7 @@ module.exports = {
     obtenerProductosActivos,
     obtenerLotes,
     obtenerUmbrales,
+    bloquearProducto,
     buscarOrdenPendiente,
     crearOrden,
     crearAlertaReabastecimiento,
