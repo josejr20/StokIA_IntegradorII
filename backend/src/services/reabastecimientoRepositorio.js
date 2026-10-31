@@ -1,4 +1,5 @@
 'use strict';
+const { notificarEncargadosInventario } = require('./wsService');
 
 const {
     sequelize,
@@ -124,4 +125,5 @@ module.exports = {
     crearOrden,
     crearAlertaReabastecimiento,
     ejecutarEnTransaccion,
+    notificarEncargadosInventario,
 };

@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router'
 
 import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
+import { useInventarioRealtime } from '@/lib/socket'
 
 // El título del topbar sale de la misma ruta activa, así ninguna página
 // tiene que repetirlo a mano.
@@ -20,6 +21,7 @@ const TITULOS: Record<string, string> = {
 }
 
 export function AppShell() {
+  useInventarioRealtime()
   const { pathname } = useLocation()
   const titulo = TITULOS[pathname] ?? 'StockIA'
 

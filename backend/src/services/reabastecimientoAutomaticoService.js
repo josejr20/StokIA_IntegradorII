@@ -136,12 +136,39 @@ async function generarOrdenAutomatica({
         };
     };
 
+
+    // Ejecutar la generación y esperar a que la transacción termine.
+    let resultado;
+
     if (typeof repositorio.ejecutarEnTransaccion === 'function') {
-        return repositorio.ejecutarEnTransaccion(guardarOrdenYAlerta);
+        resultado = await repositorio.ejecutarEnTransaccion(
+            guardarOrdenYAlerta
+        );
+    } else {
+        // Compatibilidad con repositorios simulados.
+        resultado = await guardarOrdenYAlerta();
     }
 
-    // Compatibilidad temporal con repositorios simulados.
-    return guardarOrdenYAlerta();
+    // TC-06: notificar únicamente cuando la orden se haya guardado.
+    if (resultado.generada && repositorio.notificarEncargadosInventario) {
+        try {
+            await repositorio.notificarEncargadosInventario({
+                ordenId: resultado.orden.id,
+                productoId,
+                cantidadSugerida: calculo.cantidadSugerida,
+                mensaje: 'Se generó una nueva orden de reabastecimiento'
+            });
+        } catch (error) {
+            // Un fallo de notificación no debe deshacer una orden confirmada.
+            console.error(
+                '[HU-133] Error enviando notificación:',
+                error.message
+            );
+        }
+    }
+
+    return resultado;
+
 }
 
 
