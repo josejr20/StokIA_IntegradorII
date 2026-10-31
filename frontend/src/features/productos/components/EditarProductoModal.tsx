@@ -142,7 +142,7 @@ export function EditarProductoModal({
         <DialogHeader>
           <DialogTitle>Editar producto</DialogTitle>
           <DialogDescription>
-            {producto?.codigo} · {producto?.nombre} — el código, el stock y el estado no se editan desde aquí.
+            {producto?.codigo} · {producto?.nombre}
           </DialogDescription>
         </DialogHeader>
 

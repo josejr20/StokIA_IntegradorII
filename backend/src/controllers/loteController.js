@@ -1,24 +1,42 @@
-const { validationResult } = require('express-validator');
 const { Lote, Producto, MovimientoInventario, Usuario } = require('../models');
 const { LoteDto } = require('../dtos/loteDto');
 const { MovimientoDto } = require('../dtos/movimientoDto');
-const { registrarMovimiento } = require('../services/kardexService');
-const { generarCodigoLote, validarLoteParaCreacion } = require('../services/loteService');
+const { ErrorKardex, registrarMovimiento } = require('../services/kardexService');
+const { ErrorLote, generarCodigoLote, validarLoteParaCreacion, calcularFechaVencimiento } = require('../services/loteService');
 const logger = require('../utils/logger');
-const { Op } = require('sequelize');
+const { Op, QueryTypes } = require('sequelize');
+const { UniqueConstraintError } = require('sequelize');
+const ws = require('../services/wsService');
 
 const listar = async (req, res, next) => {
   try {
-    const { producto, numero_lote } = req.query;
+    const { producto, numero_lote, fecha_desde, fecha_hasta, estado, orden } = req.query;
     const page = Math.max(1, Number(req.query.page) || 1);
-    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+    const pageSize = Math.min(10000, Math.max(1, Number(req.query.page_size) || 10));
     const where = {};
     if (producto) where.producto_id = producto;
-    if (numero_lote) where.numero_lote = { [Op.like]: `%${numero_lote}%` };
+    if (numero_lote) where.numero_lote = { [Op.iLike]: `%${numero_lote}%` };
+    if (fecha_desde || fecha_hasta) {
+      where.fecha_ingreso = {
+        ...(fecha_desde && { [Op.gte]: fecha_desde }),
+        ...(fecha_hasta && { [Op.lte]: fecha_hasta }),
+      };
+    }
+    if (estado === 'agotado') where.cantidad_actual = 0;
+    if (estado === 'con_stock') where.cantidad_actual = { [Op.gt]: 0 };
+    // Los estados 'vencido' / 'por_vencer' se agregan en el Sprint 2, cuando ML defina la fecha de vencimiento.
+    // Ordenamiento estable: producto_id ASC, luego fecha_ingreso (según parámetro), luego ID DESC.
+    // Esto asegura que los lotes del mismo producto aparezcan consecutivos y la paginación sea estable.
+    const fechaIngresoOrder = orden === 'ingreso_asc' ? 'ASC' : 'DESC';
+    const order = [
+      ['producto_id', 'ASC'],
+      ['fecha_ingreso', fechaIngresoOrder],
+      ['id', 'DESC'],
+    ];
     const resultado = await Lote.findAndCountAll({
       where,
       include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],
-      order: [['fecha_ingreso', 'DESC']],
+      order,
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });
@@ -41,23 +59,36 @@ const obtener = async (req, res, next) => {
 
 const crear = async (req, res, next) => {
   let transaction;
+  let reintentado = false;
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ error: 'Datos inválidos', details: errors.array() });
+    const productoId = req.body.producto_id;
+    if (!productoId || Number(productoId) <= 0) {
+      return res.status(400).json({ error: 'producto_id es obligatorio y debe ser un entero positivo' });
+    }
 
-    const producto = await Producto.findByPk(req.body.producto_id);
+    const producto = await Producto.findByPk(productoId);
     if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
     if (!producto.activo) return res.status(400).json({ error: 'No se puede crear un lote para un producto inactivo' });
 
     const cantidadInicial = Number(req.body.cantidad_inicial ?? req.body.cantidad_actual ?? 0);
-    validarLoteParaCreacion({ cantidad_inicial: cantidadInicial, fecha_vencimiento: req.body.fecha_vencimiento });
+    if (req.body.cantidad_actual !== undefined && Number(req.body.cantidad_actual) !== cantidadInicial) {
+      return res.status(400).json({ error: 'La cantidad actual inicial debe coincidir con la cantidad inicial' });
+    }
+    validarLoteParaCreacion({ cantidad_inicial: cantidadInicial });
 
-    const siguienteNumero = (await Lote.max('id', { where: { producto_id: req.body.producto_id } }) || 0) + 1;
+    const siguienteNumero = (await Lote.max('id', { where: { producto_id: productoId } }) || 0) + 1;
+    let fechaVencimiento = req.body.fecha_vencimiento;
+    if ((fechaVencimiento === undefined || fechaVencimiento === null || fechaVencimiento === '') && producto.vida_util_dias) {
+      const fechaIngreso = req.body.fecha_ingreso || new Date();
+      fechaVencimiento = calcularFechaVencimiento(fechaIngreso, producto.vida_util_dias);
+    }
+
     const data = LoteDto.fromCreate({
       ...req.body,
       numero_lote: req.body.numero_lote || generarCodigoLote(siguienteNumero),
       cantidad_inicial: cantidadInicial,
-      cantidad_actual: req.body.cantidad_actual !== undefined ? Number(req.body.cantidad_actual) : cantidadInicial,
+      cantidad_actual: 0,
+      fecha_vencimiento: fechaVencimiento || null,
     });
 
     transaction = await Lote.sequelize.transaction();
@@ -73,9 +104,16 @@ const crear = async (req, res, next) => {
       transaction
     );
     await transaction.commit();
+    await lote.reload();
     res.status(201).json({ data: LoteDto.fromModel(lote) });
   } catch (error) {
     if (transaction) await transaction.rollback();
+    if (error instanceof ErrorKardex) return res.status(400).json({ error: error.message });
+    if (error instanceof ErrorLote) return res.status(400).json({ error: error.message });
+    if (error instanceof UniqueConstraintError && !reintentado && error.fields?.numero_lote) {
+      reintentado = true;
+      return crear(req, res, next);
+    }
     next(error);
   }
 };
@@ -84,10 +122,18 @@ const actualizar = async (req, res, next) => {
   try {
     const lote = await Lote.findByPk(req.params.id);
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
+    if (req.body.cantidad_inicial !== undefined || req.body.cantidad_actual !== undefined) {
+      return res.status(400).json({ error: 'El stock solo puede modificarse mediante movimientos de kardex' });
+    }
     const data = LoteDto.fromUpdate(req.body);
     await lote.update(data);
     res.json({ data: LoteDto.fromModel(lote) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    if (error instanceof UniqueConstraintError) {
+      return res.status(409).json({ error: 'El número de lote ya existe para este producto' });
+    }
+    next(error);
+  }
 };
 
 const historial = async (req, res, next) => {
@@ -97,8 +143,35 @@ const historial = async (req, res, next) => {
     const movimientos = await MovimientoInventario.findAll({
       where: { lote_id: lote.id },
       include: [
-        { model: Lote, as: 'lote', include: [{ model: Producto, as: 'producto' }] },
-        { model: Usuario, as: 'usuario' },
+        { model: Lote, as: 'lote', attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'], include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }] },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
+      ],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+    });
+    res.json({ data: movimientos.map((movimiento) => MovimientoDto.fromModel(movimiento)) });
+  } catch (error) { next(error); }
+};
+
+const historialProductos = async (req, res, next) => {
+  try {
+    const productoIds = String(req.query.producto_ids || '')
+      .split(',')
+      .map((id) => Number(id))
+      .filter((id) => Number.isInteger(id) && id > 0);
+    if (!productoIds.length) {
+      return res.status(400).json({ error: 'Selecciona al menos un producto válido' });
+    }
+
+    const movimientos = await MovimientoInventario.findAll({
+      include: [
+        {
+          model: Lote,
+          as: 'lote',
+          attributes: ['id', 'numero_lote', 'fecha_vencimiento', 'producto_id'],
+          where: { producto_id: { [Op.in]: [...new Set(productoIds)] } },
+          include: [{ model: Producto, as: 'producto', attributes: ['id', 'nombre', 'codigo', 'precio_venta'] }],
+        },
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nombres', 'apellidos'] },
       ],
       order: [['fecha', 'DESC'], ['id', 'DESC']],
     });
@@ -112,35 +185,40 @@ const registrarMovimientoCtrl = async (req, res, next) => {
     const lote = await Lote.findByPk(req.params.id);
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
 
-    const tipo = req.body.tipo;
-    if (!['ingreso', 'salida', 'ajuste'].includes(tipo)) {
-      return res.status(400).json({ error: 'Tipo inválido' });
+    let tipo = req.body.tipo;
+    let origen = req.body.origen || 'otro';
+    const cantidad = Number(req.body.cantidad);
+    if (!Number.isFinite(cantidad) || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
+
+    // HU8.1: Ajustes se expresan como ingreso/salida con origen='ajuste'
+    // Mantener 'ajuste' como alias de salida para compatibilidad
+    if (tipo === 'ajuste') {
+      tipo = 'salida';
+      origen = 'ajuste';
+    }
+    if (origen === 'ajuste' && !['ingreso', 'salida'].includes(tipo)) {
+      return res.status(400).json({ error: 'Con origen "ajuste", el tipo debe ser "ingreso" o "salida"' });
+    }
+    if (!['ingreso', 'salida'].includes(tipo)) {
+      return res.status(400).json({ error: 'Tipo inválido. Use "ingreso" o "salida"' });
     }
 
-    const cantidad = parseFloat(req.body.cantidad);
-    if (!Number.isFinite(cantidad) || cantidad <= 0) return res.status(400).json({ error: 'Cantidad inválida' });
     const motivo = String(req.body.motivo || '').trim();
-    if (['salida', 'ajuste'].includes(tipo) && !motivo) {
-      return res.status(400).json({ error: 'El motivo es obligatorio para salidas y ajustes' });
+    if (tipo === 'salida' && !motivo) {
+      return res.status(400).json({ error: 'El motivo es obligatorio para salidas' });
     }
 
     const producto = await Producto.findByPk(lote.producto_id);
     if (!producto || !producto.activo) return res.status(400).json({ error: 'No se pueden registrar movimientos en un producto inactivo' });
 
     transaction = await Lote.sequelize.transaction();
-    const loteBloqueado = await Lote.findByPk(req.params.id, { transaction, lock: transaction.LOCK.UPDATE });
-    if (['salida', 'ajuste'].includes(tipo) && Number(loteBloqueado.cantidad_actual) < cantidad) {
-      await transaction.rollback();
-      return res.status(400).json({ error: 'Stock insuficiente' });
-    }
-
     const movimiento = await registrarMovimiento(
-      loteBloqueado.id,
+      lote.id,
       tipo,
       cantidad,
-      req.body.origen || 'otro',
+      origen,
       motivo,
-      req.body.precio_unitario || null,
+      req.body.precio_unitario ?? null,
       req.user.id,
       transaction
     );
@@ -148,8 +226,117 @@ const registrarMovimientoCtrl = async (req, res, next) => {
     res.json({ data: movimiento });
   } catch (error) {
     if (transaction) await transaction.rollback();
+    if (error instanceof ErrorKardex) return res.status(400).json({ error: error.message });
     next(error);
   }
 };
 
-module.exports = { listar, obtener, crear, actualizar, historial, registrarMovimientoCtrl };
+const actualizarFechasVencimiento = async (req, res, next) => {
+  try {
+    const { sequelize } = require('../models');
+    const [resultados] = await sequelize.query(`
+      UPDATE lotes l
+      SET fecha_vencimiento = l.fecha_ingreso + p.vida_util_dias
+      FROM productos p
+      WHERE l.producto_id = p.id
+        AND l.fecha_vencimiento IS NULL
+        AND p.vida_util_dias IS NOT NULL
+        AND p.vida_util_dias > 0
+        AND EXISTS (
+          SELECT 1
+          FROM movimientos_inventario m
+          WHERE m.lote_id = l.id
+            AND m.tipo = 'ingreso'
+        )
+      RETURNING l.id, l.numero_lote, l.producto_id, l.fecha_ingreso, l.fecha_vencimiento
+    `);
+
+    res.json({
+      message: `Se actualizaron ${resultados.length} lote(s) con fecha de vencimiento calculada`,
+      actualizados: resultados.length,
+      lotes: resultados
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Misma normalización que claveNombre() del frontend: minúsculas, sin tildes, sin espacios sobrantes.
+const CLAVE_SQL = `translate(lower(btrim(p.nombre)), 'áéíóúüñàèìòùâêîôûäëïö', 'aeiouunaeiouaeiouaeio')`;
+
+const normalizarClave = (texto) => String(texto || '')
+  .trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('es');
+
+const listarAgrupados = async (req, res, next) => {
+  try {
+    const { search, producto_clave, fecha_desde, fecha_hasta, estado } = req.query;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+
+    const where = [];
+    const replacements = { limit: pageSize, offset: (page - 1) * pageSize };
+    if (fecha_desde) { where.push('l.fecha_ingreso >= :fecha_desde'); replacements.fecha_desde = fecha_desde; }
+    if (fecha_hasta) { where.push('l.fecha_ingreso <= :fecha_hasta'); replacements.fecha_hasta = fecha_hasta; }
+    if (estado === 'agotado') where.push('l.cantidad_actual = 0');
+    if (estado === 'con_stock') where.push('l.cantidad_actual > 0');
+    if (producto_clave) {
+      where.push(`${CLAVE_SQL} = :clave`);
+      replacements.clave = normalizarClave(producto_clave);
+    }
+
+    let having = '';
+    if (search && String(search).trim()) {
+      having = `HAVING (MIN(p.nombre) ILIKE :q OR bool_or(l.numero_lote ILIKE :q OR p.codigo ILIKE :q))`;
+      replacements.q = `%${String(search).trim().replace(/[\\%_]/g, '\\$&')}%`;
+    }
+
+    const agrupado = `
+      SELECT ${CLAVE_SQL} AS clave,
+             MIN(p.nombre) AS nombre,
+             array_agg(DISTINCT p.id) AS producto_ids,
+             array_agg(l.id) AS lote_ids
+      FROM lotes l
+      JOIN productos p ON p.id = l.producto_id
+      ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
+      GROUP BY ${CLAVE_SQL}
+      ${having}`;
+
+    const [{ total }] = await Lote.sequelize.query(
+      `SELECT COUNT(*)::int AS total FROM (${agrupado}) g`,
+      { replacements, type: QueryTypes.SELECT },
+    );
+    const grupos = await Lote.sequelize.query(
+      `${agrupado} ORDER BY 2 ASC, 1 ASC LIMIT :limit OFFSET :offset`,
+      { replacements, type: QueryTypes.SELECT },
+    );
+
+    // Solo se cargan los lotes de los grupos de esta página.
+    const ids = grupos.flatMap((g) => g.lote_ids);
+    const lotes = ids.length
+      ? await Lote.findAll({
+        where: { id: { [Op.in]: ids } },
+        include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],
+        order: [['fecha_ingreso', 'DESC'], ['id', 'DESC']],
+      })
+      : [];
+    const lotesPorId = new Map(lotes.map((lote) => [lote.id, LoteDto.fromModel(lote)]));
+
+    const totalPaginas = Math.max(1, Math.ceil(total / pageSize));
+    res.json({
+      data: grupos.map((g) => ({
+        key: g.clave,
+        nombre: g.nombre,
+        productoIds: g.producto_ids,
+        lotes: g.lote_ids.map((id) => lotesPorId.get(id)).filter(Boolean),
+      })),
+      count: total,
+      page,
+      page_size: pageSize,
+      total_pages: totalPaginas,
+      previous: page > 1,
+      next: page < totalPaginas,
+    });
+  } catch (error) { next(error); }
+};
+
+module.exports = { listar, listarAgrupados, obtener, crear, actualizar, historial, historialProductos, registrarMovimientoCtrl, actualizarFechasVencimiento };

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Plus, Pencil, Ban, RotateCcw, Image as IMAGE_ICON } from 'lucide-react'
+import { Search, Plus, Pencil, Ban, RotateCcw, ChevronLeft, ChevronRight, Image as IMAGE_ICON, Upload } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import {
   useProductos, useCategorias, useMarcas, useActivarProducto, type Producto,
 } from './api'
 import { NuevoProductoModal } from './components/NuevoProductoModal'
+import { ImportarProductosModal } from './components/ImportarProductosModal'
 import { EditarProductoModal } from './components/EditarProductoModal'
 import { DesactivarProductoDialog } from './components/DesactivarProductoDialog'
 import { ConfirmDialog } from './components/ConfirmDialog'
@@ -31,14 +32,17 @@ export default function ProductosPage() {
   const [busqueda, setBusqueda] = useState('')
   const [categoriaFiltro, setCategoriaFiltro] = useState<string>('')
   const [marcaFiltro, setMarcaFiltro] = useState<string>('')
+  const [pageSize, setPageSize] = useState(10)
+  const [pagina, setPagina] = useState(1)
 
   const [modalNuevo, setModalNuevo] = useState(false)
+  const [modalImportar, setModalImportar] = useState(false)
   const [productoEditar, setProductoEditar] = useState<Producto | null>(null)
   const [productoDesactivar, setProductoDesactivar] = useState<Producto | null>(null)
   const [productoActivar, setProductoActivar] = useState<Producto | null>(null)
 
   const { data: productos, isLoading } = useProductos({
-    search: busqueda, categoria: categoriaFiltro, marca: marcaFiltro,
+    search: busqueda, categoria: categoriaFiltro, marca: marcaFiltro, page: pagina, pageSize,
   })
   const { data: categorias } = useCategorias()
   const { data: marcas } = useMarcas()
@@ -65,10 +69,10 @@ export default function ProductosPage() {
             placeholder="Buscar por código o nombre…"
             className="pl-9"
             value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
+            onChange={(e) => { setBusqueda(e.target.value); setPagina(1) }}
           />
         </div>
-        <Select value={categoriaFiltro || 'todas'} onValueChange={(v) => setCategoriaFiltro(v === 'todas' ? '' : v)}>
+        <Select value={categoriaFiltro || 'todas'} onValueChange={(v) => { setCategoriaFiltro(v === 'todas' ? '' : v); setPagina(1) }}>
           <SelectTrigger className="w-48"><SelectValue placeholder="Categoría" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="todas">Categoría: Todas</SelectItem>
@@ -77,7 +81,7 @@ export default function ProductosPage() {
             ))}
           </SelectContent>
         </Select>
-        <Select value={marcaFiltro || 'todas'} onValueChange={(v) => setMarcaFiltro(v === 'todas' ? '' : v)}>
+        <Select value={marcaFiltro || 'todas'} onValueChange={(v) => { setMarcaFiltro(v === 'todas' ? '' : v); setPagina(1) }}>
           <SelectTrigger className="w-48"><SelectValue placeholder="Marca" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="todas">Marca: Todas</SelectItem>
@@ -86,6 +90,9 @@ export default function ProductosPage() {
             ))}
           </SelectContent>
         </Select>
+        <Button variant="outline" onClick={() => setModalImportar(true)}>
+          <Upload className="size-4" /> Importar
+        </Button>
         <Button onClick={() => setModalNuevo(true)}>
           <Plus className="size-4" /> Nuevo producto
         </Button>
@@ -136,7 +143,7 @@ export default function ProductosPage() {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{producto.categoria_nombre ?? '—'}</TableCell>
+                <TableCell>{producto.categoria_nombre ?? '-'}</TableCell>
                 <TableCell>
                   {producto.stock_total}
                   {producto.stock_total === 0 && (
@@ -184,10 +191,47 @@ export default function ProductosPage() {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </div>
+         </Table>
+       </div>
+
+       {productos && productos.count !== undefined && (
+         <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+           <span>
+             {productos.count} producto{productos.count === 1 ? '' : 's'}
+           </span>
+           <div className="flex items-center gap-2">
+             <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPagina(1) }}>
+               <SelectTrigger className="w-20"><SelectValue /></SelectTrigger>
+               <SelectContent>
+                 <SelectItem value="10">10</SelectItem>
+                 <SelectItem value="20">20</SelectItem>
+                 <SelectItem value="50">50</SelectItem>
+                 <SelectItem value="100">100</SelectItem>
+               </SelectContent>
+             </Select>
+             <Button
+               variant="outline"
+               size="sm"
+               disabled={!productos.previous}
+               onClick={() => setPagina((p) => p - 1)}
+             >
+               <ChevronLeft className="size-4" /> Anterior
+             </Button>
+             <Button
+               variant="outline"
+               size="sm"
+               disabled={!productos.next}
+               onClick={() => setPagina((p) => p + 1)}
+             >
+               Siguiente <ChevronRight className="size-4" />
+             </Button>
+           </div>
+         </div>
+       )}
 
       <NuevoProductoModal open={modalNuevo} onOpenChange={setModalNuevo} />
+
+      <ImportarProductosModal open={modalImportar} onOpenChange={setModalImportar} />
 
       <EditarProductoModal producto={productoEditar} onOpenChange={(open) => !open && setProductoEditar(null)} />
 

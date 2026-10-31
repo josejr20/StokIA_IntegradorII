@@ -16,6 +16,11 @@ Models.UnidadMedida = require('./UnidadMedida')(sequelize);
 Models.Presentacion = require('./Presentacion')(sequelize);
 Models.CatalogoMarca = require('./CatalogoMarca')(sequelize);
 Models.CatalogoValor = require('./CatalogoValor')(sequelize);
+Models.Cliente = require('./Cliente')(sequelize);
+Models.Operacion = require('./Operacion')(sequelize);
+Models.OperacionDetalle = require('./OperacionDetalle')(sequelize);
+Models.Comprobante = require('./Comprobante')(sequelize);
+Models.Configuracion = require('./Configuracion')(sequelize);
     Models.Producto = require('./Producto')(sequelize);
     Models.Lote = require('./Lote')(sequelize);
     Models.MovimientoInventario = require('./MovimientoInventario')(sequelize);
@@ -336,10 +341,87 @@ Models.UmbralConfiguracion.belongsTo(Models.Usuario, {
   as: 'usuario'
 });
 
-// Usuario <-> OrdenReabastecimiento
-Models.OrdenReabastecimiento.belongsTo(Models.Usuario, {
-  foreignKey: 'usuario_id',
-  as: 'usuario'
-});
+    // Usuario <-> OrdenReabastecimiento
+    Models.Usuario.hasMany(Models.OrdenReabastecimiento, {
+      foreignKey: 'usuario_id',
+      as: 'usuario'
+    });
+
+    // Cliente <-> Operacion (un cliente tiene muchas operaciones)
+    Models.Cliente.hasMany(Models.Operacion, {
+      foreignKey: 'cliente_id',
+      as: 'operaciones'
+    });
+
+    Models.Operacion.belongsTo(Models.Cliente, {
+      foreignKey: 'cliente_id',
+      as: 'cliente'
+    });
+
+    // Usuario <-> Operacion
+    Models.Usuario.hasMany(Models.Operacion, {
+      foreignKey: 'usuario_id',
+      as: 'operaciones'
+    });
+
+    Models.Operacion.belongsTo(Models.Usuario, {
+      foreignKey: 'usuario_id',
+      as: 'usuario'
+    });
+
+    // Operacion <-> OperacionDetalle (una operación tiene muchos productos)
+    Models.Operacion.hasMany(Models.OperacionDetalle, {
+      foreignKey: 'operacion_id',
+      as: 'detalles'
+    });
+
+    Models.OperacionDetalle.belongsTo(Models.Operacion, {
+      foreignKey: 'operacion_id',
+      as: 'operacion'
+    });
+
+    // Producto <-> OperacionDetalle (un producto aparece en muchas operaciones)
+    Models.Producto.hasMany(Models.OperacionDetalle, {
+      foreignKey: 'producto_id',
+      as: 'operacionDetalles'
+    });
+
+    Models.OperacionDetalle.belongsTo(Models.Producto, {
+      foreignKey: 'producto_id',
+      as: 'producto'
+    });
+
+    // Lote <-> OperacionDetalle
+    Models.Lote.hasMany(Models.OperacionDetalle, {
+      foreignKey: 'lote_id',
+      as: 'operacionDetalles'
+    });
+
+    Models.OperacionDetalle.belongsTo(Models.Lote, {
+      foreignKey: 'lote_id',
+      as: 'lote'
+    });
+
+    // Operacion origen <-> devoluciones que la anulan
+    Models.Operacion.hasMany(Models.Operacion, {
+      foreignKey: 'operacion_origen_id',
+      as: 'devoluciones'
+    });
+
+    Models.Operacion.belongsTo(Models.Operacion, {
+      foreignKey: 'operacion_origen_id',
+      as: 'operacionOrigen'
+    });
+
+    // Operacion <-> Comprobante (una operación genera un comprobante)
+    Models.Operacion.hasOne(Models.Comprobante, {
+      foreignKey: 'operacion_id',
+      as: 'comprobante'
+    });
+
+    Models.Comprobante.belongsTo(Models.Operacion, {
+      foreignKey: 'operacion_id',
+      as: 'operacion'
+    });
 
 module.exports = Models;

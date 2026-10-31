@@ -1,80 +1,148 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 import {
-  Search, Plus, ChevronLeft, ChevronRight, Eye, PackagePlus,
-} from 'lucide-react'
+  Search,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  PackagePlus,
+  CalendarClock,
+} from "lucide-react";
+import { toast } from "sonner";
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
-  Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
-} from '@/components/ui/table'
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
 import {
-  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
-} from '@/components/ui/select'
-import { useProductos } from '@/features/productos/api'
-import { useLotes, type Lote } from './api'
-import { NuevoLoteModal } from './components/NuevoLoteModal'
-import { LoteDetalleSheet } from './components/LoteDetalleSheet'
-import { RegistrarMovimientoModal } from './components/RegistrarMovimientoModal'
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { useProductos } from "@/features/productos/api";
+import {
+  useLotesAgrupados,
+  useActualizarFechasVencimiento,
+  type EstadoFiltroLote,
+  type Lote,
+  type GrupoLotes,
+} from "./api";
+import { NuevoLoteModal } from "./components/NuevoLoteModal";
+import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
+import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
 
-const formatoFecha = new Intl.DateTimeFormat('es-PE', { dateStyle: 'short' })
+const formatoFecha = new Intl.DateTimeFormat("es-PE", { dateStyle: "short" });
 
-type BadgeVariante = 'default' | 'secondary' | 'outline' | 'alto' | 'medio' | 'bajo'
+type BadgeVariante =
+  | "default"
+  | "secondary"
+  | "outline"
+  | "alto"
+  | "medio"
+  | "bajo";
 
-const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> = {
-  AGOTADO: { texto: 'Agotado', variante: 'secondary' },
-  VENCIDO: { texto: 'Vencido', variante: 'alto' },
-  POR_VENCER: { texto: 'Próximo a vencer', variante: 'medio' },
-  VIGENTE: { texto: 'Vigente', variante: 'bajo' },
-}
+const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> =
+{
+  AGOTADO: { texto: "Agotado", variante: "secondary" },
+  VENCIDO: { texto: "Vencido", variante: "alto" },
+  POR_VENCER: { texto: "Próximo a vencer", variante: "medio" },
+  VIGENTE: { texto: "Vigente", variante: "bajo" },
+};
 
 function aNumero(v: number | string | null | undefined): number {
-  return Number(v ?? 0)
+  return Number(v ?? 0);
+}
+
+function claveNombre(nombre: string | null | undefined): string {
+  return (nombre ?? "")
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es");
 }
 
 export default function InventarioPage() {
-  const [busqueda, setBusqueda] = useState('')
-  const [productoId, setProductoId] = useState('')
-  const [pageSize, setPageSize] = useState(10)
-  const [pagina, setPagina] = useState(1)
+  const [busqueda, setBusqueda] = useState("");
+  const [productoClave, setProductoClave] = useState("");
+  const [pageSize, setPageSize] = useState(10);
+  const [pagina, setPagina] = useState(1);
+  const [fechaDesde, setFechaDesde] = useState("");
+  const [fechaHasta, setFechaHasta] = useState("");
+  const [estadoFiltro, setEstadoFiltro] = useState<EstadoFiltroLote>("");
 
-  const [modalNuevo, setModalNuevo] = useState(false)
-  const [loteDetalle, setLoteDetalle] = useState<Lote | null>(null)
-  const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null)
+  const [modalNuevo, setModalNuevo] = useState(false);
+  const [grupoDetalle, setGrupoDetalle] = useState<GrupoLotes | null>(null);
+  const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null);
 
-  const { data: productos } = useProductos({})
-  const { data, isLoading } = useLotes({
-    search: busqueda,
-    producto: productoId,
+  const { data: productos } = useProductos({});
+  const [busquedaDebounce, setBusquedaDebounce] = useState("");
+  useEffect(() => {
+    const t = setTimeout(() => setBusquedaDebounce(busqueda), 300);
+    return () => clearTimeout(t);
+  }, [busqueda]);
+
+  const { data, isLoading } = useLotesAgrupados({
+    search: busquedaDebounce,
+    producto_clave: productoClave,
+    fecha_desde: fechaDesde,
+    fecha_hasta: fechaHasta,
+    estado: estadoFiltro,
     page: pagina,
     pageSize,
-  })
+  });
+  const grupos = data?.results ?? [];
+  const paginasTotales = data?.totalPages ?? 1;
+  const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
 
-  const productoSeleccionado = productos?.results.find(
-    (p) => String(p.id) === productoId,
-  )
+  const codigoDelLote = (lote: Lote): string => {
+    return (
+      productos?.results?.find(
+        (producto) => producto.id === lote.producto_id
+      )?.codigo ?? ""
+    );
+  };
 
-  function codigoDelLote(lote: Lote): string {
-    return productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? ''
-  }
-
-  const lotes = data?.results ?? []
+  const productosUnicos = [
+    ...new Map(
+      (productos?.results ?? []).map((producto) => [
+        claveNombre(producto.nombre),
+        producto,
+      ]),
+    ).values(),
+  ].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
 
   return (
     <div className="space-y-6">
-      {/* Toolbar: HU06 — buscar/filtrar lotes por producto y lote + crear lote */}
+      {/* Toolbar: HU06 - buscar/filtrar lotes por producto y lote + crear lote */}
       <div className="space-y-3 rounded-xl border bg-white p-4">
         <div className="flex flex-wrap items-center gap-3">
-          <Select value={productoId || 'todos'} onValueChange={(v) => { setProductoId(v === 'todos' ? '' : v); setPagina(1) }}>
+          <Select
+            value={productoClave || "todos"}
+            onValueChange={(v) => {
+              setProductoClave(v === "todos" ? "" : v);
+              setPagina(1);
+            }}
+          >
             <SelectTrigger className="w-52">
               <SelectValue placeholder="Producto" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="todos">Producto: Todos</SelectItem>
-              {productos?.results.map((p) => (
-                <SelectItem key={p.id} value={String(p.id)}>
-                  {p.codigo} · {p.nombre}
+              {productosUnicos.map((p) => (
+                <SelectItem
+                  key={claveNombre(p.nombre)}
+                  value={claveNombre(p.nombre)}
+                >
+                  {p.nombre}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -86,22 +154,87 @@ export default function InventarioPage() {
               placeholder="Buscar por lote…"
               className="pl-9 w-56"
               value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
+              onChange={(e) => {
+                setBusqueda(e.target.value);
+                setPagina(1);
+              }}
             />
           </div>
 
-          <Button
-            onClick={() => setModalNuevo(true)}
-            disabled={!productoId}
-            title={productoId ? undefined : 'Selecciona un producto para crear un lote'}
+          <Select
+            value={estadoFiltro || "todos"}
+            onValueChange={(v) => {
+              setEstadoFiltro(v === "todos" ? "" : (v as EstadoFiltroLote));
+              setPagina(1);
+            }}
           >
+            <SelectTrigger className="w-44">
+              <SelectValue placeholder="Estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Estado: Todos</SelectItem>
+              <SelectItem value="con_stock">Con stock</SelectItem>
+              <SelectItem value="agotado">Agotado</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>Ingreso</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso desde"
+              className="w-40"
+              value={fechaDesde}
+              max={fechaHasta || undefined}
+              onChange={(e) => {
+                setFechaDesde(e.target.value);
+                setPagina(1);
+              }}
+            />
+            <span>a</span>
+            <Input
+              type="date"
+              aria-label="Fecha de ingreso hasta"
+              className="w-40"
+              value={fechaHasta}
+              min={fechaDesde || undefined}
+              onChange={(e) => {
+                setFechaHasta(e.target.value);
+                setPagina(1);
+              }}
+            />
+          </div>
+
+          <Button onClick={() => setModalNuevo(true)}>
             <Plus className="size-4" /> Nuevo lote
+          </Button>
+
+          <Button
+            variant="outline"
+            onClick={() => {
+              actualizarFechasVencimiento(undefined, {
+                onSuccess: (res: any) => toast.success(res?.message || `Se actualizaron ${res?.actualizados || 0} lote(s)`),
+                onError: () => toast.error('Error al actualizar fechas de vencimiento')
+              })
+            }}
+            disabled={actualizandoFechas}
+          >
+            <CalendarClock className="size-4" />
+            {actualizandoFechas ? 'Actualizando...' : 'Calcular fechas de vencimiento faltantes'}
           </Button>
 
           <div className="ml-auto flex items-center gap-2 text-sm text-muted-foreground">
             <span>Mostrar</span>
-            <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPagina(1) }}>
-              <SelectTrigger className="w-20"><SelectValue /></SelectTrigger>
+            <Select
+              value={String(pageSize)}
+              onValueChange={(v) => {
+                setPageSize(Number(v));
+                setPagina(1);
+              }}
+            >
+              <SelectTrigger className="w-20">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="10">10</SelectItem>
                 <SelectItem value="20">20</SelectItem>
@@ -121,11 +254,11 @@ export default function InventarioPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Producto</TableHead>
-                <TableHead>Lote</TableHead>
-                <TableHead>Fecha ingreso</TableHead>
+                <TableHead>Lotes</TableHead>
+                <TableHead>Último ingreso</TableHead>
                 <TableHead className="text-right">Cant. Inicial</TableHead>
                 <TableHead className="text-right">Cant. Actual</TableHead>
-                <TableHead>Vencimiento</TableHead>
+                <TableHead>Próximo vencimiento</TableHead>
                 <TableHead>Estado</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
@@ -133,60 +266,118 @@ export default function InventarioPage() {
             <TableBody>
               {isLoading && (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center text-muted-foreground">
+                  <TableCell
+                    colSpan={8}
+                    className="text-center text-muted-foreground"
+                  >
                     Cargando…
                   </TableCell>
                 </TableRow>
               )}
-              {!isLoading && lotes.length === 0 && (
+              {!isLoading && grupos.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center text-muted-foreground">
+                  <TableCell
+                    colSpan={8}
+                    className="text-center text-muted-foreground"
+                  >
                     No hay lotes para los filtros seleccionados.
                   </TableCell>
                 </TableRow>
               )}
-              {lotes.map((lote) => {
-                const actual = aNumero(lote.cantidad_actual)
-                const { texto, variante } = ESTADO_LOTE[lote.estado ?? 'VIGENTE']
+              {grupos.map((grupo) => {
+                const lotesConStock = grupo.lotes.filter(
+                  (lote) => aNumero(lote.cantidad_actual) > 0,
+                );
+                const lotesConVencimiento = lotesConStock
+                  .filter((lote) => lote.fecha_vencimiento)
+                  .sort((a, b) =>
+                    String(a.fecha_vencimiento).localeCompare(
+                      String(b.fecha_vencimiento),
+                    ),
+                  );
+                const loteProximo = lotesConVencimiento[0] ?? null;
+                const loteAccion =
+                  loteProximo ?? lotesConStock[0] ?? grupo.lotes[0];
+                const ultimoIngreso = [...grupo.lotes].sort((a, b) =>
+                  b.fecha_ingreso.localeCompare(a.fecha_ingreso),
+                )[0];
+                const actual = grupo.lotes.reduce(
+                  (total, lote) => total + aNumero(lote.cantidad_actual),
+                  0,
+                );
+                const inicial = grupo.lotes.reduce(
+                  (total, lote) => total + aNumero(lote.cantidad_inicial),
+                  0,
+                );
+                const { texto, variante } =
+                  ESTADO_LOTE[loteProximo?.estado ?? "VIGENTE"];
                 return (
-                  <TableRow key={lote.id}>
+                  <TableRow key={grupo.key}>
                     <TableCell>
-                      <div className="font-medium">{lote.producto_nombre}</div>
+                      <div className="font-medium">{grupo.nombre}</div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{lote.numero_lote}</TableCell>
-                    <TableCell className="whitespace-nowrap text-muted-foreground">
-                      {formatoFecha.format(new Date(lote.fecha_ingreso))}
+                    <TableCell className="text-muted-foreground">
+                      {grupo.lotes.length} lote
+                      {grupo.lotes.length === 1 ? "" : "s"}
                     </TableCell>
-                    <TableCell className="text-right">{aNumero(lote.cantidad_inicial)}</TableCell>
-                    <TableCell className="text-right font-medium">{actual}</TableCell>
                     <TableCell className="whitespace-nowrap text-muted-foreground">
-                      {formatoFecha.format(new Date(lote.fecha_vencimiento))}
+                      {formatoFecha.format(
+                        new Date(ultimoIngreso.fecha_ingreso),
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right">{inicial}</TableCell>
+                    <TableCell className="text-right font-medium">
+                      {actual}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">
+                      {loteProximo?.fecha_vencimiento ? (
+                        <>
+                          <div>
+                            {formatoFecha.format(
+                              new Date(loteProximo.fecha_vencimiento),
+                            )}
+                          </div>
+                          <div className="text-xs">
+                            {loteProximo.numero_lote} · #{loteProximo.id}
+                          </div>
+                        </>
+                      ) : (
+                        "-"
+                      )}
                     </TableCell>
                     <TableCell>
-                      <Badge variant={variante}>{texto}</Badge>
+                      <Badge
+                        variant={
+                          loteProximo?.fecha_vencimiento ? variante : "outline"
+                        }
+                      >
+                        {loteProximo?.fecha_vencimiento
+                          ? texto
+                          : "Sin vencimiento"}
+                      </Badge>
                     </TableCell>
                     <TableCell>
                       <div className="flex justify-end gap-1">
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Ver historial"
-                          onClick={() => setLoteDetalle(lote)}
+                          title="Ver historial de movimientos"
+                          onClick={() => setGrupoDetalle(grupo)}
                         >
                           <Eye className="size-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Movimiento de stock"
-                          onClick={() => setLoteMovimiento(lote)}
+                          title={`Registrar movimiento · ${loteAccion.numero_lote}`}
+                          onClick={() => setLoteMovimiento(loteAccion)}
                         >
                           <PackagePlus className="size-4" />
                         </Button>
                       </div>
                     </TableCell>
                   </TableRow>
-                )
+                );
               })}
             </TableBody>
           </Table>
@@ -195,23 +386,14 @@ export default function InventarioPage() {
         {data && data.count > 0 && (
           <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
             <span>
-              {data.count} lote{data.count === 1 ? '' : 's'} en total
+              {data.count} producto{data.count === 1 ? "" : "s"} agrupado{data.count === 1 ? "" : "s"}
+              {" · "}Página {pagina} de {paginasTotales}
             </span>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={!data.previous}
-                onClick={() => setPagina((p) => p - 1)}
-              >
+              <Button variant="outline" size="sm" disabled={!data.previous} onClick={() => setPagina((p) => p - 1)}>
                 <ChevronLeft className="size-4" /> Anterior
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={!data.next}
-                onClick={() => setPagina((p) => p + 1)}
-              >
+              <Button variant="outline" size="sm" disabled={!data.next} onClick={() => setPagina((p) => p + 1)}>
                 Siguiente <ChevronRight className="size-4" />
               </Button>
             </div>
@@ -223,16 +405,15 @@ export default function InventarioPage() {
       <NuevoLoteModal
         open={modalNuevo}
         onOpenChange={setModalNuevo}
-        productoId={productoSeleccionado?.id ?? null}
-        productoNombre={productoSeleccionado?.nombre ?? ''}
-        vidaUtil={productoSeleccionado?.categoria_vida_util_dias ?? null}
+        productos={productos?.results ?? []}
       />
 
       {/* Historial del lote (HU09) */}
       <LoteDetalleSheet
-        loteId={loteDetalle?.id ?? null}
-        open={!!loteDetalle}
-        onOpenChange={(open) => !open && setLoteDetalle(null)}
+        productoNombre={grupoDetalle?.nombre ?? ""}
+        productoIds={grupoDetalle?.productoIds ?? []}
+        open={!!grupoDetalle}
+        onOpenChange={(open) => !open && setGrupoDetalle(null)}
       />
 
       {/* Movimiento de stock sobre el lote (HU08) */}
@@ -247,7 +428,6 @@ export default function InventarioPage() {
           stockActual={aNumero(loteMovimiento.cantidad_actual)}
         />
       )}
-
     </div>
-  )
+  );
 }

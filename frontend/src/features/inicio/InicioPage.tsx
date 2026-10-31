@@ -1,5 +1,13 @@
 import { useResumenInicio } from '@/features/dashboard/api'
 
+const ETIQUETAS_SEVERIDAD: Record<string, string> = {
+  critica: 'Crítica',
+  alta: 'Alta',
+  media: 'Media',
+  baja: 'Baja',
+  info: 'Información',
+}
+
 export default function InicioPage() {
   const { data, isLoading, isError } = useResumenInicio()
   const kpis = data?.kpis
@@ -36,7 +44,7 @@ export default function InicioPage() {
             {data.alertas_recientes.map((alerta) => (
               <div key={alerta.id} className="flex items-center justify-between gap-4 py-3 text-sm">
                 <span>{alerta.mensaje}</span>
-                <span className="text-muted-foreground">{alerta.severidad}</span>
+                <span className="text-muted-foreground">{ETIQUETAS_SEVERIDAD[alerta.severidad] ?? alerta.severidad}</span>
               </div>
             ))}
           </div>

@@ -3,6 +3,7 @@ class MovimientoDto {
     this.id = data.id;
     this.lote_id = data.lote_id;
     this.lote_numero = data.lote_numero || null;
+    this.lote_fecha_vencimiento = data.lote_fecha_vencimiento || null;
     this.producto_id = data.producto_id || null;
     this.producto_nombre = data.producto_nombre || null;
     this.producto_codigo = data.producto_codigo || null;
@@ -28,13 +29,26 @@ class MovimientoDto {
     const lote = data.lote || {};
     const producto = lote.producto || {};
     const usuario = data.usuario || {};
+
+    const precioUnitario =
+      data.precio_unitario != null && Number(data.precio_unitario) > 0
+        ? Number(data.precio_unitario)
+        : producto.precio_venta != null && Number(producto.precio_venta) > 0
+          ? Number(producto.precio_venta)
+          : null;
+    const precioTotal =
+      precioUnitario != null ? Number(precioUnitario) * Number(data.cantidad) : null;
+
     return new MovimientoDto({
       ...data,
       lote_numero: lote.numero_lote || null,
-      producto_id: producto.id || null,
+      lote_fecha_vencimiento: lote.fecha_vencimiento || data.lote_fecha_vencimiento || null,
+      producto_id: producto.id || lote.producto_id || null,
       producto_nombre: producto.nombre || null,
       producto_codigo: producto.codigo || null,
-      usuario_nombre: usuario.nombres || null,
+      precio_unitario: precioUnitario,
+      precio_total: precioTotal,
+      usuario_nombre: usuario.nombres || usuario.nombre || null,
       tipo_display: MovimientoDto.tipoDisplay(data.tipo),
       origen_display: MovimientoDto.origenDisplay(data.origen)
     });
@@ -50,6 +64,7 @@ class MovimientoDto {
       venta: 'Venta',
       inicial: 'Registro inicial',
       ajuste: 'Ajuste de inventario',
+      anulacion: 'Anulación de venta',
       otro: 'Otro',
     }[origen] || origen || null;
   }

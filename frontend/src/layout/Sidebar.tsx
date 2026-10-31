@@ -2,6 +2,7 @@ import { NavLink } from 'react-router'
 import {
   Home, LayoutDashboard, Package, Boxes, ShoppingCart,
   TrendingUp, Brain, Settings, Users, ScrollText, History,
+  ReceiptText, Contact,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -17,6 +18,8 @@ const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permis
   { to: '/inventario', label: 'Lotes e inventario', icon: Boxes, permiso: 'gestionar_inventario' },
   { to: '/kardex', label: 'Kardex', icon: History, permiso: 'gestionar_inventario' },
   { to: '/ventas', label: 'Ventas', icon: ShoppingCart, permiso: 'gestionar_ventas' },
+  { to: '/operaciones', label: 'Operaciones', icon: ReceiptText, permiso: 'gestionar_ventas' },
+  { to: '/clientes', label: 'Clientes', icon: Contact, permiso: 'gestionar_ventas' },
   { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
   { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
   { to: '/configuracion', label: 'Configuración', icon: Settings, permiso: 'configurar_umbrales' },
