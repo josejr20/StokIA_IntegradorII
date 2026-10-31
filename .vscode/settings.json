@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "**/Python": true,
+        "**/db": true,
+        "**/BACKENDD": true,
+        "**/.cursor": true,
+        "**/.kilo": true,
+        "**/venv": true,
+        "**/.venv": true
+    }
+}
