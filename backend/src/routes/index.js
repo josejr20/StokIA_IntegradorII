@@ -23,6 +23,7 @@ const presentacionRoutes = require('./presentaciones');
     const productoPresentacionRoutes = require('./productoPresentacion');
     const precioRoutes = require('./precio');
     const prediccionRoutes = require('./predicciones');
+    const mlRoutes = require('./ml');
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
@@ -48,5 +49,6 @@ Router.use('/preferencias', preferenciaRoutes);
     Router.use('/presentaciones-niveles', productoPresentacionRoutes);
     Router.use('/precios', precioRoutes);
     Router.use('/predicciones', prediccionRoutes);
+    Router.use('/ml', mlRoutes);
 
     module.exports = Router;
