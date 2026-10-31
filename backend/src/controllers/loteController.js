@@ -25,9 +25,14 @@ const listar = async (req, res, next) => {
     if (estado === 'agotado') where.cantidad_actual = 0;
     if (estado === 'con_stock') where.cantidad_actual = { [Op.gt]: 0 };
     // Los estados 'vencido' / 'por_vencer' se agregan en el Sprint 2, cuando ML defina la fecha de vencimiento.
-    const order = orden === 'ingreso_asc'
-      ? [['fecha_ingreso', 'ASC']]
-      : [['fecha_ingreso', 'DESC']];
+    // Ordenamiento estable: producto_id ASC, luego fecha_ingreso (según parámetro), luego ID DESC.
+    // Esto asegura que los lotes del mismo producto aparezcan consecutivos y la paginación sea estable.
+    const fechaIngresoOrder = orden === 'ingreso_asc' ? 'ASC' : 'DESC';
+    const order = [
+      ['producto_id', 'ASC'],
+      ['fecha_ingreso', fechaIngresoOrder],
+      ['id', 'DESC'],
+    ];
     const resultado = await Lote.findAndCountAll({
       where,
       include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }],

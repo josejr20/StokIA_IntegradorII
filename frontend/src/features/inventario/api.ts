@@ -96,7 +96,9 @@ export interface FiltrosMovimientos {
 }
 
 export function useLotes(filtros: FiltrosLotes = {}) {
-  const params = new URLSearchParams()
+  const page = filtros.page || 1
+  const pageSize = filtros.pageSize || 10
+  const params = new URLSearchParams()()
   if (filtros.search) params.set('numero_lote', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
@@ -104,9 +106,9 @@ export function useLotes(filtros: FiltrosLotes = {}) {
   if (filtros.estado) params.set('estado', filtros.estado)
 
   return useQuery({
-    queryKey: ['lotes', filtros],
+    queryKey: ['lotes', filtros.search, filtros.producto, filtros.fecha_desde, filtros.fecha_hasta, filtros.estado, page, pageSize],
     queryFn: async () => {
-      const pageSize = filtros.pageSize || 100
+      const pageSize = filtros.pageSize || 10
       const resultados: Lote[] = []
       let pagina = filtros.page || 1
       let hayMas = true
@@ -140,7 +142,7 @@ export function useLote(id: number) {
 }
 
 export function useMovimientosInventario(filtros: FiltrosMovimientos = {}){
-  const params = new URLSearchParams()
+  const params = new URLSearchParams()()
 
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
