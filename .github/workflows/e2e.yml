@@ -27,4 +27,3 @@ jobs:
       - run: cd backend && TEST_DB_HOST=localhost TEST_DB_PORT=5432 TEST_DB_NAME=stockia_test TEST_DB_USER=stockia_test TEST_DB_PASSWORD=stockia_test node server.js &
       - run: cd frontend && npm run dev &
       - run: npx playwright test || true
-

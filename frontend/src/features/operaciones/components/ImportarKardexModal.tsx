@@ -105,9 +105,8 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
               <label
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={desdeSoltar}
-                className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-10 text-center transition-colors ${
-                  previsualizando ? 'opacity-60' : 'hover:bg-muted/50'
-                }`}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-10 text-center transition-colors ${previsualizando ? 'opacity-60' : 'hover:bg-muted/50'
+                  }`}
               >
                 <FileUp className="size-10 text-muted-foreground" />
                 {previsualizando ? (
@@ -243,7 +242,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                 </div>
               </div>
             </div>
-          ) : (
+          ) : resultado ? (
             <div className="space-y-4">
               <div className="grid grid-cols-4 gap-4">
                 <div className="rounded-lg border bg-green-50 p-4 text-center">
@@ -285,7 +284,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                 Cerrar
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
