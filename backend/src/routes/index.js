@@ -56,5 +56,6 @@ Router.use('/preferencias', preferenciaRoutes);
     Router.use('/tipos-envase', tiposEnvaseRoutes);
     Router.use('/presentaciones-niveles', productoPresentacionRoutes);
     Router.use('/precios', precioRoutes);
+    Router.use('/predicciones', prediccionRoutes);
 
     module.exports = Router;
