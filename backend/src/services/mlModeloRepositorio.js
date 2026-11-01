@@ -1,14 +1,21 @@
 'use strict';
 
 /**
- * HU-78 — Acceso a las tablas del esquema `ml` (ml.modelos y ml.entrenamientos).
+ * HU-78 — Acceso a las tablas del esquema `ml` de la base compartida (definidas por el equipo de ML):
+ *   ml.modelos            versiones del modelo (version, algoritmo, activo, mae, rmse, metadata, notas, ...)
+ *   ml.entrenamientos_log un registro por cada entrenamiento (manual | reentrenamiento; exitoso | insuficiente_datos | sin_mejora)
+ *   ml.preparaciones_log  resumen de los datos preparados para entrenar
+ *   ml.configuracion      clave/valor (por ejemplo min_filas_entrenamiento)
  *
- * Esas tablas no tienen columna de parámetros y `ml.modelos.estado` solo admite 'activo' o 'archivado',
- * así que los parámetros, las métricas y el estado de revisión se guardan dentro del campo JSON `metricas`.
- * Las fechas de esas tablas son "timestamp sin zona" guardadas en UTC: se leen con AT TIME ZONE 'UTC'.
+ * Nuestras filas de ml.modelos se identifican con ALGORITMO: así no tocamos las de otros modelos. Los parámetros
+ * del modelo, las métricas relativas y el estado de revisión viajan en la columna JSON `metadata`.
  */
 
-const TIPO_DEMANDA = 'demanda';
+const ALGORITMO = 'holt_amortiguado_estacional';
+// ml.modelos.ruta_artefacto es obligatoria, pero este modelo no tiene archivo: sus parámetros están en `metadata`.
+const RUTA_ARTEFACTO = 'metadata:parametros';
+
+const COLUMNAS = 'id, version, algoritmo, activo, mae, rmse, filas_entrenamiento, ruta_artefacto, metadata, fecha_creacion, notas';
 
 function acceso() {
   const { sequelize } = require('../models');
@@ -26,129 +33,128 @@ async function ejecutar(sql, replacements = {}, transaction) {
   await sequelize.query(sql, { replacements, transaction });
 }
 
-const COLUMNAS_MODELO = `id, nombre, tipo, version, estado, metricas,
-  (fecha_entrenamiento AT TIME ZONE 'UTC') AS fecha_entrenamiento`;
-
 function aModelo(fila) {
   if (!fila) return null;
   return {
     id: Number(fila.id),
-    nombre: fila.nombre,
-    tipo: fila.tipo,
-    version: fila.version,
-    estado: fila.estado,
-    fecha_entrenamiento: fila.fecha_entrenamiento,
-    metricas: fila.metricas ?? {},
+    version: Number(fila.version),
+    algoritmo: fila.algoritmo,
+    activo: fila.activo === true,
+    mae: Number(fila.mae),
+    rmse: Number(fila.rmse),
+    filas_entrenamiento: Number(fila.filas_entrenamiento),
+    ruta_artefacto: fila.ruta_artefacto,
+    metadata: fila.metadata ?? {},
+    fecha_creacion: fila.fecha_creacion,
+    notas: fila.notas,
   };
 }
 
-/** Modelo activo (o null). Lo usa la predicción de demanda para tomar sus parámetros. */
-async function obtenerModeloActivo(tipo = TIPO_DEMANDA) {
+/** Modelo activo de este algoritmo (o null). Lo usa la predicción de demanda para tomar sus parámetros. */
+async function obtenerModeloActivo() {
   const filas = await consultar(
-    `SELECT ${COLUMNAS_MODELO} FROM ml.modelos
-      WHERE tipo = :tipo AND estado = 'activo'
-      ORDER BY fecha_entrenamiento DESC, id DESC LIMIT 1`,
-    { tipo },
+    `SELECT ${COLUMNAS} FROM ml.modelos WHERE algoritmo = :algoritmo AND activo = true ORDER BY version DESC, id DESC LIMIT 1`,
+    { algoritmo: ALGORITMO },
   );
   const modelo = aModelo(filas[0]);
-  return modelo ? { ...modelo, parametros: modelo.metricas.parametros ?? null } : null;
+  return modelo ? { ...modelo, parametros: modelo.metadata.parametros ?? null } : null;
 }
 
 async function obtenerModelo(id) {
-  const filas = await consultar(`SELECT ${COLUMNAS_MODELO} FROM ml.modelos WHERE id = :id`, { id });
-  return aModelo(filas[0]);
+  return aModelo((await consultar(`SELECT ${COLUMNAS} FROM ml.modelos WHERE id = :id`, { id }))[0]);
 }
 
-async function listarModelos(tipo = TIPO_DEMANDA, limite = 50) {
+async function listarModelos(limite = 50) {
   const filas = await consultar(
-    `SELECT ${COLUMNAS_MODELO} FROM ml.modelos
-      WHERE tipo = :tipo ORDER BY fecha_entrenamiento DESC, id DESC LIMIT :limite`,
-    { tipo, limite },
+    `SELECT ${COLUMNAS} FROM ml.modelos WHERE algoritmo = :algoritmo ORDER BY version DESC, id DESC LIMIT :limite`,
+    { algoritmo: ALGORITMO, limite },
   );
   return filas.map(aModelo);
 }
 
-async function listarEntrenamientos(limite = 10) {
-  const filas = await consultar(
-    `SELECT id, modelo_id, estado, detalle,
-            (iniciado_en AT TIME ZONE 'UTC') AS iniciado_en,
-            (finalizado_en AT TIME ZONE 'UTC') AS finalizado_en
-       FROM ml.entrenamientos ORDER BY id DESC LIMIT :limite`,
-    { limite },
-  );
-  return filas.map((fila) => ({ ...fila, id: Number(fila.id), modelo_id: fila.modelo_id === null ? null : Number(fila.modelo_id) }));
-}
-
-async function iniciarEntrenamiento() {
-  const filas = await consultar(`INSERT INTO ml.entrenamientos (estado) VALUES ('en_progreso') RETURNING id`);
-  return Number(filas[0].id);
-}
-
-async function finalizarEntrenamiento(id, { estado, modeloId = null, metricas = null, detalle = null }) {
-  await ejecutar(
-    `UPDATE ml.entrenamientos
-        SET finalizado_en = now(), estado = :estado, modelo_id = :modeloId,
-            metricas = CAST(:metricas AS jsonb), detalle = :detalle
-      WHERE id = :id`,
-    { id, estado, modeloId, metricas: metricas === null ? null : JSON.stringify(metricas), detalle },
-  );
-}
-
 /**
- * Registra una versión nueva. Si `activar` es true queda como modelo activo y los demás pasan a
- * 'archivado'; si no, entra como 'archivado' (el activo actual no cambia). Todo en una transacción.
+ * Registra una versión nueva (número = el mayor de la tabla + 1, para no repetir el de otros modelos).
+ * Si `activar` es true queda activa y las demás de este algoritmo pasan a inactivas. Todo en una transacción.
  */
-async function registrarModelo({ nombre, tipo = TIPO_DEMANDA, metricas, activar }) {
+async function registrarModelo({ metadata, mae, rmse, filas_entrenamiento: filas, notas, activar }) {
   const { sequelize } = acceso();
   return sequelize.transaction(async (transaction) => {
-    const siguiente = await consultar(
-      `SELECT COALESCE(MAX(NULLIF(regexp_replace(version, '[^0-9]', '', 'g'), '')::int), 0) + 1 AS numero
-         FROM ml.modelos WHERE tipo = :tipo`,
-      { tipo },
-      transaction,
-    );
-    const version = `v${siguiente[0].numero}`;
+    const siguiente = await consultar('SELECT COALESCE(MAX(version), 0) + 1 AS numero FROM ml.modelos', {}, transaction);
     if (activar) {
-      await ejecutar(`UPDATE ml.modelos SET estado = 'archivado' WHERE tipo = :tipo AND estado = 'activo'`, { tipo }, transaction);
+      await ejecutar('UPDATE ml.modelos SET activo = false WHERE algoritmo = :algoritmo AND activo = true', { algoritmo: ALGORITMO }, transaction);
     }
-    const filas = await consultar(
-      `INSERT INTO ml.modelos (nombre, tipo, version, metricas, estado)
-       VALUES (:nombre, :tipo, :version, CAST(:metricas AS jsonb), :estado)
-       RETURNING ${COLUMNAS_MODELO}`,
-      { nombre, tipo, version, metricas: JSON.stringify(metricas), estado: activar ? 'activo' : 'archivado' },
+    const insertadas = await consultar(
+      `INSERT INTO ml.modelos (version, algoritmo, activo, mae, rmse, filas_entrenamiento, ruta_artefacto, metadata, notas)
+       VALUES (:version, :algoritmo, :activo, :mae, :rmse, :filas, :ruta, CAST(:metadata AS jsonb), :notas)
+       RETURNING ${COLUMNAS}`,
+      {
+        version: Number(siguiente[0].numero),
+        algoritmo: ALGORITMO,
+        activo: activar === true,
+        mae,
+        rmse,
+        filas,
+        ruta: RUTA_ARTEFACTO,
+        metadata: JSON.stringify(metadata),
+        notas,
+      },
       transaction,
     );
-    return aModelo(filas[0]);
+    return aModelo(insertadas[0]);
   });
 }
 
-/** Pone una versión como activa (y archiva las demás). `parche` se mezcla en su campo metricas. */
+/** Pone una versión como activa (y desactiva las demás de este algoritmo). `parche` se mezcla en su metadata. */
 async function activarModelo(id, parche = {}) {
   const { sequelize } = acceso();
   await sequelize.transaction(async (transaction) => {
+    await ejecutar('UPDATE ml.modelos SET activo = false WHERE algoritmo = :algoritmo AND activo = true', { algoritmo: ALGORITMO }, transaction);
     await ejecutar(
-      `UPDATE ml.modelos SET estado = 'archivado'
-        WHERE estado = 'activo' AND tipo = (SELECT tipo FROM ml.modelos WHERE id = :id)`,
-      { id },
-      transaction,
-    );
-    await ejecutar(
-      `UPDATE ml.modelos
-          SET estado = 'activo', metricas = COALESCE(metricas, '{}'::jsonb) || CAST(:parche AS jsonb)
-        WHERE id = :id`,
-      { id, parche: JSON.stringify(parche) },
+      `UPDATE ml.modelos SET activo = true, metadata = COALESCE(metadata, '{}'::jsonb) || CAST(:parche AS jsonb)
+        WHERE id = :id AND algoritmo = :algoritmo`,
+      { id, algoritmo: ALGORITMO, parche: JSON.stringify(parche) },
       transaction,
     );
   });
   return obtenerModelo(id);
 }
 
-/** Mezcla `parche` en el campo metricas de una versión (por ejemplo, la última evaluación). */
-async function actualizarMetricas(id, parche) {
+async function actualizarMetadata(id, parche) {
   await ejecutar(
-    `UPDATE ml.modelos SET metricas = COALESCE(metricas, '{}'::jsonb) || CAST(:parche AS jsonb) WHERE id = :id`,
-    { id, parche: JSON.stringify(parche) },
+    `UPDATE ml.modelos SET metadata = COALESCE(metadata, '{}'::jsonb) || CAST(:parche AS jsonb) WHERE id = :id AND algoritmo = :algoritmo`,
+    { id, algoritmo: ALGORITMO, parche: JSON.stringify(parche) },
   );
+}
+
+async function registrarEntrenamiento({ modeloId = null, disparadoPor, resultado, promovido, mensaje }) {
+  await ejecutar(
+    `INSERT INTO ml.entrenamientos_log (modelo_id, disparado_por, resultado, promovido, mensaje)
+     VALUES (:modeloId, :disparadoPor, :resultado, :promovido, :mensaje)`,
+    { modeloId, disparadoPor, resultado, promovido, mensaje },
+  );
+}
+
+async function listarEntrenamientos(limite = 10) {
+  const filas = await consultar(
+    'SELECT id, modelo_id, disparado_por, resultado, promovido, mensaje, fecha FROM ml.entrenamientos_log ORDER BY id DESC LIMIT :limite',
+    { limite },
+  );
+  return filas.map((fila) => ({ ...fila, id: Number(fila.id), modelo_id: fila.modelo_id === null ? null : Number(fila.modelo_id) }));
+}
+
+async function registrarPreparacion({ total_filas: total, filas_validas: validas, filas_descartadas: descartadas, motivos_descarte: motivos, listo_para_entrenar: listo }) {
+  await ejecutar(
+    `INSERT INTO ml.preparaciones_log (total_filas, filas_validas, filas_descartadas, motivos_descarte, listo_para_entrenar)
+     VALUES (:total, :validas, :descartadas, CAST(:motivos AS jsonb), :listo)`,
+    { total, validas, descartadas, motivos: JSON.stringify(motivos), listo },
+  );
+}
+
+/** Filas válidas mínimas para entrenar, según ml.configuracion (o null si no está definido). */
+async function minimoFilasEntrenamiento() {
+  const filas = await consultar("SELECT valor FROM ml.configuracion WHERE clave = 'min_filas_entrenamiento'");
+  const valor = Number(filas[0]?.valor);
+  return Number.isFinite(valor) && valor > 0 ? valor : null;
 }
 
 const ORIGENES_VENTA = ['manual', 'importado'];
@@ -168,15 +174,17 @@ async function ventas(desde, hastaExclusivo) {
 }
 
 module.exports = {
-  TIPO_DEMANDA,
+  ALGORITMO,
+  RUTA_ARTEFACTO,
   obtenerModeloActivo,
   obtenerModelo,
   listarModelos,
-  listarEntrenamientos,
-  iniciarEntrenamiento,
-  finalizarEntrenamiento,
   registrarModelo,
   activarModelo,
-  actualizarMetricas,
+  actualizarMetadata,
+  registrarEntrenamiento,
+  listarEntrenamientos,
+  registrarPreparacion,
+  minimoFilasEntrenamiento,
   ventas,
 };

@@ -67,10 +67,11 @@ export interface EstadoModelo {
   ultimo_entrenamiento: {
     id: number
     modelo_id: number | null
-    estado: 'en_progreso' | 'completado' | 'fallido'
-    detalle: string | null
-    iniciado_en: string | null
-    finalizado_en: string | null
+    disparado_por: 'manual' | 'reentrenamiento'
+    resultado: 'exitoso' | 'insuficiente_datos' | 'sin_mejora'
+    promovido: boolean | null
+    mensaje: string | null
+    fecha: string | null
   } | null
   avisos: AvisoModelo[]
 }

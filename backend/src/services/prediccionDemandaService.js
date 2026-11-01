@@ -60,7 +60,7 @@ async function predecirProductos(productoIds, {
     repo.modeloActivo ? repo.modeloActivo() : null,
   ]);
   const parametros = modeloActivo?.parametros;
-  const versionModelo = modeloActivo?.version;
+  const versionModelo = typeof modeloActivo?.version === 'number' ? `v${modeloActivo.version}` : modeloActivo?.version;
 
   const productoPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
   const ventasPorProducto = new Map();

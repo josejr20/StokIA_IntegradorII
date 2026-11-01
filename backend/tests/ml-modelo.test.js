@@ -1,11 +1,12 @@
 // HU-78 — Casos de prueba de "Modelo de Machine Learning: entrenamiento y evaluación" (TC-01 a TC-07).
-// Usa datos simulados y un registro de versiones en memoria: no necesita base de datos.
+// Usa datos simulados y un registro de versiones en memoria con la misma forma que las tablas ml.* del equipo.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
 const demanda = require('../src/services/prediccionDemandaModelo');
 const entrenamiento = require('../src/services/mlEntrenamientoModelo');
 const servicio = require('../src/services/mlModeloService');
+const { ALGORITMO } = require('../src/services/mlModeloRepositorio');
 const { predecirProductos } = require('../src/services/prediccionDemandaService');
 const { leerId } = require('../src/controllers/mlController');
 
@@ -43,46 +44,48 @@ function ventasSimuladas({ productos = 12, dias: cantidadDias = 84, hasta = HAST
   return ventas;
 }
 
-// ---- registro de versiones en memoria (mismas reglas que mlModeloRepositorio)
-function crearRepositorio({ ventas = [] } = {}) {
-  const memoria = { modelos: [], entrenamientos: [], ventas, reloj: 0 };
-  const ahora = () => new Date(Date.parse('2026-10-23T15:00:00Z') + (memoria.reloj += 1000));
-  const copiar = (modelo) => (modelo ? structuredClone(modelo) : null);
-  const ordenados = () => [...memoria.modelos].sort((a, b) => b.fecha_entrenamiento - a.fecha_entrenamiento || b.id - a.id);
+// ---- tablas ml.* en memoria (mismas reglas que mlModeloRepositorio)
+function crearRepositorio({ ventas = [], minimoFilas = 50 } = {}) {
+  const memoria = { modelos: [], entrenamientos: [], preparaciones: [], ventas, reloj: 0 };
+  const reloj = () => new Date(Date.parse('2026-10-23T15:00:00Z') + (memoria.reloj += 1000));
+  const copiar = (valor) => (valor ? structuredClone(valor) : null);
+  const nuestros = () => memoria.modelos.filter((modelo) => modelo.algoritmo === ALGORITMO);
   return {
     memoria,
     obtenerModeloActivo: async () => {
-      const activo = ordenados().find((modelo) => modelo.estado === 'activo');
-      return activo ? { ...copiar(activo), parametros: activo.metricas.parametros ?? null } : null;
+      const activo = nuestros().filter((m) => m.activo).sort((a, b) => b.version - a.version)[0];
+      return activo ? { ...copiar(activo), parametros: activo.metadata.parametros ?? null } : null;
     },
     obtenerModelo: async (id) => copiar(memoria.modelos.find((modelo) => modelo.id === id)),
-    listarModelos: async () => ordenados().map(copiar),
-    listarEntrenamientos: async (limite) => [...memoria.entrenamientos].reverse().slice(0, limite).map(copiar),
-    iniciarEntrenamiento: async () => {
-      memoria.entrenamientos.push({ id: memoria.entrenamientos.length + 1, modelo_id: null, estado: 'en_progreso', detalle: null, iniciado_en: ahora(), finalizado_en: null });
-      return memoria.entrenamientos.length;
-    },
-    finalizarEntrenamiento: async (id, { estado, modeloId = null, metricas = null, detalle = null }) => {
-      Object.assign(memoria.entrenamientos[id - 1], { estado, modelo_id: modeloId, metricas, detalle, finalizado_en: ahora() });
-    },
-    registrarModelo: async ({ nombre, tipo, metricas, activar }) => {
-      const numero = Math.max(0, ...memoria.modelos.map((modelo) => Number(modelo.version.slice(1)))) + 1;
-      if (activar) memoria.modelos.forEach((modelo) => { if (modelo.estado === 'activo') modelo.estado = 'archivado'; });
-      const modelo = { id: memoria.modelos.length + 1, nombre, tipo, version: `v${numero}`, estado: activar ? 'activo' : 'archivado', metricas: structuredClone(metricas), fecha_entrenamiento: ahora() };
+    listarModelos: async () => nuestros().sort((a, b) => b.version - a.version).map(copiar),
+    registrarModelo: async ({ metadata, mae, rmse, filas_entrenamiento: filas, notas, activar }) => {
+      const version = Math.max(0, ...memoria.modelos.map((m) => m.version)) + 1; // el mayor de TODA la tabla + 1
+      if (activar) nuestros().forEach((m) => { m.activo = false; });
+      const modelo = {
+        id: memoria.modelos.length + 1, version, algoritmo: ALGORITMO, activo: activar === true, mae, rmse,
+        filas_entrenamiento: filas, ruta_artefacto: 'metadata:parametros', metadata: structuredClone(metadata),
+        fecha_creacion: reloj(), notas,
+      };
       memoria.modelos.push(modelo);
       return copiar(modelo);
     },
     activarModelo: async (id, parche) => {
-      memoria.modelos.forEach((modelo) => { if (modelo.estado === 'activo') modelo.estado = 'archivado'; });
+      nuestros().forEach((m) => { m.activo = false; });
       const modelo = memoria.modelos.find((m) => m.id === id);
-      modelo.estado = 'activo';
-      modelo.metricas = { ...modelo.metricas, ...parche };
+      modelo.activo = true;
+      modelo.metadata = { ...modelo.metadata, ...parche };
       return copiar(modelo);
     },
-    actualizarMetricas: async (id, parche) => {
+    actualizarMetadata: async (id, parche) => {
       const modelo = memoria.modelos.find((m) => m.id === id);
-      modelo.metricas = { ...modelo.metricas, ...parche };
+      modelo.metadata = { ...modelo.metadata, ...parche };
     },
+    registrarEntrenamiento: async ({ modeloId = null, disparadoPor, resultado, promovido, mensaje }) => {
+      memoria.entrenamientos.push({ id: memoria.entrenamientos.length + 1, modelo_id: modeloId, disparado_por: disparadoPor, resultado, promovido, mensaje, fecha: reloj() });
+    },
+    listarEntrenamientos: async (limite) => [...memoria.entrenamientos].reverse().slice(0, limite).map(copiar),
+    registrarPreparacion: async (datos) => { memoria.preparaciones.push(copiar(datos)); },
+    minimoFilasEntrenamiento: async () => minimoFilas,
     ventas: async (desde, hastaExclusivo) =>
       memoria.ventas.filter((venta) => {
         const fecha = new Date(venta.fecha_venta);
@@ -92,6 +95,7 @@ function crearRepositorio({ ventas = [] } = {}) {
 }
 
 const umbralMinimo = { ...CONFIG_ML, UMBRAL_RMSE_RELATIVO: 0.0001 }; // ningún modelo lo cumple
+const soloMalosParametros = { ...CONFIG_ML, GRILLA: { alpha: [0.3], beta: [0.05], phi: [0.98] } }; // fuerza un candidato peor
 
 // ---------------------------------------------------------------- ML-02 / TC-04: métricas
 
@@ -124,7 +128,18 @@ test('el cálculo rápido del entrenamiento da el mismo total que el pronóstico
   }
 });
 
-// ---------------------------------------------------------------- ML-01 / TC-03: entrenar con datos históricos
+// ---------------------------------------------------------------- ML-01 / TC-03: datos preparados y entrenamiento
+
+test('TC-03: resume los datos preparados (filas válidas y motivos de descarte)', () => {
+  const r = entrenamiento.resumirPreparacion([
+    { cantidad: '5', fecha_venta: '2026-10-01T12:00:00-05:00' },
+    { cantidad: '0', fecha_venta: '2026-10-02T12:00:00-05:00' },
+    { cantidad: 'abc', fecha_venta: '2026-10-03T12:00:00-05:00' },
+    { cantidad: '3', fecha_venta: 'no es fecha' },
+    { cantidad: '2.5', fecha_venta: '2026-10-04T12:00:00-05:00' },
+  ]);
+  assert.deepEqual(r, { total_filas: 5, filas_validas: 2, filas_descartadas: 3, motivos_descarte: { cantidad_invalida: 2, fecha_invalida: 1 } });
+});
 
 test('TC-03: entrena con el historial de ventas y elige los parámetros con menor error', () => {
   const r = entrenamiento.entrenar(ventasSimuladas(), { hasta: HASTA });
@@ -136,13 +151,19 @@ test('TC-03: entrena con el historial de ventas y elige los parámetros con meno
   assert.ok(r.metricas.rmse_relativo > 0 && r.metricas.rmse_relativo <= CONFIG_ML.UMBRAL_RMSE_RELATIVO);
   assert.equal(r.aprobado, true);
   assert.equal(r.productos_evaluados, 12);
-  // no es peor que los parámetros por defecto sobre las pruebas de elección: sobre las de medición queda comparable
+  assert.equal(r.actual, null); // sin modelo activo no hay con qué comparar
   assert.ok(r.metricas.rmse_relativo <= r.referencia.rmse_relativo * 1.1);
 });
 
+test('compara con el modelo activo sobre las MISMAS pruebas cuando se le indican sus parámetros', () => {
+  const r = entrenamiento.entrenar(ventasSimuladas(), { hasta: HASTA, parametrosActivos: { alpha: 0.3, beta: 0.05, phi: 0.98 } });
+  assert.equal(r.ok, true);
+  assert.equal(r.actual.evaluaciones, r.metricas.evaluaciones);
+  assert.ok(r.actual.rmse_relativo > 0);
+});
+
 test('TC-03: sin historial suficiente no entrena e informa el motivo', () => {
-  const pocas = ventasSimuladas({ productos: 2, dias: 10 });
-  const r = entrenamiento.entrenar(pocas, { hasta: HASTA });
+  const r = entrenamiento.entrenar(ventasSimuladas({ productos: 2, dias: 10 }), { hasta: HASTA });
   assert.equal(r.ok, false);
   assert.equal(r.motivo, 'datos_insuficientes');
   assert.match(r.mensaje, /No hay datos históricos suficientes/);
@@ -154,9 +175,21 @@ test('con poco historial usa los mismos datos para elegir y medir y lo advierte'
   assert.equal(r.ok, true);
   assert.equal(r.validacion, 'mismos_datos');
 
-  const repo = crearRepositorio({ ventas });
-  const resultado = await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
+  const resultado = await servicio.entrenarModelo({ ahora: AHORA, repositorio: crearRepositorio({ ventas }) });
   assert.match(resultado.mensaje, /las métricas pueden ser optimistas/);
+});
+
+// ---------------------------------------------------------------- regla de promoción
+
+test('promoción: debe cumplir el umbral y no empeorar al modelo activo', () => {
+  const bueno = { rmse_relativo: 0.15 };
+  assert.deepEqual(servicio.decidirPromocion({ aprobado: false, nuevo: { rmse_relativo: 0.5 }, actual: null }),
+    { promover: false, resultado: 'exitoso', estadoRevision: 'requiere_revision' });
+  assert.equal(servicio.decidirPromocion({ aprobado: true, nuevo: bueno, actual: null }).promover, true);
+  assert.equal(servicio.decidirPromocion({ aprobado: true, nuevo: bueno, actual: { rmse_relativo: 0.2 } }).promover, true); // mejora
+  assert.equal(servicio.decidirPromocion({ aprobado: true, nuevo: bueno, actual: { rmse_relativo: 0.15 } }).promover, true); // empate
+  assert.deepEqual(servicio.decidirPromocion({ aprobado: true, nuevo: bueno, actual: { rmse_relativo: 0.1 } }),
+    { promover: false, resultado: 'sin_mejora', estadoRevision: 'sin_mejora' });
 });
 
 // ---------------------------------------------------------------- TC-01 / TC-06 / TC-05: versiones y reentrenamiento
@@ -171,47 +204,87 @@ test('TC-01 y TC-06: el entrenamiento registra una versión con su fecha y sus m
   assert.ok(r.modelo.fecha_entrenamiento);
   assert.ok(r.modelo.parametros.alpha > 0);
   for (const campo of ['mae', 'rmse', 'rmse_relativo', 'evaluaciones']) assert.ok(r.modelo[campo] !== null, campo);
-  assert.match(r.mensaje, /entrenado y activado/);
+  assert.match(r.mensaje, /^Modelo v1 entrenado y activado/);
 
-  const entrenamientoGuardado = repo.memoria.entrenamientos[0];
-  assert.equal(entrenamientoGuardado.estado, 'completado');
-  assert.equal(entrenamientoGuardado.modelo_id, 1);
-  assert.ok(entrenamientoGuardado.finalizado_en);
+  const fila = repo.memoria.modelos[0]; // lo que queda en ml.modelos
+  assert.equal(fila.algoritmo, ALGORITMO);
+  assert.equal(fila.activo, true);
+  assert.ok(fila.mae > 0 && fila.rmse >= fila.mae && fila.filas_entrenamiento > 0);
+  assert.ok(fila.ruta_artefacto && fila.notas);
+
+  assert.deepEqual(
+    (({ modelo_id, disparado_por, resultado, promovido }) => ({ modelo_id, disparado_por, resultado, promovido }))(repo.memoria.entrenamientos[0]),
+    { modelo_id: 1, disparado_por: 'manual', resultado: 'exitoso', promovido: true },
+  );
+  assert.equal(repo.memoria.preparaciones[0].listo_para_entrenar, true); // datos preparados registrados
 });
 
 test('TC-05 y TC-06: reentrenar con ventas nuevas crea una versión nueva y conserva la anterior', async () => {
   const repo = crearRepositorio({ ventas: ventasSimuladas() });
   await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
+  repo.memoria.modelos[0].metadata.parametros = { alpha: 0.3, beta: 0.05, phi: 0.98 }; // el modelo activo pasa a ser uno mediocre
 
   // pasan 7 días y entran ventas nuevas
-  const masTarde = new Date(AHORA.getTime() + dias(7));
   repo.memoria.ventas = ventasSimuladas({ hasta: demanda.sumarDias(HASTA, 7), semilla: 11 });
-  const r = await servicio.entrenarModelo({ ahora: masTarde, repositorio: repo });
+  const r = await servicio.entrenarModelo({ ahora: new Date(AHORA.getTime() + dias(7)), repositorio: repo });
 
   assert.equal(r.modelo.version, 'v2');
+  assert.equal(r.activado, true);
   assert.equal(r.modelo.datos.hasta, demanda.sumarDias(HASTA, 7)); // usó los datos nuevos
   const versiones = (await servicio.listar({ repositorio: repo })).versiones;
   assert.deepEqual(versiones.map((v) => [v.version, v.estado]), [['v2', 'activo'], ['v1', 'archivado']]);
-  assert.equal(repo.memoria.modelos.filter((m) => m.estado === 'activo').length, 1);
+  assert.equal(repo.memoria.modelos.filter((m) => m.activo).length, 1);
+  assert.equal(repo.memoria.entrenamientos.length, 2);
+});
+
+test('si el modelo nuevo cumple el umbral pero no mejora al activo, se guarda sin promoverlo (sin_mejora)', async () => {
+  const repo = crearRepositorio({ ventas: ventasSimuladas() });
+  await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo }); // v1 con los mejores parámetros
+
+  const r = await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo, config: soloMalosParametros });
+
+  assert.equal(r.activado, false);
+  assert.equal(r.modelo.version, 'v2');
+  assert.equal(r.modelo.estado, 'archivado');
+  assert.equal(r.aviso, null); // no requiere revisión: simplemente no mejora
+  assert.match(r.mensaje, /no mejora al modelo activo/);
+  assert.equal(repo.memoria.entrenamientos[1].resultado, 'sin_mejora');
+  assert.equal(repo.memoria.entrenamientos[1].promovido, false);
+  assert.equal((await repo.obtenerModeloActivo()).version, 1);
+});
+
+test('convive con modelos de otros algoritmos del equipo: no los desactiva y no repite su numeración', async () => {
+  const repo = crearRepositorio({ ventas: ventasSimuladas() });
+  repo.memoria.modelos.push({ id: 50, version: 12, algoritmo: 'random_forest', activo: true, mae: 1, rmse: 2, filas_entrenamiento: 100, ruta_artefacto: 'modelos/rf.pkl', metadata: {}, fecha_creacion: new Date(), notas: null });
+
+  const r = await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
+  assert.equal(r.modelo.version, 'v13'); // continúa la numeración de la tabla
+  assert.equal(repo.memoria.modelos.find((m) => m.id === 50).activo, true); // el de ellos sigue activo
+
+  await assert.rejects(() => servicio.activarVersion(50, { repositorio: repo }), (e) => e.estadoHttp === 404); // no es nuestro
+  assert.equal(repo.memoria.modelos.find((m) => m.id === 50).activo, true);
+  assert.deepEqual((await servicio.listar({ repositorio: repo })).versiones.map((v) => v.version), ['v13']); // solo vemos los nuestros
 });
 
 test('la predicción de demanda (HU-72) usa los parámetros y la versión del modelo activo', async () => {
   const repo = crearRepositorio({ ventas: ventasSimuladas() });
   const { modelo } = await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
 
-  const repoPrediccion = (conModelo) => ({
+  const repoPrediccion = (version) => ({
     productos: async (ids) => ids.map((id) => ({ id, codigo: `P-${id}`, nombre: `Producto ${id}`, activo: true })),
     ventas: async () => repo.memoria.ventas.filter((v) => v.producto_id === 1),
-    modeloActivo: async () => (conModelo ? { version: 'v7', parametros: { alpha: 0.3, beta: 0.05, phi: 0.98 } } : null),
+    modeloActivo: async () => (version === null ? null : { version, parametros: { alpha: 0.3, beta: 0.05, phi: 0.98 } }),
   });
-  const base = await predecirProductos([1], { horizonte: 14, ahora: AHORA, repositorio: repoPrediccion(false) });
-  const entrenado = await predecirProductos([1], { horizonte: 14, ahora: AHORA, repositorio: repoPrediccion(true) });
+  const base = await predecirProductos([1], { horizonte: 14, ahora: AHORA, repositorio: repoPrediccion(null) });
+  const conTexto = await predecirProductos([1], { horizonte: 14, ahora: AHORA, repositorio: repoPrediccion('v7') });
+  const conNumero = await predecirProductos([1], { horizonte: 14, ahora: AHORA, repositorio: repoPrediccion(7) }); // como viene de ml.modelos
 
   assert.equal(base.resultados[0].modelo.version, demanda.VERSION_MODELO);
-  assert.equal(entrenado.resultados[0].modelo.version, 'v7');
-  assert.deepEqual(entrenado.resultados[0].modelo.parametros, { alpha: 0.3, beta: 0.05, phi: 0.98 });
-  assert.notEqual(entrenado.resultados[0].demanda_estimada, base.resultados[0].demanda_estimada);
-  assert.ok(modelo.parametros); // y el modelo entrenado dejó sus parámetros guardados
+  assert.equal(conTexto.resultados[0].modelo.version, 'v7');
+  assert.equal(conNumero.resultados[0].modelo.version, 'v7');
+  assert.deepEqual(conNumero.resultados[0].modelo.parametros, { alpha: 0.3, beta: 0.05, phi: 0.98 });
+  assert.notEqual(conNumero.resultados[0].demanda_estimada, base.resultados[0].demanda_estimada);
+  assert.ok(modelo.parametros);
 });
 
 // ---------------------------------------------------------------- TC-02: desempeño insuficiente
@@ -228,10 +301,9 @@ test('TC-02: si las métricas no cumplen el umbral, avisa y no pone el modelo en
   assert.equal(r.aviso.codigo, 'requiere_revision');
   assert.match(r.aviso.mensaje, /Requiere revisión antes de ponerse en uso/);
   assert.match(r.mensaje, /requiere revisión/);
+  assert.deepEqual([repo.memoria.entrenamientos[1].resultado, repo.memoria.entrenamientos[1].promovido], ['exitoso', false]);
 
-  // el modelo bueno anterior sigue siendo el que se usa
-  const activo = await repo.obtenerModeloActivo();
-  assert.equal(activo.version, 'v1');
+  assert.equal((await repo.obtenerModeloActivo()).version, 1); // el modelo bueno anterior sigue en uso
   const estado = await servicio.listar({ repositorio: repo });
   assert.equal(estado.versiones[0].estado, 'requiere_revision');
   assert.ok(estado.avisos.some((a) => a.codigo === 'requiere_revision'));
@@ -262,14 +334,13 @@ test('TC-07: con ventas normales el modelo activo sigue cumpliendo el umbral y n
   assert.equal(r.aviso, null);
   assert.ok(r.evaluacion.rmse_relativo <= CONFIG_ML.UMBRAL_RMSE_RELATIVO);
   assert.equal(r.evaluacion.dias_evaluados, CONFIG_ML.DIAS_EVALUACION_RECIENTE);
-  assert.ok((await repo.obtenerModeloActivo()).metricas.ultima_evaluacion); // queda guardada
+  assert.ok((await repo.obtenerModeloActivo()).metadata.ultima_evaluacion); // queda guardada
 });
 
 test('TC-07: si la demanda cambia de golpe y el error supera el umbral, alerta y lo deja registrado', async () => {
   const repo = crearRepositorio({ ventas: ventasSimuladas() });
   await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
-  // las ventas se desploman a 1/10 en las últimas 3 semanas
-  repo.memoria.ventas = ventasSimuladas({ cambio: { ultimosDias: 21, factor: 0.1 } });
+  repo.memoria.ventas = ventasSimuladas({ cambio: { ultimosDias: 21, factor: 0.1 } }); // las ventas se desploman a 1/10
 
   const r = await servicio.evaluarModeloActivo({ ahora: AHORA, repositorio: repo });
   assert.equal(r.evaluacion.aprobado, false);
@@ -289,11 +360,21 @@ test('TC-07: sin historial reciente suficiente informa que no se puede evaluar',
 
 // ---------------------------------------------------------------- robustez
 
-test('sin datos suficientes el entrenamiento falla con un mensaje claro y no crea versiones', async () => {
-  const repo = crearRepositorio({ ventas: ventasSimuladas({ productos: 1, dias: 9 }) });
+test('con pocas filas de ventas no entrena, lo registra como insuficiente_datos y no crea versiones', async () => {
+  const repo = crearRepositorio({ ventas: ventasSimuladas({ productos: 1, dias: 9 }) }); // menos de 50 filas
   await assert.rejects(() => servicio.entrenarModelo({ ahora: AHORA, repositorio: repo }), (e) => e.codigo === 'datos_insuficientes' && e.estadoHttp === 422);
   assert.equal(repo.memoria.modelos.length, 0);
-  assert.equal(repo.memoria.entrenamientos[0].estado, 'fallido');
+  assert.equal(repo.memoria.entrenamientos[0].resultado, 'insuficiente_datos');
+  assert.equal(repo.memoria.entrenamientos[0].promovido, false);
+  assert.equal(repo.memoria.preparaciones[0].listo_para_entrenar, false);
+});
+
+test('respeta el mínimo de filas configurado en ml.configuracion (min_filas_entrenamiento)', async () => {
+  const repo = crearRepositorio({ ventas: ventasSimuladas(), minimoFilas: 100000 });
+  await assert.rejects(
+    () => servicio.entrenarModelo({ ahora: AHORA, repositorio: repo }),
+    (e) => e.codigo === 'datos_insuficientes' && /100000/.test(e.message) && /min_filas_entrenamiento/.test(e.message),
+  );
 });
 
 test('no permite dos entrenamientos a la vez y libera el cerrojo al terminar o al fallar', async () => {
@@ -311,10 +392,18 @@ test('no permite dos entrenamientos a la vez y libera el cerrojo al terminar o a
 
   repo.ventas = async () => { throw new Error('se cayó la conexión'); };
   await assert.rejects(() => servicio.entrenarModelo({ ahora: AHORA, repositorio: repo }), /se cayó la conexión/);
-  assert.equal(repo.memoria.entrenamientos.at(-1).estado, 'fallido');
 
   repo.ventas = ventasOriginal; // el cerrojo se liberó: se puede volver a entrenar
   assert.equal((await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo })).modelo.version, 'v2');
+});
+
+test('si fallan los registros auxiliares (logs), el modelo entrenado igual queda guardado', async () => {
+  const repo = crearRepositorio({ ventas: ventasSimuladas() });
+  repo.registrarEntrenamiento = async () => { throw new Error('sin permiso en ml.entrenamientos_log'); };
+  repo.registrarPreparacion = async () => { throw new Error('sin permiso en ml.preparaciones_log'); };
+  const r = await servicio.entrenarModelo({ ahora: AHORA, repositorio: repo });
+  assert.equal(r.modelo.version, 'v1');
+  assert.equal(repo.memoria.modelos.length, 1);
 });
 
 test('sin modelos entrenados la pantalla recibe un aviso informativo', async () => {
@@ -322,6 +411,30 @@ test('sin modelos entrenados la pantalla recibe un aviso informativo', async () 
   assert.equal(estado.modelo_activo, null);
   assert.deepEqual(estado.avisos.map((a) => a.codigo), ['sin_modelo_activo']);
   assert.equal(estado.umbral_rmse_relativo, 0.3);
+  assert.equal(estado.ultimo_entrenamiento, null);
+});
+
+test('si faltan las tablas, la estructura no coincide o no hay permisos, responde con un mensaje claro y no con un 500', async () => {
+  const falla = (codigo, mensaje) => ({
+    listarModelos: async () => { throw Object.assign(new Error(mensaje), { parent: { code: codigo, message: mensaje } }); },
+    listarEntrenamientos: async () => [],
+  });
+  await assert.rejects(() => servicio.listar({ repositorio: falla('42P01', 'relation "ml.modelos" does not exist') }),
+    (e) => e.codigo === 'tablas_ml_no_disponibles' && e.estadoHttp === 503);
+  await assert.rejects(() => servicio.listar({ repositorio: falla('42703', 'column "nombre" does not exist') }),
+    (e) => e.codigo === 'estructura_ml_distinta' && e.estadoHttp === 503 && /nombre/.test(e.message));
+  await assert.rejects(() => servicio.listar({ repositorio: falla('42501', 'permission denied') }),
+    (e) => e.codigo === 'permisos_ml' && e.estadoHttp === 503);
+
+  const otroError = new Error('otro problema');
+  await assert.rejects(() => servicio.listar({ repositorio: { listarModelos: async () => { throw otroError; }, listarEntrenamientos: async () => [] } }),
+    (e) => e === otroError); // los demás errores no se disfrazan
+
+  // y el cerrojo se libera aunque falle al entrenar
+  const roto = crearRepositorio({ ventas: ventasSimuladas() });
+  roto.ventas = async () => { throw Object.assign(new Error('x'), { parent: { code: '42P01' } }); };
+  await assert.rejects(() => servicio.entrenarModelo({ ahora: AHORA, repositorio: roto }), (e) => e.codigo === 'tablas_ml_no_disponibles');
+  assert.equal((await servicio.entrenarModelo({ ahora: AHORA, repositorio: crearRepositorio({ ventas: ventasSimuladas() }) })).modelo.version, 'v1');
 });
 
 test('controlador: valida el id de la versión', () => {

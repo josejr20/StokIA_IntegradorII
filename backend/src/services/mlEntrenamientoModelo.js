@@ -30,6 +30,7 @@ const CONFIG_ML = Object.freeze({
   DIAS_VALIDACION: 14, // los orígenes de los últimos 14 días se reservan para medir
   VENTANA_ENTRENAMIENTO_DIAS: 180, // cuánto historial de ventas se carga
   MIN_EVALUACIONES: 10, // mínimo de pruebas para poder entrenar o evaluar
+  MIN_FILAS_ENTRENAMIENTO: 50, // filas de ventas válidas mínimas (se lee de ml.configuracion si existe)
   DIAS_EVALUACION_RECIENTE: 28, // TC-07: desempeño del modelo activo sobre los últimos 28 días
   GRILLA: Object.freeze({
     alpha: [0.1, 0.05, 0.15, 0.2, 0.3],
@@ -163,13 +164,26 @@ function mensajeDatosInsuficientes(evaluaciones, config) {
   );
 }
 
+/** TC-03: cuántas filas de ventas sirven para entrenar y por qué se descartan las demás. */
+function resumirPreparacion(ventas) {
+  const motivos = {};
+  let validas = 0;
+  for (const venta of ventas) {
+    const cantidad = Number(venta.cantidad);
+    if (Number.isNaN(new Date(venta.fecha_venta).getTime())) motivos.fecha_invalida = (motivos.fecha_invalida ?? 0) + 1;
+    else if (!Number.isFinite(cantidad) || cantidad <= 0) motivos.cantidad_invalida = (motivos.cantidad_invalida ?? 0) + 1;
+    else validas += 1;
+  }
+  return { total_filas: ventas.length, filas_validas: validas, filas_descartadas: ventas.length - validas, motivos_descarte: motivos };
+}
+
 // ---------------------------------------------------------------- entrenar / evaluar
 
 /**
  * ML-01 / TC-03: entrena con el historial de ventas.
  * Devuelve { ok: false, motivo, mensaje } si no hay datos, o el modelo entrenado con sus métricas.
  */
-function entrenar(ventas, { hasta, config = CONFIG_ML } = {}) {
+function entrenar(ventas, { hasta, config = CONFIG_ML, parametrosActivos = null } = {}) {
   const series = prepararSeries(ventas, hasta, config.VENTANA_ENTRENAMIENTO_DIAS);
   const datos = resumenDatos(series, ventas, hasta);
   const evaluaciones = construirEvaluaciones(series, { horizonte: config.HORIZONTE_EVALUACION, paso: config.PASO_ORIGEN });
@@ -202,11 +216,17 @@ function entrenar(ventas, { hasta, config = CONFIG_ML } = {}) {
   const metricas = calcularMetricas(paresDe(conjuntoMedir, mejor.parametros, config.HORIZONTE_EVALUACION));
   const referencia = calcularMetricas(paresDe(conjuntoMedir, demanda.PARAMETROS_POR_DEFECTO, config.HORIZONTE_EVALUACION));
 
+  // Si ya hay un modelo activo, se mide sobre las MISMAS pruebas para decidir si el nuevo realmente mejora.
+  const actual = parametrosActivos
+    ? calcularMetricas(paresDe(conjuntoMedir, demanda.normalizarParametros(parametrosActivos), config.HORIZONTE_EVALUACION))
+    : null;
+
   return {
     ok: true,
     parametros: mejor.parametros,
     metricas,
     referencia, // parámetros por defecto medidos sobre las mismas pruebas, para comparar
+    actual, // parámetros del modelo activo medidos sobre las mismas pruebas (o null si no hay)
     aprobado: cumpleUmbral(metricas, config),
     umbral_rmse_relativo: config.UMBRAL_RMSE_RELATIVO,
     validacion: independiente ? 'independiente' : 'mismos_datos',
@@ -251,6 +271,7 @@ module.exports = {
   prepararSeries,
   construirEvaluaciones,
   calcularMetricas,
+  resumirPreparacion,
   entrenar,
   evaluarParametros,
 };
