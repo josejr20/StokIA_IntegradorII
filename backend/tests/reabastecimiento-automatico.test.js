@@ -136,3 +136,80 @@ test('TC-08: evita órdenes duplicadas durante ejecuciones simultáneas', async 
         1
     );
 });
+
+
+test('HU-136 / TC-07: no genera orden ni notificación si el stock es suficiente', async () => {
+    let ordenesCreadas = 0;
+    let alertasCreadas = 0;
+    let notificacionesEnviadas = 0;
+
+    const repositorio = {
+        buscarOrdenPendiente: async () => null,
+
+        crearOrden: async () => {
+            ordenesCreadas++;
+        },
+
+        crearAlertaReabastecimiento: async () => {
+            alertasCreadas++;
+        },
+
+        notificarEncargadosInventario: async () => {
+            notificacionesEnviadas++;
+        }
+    };
+
+    const resultado = await generarOrdenAutomatica({
+        productoId: 1,
+        stockActual: 30,
+        stockMinimo: 10,
+        demandaEstimada: 20,
+        repositorio
+    });
+
+    assert.equal(resultado.generada, false);
+    assert.equal(resultado.motivo, 'reabastecimiento_no_necesario');
+    assert.equal(ordenesCreadas, 0);
+    assert.equal(alertasCreadas, 0);
+    assert.equal(notificacionesEnviadas, 0);
+});
+
+test('HU-136 / TC-06: notifica al encargado cuando se genera una orden', async () => {
+    const ordenes = [];
+    const alertas = [];
+    const notificaciones = [];
+
+    const repositorio = {
+        buscarOrdenPendiente: async () => null,
+
+        crearOrden: async (datos) => {
+            const orden = { id: 40, ...datos };
+            ordenes.push(orden);
+            return orden;
+        },
+
+        crearAlertaReabastecimiento: async (datos) => {
+            alertas.push(datos);
+            return { id: 50, ...datos };
+        },
+
+        notificarEncargadosInventario: async (datos) => {
+            notificaciones.push(datos);
+        }
+    };
+
+    const resultado = await generarOrdenAutomatica({
+        productoId: 1,
+        stockActual: 5,
+        stockMinimo: 10,
+        demandaEstimada: 20,
+        repositorio
+    });
+
+    assert.equal(resultado.generada, true);
+    assert.equal(ordenes.length, 1);
+    assert.equal(alertas.length, 1);
+    assert.equal(notificaciones.length, 1);
+    assert.equal(notificaciones[0].productoId, 1);
+});
+
