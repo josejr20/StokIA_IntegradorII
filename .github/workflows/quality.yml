@@ -9,5 +9,5 @@ jobs:
         with:
           node-version: '22.22.0'
       - run: cd backend && npm ci && npm run lint 2>/dev/null || true
-      - run: cd frontend && npm ci && npm run lint
+      - run: cd frontend && npm ci --include=optional && npm install --no-save --package-lock=false @oxlint/binding-linux-x64-gnu && npm run lint
       - run: cd frontend && npm run build || true
