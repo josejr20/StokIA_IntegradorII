@@ -1,7 +1,9 @@
-import { Bell, Search, LogOut } from 'lucide-react'
+// import { Bell, Search, LogOut } from 'lucide-react'
+import { Search, LogOut } from 'lucide-react'
 
+import { NotificacionesMenu } from './NotificacionesMenu'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+//import { Button } from '@/components/ui/button'
 import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
@@ -15,7 +17,7 @@ export function Topbar({ titulo }: { titulo: string }) {
       <div className="min-w-0">
         <h1 className="truncate text-lg font-semibold">{titulo}</h1>
         <p className="truncate text-xs text-muted-foreground">
-          Bienvenido, {usuario?.nombres ?? 'usuario'} · Su rol es: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
+          Bienvenido, {usuario?.nombres ?? 'usuario'} · Rol: {usuario?.rol_nombre ?? usuario?.rol ?? 'sin rol'}
         </p>
       </div>
 
@@ -25,12 +27,10 @@ export function Topbar({ titulo }: { titulo: string }) {
           <Input placeholder="Buscar producto…" className="w-64 pl-8" />
         </div>
 
-        <Button variant="ghost" size="icon" aria-label="Notificaciones">
-          <Bell className="size-4" />
-        </Button>
+        <NotificacionesMenu />
 
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild>
             <button className="grid size-8 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
               <img src="/usericon.png" alt="Usuario" className="size-8 rounded-full object-cover" />
             </button>

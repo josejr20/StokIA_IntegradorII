@@ -125,7 +125,7 @@ export function NuevoProductoModal({ open, onOpenChange }: { open: boolean; onOp
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label>Categoria *</Label>
+              <Label>Categoría *</Label>
               <Controller
                 control={control}
                 name="categoria"

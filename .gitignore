@@ -1,13 +1,13 @@
-.contrasenas.txt
-/contrasenas.txt
-contrasenas.txt
-.kilo
+# Entornos virtuales
 venv/
 .venv/
-/backend/venv/
-/BACKENDD/
-/db/
-.db/
-/catalogo_presentaciones_Correcciones.xlsx
-.catalogo_presentaciones_Correcciones.xlsx
-/Python/
+backend/venv/
+
+# Logs
+logs/
+.logs/
+*.log
+
+# IDEs y editores
+.vscode/
+.idea/

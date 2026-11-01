@@ -12,7 +12,9 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials: true,
 }));
-app.use(express.json());
+// El limite alto es para la carga masiva de productos (POST /api/productos/importar),
+// que envia hasta 500 filas en una sola peticion.
+app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use('/upload', express.static(path.resolve(__dirname, '../upload')));
 
@@ -27,7 +29,7 @@ app.get('/', (req, res) => {
       usuarios: '/api/usuarios',
       roles: '/api/roles',
       permisos: '/api/permisos',
-      categorias: '/api/categorias',
+      categorias: '/api/categoria',
       productos: '/api/productos',
       lotes: '/api/lotes',
       movimientos: '/api/movimientos',
@@ -43,6 +45,8 @@ app.use('/api', require('./routes'));
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+const { testLocalConnection } = require('./config/database');
+
 const start = async () => {
   const connected = await testConnection();
   if (!connected) {
@@ -50,17 +54,36 @@ const start = async () => {
     process.exit(1);
   }
   try {
-    await require('./models').sequelize.sync({ alter: false });
-    logger.info('Modelos sincronizados');
-  }  catch (err) {
-    logger.error(`Error sincronizando modelos: ${err.message}`);
-    console.error(err);
+    await testLocalConnection();
+    console.log('Conexión de manera local establecida correctamente');
+  } catch (err) {
+    // no abortar
   }
+  // No modificar automáticamente el esquema de la BD compartida.
+  // Habilitar únicamente en un entorno controlado.
+  if (process.env.DB_SYNC_ENABLED === 'true') {
+    try {
+      await require('./models').sequelize.sync({ alter: false });
+      logger.info('Sincronización de modelos completada');
+    } catch (err) {
+      logger.error(`Error sincronizando modelos: ${err.message}`);
+      console.error(err);
+    }
+  } else {
+    logger.info('Sincronización automática de modelos desactivada');
+  }
+  // HU-133: tarea programada de reabastecimiento.
+  // Desactivada por defecto. Solo ejecuta simulaciones.
+  if (process.env.REABASTECIMIENTO_CRON_ENABLED === 'true') {
+    const {
+      iniciarReabastecimientoCron
+    } = require('./services/reabastecimientoCron');
 
-  app.listen(process.env.PORT || 3000, () => {
-    logger.info(`Servidor corriendo en puerto ${process.env.PORT || 3000}`);
-    logger.info(`Entorno: ${process.env.NODE_ENV || 'development'}`);
-  });
+    iniciarReabastecimientoCron();
+    logger.info('[HU-133] Cron de simulación habilitado');
+  } else {
+    logger.info('[HU-133] Cron de simulación desactivado');
+  }
 };
 
 module.exports = { app, start };

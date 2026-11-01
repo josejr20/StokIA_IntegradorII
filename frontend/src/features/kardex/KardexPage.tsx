@@ -182,11 +182,11 @@ export default function KardexPage() {
                   <TableCell className={`text-right font-medium ${esIngreso ? 'text-secondary' : 'text-destructive'}`}>
                     {esIngreso ? '+' : '-'}{mov.cantidad}
                   </TableCell>
-                  <TableCell className="text-right">{mov.precio_unitario != null ? formatoMoneda.format(mov.precio_unitario) : '—'}</TableCell>
-                  <TableCell className="text-right">{mov.precio_total != null ? formatoMoneda.format(mov.precio_total) : '—'}</TableCell>
+                  <TableCell className="text-right">{mov.precio_unitario != null ? formatoMoneda.format(mov.precio_unitario) : '-'}</TableCell>
+                  <TableCell className="text-right">{mov.precio_total != null ? formatoMoneda.format(mov.precio_total) : '-'}</TableCell>
                   <TableCell className="text-right">{mov.saldo_cantidad}</TableCell>
                   <TableCell className="text-right">{formatoMoneda.format(mov.saldo_valorizado)}</TableCell>
-                  <TableCell className="text-muted-foreground">{mov.usuario_nombre ?? '—'}</TableCell>
+                  <TableCell className="text-muted-foreground">{mov.usuario_nombre ?? '-'}</TableCell>
                 </TableRow>
               )
             })}

@@ -15,7 +15,7 @@ const options = {
     info: {
       title: 'StockIA API',
       version: '1.0.0',
-      description: 'API de gestión de inventario — Node.js + Express + Sequelize + PostgreSQL',
+      description: 'API de gestión de inventario - Node.js + Express + Sequelize + PostgreSQL',
       contact: {
         name: 'StockIA Team'
       },
@@ -219,8 +219,8 @@ const options = {
             numero_lote: { type: 'string', example: 'LOT-2024-001' },
             cantidad_inicial: { type: 'number', format: 'decimal', example: 100.00 },
             cantidad_actual: { type: 'number', format: 'decimal', example: 80.00 },
-            fecha_ingresso: { type: 'string', format: 'date', example: '2024-01-01' },
-            fecha_vencimiento: { type: 'string', format: 'date', example: '2025-01-01' },
+            fecha_ingreso: { type: 'string', format: 'date', example: '2024-01-01' },
+            fecha_vencimiento: { type: 'string', format: 'date', nullable: true, example: '2025-01-01' },
             fecha_creacion: { type: 'string', format: 'date-time' }
           }
         },
@@ -264,6 +264,17 @@ const options = {
             nombre_archivo: { type: 'string', example: 'ventas.xlsx' },
             filas_procesadas: { type: 'integer', example: 100 },
             filas_con_error: { type: 'integer', example: 2 },
+            detalle_errores: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  fila: { type: 'integer' },
+                  codigo: { type: 'string' },
+                  motivo: { type: 'string' },
+                },
+              },
+            },
             estado: { type: 'string', enum: ['procesando', 'completado', 'fallido'], example: 'completado' },
             fecha: { type: 'string', format: 'date-time' }
           }

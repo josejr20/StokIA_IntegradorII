@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
 const { listar, obtener, crear, actualizar, aprobar, rechazar } = require('../controllers/ordenReabastecimientoController');
+const { simular } = require('../controllers/reabastecimientoAutomaticoController');
 const router = Router();
 router.use(autenticar);
 
@@ -150,6 +151,11 @@ router.use(autenticar);
  *               $ref: '#/components/schemas/OrdenReabastecimiento'
  */
 router.get('/', verificarPermiso('gestionar_reabastecimiento'), listar);
+router.post(
+    '/simular',
+    verificarPermiso('gestionar_reabastecimiento'),
+    simular
+);
 router.get('/:id', verificarPermiso('gestionar_reabastecimiento'), obtener);
 router.post('/', verificarPermiso('gestionar_reabastecimiento'), crear);
 router.put('/:id', verificarPermiso('gestionar_reabastecimiento'), actualizar);

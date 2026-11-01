@@ -30,6 +30,7 @@ class ProductoDto {
     this.stock_total = data.stock_total || 0;
     this.fecha_creacion = data.fecha_creacion;
     this.fecha_actualizacion = data.fecha_actualizacion;
+    this.vida_util_dias = data.vida_util_dias !== undefined && data.vida_util_dias !== null ? data.vida_util_dias : null;
   }
 
   static fromModel(producto) {
@@ -71,7 +72,8 @@ class ProductoDto {
       caracteristicas: body.caracteristicas || {},
       imagen: body.imagen || null,
       descripcion: body.descripcion || null,
-      activo: body.activo !== undefined ? body.activo : true
+      activo: body.activo !== undefined ? body.activo : true,
+      vida_util_dias: body.vida_util_dias !== undefined && body.vida_util_dias !== null && body.vida_util_dias !== '' ? Number(body.vida_util_dias) : null
     };
   }
 
@@ -90,6 +92,13 @@ class ProductoDto {
     if (body.precio_venta !== undefined) data.precio_venta = body.precio_venta;
     if (body.caracteristicas !== undefined) data.caracteristicas = body.caracteristicas;
     if (body.activo !== undefined) data.activo = body.activo;
+    if (body.vida_util_dias !== undefined) {
+      if (body.vida_util_dias === null || body.vida_util_dias === '') {
+        data.vida_util_dias = null;
+      } else {
+        data.vida_util_dias = Number(body.vida_util_dias);
+      }
+    }
     return data;
   }
 }

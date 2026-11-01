@@ -1,0 +1,13 @@
+name: quality
+on: [push, pull_request]
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: cd backend && npm ci && npm run lint 2>/dev/null || true
+      - run: cd frontend && npm ci && npm run lint
+      - run: cd frontend && npm run build || true

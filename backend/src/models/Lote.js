@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
     cantidad_inicial: { type: DataTypes.DECIMAL(12, 2), allowNull: false, defaultValue: 0 },
     cantidad_actual: { type: DataTypes.DECIMAL(12, 2), allowNull: false, defaultValue: 0 },
     fecha_ingreso: { type: DataTypes.DATEONLY, allowNull: false, defaultValue: () => new Date().toISOString().slice(0, 10) },
-    fecha_vencimiento: { type: DataTypes.DATEONLY, allowNull: false },
+    fecha_vencimiento: { type: DataTypes.DATEONLY, allowNull: true },
     fecha_creacion: { type: DataTypes.DATEONLY, allowNull: false, defaultValue: () => new Date().toISOString().slice(0, 10) }
   }, {
     tableName: 'lotes',

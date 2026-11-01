@@ -5,6 +5,7 @@ class ImportacionVentaDto {
     this.nombre_archivo = data.nombre_archivo;
     this.filas_procesadas = data.filas_procesadas;
     this.filas_con_error = data.filas_con_error;
+    this.detalle_errores = data.detalle_errores ?? [];
     this.estado = data.estado;
     this.fecha = data.fecha;
   }

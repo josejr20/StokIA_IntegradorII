@@ -31,11 +31,15 @@ export interface CrearUsuarioInput {
   clave_secreta: string
 }
 
-export function useUsuarios() {
+export function useUsuarios(page?: number, pageSize?: number) {
+  const params = new URLSearchParams()
+  if (page && page > 1) params.set('page', String(page))
+  if (pageSize) params.set('page_size', String(pageSize))
+  const qs = params.toString()
   return useQuery({
-    queryKey: ['usuarios'],
+    queryKey: ['usuarios', page, pageSize],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: Usuario[] }>('/usuarios')
+      const respuesta = await api.get<{ data: Usuario[] }>(`/usuarios${qs ? `?${qs}` : ''}`)
       return respuesta.data
     },
   })
