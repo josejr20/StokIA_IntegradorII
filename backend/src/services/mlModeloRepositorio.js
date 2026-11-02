@@ -60,6 +60,15 @@ async function obtenerModeloActivo() {
   return modelo ? { ...modelo, parametros: modelo.metadata.parametros ?? null } : null;
 }
 
+/** Modelo activo de OTRO algoritmo (si lo hay). ml.modelos solo admite un modelo activo en toda la tabla. */
+async function obtenerModeloActivoOtro() {
+  const filas = await consultar(
+    `SELECT ${COLUMNAS} FROM ml.modelos WHERE activo = true AND algoritmo <> :algoritmo ORDER BY version DESC LIMIT 1`,
+    { algoritmo: ALGORITMO },
+  );
+  return aModelo(filas[0]);
+}
+
 async function obtenerModelo(id) {
   return aModelo((await consultar(`SELECT ${COLUMNAS} FROM ml.modelos WHERE id = :id`, { id }))[0]);
 }
@@ -73,14 +82,29 @@ async function listarModelos(limite = 50) {
 }
 
 /**
- * Registra una versión nueva (número = el mayor de la tabla + 1, para no repetir el de otros modelos).
- * Si `activar` es true queda activa y las demás de este algoritmo pasan a inactivas. Todo en una transacción.
+ * Registra una versión nueva (número = el mayor de la tabla + 1; hay un índice único sobre `version`).
+ * ml.modelos tiene un índice único que permite UN SOLO modelo activo en toda la tabla. Por eso, si otro algoritmo
+ * ya tiene el modelo activo, este se guarda inactivo y se devuelve `bloqueado_por`: nunca se le quita el lugar.
+ * Si `activar` es true y no hay otro, queda activo y las demás versiones de este algoritmo pasan a inactivas.
  */
 async function registrarModelo({ metadata, mae, rmse, filas_entrenamiento: filas, notas, activar }) {
   const { sequelize } = acceso();
   return sequelize.transaction(async (transaction) => {
     const siguiente = await consultar('SELECT COALESCE(MAX(version), 0) + 1 AS numero FROM ml.modelos', {}, transaction);
-    if (activar) {
+    let activarAhora = activar === true;
+    let bloqueadoPor = null;
+    if (activarAhora) {
+      const otro = await consultar(
+        'SELECT version, algoritmo FROM ml.modelos WHERE activo = true AND algoritmo <> :algoritmo LIMIT 1',
+        { algoritmo: ALGORITMO },
+        transaction,
+      );
+      if (otro[0]) {
+        activarAhora = false;
+        bloqueadoPor = { version: Number(otro[0].version), algoritmo: otro[0].algoritmo };
+      }
+    }
+    if (activarAhora) {
       await ejecutar('UPDATE ml.modelos SET activo = false WHERE algoritmo = :algoritmo AND activo = true', { algoritmo: ALGORITMO }, transaction);
     }
     const insertadas = await consultar(
@@ -90,7 +114,7 @@ async function registrarModelo({ metadata, mae, rmse, filas_entrenamiento: filas
       {
         version: Number(siguiente[0].numero),
         algoritmo: ALGORITMO,
-        activo: activar === true,
+        activo: activarAhora,
         mae,
         rmse,
         filas,
@@ -100,15 +124,21 @@ async function registrarModelo({ metadata, mae, rmse, filas_entrenamiento: filas
       },
       transaction,
     );
-    return aModelo(insertadas[0]);
+    return { ...aModelo(insertadas[0]), bloqueado_por: bloqueadoPor };
   });
 }
 
-/** Pone una versión como activa (y desactiva las demás de este algoritmo). `parche` se mezcla en su metadata. */
+/**
+ * Activación MANUAL (acción explícita del administrador): como la tabla solo admite un modelo activo, desactiva el
+ * que esté activo (aunque sea de otro algoritmo) y lo informa en `desactivado`. `parche` se mezcla en su metadata.
+ */
 async function activarModelo(id, parche = {}) {
   const { sequelize } = acceso();
+  let desactivado = null;
   await sequelize.transaction(async (transaction) => {
-    await ejecutar('UPDATE ml.modelos SET activo = false WHERE algoritmo = :algoritmo AND activo = true', { algoritmo: ALGORITMO }, transaction);
+    const activos = await consultar('SELECT version, algoritmo FROM ml.modelos WHERE activo = true AND id <> :id LIMIT 1', { id }, transaction);
+    desactivado = activos[0] ? { version: Number(activos[0].version), algoritmo: activos[0].algoritmo } : null;
+    await ejecutar('UPDATE ml.modelos SET activo = false WHERE activo = true AND id <> :id', { id }, transaction);
     await ejecutar(
       `UPDATE ml.modelos SET activo = true, metadata = COALESCE(metadata, '{}'::jsonb) || CAST(:parche AS jsonb)
         WHERE id = :id AND algoritmo = :algoritmo`,
@@ -116,7 +146,7 @@ async function activarModelo(id, parche = {}) {
       transaction,
     );
   });
-  return obtenerModelo(id);
+  return { ...(await obtenerModelo(id)), desactivado };
 }
 
 async function actualizarMetadata(id, parche) {
@@ -177,6 +207,7 @@ module.exports = {
   ALGORITMO,
   RUTA_ARTEFACTO,
   obtenerModeloActivo,
+  obtenerModeloActivoOtro,
   obtenerModelo,
   listarModelos,
   registrarModelo,

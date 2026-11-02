@@ -128,11 +128,12 @@ export default function ModeloMLPage() {
   const datos = estado.data
 
   function activarVersion(version: VersionModelo) {
-    if (version.estado === 'requiere_revision') {
-      const seguro = window.confirm(
-        `La versión ${version.version} no alcanzó el desempeño mínimo. ¿Seguro que quieres ponerla en uso?`,
-      )
-      if (!seguro) return
+    const otroActivo = datos?.avisos.some((aviso) => aviso.codigo === 'otro_modelo_activo') ?? false
+    if (version.estado === 'requiere_revision' || otroActivo) {
+      const motivo = otroActivo
+        ? 'Hay un modelo activo de otro algoritmo y activar esta versión lo desactivará.'
+        : 'No alcanzó el desempeño mínimo.'
+      if (!window.confirm(`Versión ${version.version}: ${motivo} ¿Seguro que quieres ponerla en uso?`)) return
     }
     activar.mutate(version.id)
   }

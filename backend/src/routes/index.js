@@ -28,6 +28,7 @@ const presentacionRoutes = require('./presentaciones');
     const reniecRoutes = require('./reniec.routes');
     const rucRoutes = require('./ruc.routes');
     const mlRoutes = require('./ml');
+    const prediccionRoutes = require('./predicciones');
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);

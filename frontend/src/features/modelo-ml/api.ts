@@ -53,7 +53,7 @@ export interface VersionModelo {
 }
 
 export interface AvisoModelo {
-  codigo: 'requiere_revision' | 'desempeno_bajo' | 'sin_modelo_activo'
+  codigo: 'requiere_revision' | 'desempeno_bajo' | 'sin_modelo_activo' | 'otro_modelo_activo'
   severidad: 'info' | 'alta' | 'critica'
   modelo_id: number | null
   mensaje: string

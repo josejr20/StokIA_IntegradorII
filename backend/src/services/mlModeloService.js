@@ -45,6 +45,13 @@ function traducirErrorBD(error) {
       503,
     );
   }
+  if (codigo === '23505') {
+    return new ErrorML(
+      'Ya hay otro modelo activo en ml.modelos (la tabla solo admite uno). Revisa cuál es antes de entrenar o activar.',
+      'conflicto_modelo_activo',
+      409,
+    );
+  }
   if (codigo === '42501') {
     return new ErrorML('El usuario de la base de datos no tiene permisos sobre el esquema ml.', 'permisos_ml', 503);
   }
@@ -130,15 +137,28 @@ function avisoDesempeno(modelo, evaluacion) {
   };
 }
 
-function construirAvisos(versiones) {
+function construirAvisos(versiones, otroActivo = null) {
   const avisos = [];
   const activo = versiones.find((modelo) => modelo.activo);
-  if (!activo) {
+  if (!activo && !otroActivo) {
     avisos.push({
       codigo: 'sin_modelo_activo',
       severidad: 'info',
       modelo_id: null,
-      mensaje: 'Todavía no hay un modelo entrenado: las predicciones usan los parámetros por defecto. Entrena el modelo para ajustarlos al historial de ventas.',
+      mensaje: versiones.length === 0
+        ? 'Todavía no hay un modelo entrenado: las predicciones usan los parámetros por defecto. Entrena el modelo para ajustarlos al historial de ventas.'
+        : 'No hay un modelo activo: las predicciones usan los parámetros por defecto. Activa una versión o entrena el modelo.',
+    });
+  }
+  if (otroActivo) {
+    avisos.push({
+      codigo: 'otro_modelo_activo',
+      severidad: 'info',
+      modelo_id: otroActivo.id,
+      mensaje:
+        `En ml.modelos el modelo activo es de otro algoritmo (${otroActivo.algoritmo}, ${etiqueta(otroActivo.version)}) y la tabla solo admite uno. ` +
+        'Mientras siga así, el modelo de demanda no se usa para predecir (se usan los parámetros por defecto). ' +
+        'Activar una versión de aquí lo desactivará.',
     });
   }
   const ultima = versiones[0];
@@ -154,6 +174,7 @@ function construirAvisos(versiones) {
 async function listar({ repositorio = repositorioPorDefecto } = {}) {
   const versiones = await repositorio.listarModelos();
   const activo = versiones.find((modelo) => modelo.activo) ?? null;
+  const otroActivo = await repositorio.obtenerModeloActivoOtro();
   const entrenamientos = await repositorio.listarEntrenamientos(1);
   return {
     umbral_rmse_relativo: CONFIG_ML.UMBRAL_RMSE_RELATIVO,
@@ -161,15 +182,17 @@ async function listar({ repositorio = repositorioPorDefecto } = {}) {
     modelo_activo: activo ? resumenVersion(activo) : null,
     versiones: versiones.map((modelo, indice) => resumenVersion(modelo, indice === 0)),
     ultimo_entrenamiento: entrenamientos[0] ? { ...entrenamientos[0], fecha: aIso(entrenamientos[0].fecha) } : null,
-    avisos: construirAvisos(versiones),
+    avisos: construirAvisos(versiones, otroActivo),
   };
 }
 
 // ---------------------------------------------------------------- entrenar (ML-01, ML-02, ML-03)
 
 /** ¿Se promueve el modelo nuevo? Debe cumplir el umbral y no empeorar al activo (medido sobre los mismos datos). */
-function decidirPromocion({ aprobado, nuevo, actual }) {
+function decidirPromocion({ aprobado, nuevo, actual, otroActivo = null }) {
   if (!aprobado) return { promover: false, resultado: 'exitoso', estadoRevision: 'requiere_revision' };
+  // ml.modelos solo admite un modelo activo: si es de otro algoritmo, no se le quita el lugar.
+  if (otroActivo) return { promover: false, resultado: 'exitoso', estadoRevision: 'sin_cupo' };
   if (actual && actual.rmse_relativo !== null && nuevo.rmse_relativo > actual.rmse_relativo) {
     return { promover: false, resultado: 'sin_mejora', estadoRevision: 'sin_mejora' };
   }
@@ -200,7 +223,7 @@ function armarMetadata(resultado, ahora, estadoRevision, preparacion) {
   };
 }
 
-function descripcionEntrenamiento(decision, resultado) {
+function descripcionEntrenamiento(decision, resultado, otroActivo = null) {
   const m = resultado.metricas;
   const medidas =
     `RMSE relativo ${porcentaje(m.rmse_relativo)} (umbral ${porcentaje(resultado.umbral_rmse_relativo)}), ` +
@@ -210,6 +233,12 @@ function descripcionEntrenamiento(decision, resultado) {
     : '';
   if (decision.estadoRevision === 'requiere_revision') {
     return `entrenado, pero requiere revisión antes de ponerse en uso. ${medidas}${nota}`;
+  }
+  if (decision.estadoRevision === 'sin_cupo') {
+    return (
+      `entrenado y cumple el umbral, pero no se activó porque ya hay un modelo activo de otro algoritmo ` +
+      `(${otroActivo?.algoritmo}, ${etiqueta(otroActivo?.version)}) y ml.modelos solo admite uno. Actívalo manualmente si corresponde. ${medidas}${nota}`
+    );
   }
   if (decision.estadoRevision === 'sin_mejora') {
     return (
@@ -257,8 +286,9 @@ async function entrenarModelo({ ahora = new Date(), repositorio = repositorioPor
     }
     await intentar(() => repositorio.registrarPreparacion({ ...preparacion, listo_para_entrenar: true }));
 
-    const decision = decidirPromocion({ aprobado: resultado.aprobado, nuevo: resultado.metricas, actual: resultado.actual });
-    const descripcion = descripcionEntrenamiento(decision, resultado);
+    const otroActivo = await repositorio.obtenerModeloActivoOtro();
+    const decision = decidirPromocion({ aprobado: resultado.aprobado, nuevo: resultado.metricas, actual: resultado.actual, otroActivo });
+    const descripcion = descripcionEntrenamiento(decision, resultado, otroActivo);
     const registrado = await repositorio.registrarModelo({
       metadata: armarMetadata(resultado, ahora, decision.estadoRevision, preparacion),
       mae: resultado.metricas.mae,
@@ -268,14 +298,18 @@ async function entrenarModelo({ ahora = new Date(), repositorio = repositorioPor
       activar: decision.promover,
     });
 
-    const mensaje = `Modelo ${etiqueta(registrado.version)} ${descripcion}`;
+    // Si justo antes de guardar otro proceso tomó el lugar de modelo activo, no se promueve.
+    const activado = decision.promover && !registrado.bloqueado_por;
+    const mensaje = registrado.bloqueado_por && decision.promover
+      ? `Modelo ${etiqueta(registrado.version)} ${descripcionEntrenamiento({ estadoRevision: 'sin_cupo' }, resultado, registrado.bloqueado_por)}`
+      : `Modelo ${etiqueta(registrado.version)} ${descripcion}`;
     await intentar(() => repositorio.registrarEntrenamiento({
-      modeloId: registrado.id, disparadoPor, resultado: decision.resultado, promovido: decision.promover, mensaje,
+      modeloId: registrado.id, disparadoPor, resultado: decision.resultado, promovido: activado, mensaje,
     }));
 
     return {
       modelo: resumenVersion(registrado),
-      activado: decision.promover,
+      activado,
       mensaje,
       aviso: decision.estadoRevision === 'requiere_revision' ? avisoRevision(registrado) : null,
     };
@@ -296,7 +330,10 @@ async function activarVersion(id, { ahora = new Date(), repositorio = repositori
     estado_revision: 'activado_manualmente',
     activado_en: ahora.toISOString(),
   });
-  return { modelo: resumenVersion(activado), mensaje: `El modelo ${etiqueta(activado.version)} quedó activo.` };
+  const reemplazado = activado.desactivado && activado.desactivado.algoritmo !== repositorioPorDefecto.ALGORITMO
+    ? ` Se desactivó el modelo de otro algoritmo (${activado.desactivado.algoritmo}, ${etiqueta(activado.desactivado.version)}).`
+    : '';
+  return { modelo: resumenVersion(activado), mensaje: `El modelo ${etiqueta(activado.version)} quedó activo.${reemplazado}` };
 }
 
 /**
