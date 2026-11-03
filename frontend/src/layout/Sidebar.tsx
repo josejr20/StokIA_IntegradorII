@@ -1,14 +1,4 @@
-import { NavLink } from 'react-router'
-import {
-Home, LayoutDashboard, Package, Boxes, ShoppingCart,
-  TrendingUp, Brain, Settings, Users, ScrollText, History, AlertTriangle, ReceiptText, Contact
-Home, LayoutDashboard, Package, Boxes, ShoppingCart, ClipboardList,
-  TrendingUp, Brain, Settings, Users, ScrollText, History,
-  ReceiptText, Contact,
-} from 'lucide-react'
-
-import { cn } from '@/lib/utils'
-import { useAuth, type PermisoCodigo } from '@/auth/AuthContext'
+import { NavLink } from 'react-router'\r\nimport {\r\n  Home, LayoutDashboard, Package, Boxes, ShoppingCart,\r\n  TrendingUp, Brain, Settings, Users, ScrollText, History, AlertTriangle, ReceiptText, Contact, ClipboardList\r\n} from 'lucide-react'\r\nimport { useAuth, type PermisoCodigo } from '@/auth/AuthContext'
 
 // Coincide 1 a 1 con las 11 pantallas del prototipo de Figma (ProyectoHU),
 // más Kardex, que no estaba en el prototipo original pero se sumó como

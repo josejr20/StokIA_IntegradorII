@@ -31,11 +31,6 @@ import {
 import { useProductos } from "@/features/productos/api";
 import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type GrupoLotes, type Lote } from "./api";
 import {
-  useLotesAgrupados,
-  useActualizarFechasVencimiento,
-  type EstadoFiltroLote,
-  type Lote,
-  type GrupoLotes,
 } from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
