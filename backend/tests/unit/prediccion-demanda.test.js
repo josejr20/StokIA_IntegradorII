@@ -3,9 +3,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const modelo = require('../src/services/prediccionDemandaModelo');
-const { predecirProductos } = require('../src/services/prediccionDemandaService');
-const { leerParametros, MAX_PRODUCTOS } = require('../src/controllers/prediccionController');
+const modelo = require('../../src/services/prediccionDemandaModelo');
+const { predecirProductos } = require('../../src/services/prediccionDemandaService');
+const { leerParametros, MAX_PRODUCTOS } = require('../../src/controllers/prediccionController');
 
 const AHORA = new Date('2026-10-21T15:00:00-05:00'); // miércoles; el último día completo es el 20/oct
 const HASTA = '2026-10-20';

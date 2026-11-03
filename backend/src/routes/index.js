@@ -50,6 +50,9 @@ const catalogoMarcaRoutes = require('./catalogoMarcas');
     const precioRoutes = require('./precio');
     const reniecRoutes = require('./reniec.routes');
     const rucRoutes = require('./ruc.routes');
+const mlRoutes = require('./ml');
+    const prediccionRoutes = require('./predicciones');
+
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
 Router.use('/roles', rolRoutes);
@@ -82,3 +85,11 @@ Router.use('/precios', precioRoutes);
 Router.use('/predicciones', prediccionRoutes);
 Router.use('/riesgo-vencimiento', riesgoVencimientoRoutes);
 module.exports = Router;
+Router.use('/auditoria', auditoriaRoutes);
+    Router.use('/tipos-envase', tiposEnvaseRoutes);
+    Router.use('/presentaciones-niveles', productoPresentacionRoutes);
+    Router.use('/precios', precioRoutes);
+    Router.use('/predicciones', prediccionRoutes);
+    Router.use('/ml', mlRoutes);
+
+    module.exports = Router;
