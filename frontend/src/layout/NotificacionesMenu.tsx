@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bell, Loader2 } from 'lucide-react'
 
 import { api } from '@/lib/api'
@@ -52,6 +52,26 @@ export function NotificacionesMenu() {
             setCargando(false)
         }
     }
+
+    useEffect(() => {
+        if (!autorizado) return
+
+        const actualizarNotificaciones = () => {
+            void cargarAlertas()
+        }
+
+        window.addEventListener(
+            'reabastecimiento:orden_generada',
+            actualizarNotificaciones
+        )
+
+        return () => {
+            window.removeEventListener(
+                'reabastecimiento:orden_generada',
+                actualizarNotificaciones
+            )
+        }
+    }, [autorizado])
 
     if (!autorizado) return null
 

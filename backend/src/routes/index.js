@@ -81,5 +81,4 @@ Router.use('/presentaciones-niveles', productoPresentacionRoutes);
 Router.use('/precios', precioRoutes);
 Router.use('/predicciones', prediccionRoutes);
 Router.use('/riesgo-vencimiento', riesgoVencimientoRoutes);
-
 module.exports = Router;

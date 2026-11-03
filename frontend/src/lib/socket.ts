@@ -22,6 +22,12 @@ export function useInventarioRealtime() {
       void queryClient.invalidateQueries({ queryKey: ['movimientos-inventario'] })
       void queryClient.invalidateQueries({ queryKey: ['productos'] })
     }
+
+    const notificarReabastecimiento = () => {
+      window.dispatchEvent(new Event('reabastecimiento:orden_generada'))
+    }
+
+    s.on('reabastecimiento:orden_generada', notificarReabastecimiento)
     s.on('lote:creado', invalidar)
     s.on('lote:actualizado', invalidar)
     s.on('movimiento:creado', invalidar)
@@ -31,6 +37,10 @@ export function useInventarioRealtime() {
       s.off('lote:actualizado', invalidar)
       s.off('movimiento:creado', invalidar)
       s.off('inventario:actualizado', invalidar)
+      s.off('reabastecimiento:orden_generada', notificarReabastecimiento)
+
+      s.disconnect()
+      socket = null
     }
   }, [queryClient])
 }

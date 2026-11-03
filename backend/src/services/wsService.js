@@ -24,4 +24,27 @@ function emitir(evento, datos) {
   }
 }
 
-module.exports = { emitir };
+/**
+ * Notifica a los encargados de inventario conectados.
+ * HU-133 / US-26 - TC-06.
+ */
+function notificarEncargadosInventario(datos) {
+  try {
+    const io = getIO();
+
+    io.to('encargados_inventario').emit(
+      'reabastecimiento:orden_generada',
+      datos
+    );
+  } catch (error) {
+    console.error(
+      'Error notificando orden de reabastecimiento:',
+      error.message
+    );
+  }
+}
+
+module.exports = {
+  emitir,
+  notificarEncargadosInventario
+};
