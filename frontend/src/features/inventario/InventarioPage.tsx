@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -30,15 +30,11 @@ import {
 } from "@/components/ui/select";
 import { useProductos } from "@/features/productos/api";
 import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type GrupoLotes, type Lote } from "./api";
-import {
-} from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
 
 const formatoFecha = new Intl.DateTimeFormat("es-PE", { dateStyle: "short" });
-
-type GrupoLotes = NonNullable<ReturnType<typeof useLotesAgrupados>['data']>['results'][number]
 
 type BadgeVariante =
   | "default"
@@ -49,12 +45,12 @@ type BadgeVariante =
   | "bajo";
 
 const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> =
-{
-  AGOTADO: { texto: "Agotado", variante: "secondary" },
-  VENCIDO: { texto: "Vencido", variante: "alto" },
-  POR_VENCER: { texto: "Próximo a vencer", variante: "medio" },
-  VIGENTE: { texto: "Vigente", variante: "bajo" },
-};
+  {
+    AGOTADO: { texto: "Agotado", variante: "secondary" },
+    VENCIDO: { texto: "Vencido", variante: "alto" },
+    POR_VENCER: { texto: "Próximo a vencer", variante: "medio" },
+    VIGENTE: { texto: "Vigente", variante: "bajo" },
+  };
 
 function aNumero(v: number | string | null | undefined): number {
   return Number(v ?? 0);
@@ -103,18 +99,7 @@ export default function InventarioPage() {
   const paginasTotales = data?.totalPages ?? 1;
   const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
 
-// Código asociado al producto del lote. No modifica el inventario.
-  function codigoDelLote(lote: Lote): string {
-    return productos?.results.find((producto) => producto.id === lote.producto_id)?.codigo ?? "";
-  }
-const codigoDelLote = (lote: Lote): string => {
-    return (
-      productos?.results?.find(
-        (producto) => producto.id === lote.producto_id
-      )?.codigo ?? ""
-    );
-  };
-const productosUnicos = [
+  const productosUnicos = [
     ...new Map(
       (productos?.results ?? []).map((producto) => [
         claveNombre(producto.nombre),
