@@ -144,7 +144,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                     <p className="font-semibold">Notas importantes:</p>
                     <ul className="list-disc ml-4 space-y-0.5 text-xs">
                       <li>El archivo debe tener las columnas: N°, fcreacion, cliente, presentacion, observaciones, motivo, cantidad</li>
-                      <li>Los motivos válidos son: "Ingreso por devolucion en una venta" y "Salida por generacion de pedido a venta"</li>
+                      <li>Los motivos válidos son: "Ingreso por devolucion en una venta", "Salida por generacion de pedido a venta" e "Ingreso por compra"</li>
                       <li>Primero se previsualiza (lectura/revisión), luego se confirma para ingresar a BD</li>
                     </ul>
                   </div>
@@ -179,6 +179,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
               <div className="flex flex-wrap gap-3 text-xs">
                 <span className="rounded-full bg-muted px-2 py-1">Ventas (salida): {preview.ventas}</span>
                 <span className="rounded-full bg-muted px-2 py-1">Devoluciones (ingreso): {preview.devoluciones}</span>
+                <span className="rounded-full bg-muted px-2 py-1">Compras (ingreso): {preview.compras}</span>
                 <span className="rounded-full bg-muted px-2 py-1">Válidas: {preview.validas}</span>
               </div>
 

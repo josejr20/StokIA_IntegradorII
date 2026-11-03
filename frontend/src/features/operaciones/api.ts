@@ -231,7 +231,7 @@ export interface KardexPreviewFila {
   observaciones: string
   motivo: string
   cantidad: string | number
-  tipo: 'venta' | 'devolucion' | null
+  tipo: 'venta' | 'devolucion' | 'compra' | null
   productoId: number | null
   estado: 'OK' | 'ERROR'
   errores: string[]
@@ -245,6 +245,7 @@ export interface KardexPreviewResultado {
   conError: number
   devoluciones: number
   ventas: number
+  compras: number
   clientesNuevos: string[]
   productosNoMapeados: string[]
   filas: KardexPreviewFila[]
