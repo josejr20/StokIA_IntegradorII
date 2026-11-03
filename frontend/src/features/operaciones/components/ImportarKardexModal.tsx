@@ -243,7 +243,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                 </div>
               </div>
             </div>
-          ) : (
+          ) : resultado ? (
             <div className="space-y-4">
               <div className="grid grid-cols-4 gap-4">
                 <div className="rounded-lg border bg-green-50 p-4 text-center">
@@ -285,7 +285,7 @@ export function ImportarKardexModal({ open, onOpenChange }: { open: boolean; onO
                 Cerrar
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
