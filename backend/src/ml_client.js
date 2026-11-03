@@ -1,7 +1,8 @@
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const mlClient = {
   obtenerPrediccion: async (productoId, horizonteDias = 7) => {
-    return null;
+    const { predecirProducto } = require("./services/prediccionDemandaService");
+    return predecirProducto(productoId, horizonteDias);
   },
   obtenerRiesgo: async (productoId) => {
     return null;
@@ -9,7 +10,7 @@ const mlClient = {
   obtenerRiesgos_todos: async () => {
     return null;
   },
-  obtener_anomalias: async (estado = 'nueva') => {
+  obtener_anomalias: async (estado = "nueva") => {
     return null;
   },
   obtener_historico_comparacion: async (productoId) => {
@@ -17,7 +18,7 @@ const mlClient = {
   },
   solicitar_reentrenamiento: async (forzar = false) => {
     return null;
-  }
+  },
 };
 
 module.exports = mlClient;
