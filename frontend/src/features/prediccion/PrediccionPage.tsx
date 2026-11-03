@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { AlertTriangle, Search, TrendingUp, X } from 'lucide-react'
 import { CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-
+import { useMemo, useState } from 'react'
+import {
+  AlertTriangle,
+  PackageCheck,
+  RefreshCw,
+  Search,
+} from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -323,4 +329,34 @@ export default function PrediccionPage() {
       )}
     </div>
   )
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
+import { useProductos } from '@/features/productos/api'
+import {
+  useLotes,
+  useMovimientosInventario,
+  type Lote,
+  type MovimientoInventario,
+} from '@/features/inventario/api'
+
+type NivelPrioridad = 'Alta' | 'Media' | 'Baja'
+type FiltroPrioridad = 'Todas' | NivelPrioridad
+
+type ProductoEvaluado = {
+  id: number
+  codigo: string
+  nombre: string
+  stock: number
+  demanda30: number
+  diasCobertura: number | null
+  diasVencer: number | null
+  prioridad: NivelPrioridad
+  motivo: string
 }
