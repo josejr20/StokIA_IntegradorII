@@ -1,5 +1,6 @@
 const Router = require('express').Router();
 const authRoutes = require('./auth');
+const prediccionRoutes = require('./predicciones');
 const usuarioRoutes = require('./usuarios');
 const rolRoutes = require('./roles');
 const permisoRoutes = require('./permisos');
