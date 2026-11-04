@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
-const { listar, obtener, crear, actualizar, eliminar } = require('../controllers/umbralController');
+const { listar, obtener, crear, actualizar, eliminar, resumenStockMinimo, guardarMinimoProducto, quitarMinimoProducto, evaluarTodosStockMinimo } = require('../controllers/umbralController');
 const router = Router();
 router.use(autenticar);
 
@@ -110,6 +110,13 @@ router.use(autenticar);
  *       '404':
  *         $ref: '#/components/responses/NotFoundError'
  */
+// US-24: registrar estas rutas ANTES de /:id.
+// GET consulta, PUT/DELETE guardan o restablecen; POST genera alertas bajo demanda.
+router.get('/stock-minimo/resumen', verificarPermiso('configurar_umbrales'), resumenStockMinimo);
+router.put('/stock-minimo/productos/:productoId', verificarPermiso('configurar_umbrales'), guardarMinimoProducto);
+router.delete('/stock-minimo/productos/:productoId', verificarPermiso('configurar_umbrales'), quitarMinimoProducto);
+router.post('/stock-minimo/evaluar', verificarPermiso('configurar_umbrales'), evaluarTodosStockMinimo);
+
 router.get('/', verificarPermiso('configurar_umbrales'), listar);
 router.get('/:id', verificarPermiso('configurar_umbrales'), obtener);
 router.post('/', verificarPermiso('configurar_umbrales'), crear);
