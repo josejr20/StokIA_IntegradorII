@@ -32,6 +32,7 @@ const lote = (id, stock, diasParaVencer, extra = {}) => ({
 });
 const evaluarUno = (l, d) => riesgo.evaluarLotes([l], d, HOY)[0];
 
+// Prueba: TC-01: stock alto, vencimiento próximo y demanda menor al stock => riesgo alto con sus factores.
 test('TC-01: stock alto, vencimiento próximo y demanda menor al stock => riesgo alto con sus factores', () => {
   const r = evaluarUno(lote(1, 100, 30), demanda({ porDia: 1 })); // se venderían 30 de 100
   assert.equal(r.estado, 'ok');
@@ -41,6 +42,7 @@ test('TC-01: stock alto, vencimiento próximo y demanda menor al stock => riesgo
   assert.ok(r.factores.length >= 4);
 });
 
+// Prueba: TC-02: la demanda estimada agota el stock antes de vencer => riesgo bajo.
 test('TC-02: la demanda estimada agota el stock antes de vencer => riesgo bajo', () => {
   const r = evaluarUno(lote(1, 100, 60), demanda({ porDia: 5 })); // se venderían 300 > 100
   assert.equal(r.nivel, 'bajo');
@@ -48,6 +50,7 @@ test('TC-02: la demanda estimada agota el stock antes de vencer => riesgo bajo',
   assert.match(r.factores.join(' '), /alcanza para vender todo el lote/);
 });
 
+// Prueba: TC-03: el riesgo depende del stock, de la demanda estimada y de la fecha de vencimiento.
 test('TC-03: el riesgo depende del stock, de la demanda estimada y de la fecha de vencimiento', () => {
   const base = evaluarUno(lote(1, 100, 30), demanda({ porDia: 2 })); // 60 se venden, 40 % en riesgo
   const masStock = evaluarUno(lote(1, 200, 30), demanda({ porDia: 2 }));
@@ -58,6 +61,7 @@ test('TC-03: el riesgo depende del stock, de la demanda estimada y de la fecha d
   assert.ok(masPlazo.porcentaje_en_riesgo < base.porcentaje_en_riesgo);
 });
 
+// Prueba: TC-04: clasifica en niveles alto, medio y bajo.
 test('TC-04: clasifica en niveles alto, medio y bajo', () => {
   // Stock 100 y demanda hasta el vencimiento: 30 -> 70 % en riesgo, 80 -> 20 %, 96 -> 4 %.
   assert.equal(evaluarUno(lote(1, 100, 30), demanda({ porDia: 1 })).nivel, 'alto');
@@ -68,12 +72,14 @@ test('TC-04: clasifica en niveles alto, medio y bajo', () => {
   assert.equal(riesgo.clasificarNivel(0.149, 60), 'bajo');
 });
 
+// Prueba: TC-04: un riesgo medio con vencimiento en 7 días o menos sube a alto.
 test('TC-04: un riesgo medio con vencimiento en 7 días o menos sube a alto', () => {
   assert.equal(riesgo.clasificarNivel(0.3, 20), 'medio');
   assert.equal(riesgo.clasificarNivel(0.3, 7), 'alto');
   assert.equal(riesgo.clasificarNivel(0.05, 3), 'bajo'); // sin unidades en riesgo no hay urgencia
 });
 
+// Prueba: TC-05: muestra los factores que justifican la clasificación.
 test('TC-05: muestra los factores que justifican la clasificación', () => {
   const r = evaluarUno(lote(1, 100, 30), demanda({ porDia: 1, confianza: 'media' }));
   const texto = r.factores.join(' | ');
@@ -85,6 +91,7 @@ test('TC-05: muestra los factores que justifican la clasificación', () => {
   assert.match(r.mensaje, /^Riesgo alto/);
 });
 
+// Prueba: FEFO: el lote que vence antes se abastece primero y el otro cuenta solo con la demanda restante.
 test('FEFO: el lote que vence antes se abastece primero y el otro cuenta solo con la demanda restante', () => {
   const [a, b] = riesgo.evaluarLotes([lote(2, 100, 40), lote(1, 50, 10)], demanda({ porDia: 3 }), HOY);
   // Lote 1 vence en 10 días: demanda 30 -> se venden 30 de 50 (20 en riesgo, 40 %)
@@ -99,6 +106,7 @@ test('FEFO: el lote que vence antes se abastece primero y el otro cuenta solo co
   assert.match(b.factores.join(' '), /30 se destinan antes a lotes que vencen primero/);
 });
 
+// Prueba: un lote que ya venció con stock es riesgo alto sin necesitar demanda estimada.
 test('un lote que ya venció con stock es riesgo alto sin necesitar demanda estimada', () => {
   const r = evaluarUno(lote(1, 40, -5), null);
   assert.equal(r.nivel, 'alto');
@@ -108,6 +116,7 @@ test('un lote que ya venció con stock es riesgo alto sin necesitar demanda esti
   assert.equal(evaluarUno(lote(2, 10, 0), null).nivel, 'alto'); // vence hoy
 });
 
+// Prueba: TC-07: informa que no hay datos suficientes (sin fecha de vencimiento o sin demanda estimada).
 test('TC-07: informa que no hay datos suficientes (sin fecha de vencimiento o sin demanda estimada)', () => {
   const sinFecha = evaluarUno(lote(1, 100, null), demanda());
   assert.equal(sinFecha.estado, 'datos_insuficientes');
@@ -121,10 +130,12 @@ test('TC-07: informa que no hay datos suficientes (sin fecha de vencimiento o si
   assert.match(sinVentas.mensaje, /historial de ventas/);
 });
 
+// Prueba: los lotes agotados (stock 0) no se analizan.
 test('los lotes agotados (stock 0) no se analizan', () => {
   assert.equal(riesgo.evaluarLotes([lote(1, 0, 30)], demanda(), HOY).length, 0);
 });
 
+// Prueba: el producto toma el nivel de su peor lote.
 test('el producto toma el nivel de su peor lote', () => {
   const lotes = riesgo.evaluarLotes([lote(1, 10, 100), lote(2, 100, 5)], demanda({ porDia: 1 }), HOY);
   assert.equal(riesgo.consolidarProducto(lotes).nivel, 'alto');
@@ -154,6 +165,7 @@ const productosBase = [
   { id: 3, codigo: 'P-003', nombre: 'Producto C', activo: true },
 ];
 
+// Prueba: servicio: resume por nivel, ordena lo más grave primero y estima demanda solo cuando hace falta.
 test('servicio: resume por nivel, ordena lo más grave primero y estima demanda solo cuando hace falta', async () => {
   const e = entorno({
     productos: productosBase,
@@ -175,6 +187,7 @@ test('servicio: resume por nivel, ordena lo más grave primero y estima demanda 
   assert.equal(e.llamadas.length, 1);
 });
 
+// Prueba: servicio: el filtro por nivel solo afecta la lista, no el resumen.
 test('servicio: el filtro por nivel solo afecta la lista, no el resumen', async () => {
   const e = entorno({
     productos: productosBase,
@@ -189,6 +202,7 @@ test('servicio: el filtro por nivel solo afecta la lista, no el resumen', async 
   assert.equal(r.resumen.lotes_analizados, 2);
 });
 
+// Prueba: servicio: nunca pide más de 180 días de demanda.
 test('servicio: nunca pide más de 180 días de demanda', async () => {
   const e = entorno({
     productos: productosBase,
@@ -199,6 +213,7 @@ test('servicio: nunca pide más de 180 días de demanda', async () => {
   assert.equal(e.llamadas[0].horizonte, 180);
 });
 
+// Prueba: servicio: sin lotes con stock devuelve un resumen vacío.
 test('servicio: sin lotes con stock devuelve un resumen vacío', async () => {
   const e = entorno({ productos: productosBase, lotes: [] });
   const r = await analizarRiesgo({ ahora: AHORA, repositorio: e.repositorio, predictor: e.predictor });
@@ -207,6 +222,7 @@ test('servicio: sin lotes con stock devuelve un resumen vacío', async () => {
   assert.equal(e.llamadas.length, 0);
 });
 
+// Prueba: TC-06: el riesgo se actualiza cuando cambian el stock, las ventas o la fecha de vencimiento.
 test('TC-06: el riesgo se actualiza cuando cambian el stock, las ventas o la fecha de vencimiento', async () => {
   const datos = [{ id: 20, producto_id: 2, numero_lote: 'B1', cantidad_actual: 100, fecha_vencimiento: sumarDias(HOY, 30) }];
   const demandas = { 2: demanda({ porDia: 1 }) };
@@ -227,6 +243,7 @@ test('TC-06: el riesgo se actualiza cuando cambian el stock, las ventas o la fec
   assert.equal((await consulta()).productos[0].nivel, 'bajo');
 });
 
+// Prueba: controlador: valida producto_ids y nivel (ambos opcionales).
 test('controlador: valida producto_ids y nivel (ambos opcionales)', () => {
   assert.deepEqual(leerParametros({}), { ids: null, nivel: null });
   assert.deepEqual(leerParametros({ producto_ids: '2,3,3', nivel: 'ALTO' }), { ids: [2, 3], nivel: 'alto' });

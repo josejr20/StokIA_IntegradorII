@@ -7,6 +7,7 @@ const {
     generarOrdenAutomatica,
 } = require('../src/services/reabastecimientoAutomaticoService');
 
+// Prueba: TC-05: no genera una orden duplicada si ya existe una pendiente.
 test('TC-05: no genera una orden duplicada si ya existe una pendiente', async () => {
     let ordenesCreadas = 0;
 
@@ -36,6 +37,7 @@ test('TC-05: no genera una orden duplicada si ya existe una pendiente', async ()
     assert.equal(ordenesCreadas, 0);
 });
 
+// Prueba: TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre.
 test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () => {
     const ordenesCreadas = [];
     const alertasCreadas = [];
@@ -74,6 +76,7 @@ test('TC-01 y TC-05: genera una orden cuando hay riesgo de quiebre', async () =>
 });
 
 
+// Prueba: TC-08: evita órdenes duplicadas durante ejecuciones simultáneas.
 test('TC-08: evita órdenes duplicadas durante ejecuciones simultáneas', async () => {
     const ordenes = [];
     const alertas = [];
@@ -138,6 +141,7 @@ test('TC-08: evita órdenes duplicadas durante ejecuciones simultáneas', async 
 });
 
 
+// Prueba: HU-136 / TC-07: no genera orden ni notificación si el stock es suficiente.
 test('HU-136 / TC-07: no genera orden ni notificación si el stock es suficiente', async () => {
     let ordenesCreadas = 0;
     let alertasCreadas = 0;
@@ -174,6 +178,7 @@ test('HU-136 / TC-07: no genera orden ni notificación si el stock es suficiente
     assert.equal(notificacionesEnviadas, 0);
 });
 
+// Prueba: HU-136 / TC-06: notifica al encargado cuando se genera una orden.
 test('HU-136 / TC-06: notifica al encargado cuando se genera una orden', async () => {
     const ordenes = [];
     const alertas = [];
@@ -212,4 +217,3 @@ test('HU-136 / TC-06: notifica al encargado cuando se genera una orden', async (
     assert.equal(notificaciones.length, 1);
     assert.equal(notificaciones[0].productoId, 1);
 });
-

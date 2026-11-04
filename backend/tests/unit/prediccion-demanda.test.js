@@ -23,6 +23,7 @@ function ventasSimuladas({ dias = 70, patron = [2, 10, 10, 10, 10, 14, 20], mult
 
 const total = (resultado) => resultado.demanda_estimada;
 
+// Prueba: TC-01: con historial suficiente muestra la demanda estimada del periodo siguiente.
 test('TC-01: con historial suficiente muestra la demanda estimada del periodo siguiente', () => {
   const r = modelo.predecirDemanda(ventasSimuladas(), { horizonte: 7, hasta: HASTA });
   assert.equal(r.estado, 'ok');
@@ -32,6 +33,7 @@ test('TC-01: con historial suficiente muestra la demanda estimada del periodo si
   assert.ok(r.intervalo_inferior <= r.demanda_estimada && r.demanda_estimada <= r.intervalo_superior);
 });
 
+// Prueba: TC-02 y TC-07: sin historial suficiente informa que no hay datos para predecir.
 test('TC-02 y TC-07: sin historial suficiente informa que no hay datos para predecir', () => {
   const pocos = ventasSimuladas({ dias: 70 }).slice(0, 3); // solo 3 días con ventas
   const r = modelo.predecirDemanda(pocos, { horizonte: 7, hasta: HASTA });
@@ -46,12 +48,14 @@ test('TC-02 y TC-07: sin historial suficiente informa que no hay datos para pred
   assert.equal(ninguno.motivo, 'sin_ventas');
 });
 
+// Prueba: TC-02: ventas que cubren menos de 14 días tampoco bastan.
 test('TC-02: ventas que cubren menos de 14 días tampoco bastan', () => {
   const r = modelo.predecirDemanda(ventasSimuladas({ dias: 10 }), { horizonte: 7, hasta: HASTA });
   assert.equal(r.estado, 'datos_insuficientes');
   assert.equal(r.motivo, 'historial_corto');
 });
 
+// Prueba: TC-04: la estimación depende del historial de ventas (el doble de ventas, el doble de demanda).
 test('TC-04: la estimación depende del historial de ventas (el doble de ventas, el doble de demanda)', () => {
   const base = modelo.predecirDemanda(ventasSimuladas(), { horizonte: 7, hasta: HASTA });
   const doble = modelo.predecirDemanda(ventasSimuladas({ multiplicador: 2 }), { horizonte: 7, hasta: HASTA });
@@ -59,6 +63,7 @@ test('TC-04: la estimación depende del historial de ventas (el doble de ventas,
   assert.ok(razon > 1.9 && razon < 2.1, `razón ${razon}`);
 });
 
+// Prueba: TC-04: las ventas del día en curso no se cuentan (el día aún no termina).
 test('TC-04: las ventas del día en curso no se cuentan (el día aún no termina)', () => {
   const conHoy = [...ventasSimuladas(), { fecha_venta: '2026-10-21T10:00:00-05:00', cantidad: '500' }];
   const a = modelo.predecirDemanda(ventasSimuladas(), { horizonte: 7, hasta: HASTA });
@@ -66,6 +71,7 @@ test('TC-04: las ventas del día en curso no se cuentan (el día aún no termina
   assert.equal(total(a), total(b));
 });
 
+// Prueba: TC-04: una venta de noche en Lima cuenta en su día local, no en el día UTC siguiente.
 test('TC-04: una venta de noche en Lima cuenta en su día local, no en el día UTC siguiente', () => {
   const noche = [{ fecha_venta: '2026-10-20T22:30:00-05:00', cantidad: '9' }]; // 03:30 UTC del 21/oct
   const { serie } = modelo.construirSerie(noche, HASTA);
@@ -73,6 +79,7 @@ test('TC-04: una venta de noche en Lima cuenta en su día local, no en el día U
   assert.equal(serie.at(-1).cantidad, 9);
 });
 
+// Prueba: TC-05: el modelo aprende el patrón semanal (sábado alto, domingo bajo).
 test('TC-05: el modelo aprende el patrón semanal (sábado alto, domingo bajo)', () => {
   const r = modelo.predecirDemanda(ventasSimuladas(), { horizonte: 7, hasta: HASTA });
   const porFecha = Object.fromEntries(r.proyeccion.map((p) => [p.fecha, p.cantidad]));
@@ -82,6 +89,7 @@ test('TC-05: el modelo aprende el patrón semanal (sábado alto, domingo bajo)',
   assert.ok(sabado > lunes && lunes > domingo, `sáb ${sabado}, lun ${lunes}, dom ${domingo}`);
 });
 
+// Prueba: TC-05: detecta tendencia al alza cuando las ventas recientes crecen.
 test('TC-05: detecta tendencia al alza cuando las ventas recientes crecen', () => {
   const creciente = [];
   for (let i = 0; i < 56; i += 1) {
@@ -92,6 +100,7 @@ test('TC-05: detecta tendencia al alza cuando las ventas recientes crecen', () =
   assert.equal(r.tendencia, 'sube');
 });
 
+// Prueba: TC-06: el resultado trae todo lo necesario para mostrarlo de forma comprensible.
 test('TC-06: el resultado trae todo lo necesario para mostrarlo de forma comprensible', () => {
   const r = modelo.predecirDemanda(ventasSimuladas(), { horizonte: 14, hasta: HASTA });
   assert.match(r.mensaje, /Se estima una demanda de .* unidades para los próximos 14 días/);
@@ -103,6 +112,7 @@ test('TC-06: el resultado trae todo lo necesario para mostrarlo de forma compren
   assert.ok(r.promedio_diario > 0);
 });
 
+// Prueba: TC-03: se pueden analizar varios productos a la vez, en el orden pedido.
 test('TC-03: se pueden analizar varios productos a la vez, en el orden pedido', async () => {
   const ventas = [
     ...ventasSimuladas().map((v) => ({ ...v, producto_id: 2 })),
@@ -135,6 +145,7 @@ test('TC-03: se pueden analizar varios productos a la vez, en el orden pedido', 
   assert.deepEqual(argumentos[0], [3, 2, 4, 99]);
 });
 
+// Prueba: TC-03: valida la selección de productos y el horizonte.
 test('TC-03: valida la selección de productos y el horizonte', () => {
   assert.deepEqual(leerParametros({ producto_ids: '2,3,3', horizonte_dias: '14' }), { ids: [2, 3], horizonte: 14 });
   assert.equal(leerParametros({ producto_ids: '5' }).horizonte, 7); // horizonte por defecto

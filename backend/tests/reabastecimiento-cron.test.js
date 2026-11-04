@@ -7,6 +7,7 @@ const {
     evaluarProducto
 } = require('../src/services/reabastecimientoAutomaticoService');
 
+// Prueba: HU-133: identifica un producto que necesita reabastecimiento.
 test('HU-133: identifica un producto que necesita reabastecimiento', async () => {
     const repositorio = {
         obtenerLotes: async () => [
@@ -41,6 +42,7 @@ test('HU-133: identifica un producto que necesita reabastecimiento', async () =>
     assert.equal(resultado.cantidadSugerida, 25);
 });
 
+// Prueba: HU-133: no genera sugerencias si falta el stock minimo.
 test('HU-133: no genera sugerencias si falta el stock minimo', async () => {
     const repositorio = {
         obtenerLotes: async () => [],
@@ -63,6 +65,7 @@ test('HU-133: no genera sugerencias si falta el stock minimo', async () => {
 });
 
 
+// Prueba: HU-133: evalúa el producto y genera una orden con su alerta.
 test('HU-133: evalúa el producto y genera una orden con su alerta', async () => {
     const {
         procesarReabastecimiento
