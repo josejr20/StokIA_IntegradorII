@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import type { Cliente, Comprobante, Operacion, TipoOperacion } from '@/types'
@@ -22,16 +22,19 @@ export function useOperaciones(filtros: FiltrosOperaciones = {}) {
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
   if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
   if (filtros.buscar) params.set('buscar', filtros.buscar)
-  if (filtros.page && filtros.page > 1) params.set('page', String(filtros.page))
-  if (filtros.pageSize) params.set('page_size', String(filtros.pageSize))
+  params.set('page', String(filtros.page ?? 1))
+  params.set('page_size', String(filtros.pageSize ?? 10))
   const qs = params.toString()
 
   return useQuery({
     queryKey: ['operaciones', qs],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: Operacion[] }>(`/operaciones${qs ? `?${qs}` : ''}`)
-      return respuesta.data
+      const r = await api.get<{
+        data: Operacion[]; count: number; total_pages: number; previous: boolean; next: boolean
+      }>(`/operaciones?${qs}`)
+      return { results: r.data, count: r.count, totalPages: r.total_pages, previous: r.previous, next: r.next }
     },
+    placeholderData: keepPreviousData,
   })
 }
 
@@ -101,8 +104,9 @@ export function useComprobante(operacionId: number | null) {
       const respuesta = await api.get<{ data: Comprobante }>(`/operaciones/${operacionId}/comprobante`)
       return respuesta.data
     },
-    refetchOnMount: 'always',
+    refetchOnMount: true,
     enabled: operacionId !== null,
+    retry: 2,
   })
 }
 
@@ -228,7 +232,7 @@ export interface KardexPreviewFila {
   observaciones: string
   motivo: string
   cantidad: string | number
-  tipo: 'venta' | 'devolucion' | null
+  tipo: 'venta' | 'devolucion' | 'compra' | null
   productoId: number | null
   estado: 'OK' | 'ERROR'
   errores: string[]
@@ -242,6 +246,7 @@ export interface KardexPreviewResultado {
   conError: number
   devoluciones: number
   ventas: number
+  compras: number
   clientesNuevos: string[]
   productosNoMapeados: string[]
   filas: KardexPreviewFila[]

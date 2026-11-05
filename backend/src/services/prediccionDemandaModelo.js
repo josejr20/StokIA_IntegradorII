@@ -38,6 +38,23 @@ const CONFIG = Object.freeze({
   DIAS_SERIE_MOSTRADA: 42,
 });
 
+// Parámetros de suavizado del modelo. HU-78: el entrenamiento ajusta estos valores con el historial de ventas.
+const PARAMETROS_POR_DEFECTO = Object.freeze({ alpha: CONFIG.ALPHA, beta: CONFIG.BETA, phi: CONFIG.PHI });
+
+/** Devuelve parámetros válidos; cualquier valor ausente o fuera de rango se reemplaza por el de defecto. */
+function normalizarParametros(parametros) {
+  const dentro = (valor, minimo, maximo, porDefecto) => {
+    const numero = Number(valor);
+    return Number.isFinite(numero) && numero >= minimo && numero <= maximo ? numero : porDefecto;
+  };
+  const origen = parametros ?? {};
+  return {
+    alpha: dentro(origen.alpha, 0.01, 1, PARAMETROS_POR_DEFECTO.alpha),
+    beta: dentro(origen.beta, 0, 1, PARAMETROS_POR_DEFECTO.beta),
+    phi: dentro(origen.phi, 0.5, 1, PARAMETROS_POR_DEFECTO.phi),
+  };
+}
+
 const NOMBRE_MODELO = 'Holt amortiguado con estacionalidad semanal';
 const VERSION_MODELO = '1.0.0';
 
@@ -148,16 +165,15 @@ function mensajeInsuficiencia(motivo, { serie, diasConVentas }) {
 // ---------------------------------------------------------------- modelo
 
 /** Factores por día de la semana (índice 0 = domingo). Neutros si hay poco historial. */
-function calcularFactoresSemanales(serie) {
+function calcularFactoresSemanales(serie, dows = serie.map((punto) => diaSemana(punto.fecha))) {
   const neutros = [1, 1, 1, 1, 1, 1, 1];
   if (serie.length < CONFIG.MIN_DIAS_ESTACIONALIDAD) return neutros;
 
   const suma = Array(7).fill(0);
   const cuenta = Array(7).fill(0);
-  for (const { fecha, cantidad } of serie) {
-    const dia = diaSemana(fecha);
-    suma[dia] += cantidad;
-    cuenta[dia] += 1;
+  for (let i = 0; i < serie.length; i += 1) {
+    suma[dows[i]] += serie[i].cantidad;
+    cuenta[dows[i]] += 1;
   }
   const medias = suma.map((total, i) => (cuenta[i] ? total / cuenta[i] : 0));
   const mediaGlobal = medias.reduce((a, b) => a + b, 0) / 7;
@@ -169,10 +185,10 @@ function calcularFactoresSemanales(serie) {
 }
 
 /** Recorre el historial actualizando nivel y tendencia; mide el error de cada paso. */
-function ajustarModelo(serie, factores) {
+function ajustarModelo(serie, factores, parametros = PARAMETROS_POR_DEFECTO, dows = serie.map((punto) => diaSemana(punto.fecha))) {
   const n = serie.length;
   const sinEstacion = (i) => {
-    const factor = factores[diaSemana(serie[i].fecha)];
+    const factor = factores[dows[i]];
     return factor > FACTOR_MINIMO ? serie[i].cantidad / factor : null;
   };
   const media = (desde, hasta) => {
@@ -188,7 +204,7 @@ function ajustarModelo(serie, factores) {
     return cuenta ? suma / cuenta : 0;
   };
 
-  const { ALPHA, BETA, PHI } = CONFIG;
+  const { alpha: ALPHA, beta: BETA, phi: PHI } = parametros;
   let nivel = media(0, 7);
   let tendencia = n >= 14 ? (media(7, 14) - media(0, 7)) / 7 : 0;
 
@@ -198,7 +214,7 @@ function ajustarModelo(serie, factores) {
   let pasos = 0;
 
   for (let t = 7; t < n; t += 1) {
-    const factor = factores[diaSemana(serie[t].fecha)];
+    const factor = factores[dows[t]];
     const base = nivel + PHI * tendencia;
     const ajustado = Math.max(0, base) * factor;
     const real = serie[t].cantidad;
@@ -227,15 +243,16 @@ function ajustarModelo(serie, factores) {
   };
 }
 
-function proyectar({ nivel, tendencia }, factores, hasta, horizonte) {
+function proyectar({ nivel, tendencia }, factores, hasta, horizonte, phi = PARAMETROS_POR_DEFECTO.phi, conFechas = true) {
   const dias = [];
+  const diaBase = diaSemana(hasta);
   let potencia = 1;
   let efectoTendencia = 0;
   for (let h = 1; h <= horizonte; h += 1) {
-    potencia *= CONFIG.PHI;
+    potencia *= phi;
     efectoTendencia += potencia * tendencia;
-    const fecha = sumarDias(hasta, h);
-    dias.push({ fecha, cantidad: Math.max(0, nivel + efectoTendencia) * factores[diaSemana(fecha)] });
+    const cantidad = Math.max(0, nivel + efectoTendencia) * factores[(diaBase + h) % 7];
+    dias.push({ fecha: conFechas ? sumarDias(hasta, h) : null, cantidad });
   }
   return dias;
 }
@@ -260,13 +277,44 @@ function clasificarConfianza(errorRelativo) {
   return 'baja';
 }
 
+/** Pronóstico diario sin redondeos ni textos: lo usa el entrenamiento (HU-78) para evaluar parámetros. */
+function pronosticarSerie(serie, horizonte, hasta, parametros = PARAMETROS_POR_DEFECTO) {
+  const p = normalizarParametros(parametros);
+  const factores = calcularFactoresSemanales(serie);
+  const ajuste = ajustarModelo(serie, factores, p);
+  return proyectar(ajuste, factores, hasta, horizonte, p.phi);
+}
+
+/** Lo que no depende de los parámetros (días de la semana y factores): se calcula una vez por serie. */
+function prepararPrecalculo(serie) {
+  const dows = serie.map((punto) => diaSemana(punto.fecha));
+  return { dows, factores: calcularFactoresSemanales(serie, dows) };
+}
+
+/**
+ * Demanda total predicha para el horizonte, sin textos ni fechas (mucho más rápida que pronosticarSerie).
+ * Da el mismo total. `parametros` debe venir ya validado (ver normalizarParametros).
+ */
+function pronosticarTotal(serie, horizonte, hasta, parametros, precalculo = prepararPrecalculo(serie)) {
+  const ajuste = ajustarModelo(serie, precalculo.factores, parametros, precalculo.dows);
+  let total = 0;
+  for (const dia of proyectar(ajuste, precalculo.factores, hasta, horizonte, parametros.phi, false)) total += dia.cantidad;
+  return total;
+}
+
 const formatoNumero = (valor) => valor.toLocaleString('es-PE', { maximumFractionDigits: 1 });
 
 /**
  * Punto de entrada: ventas de un producto -> resultado listo para la API.
  * `hasta` es el último día completo (YYYY-MM-DD).
  */
-function predecirDemanda(ventas, { horizonte = CONFIG.HORIZONTE_DEFECTO, hasta = ultimoDiaCompleto() } = {}) {
+function predecirDemanda(ventas, {
+  horizonte = CONFIG.HORIZONTE_DEFECTO,
+  hasta = ultimoDiaCompleto(),
+  parametros,
+  versionModelo,
+} = {}) {
+  const p = normalizarParametros(parametros);
   const info = construirSerie(ventas, hasta);
   const historial = {
     desde: info.desde,
@@ -296,13 +344,13 @@ function predecirDemanda(ventas, { horizonte = CONFIG.HORIZONTE_DEFECTO, hasta =
   }
 
   const factores = calcularFactoresSemanales(info.serie);
-  const ajuste = ajustarModelo(info.serie, factores);
-  const dias = proyectar(ajuste, factores, hasta, horizonte);
+  const ajuste = ajustarModelo(info.serie, factores, p);
+  const dias = proyectar(ajuste, factores, hasta, horizonte, p.phi);
 
   const total = dias.reduce((suma, dia) => suma + dia.cantidad, 0);
   // Varianza del total = ruido diario (H · σ²) + incertidumbre del nivel estimado (H² · σ² · α/(2-α)),
   // que no se promedia a lo largo del horizonte porque afecta a todos los días por igual.
-  const varianzaRelativa = horizonte + horizonte ** 2 * (CONFIG.ALPHA / (2 - CONFIG.ALPHA));
+  const varianzaRelativa = horizonte + horizonte ** 2 * (p.alpha / (2 - p.alpha));
   const margen = CONFIG.Z_INTERVALO_80 * ajuste.sigma * Math.sqrt(varianzaRelativa);
   const inferior = Math.max(0, total - margen);
   const superior = total + margen;
@@ -325,12 +373,17 @@ function predecirDemanda(ventas, { horizonte = CONFIG.HORIZONTE_DEFECTO, hasta =
     historial,
     serie_historica: serieHistorica,
     proyeccion: dias.map((dia) => ({ fecha: dia.fecha, cantidad: redondear(dia.cantidad) })),
-    modelo: { nombre: NOMBRE_MODELO, version: VERSION_MODELO },
+    modelo: { nombre: NOMBRE_MODELO, version: versionModelo ?? VERSION_MODELO, parametros: p },
   };
 }
 
 module.exports = {
   CONFIG,
+  PARAMETROS_POR_DEFECTO,
+  normalizarParametros,
+  pronosticarSerie,
+  prepararPrecalculo,
+  pronosticarTotal,
   NOMBRE_MODELO,
   VERSION_MODELO,
   predecirDemanda,

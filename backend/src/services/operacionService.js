@@ -868,109 +868,168 @@ async function obtenerOperacion(id, transaction = null) {
 
 async function obtenerComprobanteOperacion(id) {
   const operacion = await obtenerOperacion(id);
-  if (!operacion?.comprobante) return { operacion, comprobante: null };
+  if (!operacion) return { operacion: null, comprobante: null };
+  if (!operacion.comprobante) return { operacion, comprobante: null };
 
-  const ventas = await Venta.findAll({ where: { operacion_id: operacion.id } });
-  let ventasReferencia = [];
-  let usuario = operacion.usuario || null;
-  if (operacion.operacion_origen_id) {
-    ventasReferencia = await Venta.findAll({
-      where: { operacion_id: operacion.operacion_origen_id },
-    });
-    if (!usuario && operacion.operacionOrigen?.usuario_id) {
-      usuario = await Usuario.findByPk(operacion.operacionOrigen.usuario_id);
-    }
-  }
-  if (!usuario) {
-    const usuarioId = ventas.find((venta) => venta.usuario_id)?.usuario_id;
-    if (usuarioId) usuario = await Usuario.findByPk(usuarioId);
-  }
   const comprobante = operacion.comprobante.toJSON
     ? operacion.comprobante.toJSON()
     : operacion.comprobante;
-  let operacionDatos = operacion.toJSON ? operacion.toJSON() : operacion;
-  if (!operacionDatos.detalles?.length) {
-    const itemsLegado = Array.isArray(comprobante.datos?.items) ? comprobante.datos.items : [];
-    const itemsParaReconstruir = itemsLegado.length
-      ? itemsLegado
-      : ventas.filter((venta) => Number(venta.cantidad) !== 0).map((venta) => ({
-        producto_id: venta.producto_id,
-        lote_id: venta.lote_id,
-        cantidad: Math.abs(Number(venta.cantidad)),
-        precio_unitario: venta.precio_unitario,
-        subtotal: Math.abs(Number(venta.cantidad) * Number(venta.precio_unitario)),
-      }));
-    const productoIds = [...new Set(itemsParaReconstruir
-      .map((item) => Number(item.producto_id))
-      .filter(Number.isInteger))];
-    const productos = productoIds.length
-      ? await Producto.findAll({ where: { id: { [Op.in]: productoIds } } })
-      : [];
-    const productosPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
-    operacionDatos = {
-      ...operacionDatos,
-      detalles: itemsParaReconstruir.map((item) => ({
-        ...item,
-        producto_id: Number(item.producto_id),
-        cantidad: item.cantidad,
-        precio_unitario: item.precio_unitario,
-        subtotal: item.subtotal,
-        lote_id: item.lote_id ?? null,
-        producto: productosPorId.get(Number(item.producto_id)) || {
-          id: item.producto_id,
-          codigo: item.codigo,
-          nombre: item.producto,
-        },
-      })),
-    };
-  }
-  return {
-    operacion: operacionDatos,
-    comprobante: {
-      ...comprobante,
-      datos: reconstruirDatosComprobante(
+
+  try {
+    const ventas = await Venta.findAll({ where: { operacion_id: operacion.id } });
+    let ventasReferencia = [];
+    let usuario = operacion.usuario || null;
+    if (operacion.operacion_origen_id) {
+      try {
+        ventasReferencia = await Venta.findAll({
+          where: { operacion_id: operacion.operacion_origen_id },
+        });
+      } catch {}
+      if (!usuario && operacion.operacionOrigen?.usuario_id) {
+        try {
+          usuario = await Usuario.findByPk(operacion.operacionOrigen.usuario_id);
+        } catch {}
+      }
+    }
+    if (!usuario) {
+      const usuarioId = ventas.find((venta) => venta.usuario_id)?.usuario_id;
+      if (usuarioId) {
+        try {
+          usuario = await Usuario.findByPk(usuarioId);
+        } catch {}
+      }
+    }
+
+    let operacionDatos = operacion.toJSON ? operacion.toJSON() : operacion;
+
+    if (!operacionDatos.detalles?.length) {
+      const itemsLegado = Array.isArray(comprobante.datos?.items) ? comprobante.datos.items : [];
+      if (itemsLegado.length) {
+        const productoIds = [...new Set(itemsLegado
+          .map((item) => Number(item.producto_id))
+          .filter(Number.isInteger))];
+        const productos = productoIds.length
+          ? await Producto.findAll({ where: { id: { [Op.in]: productoIds } } })
+          : [];
+        const productosPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
+        operacionDatos = {
+          ...operacionDatos,
+          detalles: itemsLegado.map((item, idx) => ({
+            id: idx + 1,
+            operacion_id: operacion.id,
+            producto_id: Number(item.producto_id),
+            cantidad: item.cantidad,
+            precio_unitario: item.precio_unitario,
+            subtotal: item.subtotal,
+            lote_id: item.lote_id ?? null,
+            producto: productosPorId.get(Number(item.producto_id)) || {
+              id: item.producto_id,
+              codigo: item.codigo,
+              nombre: item.producto,
+            },
+            lote: {},
+          })),
+        };
+      } else {
+        const itemsParaReconstruir = ventas.filter((venta) => Number(venta.cantidad) !== 0).map((venta) => ({
+          producto_id: venta.producto_id,
+          lote_id: venta.lote_id,
+          cantidad: Math.abs(Number(venta.cantidad)),
+          precio_unitario: venta.precio_unitario,
+          subtotal: Math.abs(Number(venta.cantidad) * Number(venta.precio_unitario)),
+        }));
+        const productoIds = [...new Set(itemsParaReconstruir
+          .map((item) => Number(item.producto_id))
+          .filter(Number.isInteger))];
+        const productos = productoIds.length
+          ? await Producto.findAll({ where: { id: { [Op.in]: productoIds } } })
+          : [];
+        const productosPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
+        operacionDatos = {
+          ...operacionDatos,
+          detalles: itemsParaReconstruir.map((item, idx) => ({
+            id: idx + 1,
+            operacion_id: operacion.id,
+            producto_id: Number(item.producto_id),
+            cantidad: item.cantidad,
+            precio_unitario: item.precio_unitario,
+            subtotal: item.subtotal,
+            lote_id: item.lote_id ?? null,
+            producto: productosPorId.get(Number(item.producto_id)) || {
+              id: item.producto_id,
+              codigo: item.codigo,
+              nombre: item.producto,
+            },
+            lote: {},
+          })),
+        };
+      }
+    }
+
+    let datosReconstruidos = comprobante.datos || {};
+    try {
+      datosReconstruidos = reconstruirDatosComprobante(
         operacionDatos,
         comprobante,
         [...ventas, ...ventasReferencia],
         usuario,
-      ),
-    },
-  };
+      );
+    } catch (e) {
+      datosReconstruidos = comprobante.datos || {};
+    }
+
+    return {
+      operacion: operacionDatos,
+      comprobante: {
+        ...comprobante,
+        datos: datosReconstruidos,
+      },
+    };
+  } catch (e) {
+    console.error('Error reconstruyendo comprobante, devolviendo datos guardados:', e?.message);
+    return {
+      operacion: operacion.toJSON ? operacion.toJSON() : operacion,
+      comprobante,
+    };
+  }
 }
 
-async function listarOperaciones({ tipo, cliente_id, fecha_desde, fecha_hasta, buscar } = {}) {
+async function listarOperaciones({
+  tipo, cliente_id, fecha_desde, fecha_hasta, buscar, page = 1, pageSize = 10,
+} = {}) {
   const where = {};
   if (tipo) where.tipo = tipo;
   if (cliente_id) where.cliente_id = cliente_id;
   if (fecha_desde || fecha_hasta) {
     where.fecha = {};
-    if (fecha_desde) where.fecha[Op.gte] = fecha_desde;
-    if (fecha_hasta) where.fecha[Op.lte] = fecha_hasta;
+    if (fecha_desde) where.fecha[Op.gte] = new Date(`${fecha_desde}T00:00:00.000-05:00`);
+    if (fecha_hasta) where.fecha[Op.lte] = new Date(`${fecha_hasta}T23:59:59.999-05:00`);
   }
   if (buscar) where.numero = { [Op.iLike]: `%${buscar}%` };
-  const operaciones = await Operacion.findAll({
-    where,
-    attributes: {
-      include: [[
-        Operacion.sequelize.literal(
-          '(SELECT COUNT(DISTINCT d.producto_id) FROM operacion_detalles d WHERE d.operacion_id = "Operacion".id)',
-        ),
-        'productos_count',
-      ]],
-    },
-    include: [
-      { model: Cliente, as: 'cliente' },
-      { model: Usuario, as: 'usuario' },
-      { model: Comprobante, as: 'comprobante' },
-      {
-        model: require('../models').OperacionDetalle,
-        as: 'detalles',
-        include: [{ model: require('../models').Producto, as: 'producto', attributes: ['id', 'codigo', 'nombre'] }],
+
+  const [count, operaciones] = await Promise.all([
+    Operacion.count({ where }),
+    Operacion.findAll({
+      where,
+      attributes: {
+        include: [[
+          Operacion.sequelize.literal(
+            '(SELECT COUNT(DISTINCT d.producto_id) FROM operacion_detalles d WHERE d.operacion_id = "Operacion".id)',
+          ),
+          'productos_count',
+        ]],
       },
-    ],
-    order: [['fecha', 'DESC'], ['id', 'DESC']],
-  });
-  return completarListado(operaciones);
+      include: [
+        { model: Cliente, as: 'cliente' },
+        { model: Usuario, as: 'usuario' },
+        { model: Comprobante, as: 'comprobante' },
+      ],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    }),
+  ]);
+  return { rows: await completarListado(operaciones), count };
 }
 
 /**
@@ -1222,7 +1281,6 @@ module.exports = {
   obtenerOperacion,
   obtenerOperacionCompleta,
   obtenerComprobanteOperacion,
-  reconstruirDatosComprobante,
   listarOperaciones,
   anularOperacion,
   puedeAnularOperacion,

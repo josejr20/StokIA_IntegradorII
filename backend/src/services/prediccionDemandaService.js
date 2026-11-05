@@ -24,6 +24,14 @@ function repositorioPorDefecto() {
       attributes: ['id', 'codigo', 'nombre', 'activo'],
       raw: true,
     }),
+    // HU-78: parámetros del modelo activo (si no hay o falla la consulta, se usan los de defecto).
+    modeloActivo: async () => {
+      try {
+        return await require('./mlModeloRepositorio').obtenerModeloActivo();
+      } catch {
+        return null;
+      }
+    },
     ventas: (ids, desde, hastaExclusivo) => Venta.findAll({
       where: {
         producto_id: { [Op.in]: ids },
@@ -72,6 +80,13 @@ async function predecirProductos(productoIds, {
 
   const { ventasValidas, ventasExcluidas, excluidosPorProducto } =
     filtrarVentasPorAlertas(ventas, alertas);
+  const [productos, ventas, modeloActivo] = await Promise.all([
+    repo.productos(productoIds),
+    repo.ventas(productoIds, rango.desde, rango.hasta),
+    repo.modeloActivo ? repo.modeloActivo() : null,
+  ]);
+  const parametros = modeloActivo?.parametros;
+  const versionModelo = typeof modeloActivo?.version === 'number' ? `v${modeloActivo.version}` : modeloActivo?.version;
 
   const productoPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
   const ventasPorProducto = new Map();
@@ -104,6 +119,7 @@ async function predecirProductos(productoIds, {
       calidad_datos: {
         ventas_anomalas_excluidas: excluidosPorProducto.get(String(id)) ?? 0,
       },
+      ...modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], { horizonte, hasta, parametros, versionModelo }),
     };
   });
 

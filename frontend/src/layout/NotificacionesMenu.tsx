@@ -1,6 +1,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { Bell, Loader2, AlertTriangle } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Bell, Loader2 } from 'lucide-react'
 
 import { api } from '@/lib/api'
 import { useAuth } from '@/auth/AuthContext'
@@ -89,6 +91,54 @@ export function NotificacionesMenu() {
           size="icon"
           className="relative"
           aria-label="Notificaciones"
+    useEffect(() => {
+        if (!autorizado) return
+
+        const actualizarNotificaciones = () => {
+            void cargarAlertas()
+        }
+
+        window.addEventListener(
+            'reabastecimiento:orden_generada',
+            actualizarNotificaciones
+        )
+
+        return () => {
+            window.removeEventListener(
+                'reabastecimiento:orden_generada',
+                actualizarNotificaciones
+            )
+        }
+    }, [autorizado])
+
+    if (!autorizado) return null
+
+    return (
+        <DropdownMenu onOpenChange={(abierto) => {
+            if (abierto) void cargarAlertas()
+        }}>
+            <DropdownMenuTrigger asChild>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Notificaciones"
+                >
+                    <Bell className="size-4" />
+                </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+                align="end"
+                className="w-80 max-w-[calc(100vw-2rem)]"
+            >
+                <div className="border-b px-3 py-2">
+                    <p className="text-sm font-semibold">
+                        Alertas de inventario
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                        Notificaciones de bajo stock
+                    </p>
+                </div>
 
         >
           <Bell className="size-4" />

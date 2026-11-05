@@ -76,7 +76,7 @@ export default function VentasPage() {
 
       {isLoading && <p className="text-muted-foreground">Cargando ventas...</p>}
       {isError && <p className="text-destructive">No se pudieron cargar las ventas.</p>}
-      {ventas.length > 0 && (
+      {!isLoading && !isError && (
         <div className="overflow-x-auto rounded-xl border bg-white">
           <table className="w-full text-sm">
             <thead className="border-b text-left text-muted-foreground">

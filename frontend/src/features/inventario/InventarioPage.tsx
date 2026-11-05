@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -29,13 +29,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useProductos } from "@/features/productos/api";
-import {
-  useLotesAgrupados,
-  useActualizarFechasVencimiento,
-  type EstadoFiltroLote,
-  type Lote,
-  type GrupoLotes,
-} from "./api";
+import { useLotesAgrupados, useActualizarFechasVencimiento, type EstadoFiltroLote, type GrupoLotes, type Lote } from "./api";
 import { NuevoLoteModal } from "./components/NuevoLoteModal";
 import { LoteDetalleSheet } from "./components/LoteDetalleSheet";
 import { RegistrarMovimientoModal } from "./components/RegistrarMovimientoModal";
@@ -51,12 +45,12 @@ type BadgeVariante =
   | "bajo";
 
 const ESTADO_LOTE: Record<string, { texto: string; variante: BadgeVariante }> =
-{
-  AGOTADO: { texto: "Agotado", variante: "secondary" },
-  VENCIDO: { texto: "Vencido", variante: "alto" },
-  POR_VENCER: { texto: "Próximo a vencer", variante: "medio" },
-  VIGENTE: { texto: "Vigente", variante: "bajo" },
-};
+  {
+    AGOTADO: { texto: "Agotado", variante: "secondary" },
+    VENCIDO: { texto: "Vencido", variante: "alto" },
+    POR_VENCER: { texto: "Próximo a vencer", variante: "medio" },
+    VIGENTE: { texto: "Vigente", variante: "bajo" },
+  };
 
 function aNumero(v: number | string | null | undefined): number {
   return Number(v ?? 0);
@@ -84,6 +78,8 @@ export default function InventarioPage() {
   const [loteMovimiento, setLoteMovimiento] = useState<Lote | null>(null);
 
   const { data: productos } = useProductos({});
+  const codigoDelLote = (lote: Lote) =>
+    productos?.results.find((p) => p.id === lote.producto_id)?.codigo ?? "";
   const [busquedaDebounce, setBusquedaDebounce] = useState("");
   useEffect(() => {
     const t = setTimeout(() => setBusquedaDebounce(busqueda), 300);
@@ -102,14 +98,6 @@ export default function InventarioPage() {
   const grupos = data?.results ?? [];
   const paginasTotales = data?.totalPages ?? 1;
   const { mutate: actualizarFechasVencimiento, isPending: actualizandoFechas } = useActualizarFechasVencimiento();
-
-  const codigoDelLote = (lote: Lote): string => {
-    return (
-      productos?.results?.find(
-        (producto) => producto.id === lote.producto_id
-      )?.codigo ?? ""
-    );
-  };
 
   const productosUnicos = [
     ...new Map(
