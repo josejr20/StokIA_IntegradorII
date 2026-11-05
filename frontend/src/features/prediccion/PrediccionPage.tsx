@@ -6,6 +6,8 @@ import {
   Search,
 } from 'lucide-react'
 
+import { api } from '@/lib/api'
+import { useAuth } from '@/auth/AuthContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -198,9 +200,66 @@ const estilosPrioridad: Record<NivelPrioridad, string> = {
   Baja: 'border-green-200 bg-green-100 text-green-800',
 }
 
+// US-22: respuesta de la vista previa y del registro controlado de anomalías.
+type AnomaliaDetectada = {
+  fuente: 'venta' | 'movimiento'
+  registro_id: number | string
+  producto_id: number | string
+  cantidad: number | string
+  fecha: string
+  origen?: string
+  motivo?: string
+  limite_inferior?: number
+  limite_superior?: number
+}
+
+type ResultadoAnomalias = {
+  modo: 'vista_previa' | 'registro'
+  rango_desde: string
+  rango_hasta: string
+  ventas_consultadas: number
+  movimientos_consultados: number
+  anomalias_encontradas: number
+  muestra_anomalias: AnomaliaDetectada[]
+  muestra_truncada: boolean
+  alertas_creadas: number
+  alertas_ya_existentes: number
+  pendientes_por_limite: number
+}
+
+const LIMITE_ALERTAS_POR_EJECUCION = 10
+
+function mostrarNumero(valor: string | number) {
+  const numero = Number(valor)
+  return Number.isFinite(numero)
+    ? numero.toLocaleString('es-PE', { maximumFractionDigits: 2 })
+    : String(valor)
+}
+
 export default function PrediccionPage() {
   const [busqueda, setBusqueda] = useState('')
   const [filtro, setFiltro] = useState<FiltroPrioridad>('Todas')
+
+  const { usuario, tienePermiso } = useAuth()
+  const puedeVerAnomalias = tienePermiso('ver_alertas')
+  // El servidor también comprueba el rol; esto solo controla la interfaz.
+  const esAdministrador =
+    String(usuario?.rol_nombre ?? usuario?.rol ?? '')
+      .trim()
+      .toLocaleLowerCase('es-PE') === 'administrador'
+
+  // Deshabilitado por defecto para evitar escrituras accidentales en la BD compartida.
+  const registroHabilitado =
+    import.meta.env.VITE_HABILITAR_REGISTRO_ANOMALIAS === 'true'
+
+  const [diasHistorial, setDiasHistorial] = useState(180)
+  const [consultandoAnomalias, setConsultandoAnomalias] = useState(false)
+  const [registrandoAnomalias, setRegistrandoAnomalias] = useState(false)
+  const [vistaAnomalias, setVistaAnomalias] = useState<ResultadoAnomalias | null>(null)
+  const [resultadoRegistro, setResultadoRegistro] = useState<ResultadoAnomalias | null>(null)
+  const [errorAnomalias, setErrorAnomalias] = useState('')
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false)
+  const [textoConfirmacion, setTextoConfirmacion] = useState('')
 
   const {
     data: productosData,
@@ -281,6 +340,64 @@ export default function PrediccionPage() {
       recargarLotes(),
       recargarMovimientos(),
     ])
+  }
+
+  async function analizarAnomalias() {
+    if (!puedeVerAnomalias || consultandoAnomalias || registrandoAnomalias) return
+
+    setConsultandoAnomalias(true)
+    setErrorAnomalias('')
+    setVistaAnomalias(null)
+    setResultadoRegistro(null)
+    setMostrarConfirmacion(false)
+    setTextoConfirmacion('')
+
+    try {
+      // GET solamente analiza. Nunca registra alertas ni cambia inventario.
+      const respuesta = await api.get<ResultadoAnomalias>(
+        `/alertas/anomalias-local/vista-previa?diasHistorial=${diasHistorial}`,
+      )
+      setVistaAnomalias(respuesta)
+    } catch {
+      setErrorAnomalias('No se pudo analizar el historial. Comprueba la conexión y tus permisos.')
+    } finally {
+      setConsultandoAnomalias(false)
+    }
+  }
+
+  async function registrarAnomaliasConfirmadas() {
+    if (
+      !esAdministrador ||
+      !registroHabilitado ||
+      !vistaAnomalias ||
+      vistaAnomalias.anomalias_encontradas === 0 ||
+      textoConfirmacion !== 'REGISTRAR' ||
+      registrandoAnomalias ||
+      consultandoAnomalias
+    ) return
+
+    setRegistrandoAnomalias(true)
+    setErrorAnomalias('')
+
+    try {
+      // POST modifica la BD: solo tras la confirmación explícita del administrador.
+      // El Backend exige además verificarAdministrador y confirmar: true.
+      const respuesta = await api.post<ResultadoAnomalias>(
+        '/alertas/anomalias-local/evaluar',
+        {
+          confirmar: true,
+          diasHistorial,
+          limiteNuevas: LIMITE_ALERTAS_POR_EJECUCION,
+        },
+      )
+      setResultadoRegistro(respuesta)
+      setMostrarConfirmacion(false)
+      setTextoConfirmacion('')
+    } catch {
+      setErrorAnomalias('No se pudieron registrar las alertas. No repitas el envío sin comprobar el estado.')
+    } finally {
+      setRegistrandoAnomalias(false)
+    }
   }
 
   return (
@@ -461,6 +578,191 @@ export default function PrediccionPage() {
           </TableBody>
         </Table>
       </section>
+
+      {puedeVerAnomalias && (
+        <section className="space-y-4 rounded-xl border p-4 md:p-5" aria-label="Detector de anomalías US-22">
+          <div>
+            <h2 className="text-lg font-semibold">Detección de anomalías en ventas e inventario</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Consulta movimientos y ventas con cantidades inusuales. La vista previa no guarda
+              registros ni modifica el inventario.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-end gap-3">
+            <label className="flex flex-col gap-1 text-sm" htmlFor="dias-anomalias">
+              <span>Días de historial</span>
+              <select
+                id="dias-anomalias"
+                className="h-9 rounded-md border bg-background px-3"
+                value={diasHistorial}
+                disabled={consultandoAnomalias || registrandoAnomalias}
+                onChange={(event) => {
+                  setDiasHistorial(Number(event.target.value))
+                  setVistaAnomalias(null)
+                  setResultadoRegistro(null)
+                  setMostrarConfirmacion(false)
+                  setTextoConfirmacion('')
+                  setErrorAnomalias('')
+                }}
+              >
+                <option value={30}>30 días</option>
+                <option value={90}>90 días</option>
+                <option value={180}>180 días</option>
+                <option value={365}>365 días</option>
+              </select>
+            </label>
+
+            <Button
+              type="button"
+              variant="outline"
+              disabled={consultandoAnomalias || registrandoAnomalias}
+              onClick={() => void analizarAnomalias()}
+            >
+              <Search className="mr-2 size-4" />
+              {consultandoAnomalias ? 'Analizando...' : 'Analizar anomalías'}
+            </Button>
+          </div>
+
+          {errorAnomalias && (
+            <p role="alert" className="rounded-md border border-red-200 p-3 text-sm text-red-700">
+              {errorAnomalias}
+            </p>
+          )}
+
+          {vistaAnomalias && (
+            <div className="space-y-3">
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground">Ventas consultadas</p>
+                  <p className="text-2xl font-semibold">{vistaAnomalias.ventas_consultadas}</p>
+                </div>
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground">Movimientos consultados</p>
+                  <p className="text-2xl font-semibold">{vistaAnomalias.movimientos_consultados}</p>
+                </div>
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground">Anomalías detectadas</p>
+                  <p className="text-2xl font-semibold">{vistaAnomalias.anomalias_encontradas}</p>
+                </div>
+              </div>
+
+              {vistaAnomalias.anomalias_encontradas === 0 ? (
+                <p role="status" className="text-sm text-muted-foreground">
+                  No se encontraron anomalías en este periodo.
+                </p>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground">
+                    Muestra de hasta 10 registros. Un movimiento y una venta relacionados pueden
+                    aparecer como dos anomalías distintas. Esta vista previa no registra alertas.
+                  </p>
+                  <div className="overflow-x-auto rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Origen</TableHead>
+                          <TableHead>Registro</TableHead>
+                          <TableHead>Producto</TableHead>
+                          <TableHead>Cantidad</TableHead>
+                          <TableHead>Motivo</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {vistaAnomalias.muestra_anomalias.slice(0, 10).map((anomalia, indice) => (
+                          <TableRow key={`${anomalia.fuente}-${anomalia.registro_id}-${indice}`}>
+                            <TableCell>{anomalia.fuente === 'venta' ? 'Venta' : 'Movimiento'}</TableCell>
+                            <TableCell>#{anomalia.registro_id}</TableCell>
+                            <TableCell>#{anomalia.producto_id}</TableCell>
+                            <TableCell>{mostrarNumero(anomalia.cantidad)}</TableCell>
+                            <TableCell>{anomalia.motivo ?? 'Cantidad inusual'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              )}
+
+              {esAdministrador && (
+                <div className="space-y-3 rounded-lg border p-3">
+                  <h3 className="font-medium">Registro de alertas (solo administrador)</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Registrar SÍ escribe nuevas alertas en la base conectada, con un máximo de
+                    {` ${LIMITE_ALERTAS_POR_EJECUCION} `}por ejecución. No elimina ni modifica ventas.
+                    No lo uses en una base compartida para hacer pruebas.
+                  </p>
+
+                  {!registroHabilitado ? (
+                    <p className="text-sm text-amber-700">
+                      Registro deshabilitado por seguridad. Solo debe habilitarse después de
+                      verificar una base de pruebas aislada.
+                    </p>
+                  ) : (
+                    <>
+                      {!mostrarConfirmacion ? (
+                        <Button
+                          type="button"
+                          disabled={vistaAnomalias.anomalias_encontradas === 0 || registrandoAnomalias}
+                          onClick={() => {
+                            setMostrarConfirmacion(true)
+                            setTextoConfirmacion('')
+                          }}
+                        >
+                          Preparar registro de alertas
+                        </Button>
+                      ) : (
+                        <div className="space-y-3 rounded-lg border p-3">
+                          <p className="text-sm font-medium">
+                            Esta acción guardará alertas en la base de datos conectada. Para
+                            confirmar, escribe REGISTRAR en el campo siguiente.
+                          </p>
+                          <Input
+                            aria-label="Confirmar registro de anomalías"
+                            placeholder="Escribe REGISTRAR"
+                            value={textoConfirmacion}
+                            disabled={registrandoAnomalias}
+                            onChange={(event) => setTextoConfirmacion(event.target.value)}
+                          />
+                          <div className="flex flex-wrap gap-2">
+                            <Button
+                              type="button"
+                              disabled={registrandoAnomalias || textoConfirmacion !== 'REGISTRAR'}
+                              onClick={() => void registrarAnomaliasConfirmadas()}
+                            >
+                              {registrandoAnomalias ? 'Registrando...' : 'Confirmar y registrar'}
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              disabled={registrandoAnomalias}
+                              onClick={() => {
+                                setMostrarConfirmacion(false)
+                                setTextoConfirmacion('')
+                              }}
+                            >
+                              Cancelar
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {resultadoRegistro && (
+            <p role="status" className="rounded-lg border p-3 text-sm">
+              Registro finalizado: {resultadoRegistro.alertas_creadas} alerta(s) nueva(s),
+              {' '}{resultadoRegistro.alertas_ya_existentes} ya existente(s) y
+              {' '}{resultadoRegistro.pendientes_por_limite} pendiente(s) por el límite.
+              Puedes revisar la campanita de notificaciones.
+            </p>
+          )}
+        </section>
+      )}
 
       <p className="text-xs text-muted-foreground">
         La demanda se estima con las salidas de ventas registradas en los últimos 30 días. Los resultados dependen de la información disponible en el sistema.
