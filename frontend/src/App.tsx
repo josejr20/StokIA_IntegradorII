@@ -1,12 +1,10 @@
 import { Routes, Route } from 'react-router'
- 
 import { RutaConPermiso, RutaInicial, RutaProtegida, RutaSoloAdministrador } from '@/auth/RutaProtegida'
 import LoginPage from '@/auth/LoginPage'
 import RecuperarPasswordPage from '@/auth/RecuperarPasswordPage'
 import VerificarCodigoPage from '@/auth/VerificarCodigoPage'
 import RestablecerPasswordPage from '@/auth/RestablecerPasswordPage'
 import { AppShell } from '@/layout/AppShell'
- 
 import InicioPage from '@/features/inicio/InicioPage'
 import DashboardPage from '@/features/dashboard/DashboardPage'
 import ProductosPage from '@/features/productos/ProductosPage'
@@ -22,12 +20,8 @@ import ModeloMLPage from '@/features/modelo-ml/ModeloMLPage'
 import ConfiguracionPage from '@/features/configuracion/ConfiguracionPage'
 import UsuariosPage from '@/features/usuarios/UsuariosPage'
 import AuditoriaPage from '@/features/auditoria/AuditoriaPage'
-<<<<<<< HEAD
 import RiesgoVencimientoPage from '@/features/riesgo/RiesgoVencimientoPage'
 
-=======
- 
->>>>>>> 4d80470 (Websocket-Comrobante)
 export default function App() {
   return (
     <Routes>
@@ -35,7 +29,6 @@ export default function App() {
       <Route path="/recuperar" element={<RecuperarPasswordPage />} />
       <Route path="/verificar-codigo" element={<VerificarCodigoPage />} />
       <Route path="/restablecer" element={<RestablecerPasswordPage />} />
- 
       <Route element={<RutaProtegida />}>
         <Route element={<AppShell />}>
           <Route index element={<RutaInicial><InicioPage /></RutaInicial>} />

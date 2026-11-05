@@ -624,11 +624,6 @@ function HistorialOperaciones() {
     return () => clearInterval(intervalo)
   }, [])
 
-  const actualizarFiltros = (cambio: Partial<typeof filtros>) => {
-    setFiltros((f) => ({ ...f, ...cambio }))
-    setPagina(1)
-  }
-
   const { data: respuesta, isLoading } = useOperaciones({
     tipo: filtros.tipo,
     buscar: debounce,

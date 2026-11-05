@@ -1,4 +1,4 @@
-const { getIO } = require('../config/socket');
+﻿const { getIO } = require('../config/socket');
 
 /**
  * Eventos de WebSocket soportados:
@@ -27,7 +27,6 @@ function emitir(evento, datos) {
   }
 }
 
-<<<<<<< HEAD
 /**
  * Notifica a los encargados de inventario conectados.
  * HU-133 / US-26 - TC-06.
@@ -48,12 +47,7 @@ function notificarEncargadosInventario(datos) {
   }
 }
 
-module.exports = {
-  emitir,
-  notificarEncargadosInventario
-};
-=======
-/** Emite un evento de operación y refresca las queries relacionadas. */
+/** Emite un evento de operaciÃ³n y refresca las queries relacionadas. */
 function emitirOperacion(evento, operacion) {
   if (!operacion) return;
   emitir(evento, {
@@ -66,5 +60,8 @@ function emitirOperacion(evento, operacion) {
   });
 }
 
-module.exports = { emitir, emitirOperacion };
->>>>>>> 4d80470 (Websocket-Comrobante)
+module.exports = {
+  emitir,
+  notificarEncargadosInventario,
+  emitirOperacion
+};

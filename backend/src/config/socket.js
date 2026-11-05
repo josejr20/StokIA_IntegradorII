@@ -1,4 +1,4 @@
-const { Server } = require('socket.io');
+﻿const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 
 let io = null;
@@ -20,22 +20,8 @@ function initSocket(server) {
     path: '/socket.io',
   });
 
-<<<<<<< HEAD
-
-  // Autenticación mediante la cookie HttpOnly existente.
+  // AutenticaciÃ³n mediante la cookie HttpOnly existente.
   io.use(async (socket, next) => {
-=======
-  // Middleware de autenticación por JWT en handshake.
-  // Prioriza el token enviado explícitamente (auth/query); si no hay,
-  // intenta obtenerlo de la cookie HTTP-only stockia_access que el
-  // navegador envía con withCredentials.
-  io.use((socket, next) => {
-    const token = socket.handshake.auth?.token || socket.handshake.query?.token
-      || extraerTokenCookie(socket.handshake.headers.cookie);
-    if (!token) {
-      return next(new Error('No autorizado: token requerido'));
-    }
->>>>>>> 4d80470 (Websocket-Comrobante)
     try {
       const origenPermitido = process.env.CORS_ORIGIN || 'http://localhost:5173';
       const origen = socket.handshake.headers.origin;
@@ -54,7 +40,7 @@ function initSocket(server) {
         .find(item => item.startsWith('stockia_access='));
 
       if (!cookie) {
-        return next(new Error('No autorizado: sesión requerida'));
+        return next(new Error('No autorizado: sesiÃ³n requerida'));
       }
 
       const token = decodeURIComponent(
@@ -64,7 +50,7 @@ function initSocket(server) {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
 
       // Verificar que la cuenta siga activa y que su rol
-      // no haya cambiado desde que se emitió el token.
+      // no haya cambiado desde que se emitiÃ³ el token.
       const { Usuario } = require('../models');
       const usuario = await Usuario.findByPk(payload.id, {
         attributes: ['id', 'rol_id', 'activo'],
@@ -79,25 +65,18 @@ function initSocket(server) {
 
       next();
     } catch (error) {
-      next(new Error('No autorizado: sesión inválida'));
+      return next(new Error('No autorizado: token invÃ¡lido'));
     }
   });
-
 
   io.on('connection', (socket) => {
-    console.log(`WebSocket conectado: userId=${socket.userId} socket=${socket.id}`);
-
-    // Sala exclusiva para encargados de inventario (rol ID 2).
-    if (Number(socket.userRol) === 2) {
-      socket.join('encargados_inventario');
-      console.log(`Usuario ${socket.userId} unido a encargados_inventario`);
-    }
-
-    socket.on('disconnect', () => {
-      console.log(`WebSocket desconectado: socket=${socket.id}`);
+    socket.on('subscribe:encargados_inventario', () => {
+      const rolesAutorizados = new Set(['Administrador', 'Almacenero']);
+      if (rolesAutorizados.has(socket.userRol)) {
+        socket.join('encargados_inventario');
+      }
     });
   });
-
 
   return io;
 }
@@ -109,13 +88,4 @@ function getIO() {
   return io;
 }
 
-/**
- * Emite un evento a todos los sockets conectados.
- * @param {string} event - Nombre del evento
- * @param {*} data - Datos a enviar
- */
-function emit(event, data) {
-  if (io) io.emit(event, data);
-}
-
-module.exports = { initSocket, getIO, emit };
+module.exports = { initSocket, getIO };
