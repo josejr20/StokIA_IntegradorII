@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
-const { verificarPermiso } = require('../middleware/permission');
+const { verificarPermiso, verificarAdministrador } = require('../middleware/permission');
 const { listar, obtener, crear, actualizar, marcarVista, atender, notificar, sincronizarML } = require('../controllers/alertaController');
 const { vistaPrevia: vistaPreviaAnomaliasLocales, registrar: registrarAnomaliasLocales } = require('../controllers/anomaliasLocalController');
 const router = Router();
@@ -178,7 +178,7 @@ router.use(autenticar);
  *                   example: 1
  */
 router.get('/anomalias-local/vista-previa', verificarPermiso('ver_alertas'), vistaPreviaAnomaliasLocales);
-router.post('/anomalias-local/evaluar', verificarPermiso('ver_alertas'), registrarAnomaliasLocales);
+router.post('/anomalias-local/evaluar', verificarAdministrador, registrarAnomaliasLocales);
 router.get('/', verificarPermiso('ver_alertas'), listar);
 router.get('/:id', verificarPermiso('ver_alertas'), obtener);
 router.post('/', verificarPermiso('ver_alertas'), crear);
