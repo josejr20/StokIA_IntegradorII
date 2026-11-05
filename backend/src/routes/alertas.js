@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
 const { listar, obtener, crear, actualizar, marcarVista, atender, notificar, sincronizarML } = require('../controllers/alertaController');
+const { vistaPrevia: vistaPreviaAnomaliasLocales, registrar: registrarAnomaliasLocales } = require('../controllers/anomaliasLocalController');
 const router = Router();
 router.use(autenticar);
 
@@ -138,7 +139,7 @@ router.use(autenticar);
  *               $ref: '#/components/schemas/Alerta'
  * /api/alertas/{id}/notificar:
  *   post:
- *     summary: Enviar notificación de alerta
+ *     summary: Enviar notificaciÃ³n de alerta
  *     tags: [Alertas]
  *     security:
  *       - BearerAuth: []
@@ -150,7 +151,7 @@ router.use(autenticar);
  *           type: integer
  *     responses:
  *       '200':
- *         description: Notificación enviada
+ *         description: NotificaciÃ³n enviada
  *         content:
  *           application/json:
  *             schema:
@@ -163,7 +164,7 @@ router.use(autenticar);
  *       - BearerAuth: []
  *     responses:
  *       '200':
- *         description: Sincronización completada
+ *         description: SincronizaciÃ³n completada
  *         content:
  *           application/json:
  *             schema:
@@ -176,6 +177,8 @@ router.use(autenticar);
  *                   type: integer
  *                   example: 1
  */
+router.get('/anomalias-local/vista-previa', verificarPermiso('ver_alertas'), vistaPreviaAnomaliasLocales);
+router.post('/anomalias-local/evaluar', verificarPermiso('ver_alertas'), registrarAnomaliasLocales);
 router.get('/', verificarPermiso('ver_alertas'), listar);
 router.get('/:id', verificarPermiso('ver_alertas'), obtener);
 router.post('/', verificarPermiso('ver_alertas'), crear);
