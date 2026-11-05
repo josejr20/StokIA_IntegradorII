@@ -28,6 +28,8 @@ const presentacionRoutes = require('./presentaciones');
     const precioRoutes = require('./precio');
     const reniecRoutes = require('./reniec.routes');
     const rucRoutes = require('./ruc.routes');
+    const mlRoutes = require('./ml');
+    const prediccionRoutes = require('./predicciones');
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
@@ -58,5 +60,6 @@ Router.use('/preferencias', preferenciaRoutes);
     Router.use('/presentaciones-niveles', productoPresentacionRoutes);
     Router.use('/precios', precioRoutes);
     Router.use('/predicciones', prediccionRoutes);
+    Router.use('/ml', mlRoutes);
 
     module.exports = Router;
