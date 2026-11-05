@@ -1,6 +1,7 @@
 ﻿const Router = require('express').Router();
 const recomendacionesRoutes = require('./recomendaciones');
 const authRoutes = require('./auth');
+const prediccionRoutes = require('./predicciones');
 const usuarioRoutes = require('./usuarios');
 const rolRoutes = require('./roles');
 const permisoRoutes = require('./permisos');
@@ -29,7 +30,6 @@ const productoPresentacionRoutes = require('./productoPresentacion');
 const precioRoutes = require('./precio');
 const reniecRoutes = require('./reniec.routes');
 const rucRoutes = require('./ruc.routes');
-const prediccionRoutes = require('./predicciones');
 const riesgoVencimientoRoutes = require('./riesgoVencimiento');
 const mlRoutes = require('./ml');
 

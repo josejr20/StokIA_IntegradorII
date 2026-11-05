@@ -15,6 +15,17 @@ const registrarMovimiento = async (loteId, tipo, cantidad, origen = 'otro', moti
         loteId, tipo, cantidad, origen, motivo, precioUnitario, usuarioId, transaccion, fecha,
       );
       await transaccion.commit();
+      // US-24: revisar el stock tras confirmar el movimiento.
+      // Si falla el registro de la alerta, el movimiento ya confirmado no se revierte.
+      try {
+        const loteConfirmado = await Lote.findByPk(loteId);
+        if (loteConfirmado) {
+          const { evaluarAlertasStockMinimo } = require('./stockMinimoService');
+          await evaluarAlertasStockMinimo(loteConfirmado.producto_id);
+        }
+      } catch (errorAlerta) {
+        logger.warn(`No se pudo evaluar el stock minimo del lote ${loteId}: ${errorAlerta.message}`);
+      }
       return resultado;
     } catch (error) {
       await transaccion.rollback();

@@ -26,7 +26,12 @@ export function useInventarioRealtime() {
     const notificarReabastecimiento = () => {
       window.dispatchEvent(new Event('reabastecimiento:orden_generada'))
     }
+    const suscribirEncargadosInventario = () => {
+      s.emit('subscribe:encargados_inventario')
+    }
 
+    s.on('connect', suscribirEncargadosInventario)
+    if (s.connected) suscribirEncargadosInventario()
     s.on('reabastecimiento:orden_generada', notificarReabastecimiento)
     s.on('lote:creado', invalidar)
     s.on('lote:actualizado', invalidar)
@@ -38,6 +43,7 @@ export function useInventarioRealtime() {
       s.off('movimiento:creado', invalidar)
       s.off('inventario:actualizado', invalidar)
       s.off('reabastecimiento:orden_generada', notificarReabastecimiento)
+      s.off('connect', suscribirEncargadosInventario)
 
       s.disconnect()
       socket = null

@@ -47,7 +47,7 @@ function notificarEncargadosInventario(datos) {
   }
 }
 
-/** Emite un evento de operaciÃ³n y refresca las queries relacionadas. */
+/** Emite un evento de operación y refresca las queries relacionadas. */
 function emitirOperacion(evento, operacion) {
   if (!operacion) return;
   emitir(evento, {
