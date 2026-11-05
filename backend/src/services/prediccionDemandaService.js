@@ -71,20 +71,14 @@ async function predecirProductos(productoIds, {
   const hasta = modelo.ultimoDiaCompleto(ahora);
   const rango = modelo.rangoConsultaUtc(hasta);
 
-  const consultas = [
+  const [productos, ventas, alertas, modeloActivo] = await Promise.all([
     repo.productos(productoIds),
     repo.ventas(productoIds, rango.desde, rango.hasta),
-  ];
-  if (typeof repo.alertas === 'function') consultas.push(repo.alertas(productoIds));
-  const [productos, ventas, alertas = []] = await Promise.all(consultas);
-
-  const { ventasValidas, ventasExcluidas, excluidosPorProducto } =
-    filtrarVentasPorAlertas(ventas, alertas);
-  const [productos, ventas, modeloActivo] = await Promise.all([
-    repo.productos(productoIds),
-    repo.ventas(productoIds, rango.desde, rango.hasta),
+    typeof repo.alertas === 'function' ? repo.alertas(productoIds) : [],
     repo.modeloActivo ? repo.modeloActivo() : null,
   ]);
+  const { ventasValidas, ventasExcluidas, excluidosPorProducto } =
+    filtrarVentasPorAlertas(ventas, alertas);
   const parametros = modeloActivo?.parametros;
   const versionModelo = typeof modeloActivo?.version === 'number' ? `v${modeloActivo.version}` : modeloActivo?.version;
 
@@ -115,7 +109,6 @@ async function predecirProductos(productoIds, {
         nombre: producto.nombre,
         activo: producto.activo,
       },
-      ...modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], { horizonte, hasta }),
       calidad_datos: {
         ventas_anomalas_excluidas: excluidosPorProducto.get(String(id)) ?? 0,
       },

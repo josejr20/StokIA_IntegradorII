@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { AlertTriangle, Search, TrendingUp, X } from 'lucide-react'
 import {
@@ -12,12 +11,19 @@ import {
   YAxis,
 } from 'recharts'
 
-import { api } from '@/lib/api'
+import { api, ApiError } from '@/lib/api'
 import { useAuth } from '@/auth/AuthContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ApiError } from '@/lib/api'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { useProductos } from '@/features/productos/api'
 import { usePredecirDemanda } from './api'
 import type {
@@ -30,6 +36,7 @@ import type {
 
 const MAX_PRODUCTOS = 10
 const HORIZONTES = [7, 14, 30]
+const LIMITE_ALERTAS_POR_EJECUCION = 10
 
 const formatoNumero = new Intl.NumberFormat('es-PE', {
   maximumFractionDigits: 1,
@@ -57,7 +64,6 @@ const TEXTO_CONFIANZA: Record<Confianza, string> = {
   baja: 'Confianza baja',
 }
 
-// Colores del Badge: verde = confianza alta, ámbar = media, rojo = baja.
 const VARIANTE_CONFIANZA: Record<Confianza, 'bajo' | 'medio' | 'alto'> = {
   alta: 'bajo',
   media: 'medio',
@@ -76,6 +82,30 @@ interface PuntoGrafico {
   proyeccion?: number
 }
 
+type AnomaliaDetectada = {
+  fuente: 'venta' | 'movimiento'
+  registro_id: number | string
+  producto_id: number | string
+  cantidad: number | string
+  fecha: string
+  origen?: string
+  motivo?: string
+}
+
+type ResultadoAnomalias = {
+  modo: 'vista_previa' | 'registro'
+  rango_desde: string
+  rango_hasta: string
+  ventas_consultadas: number
+  movimientos_consultados: number
+  anomalias_encontradas: number
+  muestra_anomalias: AnomaliaDetectada[]
+  muestra_truncada: boolean
+  alertas_creadas: number
+  alertas_ya_existentes: number
+  pendientes_por_limite: number
+}
+
 function datosGrafico(resultado: PrediccionOk): PuntoGrafico[] {
   const historico: PuntoGrafico[] = resultado.serie_historica
     .slice(-28)
@@ -85,9 +115,6 @@ function datosGrafico(resultado: PrediccionOk): PuntoGrafico[] {
     }))
 
   const ultimo = historico[historico.length - 1]
-
-  // El último día real también inicia la línea punteada,
-  // para que ambas líneas se unan.
   if (ultimo) ultimo.proyeccion = ultimo.historico
 
   const proyeccion: PuntoGrafico[] = resultado.proyeccion.map((punto) => ({
@@ -111,12 +138,10 @@ function TarjetaOk({
     <div className="space-y-4 rounded-xl border bg-white p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h2 className="font-semibold">{titulo}</h2>
-
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary">
             {TEXTO_TENDENCIA[resultado.tendencia]}
           </Badge>
-
           <Badge variant={VARIANTE_CONFIANZA[resultado.confianza]}>
             {TEXTO_CONFIANZA[resultado.confianza]}
           </Badge>
@@ -128,7 +153,6 @@ function TarjetaOk({
           <p className="text-sm text-muted-foreground">
             Demanda estimada · próximos {resultado.horizonte_dias} días
           </p>
-
           <p className="mt-1 text-3xl font-semibold">
             {formatoNumero.format(resultado.demanda_estimada)}{' '}
             <span className="text-base font-normal text-muted-foreground">
@@ -136,21 +160,17 @@ function TarjetaOk({
             </span>
           </p>
         </div>
-
         <div>
           <p className="text-sm text-muted-foreground">
             Rango probable ({resultado.nivel_intervalo} %)
           </p>
-
           <p className="mt-1 text-xl font-medium">
             {formatoNumero.format(resultado.intervalo_inferior)} –{' '}
             {formatoNumero.format(resultado.intervalo_superior)}
           </p>
         </div>
-
         <div>
           <p className="text-sm text-muted-foreground">Promedio por día</p>
-
           <p className="mt-1 text-xl font-medium">
             {formatoNumero.format(resultado.promedio_diario)}
           </p>
@@ -164,16 +184,13 @@ function TarjetaOk({
             margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-
             <XAxis
               dataKey="fecha"
               tickFormatter={formatoFecha}
               minTickGap={24}
               tick={{ fontSize: 12 }}
             />
-
             <YAxis width={40} tick={{ fontSize: 12 }} />
-
             <Tooltip
               labelFormatter={(valor: unknown) =>
                 formatoFecha(String(valor))
@@ -182,9 +199,7 @@ function TarjetaOk({
                 formatoNumero.format(Number(valor))
               }
             />
-
             <Legend />
-
             <Line
               type="monotone"
               dataKey="historico"
@@ -193,7 +208,6 @@ function TarjetaOk({
               strokeWidth={2}
               dot={false}
             />
-
             <Line
               type="monotone"
               dataKey="proyeccion"
@@ -208,12 +222,11 @@ function TarjetaOk({
       </div>
 
       <p className="text-sm">{resultado.mensaje}</p>
-
       <p className="text-xs text-muted-foreground">
         Calculado con {historial.dias_analizados} días de ventas (
         {historial.dias_con_ventas} con movimiento,{' '}
-        {formatoNumero.format(historial.unidades)} unidades). Considera el
-        nivel reciente de ventas, la tendencia y el día de la semana. Es una
+        {formatoNumero.format(historial.unidades)} unidades). Considera el nivel
+        reciente de ventas, la tendencia y el día de la semana. Es una
         estimación: el rango indica dónde es más probable que quede la demanda
         real.
       </p>
@@ -239,9 +252,7 @@ function TarjetaInsuficiente({
         <AlertTriangle className="text-amber-600" />
         <h2 className="font-semibold">{titulo}</h2>
       </div>
-
       <p className="text-sm">{resultado.mensaje}</p>
-
       <p className="text-xs text-muted-foreground">
         Días con ventas: {historial.dias_con_ventas} de{' '}
         {requisitos.min_dias_con_ventas} necesarios · Historial:{' '}
@@ -264,11 +275,8 @@ function TarjetaResultado({
   if (resultado.estado === 'ok') {
     return <TarjetaOk resultado={resultado} titulo={titulo} />
   }
-
   if (resultado.estado === 'datos_insuficientes') {
-    return (
-      <TarjetaInsuficiente resultado={resultado} titulo={titulo} />
-    )
+    return <TarjetaInsuficiente resultado={resultado} titulo={titulo} />
   }
 
   return (
@@ -282,35 +290,6 @@ function TarjetaResultado({
   )
 }
 
-// US-22: respuesta de la vista previa y del registro controlado de anomalías.
-type AnomaliaDetectada = {
-  fuente: 'venta' | 'movimiento'
-  registro_id: number | string
-  producto_id: number | string
-  cantidad: number | string
-  fecha: string
-  origen?: string
-  motivo?: string
-  limite_inferior?: number
-  limite_superior?: number
-}
-
-type ResultadoAnomalias = {
-  modo: 'vista_previa' | 'registro'
-  rango_desde: string
-  rango_hasta: string
-  ventas_consultadas: number
-  movimientos_consultados: number
-  anomalias_encontradas: number
-  muestra_anomalias: AnomaliaDetectada[]
-  muestra_truncada: boolean
-  alertas_creadas: number
-  alertas_ya_existentes: number
-  pendientes_por_limite: number
-}
-
-const LIMITE_ALERTAS_POR_EJECUCION = 10
-
 function mostrarNumero(valor: string | number) {
   const numero = Number(valor)
   return Number.isFinite(numero)
@@ -319,107 +298,44 @@ function mostrarNumero(valor: string | number) {
 }
 
 export default function PrediccionPage() {
-  const [busqueda, setBusqueda] = useState('')
-  const [filtro, setFiltro] = useState<FiltroPrioridad>('Todas')
-
-  const { usuario, tienePermiso } = useAuth()
-  const puedeVerAnomalias = tienePermiso('ver_alertas')
-  // El servidor también comprueba el rol; esto solo controla la interfaz.
-  const esAdministrador =
-    String(usuario?.rol_nombre ?? usuario?.rol ?? '')
-      .trim()
-      .toLocaleLowerCase('es-PE') === 'administrador'
-
-  // Deshabilitado por defecto para evitar escrituras accidentales en la BD compartida.
-  const registroHabilitado =
-    import.meta.env.VITE_HABILITAR_REGISTRO_ANOMALIAS === 'true'
-
+  const [buscar, setBuscar] = useState('')
+  const [elegidos, setElegidos] = useState<ProductoElegido[]>([])
+  const [horizonte, setHorizonte] = useState(7)
   const [diasHistorial, setDiasHistorial] = useState(180)
   const [consultandoAnomalias, setConsultandoAnomalias] = useState(false)
   const [registrandoAnomalias, setRegistrandoAnomalias] = useState(false)
-  const [vistaAnomalias, setVistaAnomalias] = useState<ResultadoAnomalias | null>(null)
-  const [resultadoRegistro, setResultadoRegistro] = useState<ResultadoAnomalias | null>(null)
+  const [vistaAnomalias, setVistaAnomalias] =
+    useState<ResultadoAnomalias | null>(null)
+  const [resultadoRegistro, setResultadoRegistro] =
+    useState<ResultadoAnomalias | null>(null)
   const [errorAnomalias, setErrorAnomalias] = useState('')
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false)
   const [textoConfirmacion, setTextoConfirmacion] = useState('')
 
-  const {
-    data: productosData,
-    isLoading: cargandoProductos,
-    isError: errorProductos,
-    refetch: recargarProductos,
-  } = useProductos({ page: 1, pageSize: 100 })
-
-  const {
-    data: lotesData,
-    isLoading: cargandoLotes,
-    isError: errorLotes,
-    refetch: recargarLotes,
-  } = useLotes({ pageSize: 100 })
-
-  const {
-    data: movimientosData,
-    isLoading: cargandoMovimientos,
-    isError: errorMovimientos,
-    refetch: recargarMovimientos,
-  } = useMovimientosInventario({
-    fecha_desde: fechaHace30Dias(),
-    fecha_hasta: fechaHoy(),
-    pageSize: 100,
-  })
-
-  const filas = useMemo(() => {
-    const productos = productosData?.results ?? []
-    const lotes = lotesData?.results ?? []
-    const movimientos = movimientosData?.results ?? []
-
-    return productos
-      .filter((producto) => producto.activo)
-      .map((producto) =>
-        evaluarPrioridad(producto, lotes, movimientos),
-      )
-      .sort((a, b) => {
-        const orden: Record<NivelPrioridad, number> = {
-          Alta: 0,
-          Media: 1,
-          Baja: 2,
-        }
-
-        return (
-          orden[a.prioridad] - orden[b.prioridad] ||
-          a.nombre.localeCompare(b.nombre, 'es')
-        )
-      })
-  }, [productosData, lotesData, movimientosData])
-
-  const visibles = filas.filter((producto) => {
-    const texto =
-      `${producto.nombre} ${producto.codigo}`.toLowerCase()
-
-    const coincideBusqueda = texto.includes(
-      busqueda.trim().toLowerCase(),
-  const [buscar, setBuscar] = useState('')
-  const [elegidos, setElegidos] = useState<ProductoElegido[]>([])
-  const [horizonte, setHorizonte] = useState(7)
+  const { usuario, tienePermiso } = useAuth()
+  const puedeVerAnomalias = tienePermiso('ver_alertas')
+  const esAdministrador =
+    String(usuario?.rol_nombre ?? usuario?.rol ?? '')
+      .trim()
+      .toLocaleLowerCase('es-PE') === 'administrador'
+  const registroHabilitado =
+    import.meta.env.VITE_HABILITAR_REGISTRO_ANOMALIAS === 'true'
 
   const catalogo = useProductos({})
   const prediccion = usePredecirDemanda()
-
-  const texto = buscar.trim().toLowerCase()
-
+  const textoBusqueda = buscar.trim().toLowerCase()
   const productos = (catalogo.data?.results ?? [])
     .filter((producto) => producto.activo)
     .filter(
       (producto) =>
-        !texto ||
+        !textoBusqueda ||
         `${producto.codigo} ${producto.nombre}`
           .toLowerCase()
-          .includes(texto),
+          .includes(textoBusqueda),
     )
 
   const estaElegido = (id: number) =>
     elegidos.some((producto) => producto.id === id)
-
   const limiteAlcanzado = elegidos.length >= MAX_PRODUCTOS
 
   function alternar(producto: ProductoElegido) {
@@ -427,7 +343,6 @@ export default function PrediccionPage() {
       if (actuales.some((actual) => actual.id === producto.id)) {
         return actuales.filter((actual) => actual.id !== producto.id)
       }
-
       return actuales.length >= MAX_PRODUCTOS
         ? actuales
         : [...actuales, producto]
@@ -442,7 +357,9 @@ export default function PrediccionPage() {
   }
 
   async function analizarAnomalias() {
-    if (!puedeVerAnomalias || consultandoAnomalias || registrandoAnomalias) return
+    if (!puedeVerAnomalias || consultandoAnomalias || registrandoAnomalias) {
+      return
+    }
 
     setConsultandoAnomalias(true)
     setErrorAnomalias('')
@@ -452,13 +369,14 @@ export default function PrediccionPage() {
     setTextoConfirmacion('')
 
     try {
-      // GET solamente analiza. Nunca registra alertas ni cambia inventario.
       const respuesta = await api.get<ResultadoAnomalias>(
         `/alertas/anomalias-local/vista-previa?diasHistorial=${diasHistorial}`,
       )
       setVistaAnomalias(respuesta)
     } catch {
-      setErrorAnomalias('No se pudo analizar el historial. Comprueba la conexión y tus permisos.')
+      setErrorAnomalias(
+        'No se pudo analizar el historial. Comprueba la conexión y tus permisos.',
+      )
     } finally {
       setConsultandoAnomalias(false)
     }
@@ -473,14 +391,13 @@ export default function PrediccionPage() {
       textoConfirmacion !== 'REGISTRAR' ||
       registrandoAnomalias ||
       consultandoAnomalias
-    ) return
+    ) {
+      return
+    }
 
     setRegistrandoAnomalias(true)
     setErrorAnomalias('')
-
     try {
-      // POST modifica la BD: solo tras la confirmación explícita del administrador.
-      // El Backend exige además verificarAdministrador y confirmar: true.
       const respuesta = await api.post<ResultadoAnomalias>(
         '/alertas/anomalias-local/evaluar',
         {
@@ -493,35 +410,34 @@ export default function PrediccionPage() {
       setMostrarConfirmacion(false)
       setTextoConfirmacion('')
     } catch {
-      setErrorAnomalias('No se pudieron registrar las alertas. No repitas el envío sin comprobar el estado.')
+      setErrorAnomalias(
+        'No se pudieron registrar las alertas. No repitas el envío sin comprobar el estado.',
+      )
     } finally {
       setRegistrandoAnomalias(false)
     }
   }
+
   const mensajeError =
     prediccion.error instanceof ApiError
       ? prediccion.error.message
       : 'No se pudo generar la predicción.'
 
   return (
-    <div className="space-y-6">
+    <main className="space-y-6">
       <div>
         <h1 className="flex items-center gap-2 text-2xl font-semibold">
           <TrendingUp /> Predicción de demanda
         </h1>
-
         <p className="mt-1 text-sm text-muted-foreground">
-          Estima cuánto se venderá de cada producto a partir de su historial
-          de ventas, para anticipar cuánto comprar o producir.
+          Estima cuánto se venderá de cada producto a partir de su historial de
+          ventas, para anticipar cuánto comprar o producir.
         </p>
       </div>
 
       <div className="space-y-4 rounded-xl border bg-white p-5">
         <div>
-          <h2 className="font-medium">
-            1. Elige los productos a analizar
-          </h2>
-
+          <h2 className="font-medium">1. Elige los productos a analizar</h2>
           <p className="text-sm text-muted-foreground">
             Hasta {MAX_PRODUCTOS} productos a la vez.
           </p>
@@ -529,7 +445,6 @@ export default function PrediccionPage() {
 
         <div className="relative">
           <Search className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
-
           <Input
             className="pl-9"
             placeholder="Buscar por código o nombre"
@@ -539,17 +454,13 @@ export default function PrediccionPage() {
         </div>
 
         {catalogo.isLoading && (
-          <p className="text-sm text-muted-foreground">
-            Cargando productos...
-          </p>
+          <p className="text-sm text-muted-foreground">Cargando productos...</p>
         )}
-
         {catalogo.isError && (
           <p className="text-sm text-destructive">
             No se pudieron cargar los productos.
           </p>
         )}
-
         {!catalogo.isLoading &&
           !catalogo.isError &&
           productos.length === 0 && (
@@ -566,9 +477,7 @@ export default function PrediccionPage() {
                   <input
                     type="checkbox"
                     checked={estaElegido(producto.id)}
-                    disabled={
-                      !estaElegido(producto.id) && limiteAlcanzado
-                    }
+                    disabled={!estaElegido(producto.id) && limiteAlcanzado}
                     onChange={() =>
                       alternar({
                         id: producto.id,
@@ -577,11 +486,9 @@ export default function PrediccionPage() {
                       })
                     }
                   />
-
                   <span className="font-mono text-xs text-muted-foreground">
                     {producto.codigo}
                   </span>
-
                   <span className="truncate">{producto.nombre}</span>
                 </label>
               </li>
@@ -598,7 +505,6 @@ export default function PrediccionPage() {
                 className="gap-1"
               >
                 {producto.codigo}
-
                 <button
                   type="button"
                   aria-label={`Quitar ${producto.nombre}`}
@@ -610,7 +516,6 @@ export default function PrediccionPage() {
             ))}
           </div>
         )}
-
         {limiteAlcanzado && (
           <p className="text-xs text-muted-foreground">
             Llegaste al máximo de {MAX_PRODUCTOS} productos.
@@ -619,10 +524,7 @@ export default function PrediccionPage() {
 
         <div className="flex flex-wrap items-end gap-6">
           <div>
-            <h2 className="mb-2 font-medium">
-              2. Periodo a predecir
-            </h2>
-
+            <h2 className="mb-2 font-medium">2. Periodo a predecir</h2>
             <div className="flex gap-2">
               {HORIZONTES.map((dias) => (
                 <Button
@@ -637,15 +539,12 @@ export default function PrediccionPage() {
               ))}
             </div>
           </div>
-
           <Button
             type="button"
             onClick={generar}
             disabled={elegidos.length === 0 || prediccion.isPending}
           >
-            {prediccion.isPending
-              ? 'Calculando...'
-              : 'Generar predicción'}
+            {prediccion.isPending ? 'Calculando...' : 'Generar predicción'}
           </Button>
         </div>
       </div>
@@ -663,24 +562,46 @@ export default function PrediccionPage() {
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
             Resultados según las ventas registradas hasta el{' '}
-            {formatoFechaLarga(
-              prediccion.data.ultimo_dia_analizado,
-            )}
-            .
+            {formatoFechaLarga(prediccion.data.ultimo_dia_analizado)}.
           </p>
+          {prediccion.data.resultados.map((resultado) => (
+            <TarjetaResultado
+              key={resultado.producto_id}
+              resultado={resultado}
+            />
+          ))}
+        </div>
+      )}
+
+      {!prediccion.data &&
+        !prediccion.isPending &&
+        !prediccion.isError && (
+          <div className="rounded-lg border border-dashed p-10 text-center text-sm text-muted-foreground">
+            Elige uno o más productos y pulsa «Generar predicción» para ver la
+            demanda estimada.
+          </div>
+        )}
 
       {puedeVerAnomalias && (
-        <section className="space-y-4 rounded-xl border p-4 md:p-5" aria-label="Detector de anomalías US-22">
+        <section
+          className="space-y-4 rounded-xl border p-4 md:p-5"
+          aria-label="Detector de anomalías US-22"
+        >
           <div>
-            <h2 className="text-lg font-semibold">Detección de anomalías en ventas e inventario</h2>
+            <h2 className="text-lg font-semibold">
+              Detección de anomalías en ventas e inventario
+            </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Consulta movimientos y ventas con cantidades inusuales. La vista previa no guarda
-              registros ni modifica el inventario.
+              Consulta movimientos y ventas con cantidades inusuales. La vista
+              previa no guarda registros ni modifica el inventario.
             </p>
           </div>
 
           <div className="flex flex-wrap items-end gap-3">
-            <label className="flex flex-col gap-1 text-sm" htmlFor="dias-anomalias">
+            <label
+              className="flex flex-col gap-1 text-sm"
+              htmlFor="dias-anomalias"
+            >
               <span>Días de historial</span>
               <select
                 id="dias-anomalias"
@@ -702,7 +623,6 @@ export default function PrediccionPage() {
                 <option value={365}>365 días</option>
               </select>
             </label>
-
             <Button
               type="button"
               variant="outline"
@@ -715,7 +635,10 @@ export default function PrediccionPage() {
           </div>
 
           {errorAnomalias && (
-            <p role="alert" className="rounded-md border border-red-200 p-3 text-sm text-red-700">
+            <p
+              role="alert"
+              className="rounded-md border border-red-200 p-3 text-sm text-red-700"
+            >
               {errorAnomalias}
             </p>
           )}
@@ -724,16 +647,28 @@ export default function PrediccionPage() {
             <div className="space-y-3">
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-lg border p-3">
-                  <p className="text-xs text-muted-foreground">Ventas consultadas</p>
-                  <p className="text-2xl font-semibold">{vistaAnomalias.ventas_consultadas}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Ventas consultadas
+                  </p>
+                  <p className="text-2xl font-semibold">
+                    {vistaAnomalias.ventas_consultadas}
+                  </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-xs text-muted-foreground">Movimientos consultados</p>
-                  <p className="text-2xl font-semibold">{vistaAnomalias.movimientos_consultados}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Movimientos consultados
+                  </p>
+                  <p className="text-2xl font-semibold">
+                    {vistaAnomalias.movimientos_consultados}
+                  </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-xs text-muted-foreground">Anomalías detectadas</p>
-                  <p className="text-2xl font-semibold">{vistaAnomalias.anomalias_encontradas}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Anomalías detectadas
+                  </p>
+                  <p className="text-2xl font-semibold">
+                    {vistaAnomalias.anomalias_encontradas}
+                  </p>
                 </div>
               </div>
 
@@ -744,8 +679,9 @@ export default function PrediccionPage() {
               ) : (
                 <>
                   <p className="text-sm text-muted-foreground">
-                    Muestra de hasta 10 registros. Un movimiento y una venta relacionados pueden
-                    aparecer como dos anomalías distintas. Esta vista previa no registra alertas.
+                    Muestra de hasta 10 registros. Un movimiento y una venta
+                    relacionados pueden aparecer como dos anomalías distintas.
+                    Esta vista previa no registra alertas.
                   </p>
                   <div className="overflow-x-auto rounded-md border">
                     <Table>
@@ -759,15 +695,27 @@ export default function PrediccionPage() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {vistaAnomalias.muestra_anomalias.slice(0, 10).map((anomalia, indice) => (
-                          <TableRow key={`${anomalia.fuente}-${anomalia.registro_id}-${indice}`}>
-                            <TableCell>{anomalia.fuente === 'venta' ? 'Venta' : 'Movimiento'}</TableCell>
-                            <TableCell>#{anomalia.registro_id}</TableCell>
-                            <TableCell>#{anomalia.producto_id}</TableCell>
-                            <TableCell>{mostrarNumero(anomalia.cantidad)}</TableCell>
-                            <TableCell>{anomalia.motivo ?? 'Cantidad inusual'}</TableCell>
-                          </TableRow>
-                        ))}
+                        {vistaAnomalias.muestra_anomalias
+                          .slice(0, 10)
+                          .map((anomalia, indice) => (
+                            <TableRow
+                              key={`${anomalia.fuente}-${anomalia.registro_id}-${indice}`}
+                            >
+                              <TableCell>
+                                {anomalia.fuente === 'venta'
+                                  ? 'Venta'
+                                  : 'Movimiento'}
+                              </TableCell>
+                              <TableCell>#{anomalia.registro_id}</TableCell>
+                              <TableCell>#{anomalia.producto_id}</TableCell>
+                              <TableCell>
+                                {mostrarNumero(anomalia.cantidad)}
+                              </TableCell>
+                              <TableCell>
+                                {anomalia.motivo ?? 'Cantidad inusual'}
+                              </TableCell>
+                            </TableRow>
+                          ))}
                       </TableBody>
                     </Table>
                   </div>
@@ -776,67 +724,80 @@ export default function PrediccionPage() {
 
               {esAdministrador && (
                 <div className="space-y-3 rounded-lg border p-3">
-                  <h3 className="font-medium">Registro de alertas (solo administrador)</h3>
+                  <h3 className="font-medium">
+                    Registro de alertas (solo administrador)
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Registrar SÍ escribe nuevas alertas en la base conectada, con un máximo de
-                    {` ${LIMITE_ALERTAS_POR_EJECUCION} `}por ejecución. No elimina ni modifica ventas.
-                    No lo uses en una base compartida para hacer pruebas.
+                    Registrar SÍ escribe nuevas alertas en la base conectada,
+                    con un máximo de {LIMITE_ALERTAS_POR_EJECUCION} por
+                    ejecución. No elimina ni modifica ventas. No lo uses en una
+                    base compartida para hacer pruebas.
                   </p>
 
                   {!registroHabilitado ? (
                     <p className="text-sm text-amber-700">
-                      Registro deshabilitado por seguridad. Solo debe habilitarse después de
-                      verificar una base de pruebas aislada.
+                      Registro deshabilitado por seguridad. Solo debe
+                      habilitarse después de verificar una base de pruebas
+                      aislada.
                     </p>
+                  ) : !mostrarConfirmacion ? (
+                    <Button
+                      type="button"
+                      disabled={
+                        vistaAnomalias.anomalias_encontradas === 0 ||
+                        registrandoAnomalias
+                      }
+                      onClick={() => {
+                        setMostrarConfirmacion(true)
+                        setTextoConfirmacion('')
+                      }}
+                    >
+                      Preparar registro de alertas
+                    </Button>
                   ) : (
-                    <>
-                      {!mostrarConfirmacion ? (
+                    <div className="space-y-3 rounded-lg border p-3">
+                      <p className="text-sm font-medium">
+                        Esta acción guardará alertas en la base de datos
+                        conectada. Para confirmar, escribe REGISTRAR en el
+                        campo siguiente.
+                      </p>
+                      <Input
+                        aria-label="Confirmar registro de anomalías"
+                        placeholder="Escribe REGISTRAR"
+                        value={textoConfirmacion}
+                        disabled={registrandoAnomalias}
+                        onChange={(event) =>
+                          setTextoConfirmacion(event.target.value)
+                        }
+                      />
+                      <div className="flex flex-wrap gap-2">
                         <Button
                           type="button"
-                          disabled={vistaAnomalias.anomalias_encontradas === 0 || registrandoAnomalias}
+                          disabled={
+                            registrandoAnomalias ||
+                            textoConfirmacion !== 'REGISTRAR'
+                          }
+                          onClick={() =>
+                            void registrarAnomaliasConfirmadas()
+                          }
+                        >
+                          {registrandoAnomalias
+                            ? 'Registrando...'
+                            : 'Confirmar y registrar'}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          disabled={registrandoAnomalias}
                           onClick={() => {
-                            setMostrarConfirmacion(true)
+                            setMostrarConfirmacion(false)
                             setTextoConfirmacion('')
                           }}
                         >
-                          Preparar registro de alertas
+                          Cancelar
                         </Button>
-                      ) : (
-                        <div className="space-y-3 rounded-lg border p-3">
-                          <p className="text-sm font-medium">
-                            Esta acción guardará alertas en la base de datos conectada. Para
-                            confirmar, escribe REGISTRAR en el campo siguiente.
-                          </p>
-                          <Input
-                            aria-label="Confirmar registro de anomalías"
-                            placeholder="Escribe REGISTRAR"
-                            value={textoConfirmacion}
-                            disabled={registrandoAnomalias}
-                            onChange={(event) => setTextoConfirmacion(event.target.value)}
-                          />
-                          <div className="flex flex-wrap gap-2">
-                            <Button
-                              type="button"
-                              disabled={registrandoAnomalias || textoConfirmacion !== 'REGISTRAR'}
-                              onClick={() => void registrarAnomaliasConfirmadas()}
-                            >
-                              {registrandoAnomalias ? 'Registrando...' : 'Confirmar y registrar'}
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              disabled={registrandoAnomalias}
-                              onClick={() => {
-                                setMostrarConfirmacion(false)
-                                setTextoConfirmacion('')
-                              }}
-                            >
-                              Cancelar
-                            </Button>
-                          </div>
-                        </div>
-                      )}
-                    </>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
@@ -845,36 +806,20 @@ export default function PrediccionPage() {
 
           {resultadoRegistro && (
             <p role="status" className="rounded-lg border p-3 text-sm">
-              Registro finalizado: {resultadoRegistro.alertas_creadas} alerta(s) nueva(s),
-              {' '}{resultadoRegistro.alertas_ya_existentes} ya existente(s) y
-              {' '}{resultadoRegistro.pendientes_por_limite} pendiente(s) por el límite.
-              Puedes revisar la campanita de notificaciones.
+              Registro finalizado: {resultadoRegistro.alertas_creadas} alerta(s)
+              nueva(s), {resultadoRegistro.alertas_ya_existentes} ya
+              existente(s) y {resultadoRegistro.pendientes_por_limite} pendiente(s)
+              por el límite. Puedes revisar la campanita de notificaciones.
             </p>
           )}
         </section>
       )}
 
       <p className="text-xs text-muted-foreground">
-        La demanda se estima con las salidas de ventas registradas en los últimos 30 días. Los resultados dependen de la información disponible en el sistema.
+        La demanda se estima con las salidas de ventas registradas en los
+        últimos 30 días. Los resultados dependen de la información disponible
+        en el sistema.
       </p>
     </main>
-          {prediccion.data.resultados.map((resultado) => (
-            <TarjetaResultado
-              key={resultado.producto_id}
-              resultado={resultado}
-            />
-          ))}
-        </div>
-      )}
-
-      {!prediccion.data &&
-        !prediccion.isPending &&
-        !prediccion.isError && (
-          <div className="rounded-lg border border-dashed p-10 text-center text-sm text-muted-foreground">
-            Elige uno o más productos y pulsa «Generar predicción» para
-            ver la demanda estimada.
-          </div>
-        )}
-    </div>
   )
 }
