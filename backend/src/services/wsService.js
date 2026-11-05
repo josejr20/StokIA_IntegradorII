@@ -13,6 +13,9 @@ const { getIO } = require('../config/socket');
  * - ' venta:creada' : { ventaId, productoId }
  * - ' venta:importada' : { importacionId }
  * - 'inventario:actualizado' : { productoId }
+ * - 'operacion:creada' : { operacionId, numero, tipo, total, fecha }
+ * - 'operacion:anulada' : { operacionId, numero, tipo }
+ * - 'operacion:actualizada' : { operacionId, numero, tipo, estado }
  */
 
 function emitir(evento, datos) {
@@ -24,4 +27,17 @@ function emitir(evento, datos) {
   }
 }
 
-module.exports = { emitir };
+/** Emite un evento de operación y refresca las queries relacionadas. */
+function emitirOperacion(evento, operacion) {
+  if (!operacion) return;
+  emitir(evento, {
+    operacionId: operacion.id,
+    numero: operacion.numero,
+    tipo: operacion.tipo,
+    estado: operacion.estado,
+    total: Number(operacion.total ?? 0),
+    fecha: operacion.fecha,
+  });
+}
+
+module.exports = { emitir, emitirOperacion };

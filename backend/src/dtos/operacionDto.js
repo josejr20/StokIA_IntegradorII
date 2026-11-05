@@ -56,7 +56,8 @@ class ComprobanteDto {
 
   static fromModel(comprobante) {
     if (!comprobante) return null;
-    return new ComprobanteDto(comprobante.toJSON ? comprobante.toJSON() : comprobante);
+    const data = comprobante.toJSON ? comprobante.toJSON() : comprobante;
+    return new ComprobanteDto(data);
   }
 }
 

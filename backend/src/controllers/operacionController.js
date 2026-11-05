@@ -5,13 +5,13 @@ const {
   crearOperacion,
   obtenerOperacion,
   obtenerOperacionCompleta,
-  obtenerComprobanteOperacion,
   listarOperaciones,
   anularOperacion,
   leerConfiguracionImpuesto,
   guardarConfiguracionImpuesto,
 } = require('../services/operacionService');
 const logger = require('../utils/logger');
+const ws = require('../services/wsService');
 
 const TIPOS_VALIDOS = ['venta', 'devolucion', 'ajuste'];
 
@@ -68,6 +68,12 @@ const crear = async (req, res, next) => {
       return res.json({ data: OperacionDto.fromModel(resultado.operacion), repetida: true });
     }
     res.status(201).json({ data: OperacionDto.fromModel(resultado.operacion) });
+    // Notificar en tiempo real para que el historial se refresque sin polling.
+    try {
+      ws.emitirOperacion('operacion:creada', resultado.operacion);
+    } catch (e) {
+      logger.warn('No se pudo emitir evento websocket operacion:creada', e?.message);
+    }
   } catch (error) {
     if (error instanceof ErrorOperacion) {
       logger.warn(`Operación rechazada: ${error.message}`);
@@ -79,19 +85,28 @@ const crear = async (req, res, next) => {
 
 const obtenerComprobante = async (req, res, next) => {
   try {
-    const resultado = await obtenerComprobanteOperacion(req.params.id);
-    if (!resultado.operacion) return res.status(404).json({ error: 'Operación no encontrada' });
-    if (!resultado.comprobante) {
+    const svc = require('../services/operacionService');
+    const resultado = await svc.obtenerComprobanteOperacion(req.params.id);
+    if (!resultado?.operacion) return res.status(404).json({ error: 'Operación no encontrada' });
+    if (!resultado?.comprobante) {
       return res.status(404).json({ error: 'La operación no tiene comprobante' });
     }
     res.json({ data: ComprobanteDto.fromModel(resultado.comprobante) });
-  } catch (error) { next(error); }
+  } catch (error) { 
+    console.error('Error obteniendo comprobante:', error);
+    next(error); 
+  }
 };
 
 const anular = async (req, res, next) => {
   try {
     const operacion = await anularOperacion(req.params.id, req.user.id);
     res.json({ data: OperacionDto.fromModel(operacion) });
+    try {
+      ws.emitirOperacion('operacion:anulada', operacion);
+    } catch (e) {
+      logger.warn('No se pudo emitir evento websocket operacion:anulada', e?.message);
+    }
   } catch (error) {
     if (error instanceof ErrorOperacion) {
       return res.status(400).json({ error: error.message });

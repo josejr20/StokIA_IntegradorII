@@ -12,11 +12,14 @@ const TITULOS: Record<string, string> = {
   '/inventario': 'Lotes e inventario',
   '/kardex': 'Kardex',
   '/ventas': 'Ventas',
-  '/prediccion': 'Predicción y riesgo',
+  '/operaciones': 'Operaciones',
+  '/comprobantes': 'Comprobantes',
+  '/clientes': 'Clientes',
+  '/prediccion': 'PredicciÃ³n y riesgo',
   '/modelo-ml': 'Modelo ML',
-  '/configuracion': 'Configuración',
+  '/configuracion': 'ConfiguraciÃ³n',
   '/usuarios': 'Usuarios',
-  '/auditoria': 'Auditoría',
+  '/auditoria': 'AuditorÃ­a',
 }
 
 export function AppShell() {

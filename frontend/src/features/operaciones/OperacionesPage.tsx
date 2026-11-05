@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { ApiError } from '@/lib/api'
+import { useOperacionesRealtime } from '@/lib/socket'
 import { useProductos } from '@/features/productos/api'
 import {
   useAnularOperacion,
@@ -593,12 +594,17 @@ const ETIQUETA_TIPO: Record<TipoOperacion, string> = {
 }
 
 function HistorialOperaciones() {
+  const hoy = new Date()
+  const manana = new Date(hoy)
+  manana.setDate(hoy.getDate() + 1)
+  const fechaHoy = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
+  const fechaManana = `${manana.getFullYear()}-${String(manana.getMonth() + 1).padStart(2, '0')}-${String(manana.getDate()).padStart(2, '0')}`
   const [filtros, setFiltros] = useState<{
     tipo: TipoOperacion | ''
     buscar: string
     fecha_desde: string
     fecha_hasta: string
-  }>({ tipo: '', buscar: '', fecha_desde: '', fecha_hasta: '' })
+  }>({ tipo: '', buscar: '', fecha_desde: fechaHoy, fecha_hasta: fechaManana })
   const [debounce, setDebounce] = useState('')
   const [detalleId, setDetalleId] = useState<number | null>(null)
   const [comprobanteId, setComprobanteId] = useState<number | null>(null)
@@ -932,6 +938,7 @@ export default function OperacionesPage() {
   const [contadorExito, setContadorExito] = useState(0)
   const [importarAbierto, setImportarAbierto] = useState(false)
   const importarKardex = useImportarKardex()
+  useOperacionesRealtime()
 
   return (
     <div className="space-y-6">

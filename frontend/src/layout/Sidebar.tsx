@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import { useAuth, type PermisoCodigo } from '@/auth/AuthContext'
 
 // Coincide 1 a 1 con las 11 pantallas del prototipo de Figma (ProyectoHU),
-// más Kardex, que no estaba en el prototipo original pero se sumó como
+// mÃ¡s Kardex, que no estaba en el prototipo original pero se sumÃ³ como
 // pantalla propia a pedido de Alfredo.
 const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permiso?: PermisoCodigo }[] = [
   { to: '/', label: 'Inicio', icon: Home, fin: true, permiso: 'generar_reportes' },
@@ -19,12 +19,13 @@ const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permis
   { to: '/kardex', label: 'Kardex', icon: History, permiso: 'gestionar_inventario' },
   { to: '/ventas', label: 'Ventas', icon: ShoppingCart, permiso: 'gestionar_ventas' },
   { to: '/operaciones', label: 'Operaciones', icon: ReceiptText, permiso: 'gestionar_ventas' },
+  { to: '/comprobantes', label: 'Comprobantes', icon: ReceiptText, permiso: 'gestionar_ventas' },
   { to: '/clientes', label: 'Clientes', icon: Contact, permiso: 'gestionar_ventas' },
-  { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+  { to: '/prediccion', label: 'PredicciÃ³n y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
   { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
-  { to: '/configuracion', label: 'Configuración', icon: Settings, permiso: 'configurar_umbrales' },
+  { to: '/configuracion', label: 'ConfiguraciÃ³n', icon: Settings, permiso: 'configurar_umbrales' },
   { to: '/usuarios', label: 'Usuarios', icon: Users, permiso: 'gestionar_usuarios' },
-  { to: '/auditoria', label: 'Auditoría', icon: ScrollText, permiso: 'ver_auditoria' },
+  { to: '/auditoria', label: 'AuditorÃ­a', icon: ScrollText, permiso: 'ver_auditoria' },
 ]
 
 export function Sidebar() {
