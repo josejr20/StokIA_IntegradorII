@@ -1,19 +1,22 @@
 'use strict';
 
 /**
- * HU-72 · BE-01 — Servicio de predicción de demanda.
- * Lee el historial de ventas (tabla `ventas`), aplica el modelo y arma la respuesta.
- * Solo cuentan las ventas netas (manual + importado), igual que /api/ventas/resumen.
+ * HU-72: Servicio de prediccion de demanda.
+ * HU-116 / US-22: ignora temporalmente ventas identificadas por alertas US-22
+ * aun no descartadas. La venta permanece intacta en la base de datos.
+ *
+ * Solo cuentan ventas netas (manual + importado), como /api/ventas/resumen.
+ * El filtro se aplica ANTES de construir la serie de Holt.
  */
-
 const modelo = require('./prediccionDemandaModelo');
+const { filtrarVentasPorAlertas } = require('./filtroAnomaliasPrediccion');
 
 const ORIGENES_VENTA = ['manual', 'importado'];
+const ESTADOS_EXCLUIDOS = ['nueva', 'vista', 'atendida'];
 
-// Acceso a datos separado para poder reemplazarlo en las pruebas.
-// Los modelos se cargan solo al usarse, para que este archivo no abra la base al importarlo.
+// Los modelos Sequelize se cargan solo al usarse; las pruebas no abren la BD.
 function repositorioPorDefecto() {
-  const { Venta, Producto } = require('../models');
+  const { Venta, Producto, Alerta } = require('../models');
   const { Op } = require('sequelize');
   return {
     productos: (ids) => Producto.findAll({
@@ -35,15 +38,29 @@ function repositorioPorDefecto() {
         origen: { [Op.in]: ORIGENES_VENTA },
         fecha_venta: { [Op.gte]: desde, [Op.lt]: hastaExclusivo },
       },
-      attributes: ['producto_id', 'cantidad', 'fecha_venta'],
+      // HU-116 necesita el ID real para excluir SOLO el registro anomalo.
+      attributes: ['id', 'producto_id', 'cantidad', 'fecha_venta'],
+      raw: true,
+    }),
+    alertas: (ids) => Alerta.findAll({
+      where: {
+        tipo: 'anomalia',
+        estado: { [Op.in]: ESTADOS_EXCLUIDOS },
+        producto_id: { [Op.in]: ids },
+        datos_origen: { [Op.contains]: { origen: 'us22_detector_local', fuente: 'venta' } },
+      },
+      attributes: ['tipo', 'estado', 'producto_id', 'datos_origen'],
       raw: true,
     }),
   };
 }
 
 /**
- * Predice la demanda de varios productos con UNA sola consulta de ventas.
- * Devuelve un resultado por cada id pedido, en el mismo orden.
+ * Predice varios productos con una sola consulta de ventas.
+ * Se consultan sus alertas del detector US-22 y se excluyen por ID de venta.
+ * Repositorios de pruebas antiguas sin metodo alertas siguen funcionando.
+ * Si la consulta real de alertas falla, NO se generan predicciones sin filtrar:
+ * el error se propaga para no ocultar el problema.
  */
 async function predecirProductos(productoIds, {
   horizonte = modelo.CONFIG.HORIZONTE_DEFECTO,
@@ -54,6 +71,15 @@ async function predecirProductos(productoIds, {
   const hasta = modelo.ultimoDiaCompleto(ahora);
   const rango = modelo.rangoConsultaUtc(hasta);
 
+  const consultas = [
+    repo.productos(productoIds),
+    repo.ventas(productoIds, rango.desde, rango.hasta),
+  ];
+  if (typeof repo.alertas === 'function') consultas.push(repo.alertas(productoIds));
+  const [productos, ventas, alertas = []] = await Promise.all(consultas);
+
+  const { ventasValidas, ventasExcluidas, excluidosPorProducto } =
+    filtrarVentasPorAlertas(ventas, alertas);
   const [productos, ventas, modeloActivo] = await Promise.all([
     repo.productos(productoIds),
     repo.ventas(productoIds, rango.desde, rango.hasta),
@@ -64,7 +90,7 @@ async function predecirProductos(productoIds, {
 
   const productoPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
   const ventasPorProducto = new Map();
-  for (const venta of ventas) {
+  for (const venta of ventasValidas) {
     const id = Number(venta.producto_id);
     if (!ventasPorProducto.has(id)) ventasPorProducto.set(id, []);
     ventasPorProducto.get(id).push(venta);
@@ -89,6 +115,10 @@ async function predecirProductos(productoIds, {
         nombre: producto.nombre,
         activo: producto.activo,
       },
+      ...modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], { horizonte, hasta }),
+      calidad_datos: {
+        ventas_anomalas_excluidas: excluidosPorProducto.get(String(id)) ?? 0,
+      },
       ...modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], { horizonte, hasta, parametros, versionModelo }),
     };
   });
@@ -97,11 +127,14 @@ async function predecirProductos(productoIds, {
     generado_en: ahora.toISOString(),
     horizonte_dias: horizonte,
     ultimo_dia_analizado: hasta,
+    calidad_datos: {
+      total_ventas_anomalas_excluidas: ventasExcluidas.length,
+    },
     resultados,
   };
 }
 
-/** Un solo producto (lo usa ml_client.obtenerPrediccion). */
+/** Prediccion de un producto. */
 async function predecirProducto(productoId, horizonteDias, opciones = {}) {
   const horizonte = modelo.normalizarHorizonte(horizonteDias);
   const respuesta = await predecirProductos([Number(productoId)], { ...opciones, horizonte });
