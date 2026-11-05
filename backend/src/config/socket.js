@@ -3,6 +3,14 @@ const jwt = require('jsonwebtoken');
 
 let io = null;
 
+/** Lee la cookie stockia_access del header Cookie del handshake. */
+function extraerTokenCookie(cookieHeader) {
+  if (!cookieHeader || typeof cookieHeader !== 'string') return null;
+  const par = cookieHeader.split(';').map((item) => item.trim())
+    .find((item) => item.startsWith('stockia_access='));
+  return par ? decodeURIComponent(par.slice('stockia_access='.length)) : null;
+}
+
 function initSocket(server) {
   io = new Server(server, {
     cors: {
@@ -12,9 +20,22 @@ function initSocket(server) {
     path: '/socket.io',
   });
 
+<<<<<<< HEAD
 
   // Autenticación mediante la cookie HttpOnly existente.
   io.use(async (socket, next) => {
+=======
+  // Middleware de autenticación por JWT en handshake.
+  // Prioriza el token enviado explícitamente (auth/query); si no hay,
+  // intenta obtenerlo de la cookie HTTP-only stockia_access que el
+  // navegador envía con withCredentials.
+  io.use((socket, next) => {
+    const token = socket.handshake.auth?.token || socket.handshake.query?.token
+      || extraerTokenCookie(socket.handshake.headers.cookie);
+    if (!token) {
+      return next(new Error('No autorizado: token requerido'));
+    }
+>>>>>>> 4d80470 (Websocket-Comrobante)
     try {
       const origenPermitido = process.env.CORS_ORIGIN || 'http://localhost:5173';
       const origen = socket.handshake.headers.origin;

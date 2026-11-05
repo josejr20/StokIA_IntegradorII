@@ -19,9 +19,13 @@ const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permis
   { to: '/kardex', label: 'Kardex', icon: History, permiso: 'gestionar_inventario' },
   { to: '/ventas', label: 'Ventas', icon: ShoppingCart, permiso: 'gestionar_ventas' },
   { to: '/operaciones', label: 'Operaciones', icon: ReceiptText, permiso: 'gestionar_ventas' },
+  { to: '/comprobantes', label: 'Comprobantes', icon: ReceiptText, permiso: 'gestionar_ventas' },
   { to: '/clientes', label: 'Clientes', icon: Contact, permiso: 'gestionar_ventas' },
   { to: '/prediccion', label: 'PredicciÃ³n y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+<<<<<<< HEAD
   { to: '/riesgo-vencimiento', label: 'Riesgo de vencimiento', icon: AlertTriangle, permiso: 'ver_alertas' },
+=======
+>>>>>>> 4d80470 (Websocket-Comrobante)
   { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
   { to: '/configuracion', label: 'ConfiguraciÃ³n', icon: Settings, permiso: 'configurar_umbrales' },
   { to: '/usuarios', label: 'Usuarios', icon: Users, permiso: 'gestionar_usuarios' },

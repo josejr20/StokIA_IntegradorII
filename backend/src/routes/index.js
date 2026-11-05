@@ -8,6 +8,7 @@ const categoriaRoutes = require('./categorias');
 const productoRoutes = require('./productos');
 const unidadMedidaRoutes = require('./unidadesMedida');
 const presentacionRoutes = require('./presentaciones');
+<<<<<<< HEAD
 const catalogoMarcaRoutes = require('./catalogoMarcas');
 const catalogoValorRoutes = require('./catalogoValores');
 const loteRoutes = require('./lotes');
@@ -31,6 +32,29 @@ const rucRoutes = require('./ruc.routes');
 const prediccionRoutes = require('./predicciones');
 const riesgoVencimientoRoutes = require('./riesgoVencimiento');
 const mlRoutes = require('./ml');
+=======
+    const catalogoMarcaRoutes = require('./catalogoMarcas');
+    const catalogoValorRoutes = require('./catalogoValores');
+    const loteRoutes = require('./lotes');
+    const movimientoRoutes = require('./movimientos');
+    const ventaRoutes = require('./ventas');
+    const operacionRoutes = require('./operaciones');
+    const comprobantesRoutes = require('./comprobantes');
+    const clienteRoutes = require('./clientes');
+    const importacionVentaRoutes = require('./importacionesVentas');
+    const importarKardexRoutes = require('./importarKardex');
+    const umbralRoutes = require('./umbrales');
+    const ordenReabastecimientoRoutes = require('./ordenesReabastecimiento');
+    const alertaRoutes = require('./alertas');
+    const reporteRoutes = require('./reportes');
+    const preferenciaRoutes = require('./preferencias');
+    const auditoriaRoutes = require('./auditoria');
+    const tiposEnvaseRoutes = require('./tiposEnvase');
+    const productoPresentacionRoutes = require('./productoPresentacion');
+    const precioRoutes = require('./precio');
+    const reniecRoutes = require('./reniec.routes');
+    const rucRoutes = require('./ruc.routes');
+>>>>>>> 4d80470 (Websocket-Comrobante)
 
 Router.use('/auth', authRoutes);
 Router.use('/usuarios', usuarioRoutes);
@@ -46,6 +70,7 @@ Router.use('/lotes', loteRoutes);
 Router.use('/movimientos', movimientoRoutes);
 Router.use('/ventas', ventaRoutes);
 Router.use('/operaciones', operacionRoutes);
+Router.use('/comprobantes', comprobantesRoutes);
 Router.use('/clientes', clienteRoutes);
 Router.use('/reniec', reniecRoutes);
 Router.use('/ruc', rucRoutes);

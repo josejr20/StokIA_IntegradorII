@@ -104,8 +104,9 @@ export function useComprobante(operacionId: number | null) {
       const respuesta = await api.get<{ data: Comprobante }>(`/operaciones/${operacionId}/comprobante`)
       return respuesta.data
     },
-    refetchOnMount: 'always',
+    refetchOnMount: true,
     enabled: operacionId !== null,
+    retry: 2,
   })
 }
 

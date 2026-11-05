@@ -13,12 +13,19 @@ const TITULOS: Record<string, string> = {
   '/inventario': 'Lotes e inventario',
   '/kardex': 'Kardex',
   '/ventas': 'Ventas',
+<<<<<<< HEAD
   '/prediccion': 'Predicción y riesgo',
   '/riesgo-vencimiento': 'Riesgo de vencimiento',
+=======
+  '/operaciones': 'Operaciones',
+  '/comprobantes': 'Comprobantes',
+  '/clientes': 'Clientes',
+  '/prediccion': 'PredicciÃ³n y riesgo',
+>>>>>>> 4d80470 (Websocket-Comrobante)
   '/modelo-ml': 'Modelo ML',
-  '/configuracion': 'Configuración',
+  '/configuracion': 'ConfiguraciÃ³n',
   '/usuarios': 'Usuarios',
-  '/auditoria': 'Auditoría',
+  '/auditoria': 'AuditorÃ­a',
 }
 
 export function AppShell() {
