@@ -1,4 +1,5 @@
-import { Download, Printer, ReceiptText } from 'lucide-react'
+import { useState } from 'react'
+import { Download, Printer } from 'lucide-react'
 
 import {
   Dialog,
@@ -14,6 +15,73 @@ const ETIQUETA_TIPO: Record<string, string> = {
   boleta: 'BOLETA DE VENTA',
   factura: 'FACTURA DE VENTA',
   nota_credito: 'NOTA DE CRÉDITO',
+}
+const ANCHOS_PAPEL: Array<58 | 80> = [80, 58]
+
+const ESTILOS_COMPROBANTE = `
+  .receipt {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: __PAPER_WIDTH__;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    color: #171717;
+    font: 12px/1.35 Arial, Helvetica, sans-serif;
+  }
+  .receipt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #222;
+  }
+  .receipt-logo { width: 42%; max-width: 145px; height: auto; object-fit: contain; }
+  .receipt-business { text-align: right; font-size: 10px; font-weight: 700; }
+  .receipt-title { margin: 14px 0 2px; text-align: center; font-size: 15px; font-weight: 800; }
+  .receipt-number { margin: 0 0 12px; text-align: center; font-size: 12px; font-weight: 700; }
+  .receipt-meta { margin-bottom: 12px; font-size: 10px; }
+  .receipt-meta p { margin: 3px 0; overflow-wrap: anywhere; }
+  .receipt-meta strong { font-weight: 700; }
+  .receipt-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px; }
+  .receipt-table th { padding: 6px 3px; border-top: 1px solid #222; border-bottom: 1px solid #222; text-align: left; }
+  .receipt-table td { padding: 6px 3px; vertical-align: top; overflow-wrap: anywhere; }
+  .receipt-table .quantity { width: 15%; text-align: right; }
+  .receipt-table .description { width: 63%; }
+  .receipt-table .amount { width: 22%; text-align: right; white-space: nowrap; }
+  .receipt-code { display: block; color: #555; font-size: 9px; }
+  .receipt-totals { margin: 10px 0 0 auto; width: 55%; font-size: 11px; }
+  .receipt-total-row { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; }
+  .receipt-grand-total { margin-top: 4px; padding-top: 6px; border-top: 1px solid #222; font-size: 13px; font-weight: 800; }
+  .receipt-note { margin: 12px 0 0; padding-top: 8px; border-top: 1px dashed #888; font-size: 9px; overflow-wrap: anywhere; }
+  .receipt-return { margin-top: 8px; font-size: 9px; }
+  .print-area.paper-58mm { width: 58mm; max-width: 100%; }
+  .print-area.paper-80mm { width: 80mm; max-width: 100%; }
+  @media print {
+    @page { margin: 0; }
+    body * { visibility: hidden !important; }
+    .print-area, .print-area * { visibility: visible !important; }
+    .print-area {
+      position: fixed !important;
+      inset: 0 auto auto 0 !important;
+      width: __PAPER_WIDTH__ !important;
+      max-width: __PAPER_WIDTH__ !important;
+      max-height: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    .receipt { max-width: none; padding: 3mm; }
+    .receipt-table tr { break-inside: avoid; }
+  }
+`
+
+function estilosComprobante(anchoPapel: 58 | 80) {
+  return ESTILOS_COMPROBANTE.replaceAll('__PAPER_WIDTH__', `${anchoPapel}mm`)
 }
 
 function numeroFinito(valor: unknown): number | null {
@@ -141,6 +209,8 @@ export function ComprobanteModal({
   comprobante: Comprobante | null
   onCerrar: () => void
 }) {
+  const [anchoPapel, setAnchoPapel] = useState<58 | 80>(80)
+
   if (!comprobante) return null
   const datos = comprobante.datos
   if (!datos || typeof datos !== 'object') {
@@ -186,23 +256,23 @@ export function ComprobanteModal({
       : null)
   const total = numeroFinito(normalizados.total)
     ?? (subtotal !== null ? subtotal + (impuesto ?? 0) : null)
+  const estilosActuales = estilosComprobante(anchoPapel)
 
   function descargar() {
     const filas = items.map((item, index) => `
       <tr>
-        <td>${escaparHtml(item.codigo)}</td>
-        <td>${escaparHtml(item.producto)}</td>
-        <td class="numero">${escaparHtml(item.cantidad)}</td>
-        <td class="numero">${formatearMoneda(item.precio_unitario)}</td>
-        <td class="numero">${formatearMoneda(subtotalesItems[index])}</td>
+        <td class="quantity">${escaparHtml(item.cantidad)}</td>
+        <td class="description">${escaparHtml(item.producto)}<span class="receipt-code">${escaparHtml(item.codigo)}</span></td>
+        <td class="amount">${formatearMoneda(subtotalesItems[index])}</td>
       </tr>
     `).join('')
     const cliente = normalizados.cliente
       ? `${escaparHtml(normalizados.cliente.nombre)}${normalizados.cliente.documento ? ` · ${escaparHtml(normalizados.cliente.documento)}` : ''}`
       : 'Consumidor final'
     const vendedor = normalizados.vendedor
-      ? `${escaparHtml(normalizados.vendedor.nombres)} ${escaparHtml(normalizados.vendedor.apellidos)}`
+      ? `${escaparHtml(normalizados.vendedor.nombres)} ${escaparHtml(normalizados.vendedor.apellidos)}`.trim()
       : 'No registrado'
+    const logoUrl = new URL('/logo_vlag.png', window.location.origin).href
     const contenido = `<!doctype html>
 <html lang="es">
 <head>
@@ -210,50 +280,44 @@ export function ComprobanteModal({
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Comprobante ${escaparHtml(normalizados.numero_comprobante)}</title>
   <style>
-    body { color: #171717; font: 14px Arial, sans-serif; margin: 32px auto; max-width: 800px; padding: 0 24px; }
-    header { border-bottom: 2px solid #222; margin-bottom: 24px; padding-bottom: 16px; }
-    h1 { font-size: 22px; margin: 8px 0; }
-    .muted { color: #666; }
-    .datos { display: flex; justify-content: space-between; gap: 24px; margin: 24px 0; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border-bottom: 1px solid #ddd; padding: 10px 6px; text-align: left; }
-    th { color: #555; font-size: 12px; text-transform: uppercase; }
-    .numero { text-align: right; white-space: nowrap; }
-    .totales { margin: 20px 0 20px auto; width: 260px; }
-    .total { border-top: 2px solid #222; font-size: 18px; font-weight: bold; margin-top: 8px; padding-top: 8px; }
-    .motivo { background: #f4f4f5; margin-top: 24px; padding: 12px; }
-    @media print { body { margin: 0; max-width: none; } }
+    body { width: ${anchoPapel}mm; max-width: calc(100vw - 32px); margin: 16px auto; padding: 0; background: #f4f4f5; }
+    @media print { body { width: ${anchoPapel}mm; max-width: none; margin: 0; } }
+    ${estilosActuales}
   </style>
 </head>
 <body>
-  <header>
-    <div class="muted">StockIA - VLAG</div>
-    <h1>${ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}</h1>
-    <strong>N° ${escaparHtml(normalizados.numero_comprobante)}</strong>
-    <span class="muted"> · Operación ${escaparHtml(normalizados.numero_operacion)}</span>
-  </header>
-  <section class="datos">
-    <div><div class="muted">Cliente</div><strong>${cliente}</strong></div>
-    <div><div class="muted">Fecha y hora</div><strong>${escaparHtml(formatearFecha(normalizados.fecha))}</strong><br><span class="muted">Vendedor: ${vendedor}</span></div>
-  </section>
-  <table>
-    <thead><tr><th>Código</th><th>Producto</th><th class="numero">Cantidad</th><th class="numero">P. unitario</th><th class="numero">Subtotal</th></tr></thead>
-    <tbody>${filas}</tbody>
-  </table>
-  <section class="totales">
-    <div>Subtotal <span class="numero">${formatearMoneda(subtotal)}</span></div>
-    ${(impuestoPorcentaje ?? 0) > 0 ? `<div>Impuesto (${impuestoPorcentaje}%) <span class="numero">${formatearMoneda(impuesto)}</span></div>` : ''}
-    <div class="total">Total <span class="numero">${formatearMoneda(total)}</span></div>
-  </section>
-  ${normalizados.motivo ? `<p class="motivo"><strong>Motivo:</strong> ${escaparHtml(normalizados.motivo)}</p>` : ''}
-  ${normalizados.operacion_origen ? `<p class="muted">Devolución vinculada a la venta ${escaparHtml(normalizados.operacion_origen.numero)} del ${escaparHtml(formatearFecha(normalizados.operacion_origen.fecha))}</p>` : ''}
+  <main class="receipt">
+    <header class="receipt-header">
+      <img class="receipt-logo" src="${escaparHtml(logoUrl)}" alt="Logo VLAG">
+      <div class="receipt-business">StockIA<br>VLAG</div>
+    </header>
+    <h1 class="receipt-title">${ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}</h1>
+    <p class="receipt-number">N° ${escaparHtml(normalizados.numero_comprobante)}</p>
+    <section class="receipt-meta">
+      <p><strong>Cliente:</strong> ${cliente}</p>
+      <p><strong>Fecha:</strong> ${escaparHtml(formatearFecha(normalizados.fecha))}</p>
+      <p><strong>Vendedor:</strong> ${vendedor || 'No registrado'}</p>
+      <p><strong>Operación:</strong> ${escaparHtml(normalizados.numero_operacion)}</p>
+    </section>
+    <table class="receipt-table">
+      <thead><tr><th class="quantity">Cant.</th><th class="description">Descripción</th><th class="amount">Total</th></tr></thead>
+      <tbody>${filas}</tbody>
+    </table>
+    <section class="receipt-totals">
+      <div class="receipt-total-row"><span>Subtotal</span><span>${formatearMoneda(subtotal)}</span></div>
+      ${(impuestoPorcentaje ?? 0) > 0 ? `<div class="receipt-total-row"><span>Impuesto (${impuestoPorcentaje}%)</span><span>${formatearMoneda(impuesto)}</span></div>` : ''}
+      <div class="receipt-total-row receipt-grand-total"><span>TOTAL</span><span>${formatearMoneda(total)}</span></div>
+    </section>
+    ${normalizados.motivo ? `<p class="receipt-note"><strong>Motivo:</strong> ${escaparHtml(normalizados.motivo)}</p>` : ''}
+    ${normalizados.operacion_origen ? `<p class="receipt-return">Devolución vinculada a la venta ${escaparHtml(normalizados.operacion_origen.numero)} del ${escaparHtml(formatearFecha(normalizados.operacion_origen.fecha))}</p>` : ''}
+  </main>
 </body>
 </html>`
     const blob = new Blob([contenido], { type: 'text/html;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const enlace = document.createElement('a')
     enlace.href = url
-    enlace.download = `comprobante-${snapshot.numero}.html`
+    enlace.download = `comprobante-${snapshot.numero}-${anchoPapel}mm.html`
     enlace.click()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
@@ -266,109 +330,106 @@ export function ComprobanteModal({
         </DialogHeader>
 
         {/* Área que se imprime */}
-        <div className="print-area max-h-[70vh] overflow-y-auto rounded-md border p-6">
-          <div className="flex items-start justify-between border-b pb-4">
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                StockIA - VLAG
-              </p>
-              <h2 className="text-xl font-bold">
-                {ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}
-              </h2>
-              <p className="text-sm font-medium">
-                N° {normalizados.numero_comprobante || comprobante.numero}
-                <span className="ml-2 text-muted-foreground">
-                  (Operación {normalizados.numero_operacion || `OP-${comprobante.operacion_id}`})
-                </span>
-              </p>
-            </div>
-            <ReceiptText className="size-10 text-primary" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 py-4 text-sm">
-            <div>
-              <p className="text-xs uppercase text-muted-foreground">Cliente</p>
-              <p className="font-medium">{normalizados.cliente?.nombre || 'Consumidor final'}</p>
+        <style>{estilosActuales}</style>
+        <div className={`print-area paper-${anchoPapel}mm mx-auto max-h-[70vh] overflow-y-auto rounded-md border bg-zinc-100`}>
+          <main className="receipt">
+            <header className="receipt-header">
+              <img className="receipt-logo" src="/logo_vlag.png" alt="Logo VLAG" />
+              <div className="receipt-business">StockIA<br />VLAG</div>
+            </header>
+            <h2 className="receipt-title">
+              {ETIQUETA_TIPO[normalizados.tipo_comprobante] ?? 'COMPROBANTE'}
+            </h2>
+            <p className="receipt-number">
+              N° {normalizados.numero_comprobante || comprobante.numero}
+            </p>
+            <section className="receipt-meta">
+              <p><strong>Cliente:</strong> {normalizados.cliente?.nombre || 'Consumidor final'}</p>
               {normalizados.cliente?.documento && (
-                <p className="text-muted-foreground">{normalizados.cliente.documento}</p>
+                <p><strong>RUC / Documento:</strong> {normalizados.cliente.documento}</p>
               )}
-            </div>
-            <div className="text-right">
-              <p className="text-xs uppercase text-muted-foreground">Fecha y hora</p>
-              <p className="font-medium">{formatearFecha(normalizados.fecha)}</p>
-              <p className="text-muted-foreground">
-                Vendedor: {normalizados.vendedor
-                  ? `${normalizados.vendedor.nombres} ${normalizados.vendedor.apellidos}`.trim() || 'No registrado'
-                  : 'No registrado'}
+              <p><strong>Fecha:</strong> {formatearFecha(normalizados.fecha)}</p>
+              <p><strong>Vendedor:</strong> {normalizados.vendedor
+                ? `${normalizados.vendedor.nombres} ${normalizados.vendedor.apellidos}`.trim() || 'No registrado'
+                : 'No registrado'}
               </p>
-            </div>
-          </div>
+              <p><strong>Operación:</strong> {normalizados.numero_operacion || `OP-${comprobante.operacion_id}`}</p>
+            </section>
 
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left text-xs uppercase text-muted-foreground">
-                <th className="py-2 pr-2">Código</th>
-                <th className="py-2 pr-2">Producto</th>
-                <th className="py-2 pr-2 text-right">Cantidad</th>
-                <th className="py-2 pr-2 text-right">P. unitario</th>
-                <th className="py-2 text-right">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
+            <table className="receipt-table">
+              <thead>
+                <tr>
+                  <th className="quantity">Cant.</th>
+                  <th className="description">Descripción</th>
+                  <th className="amount">Total</th>
+                </tr>
+              </thead>
+              <tbody>
               {items.length > 0 ? items.map((item, index) => (
                 <tr key={`${item.producto_id}-${item.lote_id ?? ''}`}>
-                  <td className="py-2 pr-2 font-mono text-xs">{item.codigo}</td>
-                  <td className="py-2 pr-2">{item.producto}</td>
-                  <td className="py-2 pr-2 text-right">{item.cantidad}</td>
-                  <td className="py-2 pr-2 text-right">{formatearMoneda(item.precio_unitario)}</td>
-                  <td className="py-2 text-right">{formatearMoneda(subtotalesItems[index])}</td>
+                  <td className="quantity">{item.cantidad}</td>
+                  <td className="description">
+                    {item.producto}
+                    <span className="receipt-code">{item.codigo}</span>
+                  </td>
+                  <td className="amount">{formatearMoneda(subtotalesItems[index])}</td>
                 </tr>
               )) : (
                 <tr>
-                  <td className="py-3 text-center text-muted-foreground" colSpan={5}>
+                  <td className="description" colSpan={3}>
                     No hay productos guardados en este comprobante.
                   </td>
                 </tr>
               )}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
 
-          <div className="flex justify-end py-4">
-            <div className="w-56 space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
+            <div className="receipt-totals">
+              <div className="receipt-total-row">
+                <span>Subtotal</span>
                 <span>{formatearMoneda(subtotal)}</span>
               </div>
               {(impuestoPorcentaje ?? 0) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">
-                    Impuesto ({impuestoPorcentaje}%)
-                  </span>
+                <div className="receipt-total-row">
+                  <span>Impuesto ({impuestoPorcentaje}%)</span>
                   <span>{formatearMoneda(impuesto)}</span>
                 </div>
               )}
-              <div className="flex justify-between border-t pt-1 text-base font-bold">
-                <span>Total</span>
+              <div className="receipt-total-row receipt-grand-total">
+                <span>TOTAL</span>
                 <span>{formatearMoneda(total)}</span>
               </div>
             </div>
-          </div>
 
-          {normalizados.motivo && (
-            <p className="rounded-md bg-muted p-3 text-sm">
-              <span className="font-medium">Motivo: </span>
-              {normalizados.motivo}
-            </p>
-          )}
-          {normalizados.operacion_origen && (
-            <p className="mt-2 text-xs text-muted-foreground">
-              Devolución vinculada a la venta {normalizados.operacion_origen.numero} del{' '}
-              {formatearFecha(normalizados.operacion_origen.fecha)}
-            </p>
-          )}
+            {normalizados.motivo && (
+              <p className="receipt-note">
+                <strong>Motivo:</strong> {normalizados.motivo}
+              </p>
+            )}
+            {normalizados.operacion_origen && (
+              <p className="receipt-return">
+                Devolución vinculada a la venta {normalizados.operacion_origen.numero} del{' '}
+                {formatearFecha(normalizados.operacion_origen.fecha)}
+              </p>
+            )}
+          </main>
         </div>
 
         <DialogFooter>
+          <div className="flex items-center gap-1" role="group" aria-label="Ancho del papel">
+            {ANCHOS_PAPEL.map((ancho) => (
+              <Button
+                key={ancho}
+                type="button"
+                variant={anchoPapel === ancho ? 'default' : 'outline'}
+                size="sm"
+                aria-pressed={anchoPapel === ancho}
+                onClick={() => setAnchoPapel(ancho)}
+              >
+                {ancho} mm
+              </Button>
+            ))}
+          </div>
           <Button variant="outline" onClick={descargar}>
             <Download className="size-4" />
             Descargar comprobante

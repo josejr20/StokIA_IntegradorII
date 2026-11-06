@@ -1,6 +1,47 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
+
+// HU-108 / US-21: respuesta de GET /api/recomendaciones
+export type Prioridad = 'alta' | 'media' | 'baja'
+
+export interface RecomendacionProducto {
+  producto_id: number
+  codigo: string
+  nombre: string
+  prioridad: Prioridad
+  tipo_riesgo: 'sin_riesgo_alto' | 'vencido' | 'vencimiento' | 'stock_bajo'
+  accion: string
+  motivo: string
+  stock_disponible: number
+  stock_vencido: number
+  stock_por_vencer_7_dias: number
+  fecha_proximo_vencimiento: string | null
+  dias_para_vencer: number | null
+  ventas_netas_30_dias: number
+  demanda_diaria_estimada: number
+  demanda_estimada_7_dias: number
+  demanda_con_historial: boolean
+  metodo_demanda: string
+}
+
+export interface RespuestaRecomendaciones {
+  generado_en: string
+  periodo_dias: number
+  data: RecomendacionProducto[]
+}
+
+export function useRecomendaciones() {
+  return useQuery({
+    queryKey: ['recomendaciones'],
+    queryFn: async () => {
+      const respuesta = await api.get<{ data: RespuestaRecomendaciones }>('/recomendaciones')
+      return respuesta.data
+    },
+    staleTime: 0,
+    refetchOnMount: 'always',
+  })
+}
 
 // HU-72: respuesta de GET /api/predicciones/demanda
 

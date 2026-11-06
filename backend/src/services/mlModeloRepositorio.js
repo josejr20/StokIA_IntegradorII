@@ -182,9 +182,13 @@ async function registrarPreparacion({ total_filas: total, filas_validas: validas
 
 /** Filas válidas mínimas para entrenar, según ml.configuracion (o null si no está definido). */
 async function minimoFilasEntrenamiento() {
-  const filas = await consultar("SELECT valor FROM ml.configuracion WHERE clave = 'min_filas_entrenamiento'");
-  const valor = Number(filas[0]?.valor);
-  return Number.isFinite(valor) && valor > 0 ? valor : null;
+  try {
+    const filas = await consultar("SELECT valor FROM ml.configuracion WHERE clave = 'min_filas_entrenamiento'");
+    const valor = Number(filas[0]?.valor);
+    return Number.isFinite(valor) && valor > 0 ? valor : null;
+  } catch {
+    return null;
+  }
 }
 
 const ORIGENES_VENTA = ['manual', 'importado'];

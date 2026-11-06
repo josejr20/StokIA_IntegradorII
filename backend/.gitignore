@@ -6,4 +6,6 @@ logs/
 /run.log
 /scripts/
 /uploads/
-/upload/
+/upload/.env.test
+
+.env.test

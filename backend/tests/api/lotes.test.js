@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert');
 const http = require('http');
 const { app } = require('../../src/app');
+// Prueba: lotes endpoint responds.
 test('lotes endpoint responds', async () => {
   const server = http.createServer(app);
   await new Promise((r) => server.listen(0, r));

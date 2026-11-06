@@ -7,14 +7,16 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const Decimal = require('decimal.js');
 
 const { sequelize } = require('../models');
-const { Cliente, Usuario, Operacion, OperacionDetalle, Producto, Venta } = require('../models');
+const { Cliente, Usuario, Operacion, OperacionDetalle, Producto, Venta, Lote, MovimientoInventario } = require('../models');
 const { EMPLOYEE_MAP, PRESENTATION_TO_PRODUCT } = require('../config/kardexMappings');
 const {
   crearOperacion,
   buscarVentaOrigenDevolucion,
 } = require('../services/operacionService');
+const { registrarMovimiento } = require('../services/kardexService');
 const logger = require('../utils/logger');
 
 const upload = multer({ 
@@ -100,16 +102,98 @@ async function processRow(row, transaction, usuarioImportadorId) {
   }
   const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
   const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
-  if (!esDevolucion && !esVenta) {
-    throw new Error('El motivo de la fila no identifica una salida de venta ni un ingreso por devolución');
+  const esCompra = motivoNormalizado.includes('compra');
+  if (!esDevolucion && !esVenta && !esCompra) {
+    throw new Error('El motivo de la fila no identifica una salida de venta, un ingreso por devolución ni un ingreso por compra');
   }
 
-  const tipo = esDevolucion ? 'devolucion' : 'venta';
   const motivoOperacion = [
     String(observaciones || motivo || 'Importación histórica').trim(),
     empleado ? `Empleado histórico: ${String(empleado).trim()}` : '',
   ].filter(Boolean).join(' | ');
   const idempotencyKey = `KX-${crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex').slice(0, 61)}`;
+
+  if (esCompra) {
+    // Ingreso por compra: registrar movimiento de kardex con origen 'compra'
+    const producto = await Producto.findByPk(productoId, { transaction, lock: transaction.LOCK.UPDATE });
+    if (!producto) throw new Error(`No se encontró el producto ${productoId} para registrar la compra`);
+    const precioUnitario = Number(producto.precio_venta) || 0;
+
+    const fechaInicio = new Date(fecha); fechaInicio.setHours(0, 0, 0, 0);
+    const fechaFin = new Date(fecha); fechaFin.setHours(23, 59, 59, 999);
+    const existente = await MovimientoInventario.findOne({
+      where: {
+        origen: 'compra',
+        fecha: { [Op.between]: [fechaInicio, fechaFin] },
+        cantidad: cantidadOperacion,
+      },
+      include: [{ model: Lote, as: 'lote', where: { producto_id: productoId } }],
+      transaction,
+    });
+    if (existente) return { repetida: true };
+
+    const usuario = await resolveEmployee(empleado, transaction, usuarioImportadorId);
+
+    const ultimoId = await Lote.max('id', { where: { producto_id: productoId }, transaction }) || 0;
+    const lote = await Lote.create({
+      producto_id: productoId,
+      numero_lote: `CO-${String(ultimoId + 1).padStart(6, '0')}`,
+      cantidad_inicial: cantidadOperacion,
+      cantidad_actual: cantidadOperacion,
+      fecha_ingreso: fecha,
+      fecha_vencimiento: null,
+    }, { transaction });
+
+    // Calcular saldo acumulado a partir del último movimiento del producto para no
+    // depender del recálculo estricto de registrarMovimiento (que rechaza saldo histórico negativo
+    // cuando hay ventas previas del producto y la compra se inserta con fecha anterior/intermedia).
+    const ultimoMovimiento = await MovimientoInventario.findOne({
+      include: [{
+        model: Lote,
+        as: 'lote',
+        attributes: [],
+        where: { producto_id: productoId },
+      }],
+      order: [['fecha', 'DESC'], ['id', 'DESC']],
+      transaction,
+    });
+
+    let saldoCantidadAnterior = new Decimal('0');
+    let saldoValorizadoAnterior = new Decimal('0');
+    if (ultimoMovimiento) {
+      saldoCantidadAnterior = new Decimal(String(ultimoMovimiento.saldo_cantidad ?? 0));
+      saldoValorizadoAnterior = new Decimal(String(ultimoMovimiento.saldo_valorizado ?? 0));
+    }
+
+    const precioParaValorizacion = precioUnitario > 0
+      ? new Decimal(String(precioUnitario))
+      : (saldoCantidadAnterior.gt(0) ? saldoValorizadoAnterior.dividedBy(saldoCantidadAnterior).toDecimalPlaces(2) : new Decimal('0'));
+
+    const nuevoSaldoCantidad = saldoCantidadAnterior.plus(cantidadOperacion);
+    const nuevoSaldoValorizado = saldoValorizadoAnterior.plus(cantidadOperacion.times(precioParaValorizacion).toDecimalPlaces(2));
+    const nuevoSaldoPrecioUnitario = nuevoSaldoCantidad.gt(0)
+      ? nuevoSaldoValorizado.dividedBy(nuevoSaldoCantidad).toDecimalPlaces(2)
+      : new Decimal('0');
+
+    await MovimientoInventario.create({
+      lote_id: lote.id,
+      tipo: 'ingreso',
+      origen: 'compra',
+      cantidad: cantidadOperacion,
+      precio_unitario: precioUnitario,
+      costo_unitario_manual: precioUnitario !== null,
+      precio_total: cantidadOperacion.times(precioUnitario).toDecimalPlaces(2).toNumber(),
+      saldo_cantidad: nuevoSaldoCantidad.toDecimalPlaces(2).toNumber(),
+      saldo_precio_unitario: nuevoSaldoPrecioUnitario.toDecimalPlaces(2).toNumber(),
+      saldo_valorizado: nuevoSaldoValorizado.toDecimalPlaces(2).toNumber(),
+      motivo: motivoOperacion,
+      usuario_id: usuario.id,
+      fecha: fecha,
+    }, { transaction });
+    return {};
+  }
+
+  const tipo = esDevolucion ? 'devolucion' : 'venta';
   const operacionExistente = await Operacion.findOne({
     where: { idempotency_key: idempotencyKey },
     transaction,
@@ -240,10 +324,11 @@ const previsualizarKardex = async (req, res, next) => {
       const motivoNormalizado = String(motivo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
       const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
       const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
-      if (!esDevolucion && !esVenta) {
-        throw new Error('El motivo de la fila no identifica una salida de venta ni un ingreso por devolución');
+      const esCompra = motivoNormalizado.includes('compra');
+      if (!esDevolucion && !esVenta && !esCompra) {
+        throw new Error('El motivo de la fila no identifica una salida de venta, un ingreso por devolución ni un ingreso por compra');
       }
-      item.tipo = esDevolucion ? 'devolucion' : 'venta';
+      item.tipo = esDevolucion ? 'devolucion' : esVenta ? 'venta' : 'compra';
 
       if (item.cliente) {
         clientesSet.add(item.cliente);
@@ -281,6 +366,7 @@ const previsualizarKardex = async (req, res, next) => {
   const conError = previewRows.filter(r => r.estado === 'ERROR').length;
   const devoluciones = previewRows.filter(r => r.estado === 'OK' && r.tipo === 'devolucion').length;
   const ventas = previewRows.filter(r => r.estado === 'OK' && r.tipo === 'venta').length;
+  const compras = previewRows.filter(r => r.estado === 'OK' && r.tipo === 'compra').length;
 
   const previewId = crypto.randomUUID();
   const previewPath = path.join(PREVIEW_DIR, `${previewId}.json`);
@@ -299,6 +385,7 @@ const previsualizarKardex = async (req, res, next) => {
       conError,
       devoluciones,
       ventas,
+      compras,
       clientesNuevos,
       productosNoMapeados: Array.from(productosNoMapeados),
       filas: previewRows

@@ -1,7 +1,15 @@
-const { Server } = require('socket.io');
+﻿const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 
 let io = null;
+
+/** Lee la cookie stockia_access del header Cookie del handshake. */
+function extraerTokenCookie(cookieHeader) {
+  if (!cookieHeader || typeof cookieHeader !== 'string') return null;
+  const par = cookieHeader.split(';').map((item) => item.trim())
+    .find((item) => item.startsWith('stockia_access='));
+  return par ? decodeURIComponent(par.slice('stockia_access='.length)) : null;
+}
 
 function initSocket(server) {
   io = new Server(server, {
@@ -12,27 +20,53 @@ function initSocket(server) {
     path: '/socket.io',
   });
 
-  // Middleware de autenticación por JWT en handshake
-  io.use((socket, next) => {
-    const token = socket.handshake.auth?.token || socket.handshake.query?.token;
-    if (!token) {
-      return next(new Error('No autorizado: token requerido'));
-    }
+  // Autenticacion mediante JWT y la cookie HttpOnly existente.
+  io.use(async (socket, next) => {
     try {
+      const origenPermitido = process.env.CORS_ORIGIN || 'http://localhost:5173';
+      const origen = socket.handshake.headers.origin;
+
+      if (
+        typeof origen !== 'string' ||
+        !origenPermitido.split(',').map(v => v.trim()).includes(origen)
+      ) {
+        return next(new Error('No autorizado: origen no permitido'));
+      }
+
+      const token = socket.handshake.auth?.token
+        || extraerTokenCookie(socket.handshake.headers.cookie);
+      if (!token) {
+        return next(new Error('No autorizado: token requerido'));
+      }
+
       const payload = jwt.verify(token, process.env.JWT_SECRET);
-      socket.userId = payload.id;
-      socket.userRol = payload.rol;
+
+      // Revalidar que la cuenta siga activa y conservar el nombre del rol para las salas.
+      const { Usuario, Rol } = require('../models');
+      const usuario = await Usuario.findByPk(payload.id, {
+        attributes: ['id', 'rol_id', 'activo'],
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }],
+      });
+
+      if (!usuario || !usuario.activo) {
+        return next(new Error('No autorizado: usuario inactivo'));
+      }
+
+      socket.userId = usuario.id;
+      socket.userRol = usuario.rol?.nombre ?? null;
+
       next();
     } catch (error) {
-      next(new Error('No autorizado: token inválido'));
+      return next(new Error('No autorizado: token invalido'));
     }
   });
 
   io.on('connection', (socket) => {
-    console.log(`WebSocket conectado: userId=${socket.userId} socket=${socket.id}`);
-
-    socket.on('disconnect', () => {
-      console.log(`WebSocket desconectado: socket=${socket.id}`);
+    socket.on('subscribe:encargados_inventario', () => {
+      const rolesAutorizados = new Set(['Administrador', 'Encargado de Inventario']);
+      if (rolesAutorizados.has(socket.userRol)) {
+        socket.join('encargados_inventario');
+      }
     });
   });
 
@@ -46,13 +80,4 @@ function getIO() {
   return io;
 }
 
-/**
- * Emite un evento a todos los sockets conectados.
- * @param {string} event - Nombre del evento
- * @param {*} data - Datos a enviar
- */
-function emit(event, data) {
-  if (io) io.emit(event, data);
-}
-
-module.exports = { initSocket, getIO, emit };
+module.exports = { initSocket, getIO };
