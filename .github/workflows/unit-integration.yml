@@ -1,8 +1,16 @@
 name: unit-integration
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:15
@@ -10,22 +18,54 @@ jobs:
           POSTGRES_DB: stockia_test
           POSTGRES_USER: stockia_test
           POSTGRES_PASSWORD: stockia_test
-        ports: ['5432:5432']
+        ports:
+          - '5432:5432'
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U stockia_test -d stockia_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
+    env:
+      NODE_ENV: test
+      JWT_SECRET: ci-only-jwt-secret-for-tests
+
+      # Conexion de pruebas (no se conecta a Supabase ni a produccion).
+      TEST_DB_HOST: 127.0.0.1
+      TEST_DB_PORT: '5432'
+      TEST_DB_NAME: stockia_test
+      TEST_DB_USER: stockia_test
+      TEST_DB_PASSWORD: stockia_test
+
+      # Conexion principal, tambien limitada a PostgreSQL temporal de CI.
+      DB_HOST: 127.0.0.1
+      DB_PORT: '5432'
+      DB_NAME: stockia_test
+      DB_USER: stockia_test
+      DB_PASSWORD: stockia_test
+      DB_DIALECT: postgres
+
+      # Conexion local alternativa utilizada por el backend.
+      LOCAL_DB_HOST: 127.0.0.1
+      LOCAL_DB_PORT: '5432'
+      LOCAL_DB_NAME: stockia_test
+      LOCAL_DB_USER: stockia_test
+      LOCAL_DB_PASSWORD: stockia_test
+      LOCAL_DB_DIALECT: postgres
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: cd backend && npm ci
-      - run: cd backend && cp .env.test .env && node --test --test-force-exit --test-concurrency=1 tests/**/*.test.js
-        env:
-          TEST_DB_HOST: localhost
-          TEST_DB_PORT: 5432
-          TEST_DB_NAME: stockia_test
-          TEST_DB_USER: stockia_test
-          TEST_DB_PASSWORD: stockia_test
+          node-version: '20'
+
+      - name: Instalar dependencias del backend
+        working-directory: backend
+        run: npm ci
+
+      - name: Ejecutar pruebas unitarias y de integracion
+        working-directory: backend
+        run: node --test --test-force-exit --test-concurrency=1 tests/**/*.test.js
