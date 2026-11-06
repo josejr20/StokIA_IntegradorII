@@ -7,7 +7,7 @@
         "start": "node server.js",
         "dev": "node server.js",
         "seed": "node src/utils/seed.js",
-        "test": "node --test --test-force-exit --test-concurrency=1 tests"
+        "test": "node --test --test-force-exit --test-concurrency=1 \"tests/**/*.test.js\""
     },
     "keywords": [
         "stockia",
@@ -39,5 +39,8 @@
         "winston": "^3.19.0",
         "xlsx": "^0.18.5",
         "zod": "^4.6.5"
+    },
+    "devDependencies": {
+        "jest": "^30.5.2"
     }
 }
