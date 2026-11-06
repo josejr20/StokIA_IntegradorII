@@ -2,11 +2,12 @@
 
 /**
  * HU-72: Servicio de prediccion de demanda.
- * HU-116 / US-22: ignora temporalmente ventas identificadas por alertas US-22
- * aun no descartadas. La venta permanece intacta en la base de datos.
+ * HU-78: Usa los parametros del modelo ML activo, cuando estan disponibles.
+ * HU-116 / US-22: Excluye temporalmente ventas asociadas a alertas de
+ * anomalias no descartadas. Las ventas siguen intactas en la base de datos.
  *
- * Solo cuentan ventas netas (manual + importado), como /api/ventas/resumen.
- * El filtro se aplica ANTES de construir la serie de Holt.
+ * Se consideran ventas netas de origen manual e importado.
+ * El filtro de anomalias se aplica ANTES de construir la serie de prediccion.
  */
 const modelo = require('./prediccionDemandaModelo');
 const { filtrarVentasPorAlertas } = require('./filtroAnomaliasPrediccion');
@@ -14,26 +15,29 @@ const { filtrarVentasPorAlertas } = require('./filtroAnomaliasPrediccion');
 const ORIGENES_VENTA = ['manual', 'importado'];
 const ESTADOS_EXCLUIDOS = ['nueva', 'vista', 'atendida'];
 
-// Los modelos Sequelize se cargan solo al usarse; las pruebas no abren la BD.
+// Carga diferida de Sequelize: permite probar el servicio con repositorios simulados.
 function repositorioPorDefecto() {
   const { Venta, Producto, Alerta } = require('../models');
   const { Op } = require('sequelize');
+
   return {
     productos: (ids) => Producto.findAll({
       where: { id: { [Op.in]: ids } },
       attributes: ['id', 'codigo', 'nombre', 'activo'],
       raw: true,
     }),
+
     ventas: (ids, desde, hastaExclusivo) => Venta.findAll({
       where: {
         producto_id: { [Op.in]: ids },
         origen: { [Op.in]: ORIGENES_VENTA },
         fecha_venta: { [Op.gte]: desde, [Op.lt]: hastaExclusivo },
       },
-      // HU-116 necesita el ID real para excluir SOLO el registro anomalo.
+      // Es necesario el ID real para excluir unicamente la venta anomala.
       attributes: ['id', 'producto_id', 'cantidad', 'fecha_venta'],
       raw: true,
     }),
+
     alertas: (ids) => Alerta.findAll({
       where: {
         tipo: 'anomalia',
@@ -44,15 +48,24 @@ function repositorioPorDefecto() {
       attributes: ['tipo', 'estado', 'producto_id', 'datos_origen'],
       raw: true,
     }),
+
+    // Si el repositorio ML no esta disponible, se usan los parametros por defecto.
+    modeloActivo: async () => {
+      try {
+        return await require('./mlModeloRepositorio').obtenerModeloActivo();
+      } catch {
+        return null;
+      }
+    },
   };
 }
 
 /**
- * Predice varios productos con una sola consulta de ventas.
- * Se consultan sus alertas del detector US-22 y se excluyen por ID de venta.
- * Repositorios de pruebas antiguas sin metodo alertas siguen funcionando.
- * Si la consulta real de alertas falla, NO se generan predicciones sin filtrar:
- * el error se propaga para no ocultar el problema.
+ * Predice varios productos consultando cada fuente una sola vez.
+ * HU-116: Filtra alertas antes de predecir; los errores de consulta de
+ * alertas se propagan para evitar una prediccion incorrecta sin filtrar.
+ * HU-78: Recupera opcionalmente los parametros del modelo activo.
+ * Los repositorios de pruebas antiguos pueden omitir alertas y modeloActivo.
  */
 async function predecirProductos(productoIds, {
   horizonte = modelo.CONFIG.HORIZONTE_DEFECTO,
@@ -66,15 +79,22 @@ async function predecirProductos(productoIds, {
   const consultas = [
     repo.productos(productoIds),
     repo.ventas(productoIds, rango.desde, rango.hasta),
+    typeof repo.alertas === 'function' ? repo.alertas(productoIds) : Promise.resolve([]),
+    typeof repo.modeloActivo === 'function' ? repo.modeloActivo() : Promise.resolve(null),
   ];
-  if (typeof repo.alertas === 'function') consultas.push(repo.alertas(productoIds));
-  const [productos, ventas, alertas = []] = await Promise.all(consultas);
 
+  const [productos, ventas, alertas, modeloActivo] = await Promise.all(consultas);
   const { ventasValidas, ventasExcluidas, excluidosPorProducto } =
     filtrarVentasPorAlertas(ventas, alertas);
 
+  const parametros = modeloActivo?.parametros;
+  const versionModelo = typeof modeloActivo?.version === 'number'
+    ? `v${modeloActivo.version}`
+    : modeloActivo?.version;
+
   const productoPorId = new Map(productos.map((producto) => [Number(producto.id), producto]));
   const ventasPorProducto = new Map();
+
   for (const venta of ventasValidas) {
     const id = Number(venta.producto_id);
     if (!ventasPorProducto.has(id)) ventasPorProducto.set(id, []);
@@ -92,6 +112,14 @@ async function predecirProductos(productoIds, {
         mensaje: 'El producto seleccionado no existe.',
       };
     }
+
+    const prediccion = modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], {
+      horizonte,
+      hasta,
+      parametros,
+      versionModelo,
+    });
+
     return {
       producto_id: id,
       producto: {
@@ -100,7 +128,7 @@ async function predecirProductos(productoIds, {
         nombre: producto.nombre,
         activo: producto.activo,
       },
-      ...modelo.predecirDemanda(ventasPorProducto.get(id) ?? [], { horizonte, hasta }),
+      ...prediccion,
       calidad_datos: {
         ventas_anomalas_excluidas: excluidosPorProducto.get(String(id)) ?? 0,
       },

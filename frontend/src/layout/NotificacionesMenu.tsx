@@ -1,14 +1,13 @@
-
 import { useCallback, useEffect, useState } from 'react'
-import { Bell, Loader2, AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Bell, Loader2 } from 'lucide-react'
 
 import { api } from '@/lib/api'
 import { useAuth } from '@/auth/AuthContext'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 interface Alerta {
@@ -36,16 +35,12 @@ export function NotificacionesMenu() {
       if (mostrarCarga) setCargando(true)
 
       try {
-        const respuesta = await api.get<{ data: Alerta[] }>(
-          '/alertas'
-        )
+        const respuesta = await api.get<{ data: Alerta[] }>('/alertas')
 
         const pendientes = respuesta.data.filter(
           (alerta) =>
-            (alerta.tipo === 'bajo_stock' ||
-              alerta.tipo === 'anomalia') &&
-            (alerta.estado === 'nueva' ||
-              alerta.estado === 'vista')
+            (alerta.tipo === 'bajo_stock' || alerta.tipo === 'anomalia') &&
+            (alerta.estado === 'nueva' || alerta.estado === 'vista')
         )
 
         setAlertas(pendientes)
@@ -68,8 +63,21 @@ export function NotificacionesMenu() {
       void cargarAlertas()
     }, 30000)
 
+    const actualizarNotificaciones = () => {
+      void cargarAlertas()
+    }
+
+    window.addEventListener(
+      'reabastecimiento:orden_generada',
+      actualizarNotificaciones
+    )
+
     return () => {
       window.clearInterval(intervalo)
+      window.removeEventListener(
+        'reabastecimiento:orden_generada',
+        actualizarNotificaciones
+      )
     }
   }, [autorizado, cargarAlertas])
 
@@ -89,7 +97,6 @@ export function NotificacionesMenu() {
           size="icon"
           className="relative"
           aria-label="Notificaciones"
-
         >
           <Bell className="size-4" />
 
@@ -106,10 +113,7 @@ export function NotificacionesMenu() {
         className="w-80 max-w-[calc(100vw-2rem)]"
       >
         <div className="border-b px-3 py-2">
-          <p className="text-sm font-semibold">
-            Alertas de inventario
-          </p>
-
+          <p className="text-sm font-semibold">Alertas de inventario</p>
           <p className="text-xs text-muted-foreground">
             Bajo stock y anomalías detectadas
           </p>
@@ -122,9 +126,7 @@ export function NotificacionesMenu() {
               Cargando notificaciones...
             </div>
           ) : error ? (
-            <p className="p-4 text-sm text-destructive">
-              {error}
-            </p>
+            <p className="p-4 text-sm text-destructive">{error}</p>
           ) : total === 0 ? (
             <p className="p-4 text-sm text-muted-foreground">
               No hay notificaciones pendientes.
@@ -150,19 +152,12 @@ export function NotificacionesMenu() {
                 <p className="mt-1 text-xs font-medium">
                   Producto #{alerta.producto_id}
                 </p>
-
-                <p className="mt-1 text-sm">
-                  {alerta.mensaje}
-                </p>
-
+                <p className="mt-1 text-sm">{alerta.mensaje}</p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Severidad: {alerta.severidad}
                 </p>
-
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {new Date(
-                    alerta.fecha_creacion
-                  ).toLocaleString('es-PE')}
+                  {new Date(alerta.fecha_creacion).toLocaleString('es-PE')}
                 </p>
               </div>
             ))

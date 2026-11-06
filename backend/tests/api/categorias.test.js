@@ -3,6 +3,7 @@ const assert = require('node:assert');
 const http = require('http');
 const { app } = require('../../src/app');
 
+// Prueba: categorias endpoint responds.
 test('categorias endpoint responds', async () => {
   const server = http.createServer(app);
   await new Promise((r) => server.listen(0, r));

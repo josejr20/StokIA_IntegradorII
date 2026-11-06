@@ -5,13 +5,13 @@ const {
   crearOperacion,
   obtenerOperacion,
   obtenerOperacionCompleta,
-  obtenerComprobanteOperacion,
   listarOperaciones,
   anularOperacion,
   leerConfiguracionImpuesto,
   guardarConfiguracionImpuesto,
 } = require('../services/operacionService');
 const logger = require('../utils/logger');
+const ws = require('../services/wsService');
 
 const TIPOS_VALIDOS = ['venta', 'devolucion', 'ajuste'];
 
@@ -21,14 +21,28 @@ const listar = async (req, res, next) => {
     if (tipo && !TIPOS_VALIDOS.includes(tipo)) {
       return res.status(400).json({ error: 'Tipo de operación inválido' });
     }
-    const operaciones = await listarOperaciones({
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.page_size) || 10));
+
+    const { rows, count } = await listarOperaciones({
       tipo,
       cliente_id: cliente_id ? Number(cliente_id) : undefined,
       fecha_desde,
       fecha_hasta,
       buscar,
+      page,
+      pageSize,
     });
-    res.json({ data: operaciones.map((o) => OperacionDto.fromModel(o)) });
+    const totalPaginas = Math.max(1, Math.ceil(count / pageSize));
+    res.json({
+      data: rows.map((o) => OperacionDto.fromModel(o)),
+      count,
+      page,
+      page_size: pageSize,
+      total_pages: totalPaginas,
+      previous: page > 1,
+      next: page < totalPaginas,
+    });
   } catch (error) { next(error); }
 };
 
@@ -68,6 +82,12 @@ const crear = async (req, res, next) => {
       return res.json({ data: OperacionDto.fromModel(resultado.operacion), repetida: true });
     }
     res.status(201).json({ data: OperacionDto.fromModel(resultado.operacion) });
+    // Notificar en tiempo real para que el historial se refresque sin polling.
+    try {
+      ws.emitirOperacion('operacion:creada', resultado.operacion);
+    } catch (e) {
+      logger.warn('No se pudo emitir evento websocket operacion:creada', e?.message);
+    }
   } catch (error) {
     if (error instanceof ErrorOperacion) {
       logger.warn(`Operación rechazada: ${error.message}`);
@@ -79,19 +99,28 @@ const crear = async (req, res, next) => {
 
 const obtenerComprobante = async (req, res, next) => {
   try {
-    const resultado = await obtenerComprobanteOperacion(req.params.id);
-    if (!resultado.operacion) return res.status(404).json({ error: 'Operación no encontrada' });
-    if (!resultado.comprobante) {
+    const svc = require('../services/operacionService');
+    const resultado = await svc.obtenerComprobanteOperacion(req.params.id);
+    if (!resultado?.operacion) return res.status(404).json({ error: 'Operación no encontrada' });
+    if (!resultado?.comprobante) {
       return res.status(404).json({ error: 'La operación no tiene comprobante' });
     }
     res.json({ data: ComprobanteDto.fromModel(resultado.comprobante) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    console.error('Error obteniendo comprobante:', error);
+    next(error);
+  }
 };
 
 const anular = async (req, res, next) => {
   try {
     const operacion = await anularOperacion(req.params.id, req.user.id);
     res.json({ data: OperacionDto.fromModel(operacion) });
+    try {
+      ws.emitirOperacion('operacion:anulada', operacion);
+    } catch (e) {
+      logger.warn('No se pudo emitir evento websocket operacion:anulada', e?.message);
+    }
   } catch (error) {
     if (error instanceof ErrorOperacion) {
       return res.status(400).json({ error: error.message });
