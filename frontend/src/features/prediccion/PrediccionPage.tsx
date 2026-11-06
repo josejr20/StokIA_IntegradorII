@@ -47,6 +47,14 @@ function formatoFecha(iso: string) {
   return `${dia}/${mes}`
 }
 
+const fechaHoy = () => {
+  const fecha = new Date()
+
+  return [
+    fecha.getFullYear(),
+    String(fecha.getMonth() + 1).padStart(2, '0'),
+    String(fecha.getDate()).padStart(2, '0'),
+  ].join('-')
 function formatoFechaLarga(iso: string) {
   const [anio, mes, dia] = iso.split('-')
   return `${dia}/${mes}/${anio}`
@@ -58,6 +66,30 @@ const TEXTO_TENDENCIA: Record<Tendencia, string> = {
   estable: '→ Ventas estables',
 }
 
+function evaluarPrioridad(
+  producto: {
+    id: number
+    codigo: string
+    nombre: string
+    stock_total: number
+  },
+  lotes: Lote[],
+  movimientos: MovimientoInventario[],
+): ProductoEvaluado {
+
+  const lotesProducto = lotes.filter(
+    (lote) =>
+      lote.producto_id === producto.id &&
+      Number(lote.cantidad_actual) > 0,
+  )
+
+  const stock = Math.max(
+    0,
+    Number(producto.stock_total ?? 0),
+  )
+
+  const inicioPeriodo = `${fechaHace30Dias()}T00:00:00`
+  const finPeriodo = `${fechaHoy()}T23:59:59`
 const TEXTO_CONFIANZA: Record<Confianza, string> = {
   alta: 'Confianza alta',
   media: 'Confianza media',
@@ -82,6 +114,22 @@ interface PuntoGrafico {
   proyeccion?: number
 }
 
+    const fechaMovimiento = movimiento.fecha
+
+    return (
+      fechaMovimiento >= inicioPeriodo &&
+      fechaMovimiento <= finPeriodo
+    )
+  })
+
+  const demanda30 = salidas.reduce(
+    (total, movimiento) =>
+      total + Math.max(
+        0,
+        Number(movimiento.cantidad ?? 0),
+      ),
+    0,
+  )
 type AnomaliaDetectada = {
   fuente: 'venta' | 'movimiento'
   registro_id: number | string
@@ -114,6 +162,14 @@ function datosGrafico(resultado: PrediccionOk): PuntoGrafico[] {
       historico: punto.cantidad,
     }))
 
+  const diasCobertura =
+    demandaDiaria > 0
+      ? stock / demandaDiaria
+      : null
+
+  const diasVencer = lotesProducto.reduce<number | null>(
+    (minimo, lote) => {
+      if (!lote.fecha_vencimiento) return minimo
   const ultimo = historico[historico.length - 1]
   if (ultimo) ultimo.proyeccion = ultimo.historico
 
@@ -125,6 +181,22 @@ function datosGrafico(resultado: PrediccionOk): PuntoGrafico[] {
   return [...historico, ...proyeccion]
 }
 
+      if (Number.isNaN(vencimiento.getTime())) {
+        return minimo
+      }
+
+      const hoy = new Date(`${fechaHoy()}T00:00:00`)
+
+      const dias = Math.ceil(
+        (vencimiento.getTime() - hoy.getTime()) /
+          86400000,
+      )
+
+      return minimo === null
+        ? dias
+        : Math.min(minimo, dias)
+    },
+    null,
 function TarjetaOk({
   resultado,
   titulo,
@@ -234,6 +306,63 @@ function TarjetaOk({
   )
 }
 
+  const riesgoVencimiento =
+    diasVencer !== null && diasVencer <= 30
+
+  const bajaRotacion = demanda30 === 0
+
+  const motivos: string[] = []
+
+  if (stock <= 0) {
+    motivos.push('Sin stock disponible')
+  }
+
+  if (riesgoVencimiento) {
+    motivos.push(
+      diasVencer! < 0
+        ? 'Producto con lote vencido'
+        : `Vencimiento en ${diasVencer} día(s)`,
+    )
+  }
+
+  if (bajaRotacion) {
+    motivos.push(
+      'Sin ventas registradas en 30 días',
+    )
+  }
+
+  if (
+    diasCobertura !== null &&
+    diasCobertura < 7
+  ) {
+    motivos.push(
+      'Stock para menos de 7 días de demanda',
+    )
+  }
+
+  let prioridad: NivelPrioridad
+
+  if (
+    (riesgoVencimiento && bajaRotacion) ||
+    stock <= 0 ||
+    (
+      riesgoVencimiento &&
+      diasCobertura !== null &&
+      diasCobertura < 7
+    )
+  ) {
+    prioridad = 'Alta'
+  } else if (
+    riesgoVencimiento ||
+    bajaRotacion ||
+    (
+      diasCobertura !== null &&
+      diasCobertura < 14
+    )
+  ) {
+    prioridad = 'Media'
+  } else {
+    prioridad = 'Baja'
 function TarjetaInsuficiente({
   resultado,
   titulo,
@@ -298,6 +427,86 @@ function mostrarNumero(valor: string | number) {
 }
 
 export default function PrediccionPage() {
+
+  const [busqueda, setBusqueda] = useState('')
+  const [filtro, setFiltro] =
+    useState<FiltroPrioridad>('Todas')
+
+  const {
+    data: productosData,
+    isLoading: cargandoProductos,
+    isError: errorProductos,
+    refetch: recargarProductos,
+  } = useProductos({
+    page: 1,
+    pageSize: 100,
+    allPages: true,
+  })
+
+  const {
+    data: lotesData,
+    isLoading: cargandoLotes,
+    isError: errorLotes,
+    refetch: recargarLotes,
+  } = useLotes({
+    pageSize: 100,
+  })
+
+  const {
+    data: movimientosData,
+    isLoading: cargandoMovimientos,
+    isError: errorMovimientos,
+    refetch: recargarMovimientos,
+  } = useMovimientosInventario({
+    fecha_desde: fechaHace30Dias(),
+    fecha_hasta: fechaHoy(),
+    pageSize: 100,
+    allPages: true,
+  })
+
+  const filas = useMemo(() => {
+    const productos = productosData?.results ?? []
+    const lotes = lotesData?.results ?? []
+    const movimientos = movimientosData?.results ?? []
+
+    return productos
+      .filter((producto) => producto.activo)
+      .map((producto) =>
+        evaluarPrioridad(
+          producto,
+          lotes,
+          movimientos,
+        ),
+      )
+      .sort((a, b) => {
+        const orden: Record<NivelPrioridad, number> = {
+          Alta: 0,
+          Media: 1,
+          Baja: 2,
+        }
+
+        return (
+          orden[a.prioridad] - orden[b.prioridad] ||
+          a.nombre.localeCompare(b.nombre, 'es')
+        )
+      })
+  }, [
+    productosData,
+    lotesData,
+    movimientosData,
+  ])
+
+  const visibles = filas.filter((producto) => {
+    const texto =
+      `${producto.nombre} ${producto.codigo}`.toLowerCase()
+
+    const coincideBusqueda = texto.includes(
+      busqueda.trim().toLowerCase(),
+    )
+
+    const coincideFiltro =
+      filtro === 'Todas' ||
+      producto.prioridad === filtro
   const [buscar, setBuscar] = useState('')
   const [elegidos, setElegidos] = useState<ProductoElegido[]>([])
   const [horizonte, setHorizonte] = useState(7)
@@ -356,6 +565,27 @@ export default function PrediccionPage() {
     })
   }
 
+  const altas = filas.filter(
+    (p) => p.prioridad === 'Alta',
+  ).length
+
+  const medias = filas.filter(
+    (p) => p.prioridad === 'Media',
+  ).length
+
+  const bajas = filas.filter(
+    (p) => p.prioridad === 'Baja',
+  ).length
+
+  const cargando =
+    cargandoProductos ||
+    cargandoLotes ||
+    cargandoMovimientos
+
+  const hayError =
+    errorProductos ||
+    errorLotes ||
+    errorMovimientos
   async function analizarAnomalias() {
     if (!puedeVerAnomalias || consultandoAnomalias || registrandoAnomalias) {
       return
@@ -424,6 +654,19 @@ export default function PrediccionPage() {
       : 'No se pudo generar la predicción.'
 
   return (
+    <main className="space-y-6 p-4 md:p-6">
+
+      {/* Encabezado del módulo */}
+      <header className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Priorización de inventario
+          </h1>
+
+          <p className="mt-1 text-sm text-muted-foreground">
+            Identifica los productos que requieren mayor
+            atención según stock, demanda y riesgo de
+            vencimiento.
     <main className="space-y-6">
       <div>
         <h1 className="flex items-center gap-2 text-2xl font-semibold">
@@ -549,11 +792,33 @@ export default function PrediccionPage() {
         </div>
       </div>
 
+      {/* Mensaje de error */}
+      {hayError && (
       {prediccion.isError && (
         <div
           role="alert"
           className="rounded-xl border border-destructive/40 bg-white p-4 text-sm text-destructive"
         >
+          No se pudieron cargar todos los datos del
+          inventario.
+        </div>
+      )}
+
+      {/* Resumen de prioridades */}
+      <section className="grid gap-3 sm:grid-cols-3">
+
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+          <div className="flex items-center gap-2 text-sm text-red-800">
+            <AlertTriangle className="size-4" />
+            Prioridad alta
+          </div>
+
+          <p className="mt-2 text-3xl font-semibold text-red-900">
+            {altas}
+          </p>
+
+          <p className="mt-1 text-xs text-red-800">
+            Requieren atención prioritaria
           {mensajeError}
         </div>
       )}
@@ -580,6 +845,15 @@ export default function PrediccionPage() {
             Elige uno o más productos y pulsa «Generar predicción» para ver la
             demanda estimada.
           </div>
+
+          <p className="mt-2 text-3xl font-semibold text-amber-900">
+            {medias}
+          </p>
+
+          <p className="mt-1 text-xs text-amber-800">
+            Requieren seguimiento
+          </p>
+        </div>
         )}
 
       {puedeVerAnomalias && (
@@ -596,6 +870,151 @@ export default function PrediccionPage() {
               previa no guarda registros ni modifica el inventario.
             </p>
           </div>
+
+          <p className="mt-2 text-3xl font-semibold text-green-900">
+            {bajas}
+          </p>
+
+          <p className="mt-1 text-xs text-green-800">
+            Situación estable
+          </p>
+        </div>
+
+      </section>
+
+      {/* Búsqueda y filtros */}
+      <section className="flex flex-col gap-3 sm:flex-row">
+
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+
+          <Input
+            className="pl-9"
+            placeholder="Buscar por nombre o código..."
+            value={busqueda}
+            onChange={(event) =>
+              setBusqueda(event.target.value)
+            }
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {(
+            ['Todas', 'Alta', 'Media', 'Baja'] as const
+          ).map((nivel) => (
+            <Button
+              key={nivel}
+              size="sm"
+              variant={
+                filtro === nivel
+                  ? 'default'
+                  : 'outline'
+              }
+              onClick={() => setFiltro(nivel)}
+            >
+              {nivel}
+            </Button>
+          ))}
+        </div>
+
+      </section>
+
+      {/* Tabla de productos priorizados */}
+      <section className="overflow-x-auto rounded-xl border">
+
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Producto</TableHead>
+              <TableHead>Stock</TableHead>
+              <TableHead>
+                Demanda estimada (30 días)
+              </TableHead>
+              <TableHead>Cobertura</TableHead>
+              <TableHead>Vencimiento</TableHead>
+              <TableHead>Prioridad</TableHead>
+              <TableHead>Motivo</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+
+            {cargando ? (
+              <TableRow>
+                <TableCell
+                  colSpan={7}
+                  className="py-8 text-center"
+                >
+                  Cargando información del inventario.
+                </TableCell>
+              </TableRow>
+            ) : visibles.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={7}
+                  className="py-8 text-center text-muted-foreground"
+                >
+                  No se encontraron productos para mostrar.
+                </TableCell>
+              </TableRow>
+            ) : (
+              visibles.map((producto) => (
+                <TableRow key={producto.id}>
+
+                  <TableCell>
+                    <div className="font-medium">
+                      {producto.nombre}
+                    </div>
+
+                    <div className="text-xs text-muted-foreground">
+                      {producto.codigo}
+                    </div>
+                  </TableCell>
+
+                  <TableCell>
+                    {producto.stock}
+                  </TableCell>
+
+                  <TableCell>
+                    {producto.demanda30}
+                  </TableCell>
+
+                  <TableCell>
+                    {producto.diasCobertura === null
+                      ? 'Sin demanda registrada'
+                      : `${producto.diasCobertura.toFixed(1)} días`}
+                  </TableCell>
+
+                  <TableCell>
+                    {producto.diasVencer === null
+                      ? 'Sin fecha registrada'
+                      : producto.diasVencer < 0
+                        ? `Vencido hace ${Math.abs(producto.diasVencer)} día(s)`
+                        : `${producto.diasVencer} día(s)`}
+                  </TableCell>
+
+                  <TableCell>
+                    <Badge
+                      className={
+                        estilosPrioridad[producto.prioridad]
+                      }
+                    >
+                      {producto.prioridad}
+                    </Badge>
+                  </TableCell>
+
+                  <TableCell className="max-w-xs text-sm">
+                    {producto.motivo}
+                  </TableCell>
+
+                </TableRow>
+              ))
+            )}
+
+          </TableBody>
+        </Table>
+
+      </section>
 
           <div className="flex flex-wrap items-end gap-3">
             <label
@@ -815,11 +1234,16 @@ export default function PrediccionPage() {
         </section>
       )}
 
+      {/* Información de la evaluación */}
       <p className="text-xs text-muted-foreground">
+        La demanda se estima con las salidas de ventas
+        registradas en los últimos 30 días. Los resultados
+        dependen de la información disponible en el sistema.
         La demanda se estima con las salidas de ventas registradas en los
         últimos 30 días. Los resultados dependen de la información disponible
         en el sistema.
       </p>
+
     </main>
   )
 }
