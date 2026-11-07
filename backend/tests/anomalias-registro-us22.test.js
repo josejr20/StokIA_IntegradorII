@@ -33,7 +33,8 @@ function crearMocks({ ventas = serieVentas(), movimientos = [], lotes = [] } = {
     Op,
     Venta: { async findAll(opciones) {
       llamadas.ventas++;
-      assert.equal(opciones.limit, 20001);
+      assert.equal(opciones.limit, 20000);
+      assert.equal(opciones.offset, 0);
       assert.ok(opciones.where.fecha_venta[Op.gte] instanceof Date);
       return ventas;
     } },
@@ -137,10 +138,39 @@ test('HU-115: opciones invalidas se rechazan antes de consultar BD', async () =>
   assert.equal(llamadas.ventas, 0);
 });
 
-test('HU-115: rechaza historial truncado para evitar falsos positivos', async () => {
-  const { deps, creadas } = crearMocks({ ventas: new Array(20001).fill(null).map((_, i) => ({ id: i + 1 })) });
-  await assert.rejects(evaluarAnomalias({ ahora, guardar: true }, deps), (error) =>
-    error.codigo === 'HISTORIAL_DEMASIADO_GRANDE');
+test('HU-115: pagina el historial grande sin truncar ni rechazar', async () => {
+  const { deps, creadas, llamadas } = crearMocks({ ventas: new Array(20001).fill(null).map((_, i) => ({ id: i + 1 })) });
+  const resultado = await evaluarAnomalias({ ahora, guardar: true }, deps);
+  assert.equal(resultado.modo, 'registro');
+  assert.equal(llamadas.ventas, 1);
+  assert.equal(creadas.length, 0);
+});
+
+test('HU-115: pagina varias páginas cuando el historial supera un límite', async () => {
+  const Op = { in: Symbol('in'), gte: Symbol('gte'), lte: Symbol('lte'), contains: Symbol('contains') };
+  const ventas = new Array(20001).fill(null).map((_, i) => ({
+    id: i + 1, producto_id: 1, cantidad: String(10), origen: 'manual',
+    fecha_venta: new Date(Date.UTC(2026, 9, 1)),
+  }));
+  let offsetVisto = null;
+  const creadas = [];
+  const deps = {
+    Op,
+    Venta: { async findAll(opciones) {
+      offsetVisto = opciones.offset;
+      assert.equal(opciones.limit, 20000);
+      return opciones.offset === 0 ? ventas.slice(0, 20000) : ventas.slice(20000);
+    } },
+    MovimientoInventario: { async findAll() { return []; } },
+    Lote: { async findAll() { return []; } },
+    Alerta: {
+      async findOne() { return null; },
+      async create(alerta) { creadas.push(alerta); return alerta; },
+    },
+  };
+  const resultado = await evaluarAnomalias({ ahora, guardar: true }, deps);
+  assert.equal(offsetVisto, 20000);
+  assert.equal(resultado.ventas_consultadas, 20001);
   assert.equal(creadas.length, 0);
 });
 

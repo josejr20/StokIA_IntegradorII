@@ -1,12 +1,28 @@
-import { Brain } from 'lucide-react'
+import { Brain, CheckCircle2, TriangleAlert, X } from 'lucide-react'
 
 import { useAuth } from '@/auth/AuthContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ApiError } from '@/lib/api'
-import { useActivarVersion, useEntrenarModelo, useEstadoModelo, useEvaluarModelo } from './api'
-import type { AvisoModelo, EstadoVersion, ParametrosModelo, VersionModelo } from './api'
+import MetricasPanel from './MetricasPanel'
+import {
+  detalleDatosInsuficientes,
+  esDatosInsuficientes,
+  useActivarVersion,
+  useEntrenarModelo,
+  useEstadoModelo,
+  useEvaluarModelo,
+} from './api'
+import type {
+  AvisoModelo,
+  DetalleDatosInsuficientes,
+  EstadoVersion,
+  ParametrosModelo,
+  RegistroEntrenamiento,
+  ResultadoEntrenamiento,
+  VersionModelo,
+} from './api'
 
 const formatoNumero = new Intl.NumberFormat('es-PE', { maximumFractionDigits: 2 })
 
@@ -20,6 +36,14 @@ function numero(valor: number | null) {
 
 function fechaHora(iso: string | null) {
   return iso ? new Date(iso).toLocaleString('es-PE') : '—'
+}
+
+/** HU-82 / TC-05: duración legible a partir de milisegundos ("850 ms", "1,4 s", "2 min 5 s"). */
+function formatoDuracion(ms: number | null | undefined) {
+  if (ms === null || ms === undefined) return '—'
+  if (ms < 1000) return `${Math.round(ms)} ms`
+  if (ms < 60000) return `${String(Math.round(ms / 100) / 10).replace('.', ',')} s`
+  return `${Math.floor(ms / 60000)} min ${Math.round((ms % 60000) / 1000)} s`
 }
 
 function textoParametros(parametros: ParametrosModelo | null) {
@@ -41,6 +65,18 @@ const VARIANTE_ESTADO: Record<EstadoVersion, 'bajo' | 'medio' | 'secondary'> = {
   activo: 'bajo',
   requiere_revision: 'medio',
   archivado: 'secondary',
+}
+
+const ETIQUETA_RESULTADO: Record<RegistroEntrenamiento['resultado'], string> = {
+  exitoso: 'Exitoso',
+  sin_mejora: 'Sin mejora',
+  insuficiente_datos: 'Datos insuficientes',
+}
+
+const VARIANTE_RESULTADO: Record<RegistroEntrenamiento['resultado'], 'bajo' | 'medio' | 'secondary'> = {
+  exitoso: 'bajo',
+  sin_mejora: 'secondary',
+  insuficiente_datos: 'medio',
 }
 
 const CLASE_AVISO: Record<AvisoModelo['severidad'], string> = {
@@ -115,6 +151,113 @@ function TarjetaActivo({ modelo, umbral }: { modelo: VersionModelo; umbral: numb
   )
 }
 
+/** Estado final de la versión recién entrenada, en palabras para el administrador. */
+function textoEstadoEntrenamiento(resultado: ResultadoEntrenamiento) {
+  if (resultado.activado) return 'Entrenamiento exitoso'
+  return 'Entrenamiento completado'
+}
+
+/**
+ * HU-82 / FE-01 / TC-07: confirmación del entrenamiento para el administrador.
+ * Muestra la versión creada, cuándo se entrenó, cuánto tardó, con qué datos y qué desempeño tuvo.
+ */
+export function ConfirmacionEntrenamiento({ resultado, onCerrar }: { resultado: ResultadoEntrenamiento; onCerrar: () => void }) {
+  const { modelo, entrenamiento, datos_preparados: datos } = resultado
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className={`rounded-xl border p-4 text-sm ${resultado.activado ? 'border-green-300 bg-green-50' : 'border-amber-300 bg-amber-50'}`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-2">
+          <CheckCircle2 className={`mt-0.5 size-5 shrink-0 ${resultado.activado ? 'text-green-600' : 'text-amber-600'}`} aria-hidden />
+          <div>
+            <p className="font-semibold">
+              {textoEstadoEntrenamiento(resultado)} · {modelo.version}
+            </p>
+            <p className="mt-1">{resultado.mensaje}</p>
+          </div>
+        </div>
+        <Button type="button" variant="ghost" size="sm" onClick={onCerrar} aria-label="Cerrar confirmación">
+          <X className="size-4" aria-hidden />
+        </Button>
+      </div>
+
+      <dl className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <dt className="text-xs text-muted-foreground">Versión guardada</dt>
+          <dd className="font-medium">{modelo.version}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Fecha del entrenamiento</dt>
+          <dd className="font-medium">{fechaHora(entrenamiento.iniciado_en)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Duración</dt>
+          <dd className="font-medium">{formatoDuracion(entrenamiento.duracion_ms)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">RMSE relativo</dt>
+          <dd className="font-medium">
+            {porcentaje(modelo.rmse_relativo)} <span className="text-xs font-normal text-muted-foreground">(umbral {porcentaje(modelo.umbral_rmse_relativo)})</span>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Datos usados</dt>
+          <dd className="font-medium">{formatoNumero.format(datos.filas_validas)} filas de venta válidas</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Filas descartadas</dt>
+          <dd className="font-medium">{formatoNumero.format(datos.filas_descartadas)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Parámetros elegidos</dt>
+          <dd className="font-medium">{textoParametros(modelo.parametros)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Estado de la versión</dt>
+          <dd className="font-medium">{ETIQUETA_ESTADO[modelo.estado]}</dd>
+        </div>
+      </dl>
+    </div>
+  )
+}
+
+/**
+ * HU-82 / TC-02 y TC-06: cuando no hay datos suficientes NO se entrena y se explica por qué, con números.
+ * No es un fallo del sistema: es un aviso de que primero hay que cargar más historial de ventas.
+ */
+export function AvisoDatosInsuficientes({ mensaje, detalle }: { mensaje: string; detalle: DetalleDatosInsuficientes | null }) {
+  return (
+    <div role="alert" className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm">
+      <div className="flex items-start gap-2">
+        <TriangleAlert className="mt-0.5 size-5 shrink-0 text-amber-600" aria-hidden />
+        <div>
+          <p className="font-semibold">No es posible entrenar con la información disponible</p>
+          <p className="mt-1">{mensaje}</p>
+          {detalle && (
+            <ul className="mt-2 list-inside list-disc text-muted-foreground">
+              <li>
+                Filas de venta válidas: {formatoNumero.format(detalle.filas_validas)} de {formatoNumero.format(detalle.minimo_filas)} necesarias
+                {detalle.filas_descartadas > 0 && ` (${formatoNumero.format(detalle.filas_descartadas)} descartadas por datos inválidos)`}.
+              </li>
+              {detalle.pruebas_necesarias !== null && detalle.pruebas_logradas !== null && (
+                <li>
+                  Pruebas de predicción posibles: {detalle.pruebas_logradas} de {detalle.pruebas_necesarias} necesarias (los productos
+                  necesitan más días de historial).
+                </li>
+              )}
+              <li>Intento registrado el {fechaHora(detalle.iniciado_en)} · duración {formatoDuracion(detalle.duracion_ms)}.</li>
+            </ul>
+          )}
+          <p className="mt-2">Registra o importa más ventas históricas y vuelve a intentarlo. No se creó ninguna versión.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function ModeloMLPage() {
   const { tienePermiso } = useAuth()
   const puedeAdministrar = tienePermiso('gestionar_usuarios')
@@ -170,13 +313,12 @@ export default function ModeloMLPage() {
         </p>
       )}
 
-      {entrenar.data && (
-        <div
-          role="status"
-          className={`rounded-xl border p-4 text-sm ${entrenar.data.activado ? 'border-green-300 bg-green-50' : 'border-amber-300 bg-amber-50'}`}
-        >
-          {entrenar.data.mensaje}
-        </div>
+      {entrenar.data && <ConfirmacionEntrenamiento resultado={entrenar.data} onCerrar={() => entrenar.reset()} />}
+      {entrenar.error && esDatosInsuficientes(entrenar.error) && (
+        <AvisoDatosInsuficientes
+          mensaje={mensajeDeError(entrenar.error, 'No hay datos suficientes para entrenar.')}
+          detalle={detalleDatosInsuficientes(entrenar.error)}
+        />
       )}
       {evaluar.data && (
         <div
@@ -191,7 +333,7 @@ export default function ModeloMLPage() {
           {activar.data.mensaje}
         </div>
       )}
-      {[entrenar.error, evaluar.error, activar.error].map(
+      {[entrenar.error && esDatosInsuficientes(entrenar.error) ? null : entrenar.error, evaluar.error, activar.error].map(
         (error, indice) =>
           error && (
             <div key={indice} role="alert" className="rounded-xl border border-destructive/40 bg-white p-4 text-sm text-destructive">
@@ -224,6 +366,8 @@ export default function ModeloMLPage() {
             </div>
           )}
 
+          <MetricasPanel />
+
           <div className="rounded-xl border bg-white">
             <div className="border-b px-5 py-3">
               <h2 className="font-semibold">Historial de versiones</h2>
@@ -236,6 +380,7 @@ export default function ModeloMLPage() {
                 <TableRow>
                   <TableHead>Versión</TableHead>
                   <TableHead>Fecha de entrenamiento</TableHead>
+                  <TableHead>Duración</TableHead>
                   <TableHead>Estado</TableHead>
                   <TableHead>Parámetros</TableHead>
                   <TableHead className="text-right">MAE</TableHead>
@@ -247,7 +392,7 @@ export default function ModeloMLPage() {
               <TableBody>
                 {datos.versiones.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={8} className="py-8 text-center text-sm text-muted-foreground">
+                    <TableCell colSpan={9} className="py-8 text-center text-sm text-muted-foreground">
                       Todavía no se ha entrenado ninguna versión.
                     </TableCell>
                   </TableRow>
@@ -256,6 +401,7 @@ export default function ModeloMLPage() {
                   <TableRow key={version.id}>
                     <TableCell className="font-medium">{version.version}</TableCell>
                     <TableCell>{fechaHora(version.fecha_entrenamiento)}</TableCell>
+                    <TableCell>{formatoDuracion(version.entrenamiento?.duracion_ms)}</TableCell>
                     <TableCell>
                       <Badge variant={VARIANTE_ESTADO[version.estado]}>{ETIQUETA_ESTADO[version.estado]}</Badge>
                     </TableCell>
@@ -270,6 +416,46 @@ export default function ModeloMLPage() {
                         </Button>
                       )}
                     </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <div className="rounded-xl border bg-white">
+            <div className="border-b px-5 py-3">
+              <h2 className="font-semibold">Historial de entrenamientos</h2>
+              <p className="text-xs text-muted-foreground">
+                Cada intento queda registrado con su fecha y duración, incluso los que no se pudieron realizar por falta de datos.
+              </p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Fecha</TableHead>
+                  <TableHead>Resultado</TableHead>
+                  <TableHead>Duración</TableHead>
+                  <TableHead>Detalle</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {datos.entrenamientos.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="py-8 text-center text-sm text-muted-foreground">
+                      Todavía no se ha intentado ningún entrenamiento.
+                    </TableCell>
+                  </TableRow>
+                )}
+                {datos.entrenamientos.map((registro) => (
+                  <TableRow key={registro.id}>
+                    <TableCell>{fechaHora(registro.iniciado_en ?? registro.fecha)}</TableCell>
+                    <TableCell>
+                      <Badge variant={VARIANTE_RESULTADO[registro.resultado] ?? 'secondary'}>
+                        {ETIQUETA_RESULTADO[registro.resultado] ?? registro.resultado}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{formatoDuracion(registro.duracion_ms)}</TableCell>
+                    <TableCell className="max-w-xl whitespace-normal text-xs text-muted-foreground">{registro.mensaje ?? '—'}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

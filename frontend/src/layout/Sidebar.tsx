@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router'
 import {
   Home, LayoutDashboard, Package, Boxes, ShoppingCart,
-  TrendingUp, Brain, Settings, Users, ScrollText, History, AlertTriangle, ReceiptText, Contact, ClipboardList
+  TrendingUp, Scale, Brain, Settings, Users, ScrollText, History, AlertTriangle, ReceiptText, Contact, ClipboardList
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -22,6 +22,7 @@ const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permis
   { to: '/comprobantes', label: 'Comprobantes', icon: ReceiptText, permiso: 'gestionar_ventas' },
   { to: '/clientes', label: 'Clientes', icon: Contact, permiso: 'gestionar_ventas' },
   { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+  { to: '/prediccion/historico', label: 'Predicción vs ventas', icon: Scale, permiso: 'ver_kpis' },
   { to: '/riesgo-vencimiento', label: 'Riesgo de vencimiento', icon: AlertTriangle, permiso: 'ver_alertas' },
   { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
   { to: '/configuracion', label: 'Configuración', icon: Settings, permiso: 'configurar_umbrales' },

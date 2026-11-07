@@ -32,34 +32,51 @@ function depsPorDefecto() {
   return { Venta, MovimientoInventario, Lote, Alerta, Op };
 }
 
+/**
+ * Carga todos los registros de una tabla en paginas de LIMITE_REGISTROS para
+ * evitar truncar el historial (muestras recortadas generan falsos positivos).
+ */
+async function paginarTodos(modelo, opcionesBase) {
+  const todos = [];
+  let offset = 0;
+  let pagina;
+  do {
+    pagina = await modelo.findAll({
+      ...opcionesBase,
+      limit: LIMITE_REGISTROS,
+      offset,
+      raw: true,
+    });
+    todos.push(...pagina);
+    offset += pagina.length;
+  } while (pagina.length === LIMITE_REGISTROS);
+  return todos;
+}
+
 async function obtenerDatos({ diasHistorial, ahora }, { Venta, MovimientoInventario, Lote, Op }) {
   const desde = new Date(ahora.getTime() - diasHistorial * DIA_MS);
+  const baseWhereVenta = {
+    origen: { [Op.in]: ['manual', 'importado'] },
+    fecha_venta: { [Op.gte]: desde, [Op.lte]: ahora },
+  };
+  const baseWhereMovimiento = {
+    fecha: { [Op.gte]: desde, [Op.lte]: ahora },
+  };
+  const atributosVenta = ['id', 'producto_id', 'lote_id', 'cantidad', 'origen', 'fecha_venta'];
+  const atributosMovimiento = ['id', 'lote_id', 'tipo', 'origen', 'cantidad', 'fecha'];
+
   const [ventas, movimientos] = await Promise.all([
-    Venta.findAll({
-      where: {
-        origen: { [Op.in]: ['manual', 'importado'] },
-        fecha_venta: { [Op.gte]: desde, [Op.lte]: ahora },
-      },
-      attributes: ['id', 'producto_id', 'lote_id', 'cantidad', 'origen', 'fecha_venta'],
+    paginarTodos(Venta, {
+      where: baseWhereVenta,
+      attributes: atributosVenta,
       order: [['fecha_venta', 'DESC'], ['id', 'DESC']],
-      limit: LIMITE_REGISTROS + 1,
-      raw: true,
     }),
-    MovimientoInventario.findAll({
-      where: { fecha: { [Op.gte]: desde, [Op.lte]: ahora } },
-      attributes: ['id', 'lote_id', 'tipo', 'origen', 'cantidad', 'fecha'],
+    paginarTodos(MovimientoInventario, {
+      where: baseWhereMovimiento,
+      attributes: atributosMovimiento,
       order: [['fecha', 'DESC'], ['id', 'DESC']],
-      limit: LIMITE_REGISTROS + 1,
-      raw: true,
     }),
   ]);
-
-  // No analizar muestras recortadas: pueden producir alertas estadisticamente falsas.
-  if (ventas.length > LIMITE_REGISTROS || movimientos.length > LIMITE_REGISTROS) {
-    const error = new Error('Se supero el limite seguro de 20000 registros por tabla. Ajuste el rango de diasHistorial.');
-    error.codigo = 'HISTORIAL_DEMASIADO_GRANDE';
-    throw error;
-  }
 
   const idsLotes = [...new Set(movimientos.map((mov) => mov.lote_id)
     .filter((id) => id !== null && id !== undefined).map(String))];

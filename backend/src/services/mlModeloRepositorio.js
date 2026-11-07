@@ -156,20 +156,48 @@ async function actualizarMetadata(id, parche) {
   );
 }
 
-async function registrarEntrenamiento({ modeloId = null, disparadoPor, resultado, promovido, mensaje }) {
-  await ejecutar(
-    `INSERT INTO ml.entrenamientos_log (modelo_id, disparado_por, resultado, promovido, mensaje)
-     VALUES (:modeloId, :disparadoPor, :resultado, :promovido, :mensaje)`,
-    { modeloId, disparadoPor, resultado, promovido, mensaje },
-  );
+const esColumnaInexistente = (error) => (error?.parent?.code ?? error?.original?.code ?? error?.code) === '42703';
+
+async function registrarEntrenamiento({
+  modeloId = null,
+  disparadoPor,
+  resultado,
+  promovido,
+  mensaje,
+  duracionMs = null,
+  iniciadoEn = null,
+  finalizadoEn = null,
+}) {
+  try {
+    await ejecutar(
+      `INSERT INTO ml.entrenamientos_log (modelo_id, disparado_por, resultado, promovido, mensaje, duracion_ms, iniciado_en, finalizado_en)
+       VALUES (:modeloId, :disparadoPor, :resultado, :promovido, :mensaje, :duracionMs, :iniciadoEn, :finalizadoEn)`,
+      { modeloId, disparadoPor, resultado, promovido, mensaje, duracionMs, iniciadoEn, finalizadoEn },
+    );
+  } catch (error) {
+    if (!esColumnaInexistente(error)) throw error;
+    await ejecutar(
+      `INSERT INTO ml.entrenamientos_log (modelo_id, disparado_por, resultado, promovido, mensaje)
+       VALUES (:modeloId, :disparadoPor, :resultado, :promovido, :mensaje)`,
+      { modeloId, disparadoPor, resultado, promovido, mensaje },
+    );
+  }
 }
 
 async function listarEntrenamientos(limite = 10) {
-  const filas = await consultar(
-    'SELECT id, modelo_id, disparado_por, resultado, promovido, mensaje, fecha FROM ml.entrenamientos_log ORDER BY id DESC LIMIT :limite',
-    { limite },
-  );
-  return filas.map((fila) => ({ ...fila, id: Number(fila.id), modelo_id: fila.modelo_id === null ? null : Number(fila.modelo_id) }));
+  const filas = await consultar('SELECT * FROM ml.entrenamientos_log ORDER BY id DESC LIMIT :limite', { limite });
+  return filas.map((fila) => ({
+    id: Number(fila.id),
+    modelo_id: fila.modelo_id === null || fila.modelo_id === undefined ? null : Number(fila.modelo_id),
+    disparado_por: fila.disparado_por,
+    resultado: fila.resultado,
+    promovido: fila.promovido,
+    mensaje: fila.mensaje,
+    fecha: fila.fecha,
+    duracion_ms: fila.duracion_ms === null || fila.duracion_ms === undefined ? null : Number(fila.duracion_ms),
+    iniciado_en: fila.iniciado_en ?? null,
+    finalizado_en: fila.finalizado_en ?? null,
+  }));
 }
 
 async function registrarPreparacion({ total_filas: total, filas_validas: validas, filas_descartadas: descartadas, motivos_descarte: motivos, listo_para_entrenar: listo }) {

@@ -27,7 +27,7 @@ HU-82 **reutiliza ese motor** y cierra lo que faltaba:
 | **HU-84 ML-02** Generar y guardar versión | Cada entrenamiento crea `v(n+1)` en `ml.modelos`; las anteriores se conservan; solo una activa | `services/mlModeloService.js`, `services/mlModeloRepositorio.js` |
 | **HU-85 BE-01** Fecha/duración e indicar falta de datos | `reloj` inyectable, `medirTiempo`, `duracionTexto`, `ErrorML.detalle`, registro con fallback si faltan columnas, auditoría | `services/*`, `controllers/mlController.js`, `routes/ml.js`, `sql/ml_hu82_duracion_entrenamiento.sql` |
 | **HU-86 FE-01** Confirmar al administrador | `ConfirmacionEntrenamiento`, `AvisoDatosInsuficientes`, columna *Duración*, *Historial de entrenamientos* | `features/modelo-ml/ModeloMLPage.tsx`, `api.ts` |
-| **HU-87 QA-01** Ejecutar TC-01..TC-07 | Ver sección 4 | `tests/unit/ml-entrenamiento-hu82.test.js`, `tests/api/ml-entrenamiento.test.js`, `ModeloMLPage.test.tsx` |
+| **HU-87 QA-01** Ejecutar TC-01..TC-07 | Ver sección 4 | `tests/unit/ml-entrenamiento-hu82.test.js`, `tests/unit/ml-entrenamiento.test.js`, `frontend/src/features/modelo-ml/ModeloMLPage.test.tsx` |
 
 ## 3. API
 
@@ -68,13 +68,13 @@ Ejecutado el **06/11/2026** con Node 22.23 · datos simulados deterministas · t
 | TC-06 | Indica cuando faltan datos | 2 pruebas backend (por filas y por historial corto) + pantalla | ✅ Aprobado |
 | TC-07 | Confirma el entrenamiento exitoso | servicio, endpoint 201, pantalla (panel + cerrar) | ✅ Aprobado |
 
-Totales vigentes (HU-82 + HU-88) en `docs/HU-88_metricas_desempeno_modelo.md`, sección 4.
+Totales vigentes (HU-82 + HU-88) en `docs/qa/HU-88_metricas_desempeno_modelo.md`, sección 4.
 
 ### Pendiente de verificar en TU entorno (no se pudo desde el entorno de desarrollo, que no alcanza Supabase)
 1. **Prueba extremo a extremo con la BD real**: iniciar sesión como administrador → *Modelo de Machine Learning* → *Entrenar modelo*.
    Debe aparecer el panel verde con versión, fecha y duración, y una fila nueva en *Historial de versiones* y en *Historial de entrenamientos*.
 2. **TC-02 real**: con pocas ventas (o subiendo `min_filas_entrenamiento` en `ml.configuracion`) debe aparecer el aviso ámbar.
-3. Opcional: ejecutar `backend/sql/ml_hu82_duracion_entrenamiento.sql` en Supabase para guardar la duración también como columnas.
+3. Opcional: ejecutar `sql/ml_hu82_duracion_entrenamiento.sql` desde `backend` en Supabase para guardar la duración también como columnas.
    Sin él todo funciona (la duración queda en `metadata` y en el texto del mensaje).
 
 ## 5. Cómo ejecutar
@@ -82,7 +82,7 @@ Totales vigentes (HU-82 + HU-88) en `docs/HU-88_metricas_desempeno_modelo.md`, s
 ```bash
 # Backend
 cd backend && npm install
-node --test --test-force-exit tests/unit/ml-entrenamiento-hu82.test.js tests/api/ml-entrenamiento.test.js
+node --test --test-force-exit tests/unit/ml-entrenamiento-hu82.test.js tests/unit/ml-entrenamiento.test.js
 npm run dev                      # http://localhost:3000
 
 # Frontend

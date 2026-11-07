@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/auth/AuthContext'
 import { api } from '@/lib/api'
+import UmbralVencimientoSection from './vencimiento/UmbralVencimientoSection'
 
 type Origen = 'producto' | 'global' | 'predeterminado'
 
@@ -281,7 +282,7 @@ export default function ConfiguracionPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
       <div>
-        <h1 className="text-2xl font-semibold">Configuración de stock mínimo</h1>
+        <h1 className="text-2xl font-semibold">Configuración</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           US-24: elija un producto y establezca cuántas unidades deben quedar como mínimo.
         </p>
@@ -388,6 +389,8 @@ export default function ConfiguracionPage() {
           />
         )}
       </section>
+
+      <UmbralVencimientoSection />
     </div>
   )
 }

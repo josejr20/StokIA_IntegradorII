@@ -16,6 +16,7 @@ import OperacionesPage from '@/features/operaciones/OperacionesPage'
 import ComprobantesAgrupadosPage from '@/features/comprobantes/ComprobantesAgrupadosPage'
 import ClientesPage from '@/features/clientes/ClientesPage'
 import PrediccionPage from '@/features/prediccion/PrediccionPage'
+import HistoricoPrediccionesPage from '@/features/prediccion/historico/HistoricoPrediccionesPage'
 import ModeloMLPage from '@/features/modelo-ml/ModeloMLPage'
 import ConfiguracionPage from '@/features/configuracion/ConfiguracionPage'
 import UsuariosPage from '@/features/usuarios/UsuariosPage'
@@ -40,7 +41,7 @@ export default function App() {
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="operaciones" element={<OperacionesPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="comprobantes" element={<ComprobantesAgrupadosPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_ventas" />}><Route path="clientes" element={<ClientesPage />} /></Route>
-          <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="prediccion" element={<PrediccionPage />} /><Route path="modelo-ml" element={<ModeloMLPage />} /></Route>
+          <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="prediccion" element={<PrediccionPage />} /><Route path="prediccion/historico" element={<HistoricoPrediccionesPage />} /><Route path="modelo-ml" element={<ModeloMLPage />} /></Route>
           <Route element={<RutaConPermiso permiso="ver_alertas" />}><Route path="riesgo-vencimiento" element={<RiesgoVencimientoPage />} /></Route>
           <Route element={<RutaConPermiso permiso="configurar_umbrales" />}><Route path="configuracion" element={<ConfiguracionPage />} /></Route>
           <Route element={<RutaSoloAdministrador />}><Route path="usuarios" element={<UsuariosPage />} /></Route>

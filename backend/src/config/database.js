@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
     port: config.DB_PORT,
     dialect: config.DB_DIALECT,
     logging: false,
+    dialectOptions: config.DB_SSL ? { ssl: { require: true, rejectUnauthorized: false } } : {},
     pool: {
       max: 10,
       min: 2,

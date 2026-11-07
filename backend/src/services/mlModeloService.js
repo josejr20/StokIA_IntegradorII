@@ -8,6 +8,11 @@
  *   empeora al modelo activo medido sobre los mismos datos. Si no cumple el umbral, queda "requiere revisión" y
  *   se avisa al administrador (TC-02). Si cumple pero no mejora, queda como "sin_mejora".
  * - El desempeño del modelo activo se puede volver a medir con las ventas recientes (TC-07).
+ *
+ * HU-82 (entrenar el modelo de predicción de demanda) reutiliza este ciclo y agrega:
+ *  - Fecha de inicio/fin y DURACIÓN de cada entrenamiento (TC-05), guardadas en la versión y en la bitácora.
+ *  - Aviso explícito y detallado cuando no hay datos suficientes (TC-02/TC-06): el error 422 incluye `detalle`.
+ *  - Una confirmación completa para el administrador (TC-07): versión, fecha, duración, datos usados y métricas.
  */
 
 const demanda = require('./prediccionDemandaModelo');
@@ -17,12 +22,16 @@ const repositorioPorDefecto = require('./mlModeloRepositorio');
 const { CONFIG_ML } = entrenamiento;
 
 class ErrorML extends Error {
-  constructor(mensaje, codigo, estadoHttp = 422) {
+  /** `detalle` (opcional) son datos estructurados para que la pantalla explique el motivo con números. */
+  constructor(mensaje, codigo, estadoHttp = 422, detalle = null) {
     super(mensaje);
     this.codigo = codigo;
     this.estadoHttp = estadoHttp;
+    this.detalle = detalle;
   }
 }
+
+const MAX_HISTORIAL_EVALUACIONES = 30;
 
 let entrenando = false; // solo un entrenamiento a la vez
 
@@ -80,11 +89,41 @@ const porcentaje = (valor) => `${((valor ?? 0) * 100).toLocaleString('es-PE', { 
 const fechaCorta = (valor) => new Date(valor).toLocaleDateString('es-PE', { timeZone: 'America/Lima' });
 const aIso = (valor) => (valor ? new Date(valor).toISOString() : null);
 
+/** TC-05: duración legible (ej. "850 ms", "1,4 s", "2 min 5 s"). */
+function duracionTexto(ms) {
+  if (ms === null || ms === undefined || Number.isNaN(Number(ms))) return null;
+  const total = Math.max(0, Number(ms));
+  if (total < 1000) return `${Math.round(total)} ms`;
+  // Formato propio (coma decimal) para no depender del idioma/ICU instalado en el servidor.
+  if (total < 60000) return `${String(Math.round(total / 100) / 10).replace('.', ',')} s`;
+  const minutos = Math.floor(total / 60000);
+  const segundos = Math.round((total % 60000) / 1000);
+  return `${minutos} min ${segundos} s`;
+}
+
+/** TC-05: arma el registro de fecha de inicio, fecha de fin y duración a partir de un reloj (ms desde 1970). */
+function medirTiempo(inicioMs, finMs) {
+  const duracion = Math.max(0, Math.round(finMs - inicioMs));
+  return { iniciado_en: new Date(inicioMs).toISOString(), finalizado_en: new Date(finMs).toISOString(), duracion_ms: duracion };
+}
+
 /** Cómo se muestra una versión: activa, requiere revisión (solo la última no activada) o archivada. */
 function estadoVisible(modelo, esUltima) {
   if (modelo.activo) return 'activo';
   if (esUltima && modelo.metadata?.estado_revision === 'requiere_revision') return 'requiere_revision';
   return 'archivado';
+}
+
+/**
+ * HU-88 / TC-02 y TC-06: una versión "requiere revisión" cuando su error supera el umbral aceptable, ya sea por las
+ * métricas con las que se entrenó o, si es la activa, por su última evaluación con ventas recientes.
+ */
+function requiereRevision(modelo) {
+  const m = modelo.metadata ?? {};
+  const umbral = m.umbral_rmse_relativo ?? CONFIG_ML.UMBRAL_RMSE_RELATIVO;
+  if (modelo.activo && m.ultima_evaluacion) return m.ultima_evaluacion.aprobado === false;
+  if (m.rmse_relativo === null || m.rmse_relativo === undefined) return false;
+  return m.rmse_relativo > umbral;
 }
 
 function resumenVersion(modelo, esUltima = true) {
@@ -106,7 +145,22 @@ function resumenVersion(modelo, esUltima = true) {
     validacion: m.validacion ?? null,
     referencia: m.referencia ?? null,
     datos: m.datos ?? null,
+    entrenamiento: m.entrenamiento ? { ...m.entrenamiento, duracion_texto: duracionTexto(m.entrenamiento.duracion_ms) } : null,
     ultima_evaluacion: m.ultima_evaluacion ?? null,
+    requiere_revision: requiereRevision(modelo),
+  };
+}
+
+/** Un intento de entrenamiento de la bitácora (ml.entrenamientos_log) tal como lo ve la pantalla. */
+function resumenEntrenamiento(fila) {
+  const duracion = fila.duracion_ms === undefined || fila.duracion_ms === null ? null : Number(fila.duracion_ms);
+  return {
+    ...fila,
+    fecha: aIso(fila.fecha),
+    iniciado_en: aIso(fila.iniciado_en),
+    finalizado_en: aIso(fila.finalizado_en),
+    duracion_ms: duracion,
+    duracion_texto: duracionTexto(duracion),
   };
 }
 
@@ -175,13 +229,14 @@ async function listar({ repositorio = repositorioPorDefecto } = {}) {
   const versiones = await repositorio.listarModelos();
   const activo = versiones.find((modelo) => modelo.activo) ?? null;
   const otroActivo = await repositorio.obtenerModeloActivoOtro();
-  const entrenamientos = await repositorio.listarEntrenamientos(1);
+  const entrenamientos = (await repositorio.listarEntrenamientos(10)).map(resumenEntrenamiento);
   return {
     umbral_rmse_relativo: CONFIG_ML.UMBRAL_RMSE_RELATIVO,
     parametros_por_defecto: demanda.PARAMETROS_POR_DEFECTO,
     modelo_activo: activo ? resumenVersion(activo) : null,
     versiones: versiones.map((modelo, indice) => resumenVersion(modelo, indice === 0)),
-    ultimo_entrenamiento: entrenamientos[0] ? { ...entrenamientos[0], fecha: aIso(entrenamientos[0].fecha) } : null,
+    ultimo_entrenamiento: entrenamientos[0] ?? null,
+    entrenamientos, // TC-05/TC-06: últimos intentos (también los que fallaron por falta de datos), con fecha y duración
     avisos: construirAvisos(versiones, otroActivo),
   };
 }
@@ -199,7 +254,7 @@ function decidirPromocion({ aprobado, nuevo, actual, otroActivo = null }) {
   return { promover: true, resultado: 'exitoso', estadoRevision: 'aprobado' };
 }
 
-function armarMetadata(resultado, ahora, estadoRevision, preparacion) {
+function armarMetadata(resultado, ahora, estadoRevision, preparacion, tiempo) {
   const m = resultado.metricas;
   return {
     nombre: demanda.NOMBRE_MODELO,
@@ -220,6 +275,7 @@ function armarMetadata(resultado, ahora, estadoRevision, preparacion) {
     preparacion,
     horizonte_evaluacion_dias: CONFIG_ML.HORIZONTE_EVALUACION,
     entrenado_en: ahora.toISOString(),
+    entrenamiento: tiempo, // TC-05: fecha de inicio, fecha de fin y duración
   };
 }
 
@@ -250,12 +306,29 @@ function descripcionEntrenamiento(decision, resultado, otroActivo = null) {
 }
 
 /**
- * Entrena (o reentrena) con TODO el historial de ventas disponible y registra una nueva versión.
- * Reentrenar con datos nuevos es volver a ejecutarlo: siempre toma las ventas más recientes (TC-05).
+ * HU-82 · Entrena (o reentrena) con TODO el historial de ventas disponible y registra una nueva versión.
+ * Reentrenar con datos nuevos es volver a ejecutarlo: siempre toma las ventas más recientes.
+ *
+ *  1. (ML-01 / TC-03) Carga las ventas, las prepara (descarta filas inválidas) y valida que alcancen para entrenar.
+ *  2. (BE-01 / TC-02, TC-06) Si no alcanzan, NO entrena: registra el intento y responde 422 con el motivo y el detalle.
+ *  3. (ML-01) Busca los parámetros que mejor predicen y mide su desempeño con datos que no usó para elegirlos.
+ *  4. (ML-02 / TC-01, TC-04) Guarda una versión nueva en ml.modelos (las anteriores se conservan).
+ *  5. (BE-01 / TC-05) Registra fecha de inicio, de fin y duración, en la versión y en la bitácora.
+ *  6. (TC-07) Devuelve la confirmación que la pantalla muestra al administrador.
+ *
+ * `reloj` devuelve milisegundos desde 1970 y se puede reemplazar en las pruebas para fijar la duración.
+ * La duración cuenta desde que arranca el entrenamiento hasta que el modelo está calculado, justo antes de guardarlo.
  */
-async function entrenarModelo({ ahora = new Date(), repositorio = repositorioPorDefecto, config = CONFIG_ML, disparadoPor = 'manual' } = {}) {
+async function entrenarModelo({
+  ahora = new Date(),
+  repositorio = repositorioPorDefecto,
+  config = CONFIG_ML,
+  disparadoPor = 'manual',
+  reloj = Date.now,
+} = {}) {
   if (entrenando) throw new ErrorML('Ya hay un entrenamiento en curso. Espera a que termine.', 'entrenamiento_en_curso', 409);
   entrenando = true;
+  const inicioMs = reloj();
   try {
     const hasta = demanda.ultimoDiaCompleto(ahora);
     const rango = demanda.rangoConsultaUtc(hasta, config.VENTANA_ENTRENAMIENTO_DIAS);
@@ -278,23 +351,47 @@ async function entrenarModelo({ ahora = new Date(), repositorio = repositorioPor
     }
 
     if (motivoInsuficiente) {
+      // TC-02 / TC-06: no se entrena. El intento queda registrado (con su fecha y duración) y se avisa con el detalle.
+      const tiempo = medirTiempo(inicioMs, reloj());
+      const mensajeError = `${motivoInsuficiente} No es posible entrenar el modelo con la información disponible.`;
       await intentar(() => repositorio.registrarPreparacion({ ...preparacion, listo_para_entrenar: false }));
       await intentar(() => repositorio.registrarEntrenamiento({
-        modeloId: null, disparadoPor, resultado: 'insuficiente_datos', promovido: false, mensaje: motivoInsuficiente,
+        modeloId: null,
+        disparadoPor,
+        resultado: 'insuficiente_datos',
+        promovido: false,
+        mensaje: `${mensajeError} Duración: ${duracionTexto(tiempo.duracion_ms)}.`,
+        duracionMs: tiempo.duracion_ms,
+        iniciadoEn: tiempo.iniciado_en,
+        finalizadoEn: tiempo.finalizado_en,
       }));
-      throw new ErrorML(motivoInsuficiente, 'datos_insuficientes', 422);
+      throw new ErrorML(mensajeError, 'datos_insuficientes', 422, {
+        filas_totales: preparacion.total_filas,
+        filas_validas: preparacion.filas_validas,
+        filas_descartadas: preparacion.filas_descartadas,
+        motivos_descarte: preparacion.motivos_descarte,
+        minimo_filas: minimoFilas,
+        pruebas_logradas: resultado?.evaluaciones ?? null,
+        pruebas_necesarias: resultado ? config.MIN_EVALUACIONES : null,
+        ...tiempo,
+        duracion_texto: duracionTexto(tiempo.duracion_ms),
+      });
     }
     await intentar(() => repositorio.registrarPreparacion({ ...preparacion, listo_para_entrenar: true }));
 
     const otroActivo = await repositorio.obtenerModeloActivoOtro();
     const decision = decidirPromocion({ aprobado: resultado.aprobado, nuevo: resultado.metricas, actual: resultado.actual, otroActivo });
     const descripcion = descripcionEntrenamiento(decision, resultado, otroActivo);
+
+    // TC-05: el modelo ya está calculado; se congela la duración antes de guardarlo.
+    const tiempo = medirTiempo(inicioMs, reloj());
+    const duracion = duracionTexto(tiempo.duracion_ms);
     const registrado = await repositorio.registrarModelo({
-      metadata: armarMetadata(resultado, ahora, decision.estadoRevision, preparacion),
+      metadata: armarMetadata(resultado, ahora, decision.estadoRevision, preparacion, tiempo),
       mae: resultado.metricas.mae,
       rmse: resultado.metricas.rmse,
       filas_entrenamiento: preparacion.filas_validas,
-      notas: descripcion.charAt(0).toUpperCase() + descripcion.slice(1),
+      notas: `${descripcion.charAt(0).toUpperCase() + descripcion.slice(1)} Duración del entrenamiento: ${duracion}.`,
       activar: decision.promover,
     });
 
@@ -303,15 +400,25 @@ async function entrenarModelo({ ahora = new Date(), repositorio = repositorioPor
     const mensaje = registrado.bloqueado_por && decision.promover
       ? `Modelo ${etiqueta(registrado.version)} ${descripcionEntrenamiento({ estadoRevision: 'sin_cupo' }, resultado, registrado.bloqueado_por)}`
       : `Modelo ${etiqueta(registrado.version)} ${descripcion}`;
+    const mensajeConDuracion = `${mensaje} Duración del entrenamiento: ${duracion}.`;
     await intentar(() => repositorio.registrarEntrenamiento({
-      modeloId: registrado.id, disparadoPor, resultado: decision.resultado, promovido: activado, mensaje,
+      modeloId: registrado.id,
+      disparadoPor,
+      resultado: decision.resultado,
+      promovido: activado,
+      mensaje: mensajeConDuracion,
+      duracionMs: tiempo.duracion_ms,
+      iniciadoEn: tiempo.iniciado_en,
+      finalizadoEn: tiempo.finalizado_en,
     }));
 
     return {
       modelo: resumenVersion(registrado),
       activado,
-      mensaje,
+      mensaje: mensajeConDuracion,
       aviso: decision.estadoRevision === 'requiere_revision' ? avisoRevision(registrado) : null,
+      entrenamiento: { ...tiempo, duracion_texto: duracion }, // TC-05
+      datos_preparados: preparacion, // TC-03: con qué datos se entrenó
     };
   } finally {
     entrenando = false;
@@ -362,11 +469,20 @@ async function evaluarModeloActivo({ ahora = new Date(), repositorio = repositor
     umbral_rmse_relativo: resultado.umbral_rmse_relativo,
     aprobado: resultado.aprobado,
   };
-  if (activo) await repositorio.actualizarMetadata(activo.id, { ultima_evaluacion: evaluacion });
+  if (activo) {
+    // HU-88 / TC-07: cada evaluación se agrega al historial de la versión (no se pisa la anterior; se guardan las últimas 30).
+    const historial = [...(activo.metadata?.historial_evaluaciones ?? []), evaluacion].slice(-MAX_HISTORIAL_EVALUACIONES);
+    const parche = { ultima_evaluacion: evaluacion, historial_evaluaciones: historial };
+    // HU-88 / TC-02 y TC-06: si el error supera el umbral, la versión activa queda marcada "requiere revisión".
+    if (!resultado.aprobado) parche.estado_revision = 'requiere_revision';
+    else if (activo.metadata?.estado_revision === 'requiere_revision') parche.estado_revision = 'aprobado';
+    await repositorio.actualizarMetadata(activo.id, parche);
+  }
 
   const aviso = resultado.aprobado ? null : avisoDesempeno(activo, evaluacion);
+  const actualizado = activo ? await repositorio.obtenerModelo(activo.id) : null;
   return {
-    modelo: activo ? resumenVersion(activo) : null,
+    modelo: actualizado ? resumenVersion(actualizado) : null,
     evaluacion,
     aviso,
     mensaje: resultado.aprobado
@@ -375,11 +491,126 @@ async function evaluarModeloActivo({ ahora = new Date(), repositorio = repositor
   };
 }
 
+// ---------------------------------------------------------------- HU-88: métricas y comparación de versiones
+
+/**
+ * TC-04: nivel de calidad en palabras, según el RMSE relativo frente al umbral aceptable.
+ *   buena (hasta 2/3 del umbral) · aceptable (hasta el umbral) · requiere_revision (supera el umbral)
+ */
+function nivelCalidad(rmseRelativo, umbral) {
+  if (rmseRelativo === null || rmseRelativo === undefined) return 'sin_datos';
+  if (rmseRelativo > umbral) return 'requiere_revision';
+  return rmseRelativo <= (umbral * 2) / 3 + 1e-9 ? 'buena' : 'aceptable'; // 1e-9: evita errores de redondeo decimal
+}
+
+const unidades = (valor) => (valor ?? 0).toLocaleString('es-PE', { maximumFractionDigits: 1 });
+
+/** TC-04: explica las métricas con palabras del negocio (unidades vendidas por semana), no con jerga. */
+function interpretacion(version) {
+  if (version.mae === null || version.rmse === null) return null;
+  const relativo = version.rmse_relativo === null ? '' : ` Eso equivale a ${porcentaje(version.rmse_relativo)} de la demanda semanal promedio.`;
+  return (
+    `En promedio, la predicción semanal de un producto se equivoca en ${unidades(version.mae)} unidades (MAE). ` +
+    `Los errores grandes pesan más: el RMSE es ${unidades(version.rmse)} unidades.${relativo}`
+  );
+}
+
+/** Variación de una métrica entre dos versiones. Para MAE/RMSE un valor menor es mejor. */
+function variacion(base, nueva) {
+  if (base === null || base === undefined || nueva === null || nueva === undefined) return null;
+  const diferencia = Math.round((nueva - base + Number.EPSILON) * 10000) / 10000;
+  const porcentajeCambio = base === 0 ? null : Math.round(((nueva - base) / base) * 1000) / 10;
+  return { base, nueva, diferencia, porcentaje: porcentajeCambio, tendencia: diferencia < 0 ? 'mejora' : diferencia > 0 ? 'empeora' : 'igual' };
+}
+
+/** TC-05: compara el desempeño de dos versiones (MAE, RMSE y RMSE relativo). */
+function compararDos(filaBase, filaNueva) {
+  const base = resumenVersion(filaBase, false); // valores ya normalizados (números, no texto de la BD)
+  const nueva = resumenVersion(filaNueva, false);
+  const mae = variacion(base.mae, nueva.mae);
+  const rmse = variacion(base.rmse, nueva.rmse);
+  const rmseRelativo = variacion(base.rmse_relativo, nueva.rmse_relativo);
+  // El criterio de decisión es el RMSE relativo (es el que se compara con el umbral y no depende de la escala de ventas).
+  const criterio = rmseRelativo ?? rmse;
+  return {
+    base: { id: base.id, version: base.version },
+    nueva: { id: nueva.id, version: nueva.version },
+    mae,
+    rmse,
+    rmse_relativo: rmseRelativo,
+    veredicto: criterio ? criterio.tendencia : 'sin_datos',
+  };
+}
+
+function resumenMetricas(modelo, umbralGlobal, esUltima) {
+  const version = resumenVersion(modelo, esUltima);
+  const umbral = modelo.metadata?.umbral_rmse_relativo ?? umbralGlobal; // el umbral con el que se juzgó esa versión
+  return {
+    id: version.id,
+    version: version.version,
+    estado: version.estado,
+    fecha_entrenamiento: version.fecha_entrenamiento,
+    mae: version.mae,
+    rmse: version.rmse,
+    demanda_promedio: version.demanda_promedio,
+    rmse_relativo: version.rmse_relativo,
+    mae_relativo: version.demanda_promedio > 0 && version.mae !== null ? Math.round((version.mae / version.demanda_promedio) * 10000) / 10000 : null,
+    evaluaciones: version.evaluaciones,
+    umbral_rmse_relativo: umbral,
+    cumple_umbral: version.rmse_relativo !== null ? version.rmse_relativo <= umbral : null,
+    calidad: nivelCalidad(version.rmse_relativo, umbral),
+    requiere_revision: version.requiere_revision,
+    interpretacion: interpretacion(version),
+    ultima_evaluacion: version.ultima_evaluacion,
+    historial_evaluaciones: modelo.metadata?.historial_evaluaciones ?? [],
+  };
+}
+
+/**
+ * HU-88 · Métricas de desempeño de todas las versiones, de la más reciente a la más antigua:
+ *  - TC-01/TC-03/TC-04: MAE, RMSE y RMSE relativo de cada versión, con nivel de calidad y explicación.
+ *  - TC-05: cada versión trae su comparación con la anterior (`vs_anterior`) y se indica la mejor versión.
+ *  - TC-06: `requiere_revision` marca las versiones cuyo error supera el umbral.
+ *  - TC-07: `historial_evaluaciones` conserva las evaluaciones con ventas recientes de cada versión.
+ */
+async function obtenerMetricas({ repositorio = repositorioPorDefecto } = {}) {
+  const modelos = await repositorio.listarModelos();
+  const umbral = CONFIG_ML.UMBRAL_RMSE_RELATIVO;
+  const versiones = modelos.map((modelo, indice) => resumenMetricas(modelo, umbral, indice === 0));
+  versiones.forEach((version, indice) => {
+    const anterior = modelos[indice + 1]; // la lista viene de la más nueva a la más vieja
+    version.vs_anterior = anterior ? compararDos(anterior, modelos[indice]) : null;
+  });
+  const conMetricas = versiones.filter((version) => version.rmse_relativo !== null);
+  const mejor = conMetricas.reduce((a, b) => (a === null || b.rmse_relativo < a.rmse_relativo ? b : a), null);
+  const activa = versiones.find((version) => version.estado === 'activo') ?? null;
+  return {
+    umbral_rmse_relativo: umbral,
+    modelo_activo_id: activa?.id ?? null,
+    mejor_version_id: mejor?.id ?? null,
+    hay_modelo_entrenado: versiones.length > 0,
+    versiones,
+  };
+}
+
+/** TC-05: compara dos versiones cualesquiera. `idBase` es la de referencia y `idNueva` la que se evalúa frente a ella. */
+async function compararVersiones(idBase, idNueva, { repositorio = repositorioPorDefecto } = {}) {
+  if (idBase === idNueva) throw new ErrorML('Elige dos versiones distintas para compararlas.', 'comparacion_invalida', 400);
+  const [base, nueva] = await Promise.all([repositorio.obtenerModelo(idBase), repositorio.obtenerModelo(idNueva)]);
+  const valida = (modelo) => modelo && modelo.algoritmo === repositorioPorDefecto.ALGORITMO;
+  if (!valida(base) || !valida(nueva)) throw new ErrorML('Alguna de las versiones a comparar no existe.', 'modelo_no_encontrado', 404);
+  return compararDos(base, nueva);
+}
+
 module.exports = {
   ErrorML,
+  duracionTexto,
   decidirPromocion,
   listar: conTraduccion(listar),
   entrenarModelo: conTraduccion(entrenarModelo),
   activarVersion: conTraduccion(activarVersion),
   evaluarModeloActivo: conTraduccion(evaluarModeloActivo),
+  obtenerMetricas: conTraduccion(obtenerMetricas),
+  compararVersiones: conTraduccion(compararVersiones),
+  nivelCalidad,
 };

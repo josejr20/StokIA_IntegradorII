@@ -12,16 +12,20 @@ class LoteDto {
     this.fecha_vencimiento = data.fecha_vencimiento;
     this.fecha_creacion = data.fecha_creacion;
     this.dias_para_vencer = diasHastaVencimiento(data.fecha_vencimiento) ?? null;
+    this.dias_alerta_vencimiento = data.dias_alerta_vencimiento;
     this.estado = calcularEstadoLote(data);
   }
 
-  static fromModel(lote) {
+  static fromModel(lote, resolverUmbral = null) {
     if (!lote) return null;
     const data = lote.toJSON ? lote.toJSON() : lote;
+    const diasAlerta = typeof resolverUmbral === 'function'
+      ? resolverUmbral(data.producto?.categoria_id ?? null).dias
+      : (data.dias_alerta_vencimiento ?? 30);
     return new LoteDto({
       ...data,
       producto_nombre: data.producto ? (data.producto.nombre || null) : null,
-      dias_alerta_vencimiento: data.dias_alerta_vencimiento ?? 30
+      dias_alerta_vencimiento: diasAlerta
     });
   }
 

@@ -7,6 +7,16 @@ const logger = require('../utils/logger');
 const { Op, QueryTypes } = require('sequelize');
 const { UniqueConstraintError } = require('sequelize');
 const ws = require('../services/wsService');
+const { obtenerResolvedor } = require('../services/umbralVencimientoService');
+
+async function resolvedorUmbralVencimiento() {
+  try {
+    return await obtenerResolvedor();
+  } catch (error) {
+    logger.warn(`No se pudo leer el umbral de vencimiento: ${error.message}`);
+    return null;
+  }
+}
 
 const listar = async (req, res, next) => {
   try {
@@ -40,8 +50,9 @@ const listar = async (req, res, next) => {
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });
+    const resolverUmbral = await resolvedorUmbralVencimiento();
     res.json({
-      data: resultado.rows.map((lote) => LoteDto.fromModel(lote)),
+      data: resultado.rows.map((lote) => LoteDto.fromModel(lote, resolverUmbral)),
       count: resultado.count,
       previous: page > 1,
       next: page * pageSize < resultado.count,
@@ -53,7 +64,7 @@ const obtener = async (req, res, next) => {
   try {
     const lote = await Lote.findByPk(req.params.id, { include: [{ model: Lote.sequelize.models.Producto, as: 'producto' }] });
     if (!lote) return res.status(404).json({ error: 'Lote no encontrado' });
-    res.json({ data: LoteDto.fromModel(lote) });
+    res.json({ data: LoteDto.fromModel(lote, await resolvedorUmbralVencimiento()) });
   } catch (error) { next(error); }
 };
 

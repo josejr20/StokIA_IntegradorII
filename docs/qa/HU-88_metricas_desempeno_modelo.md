@@ -25,7 +25,7 @@ Regla de calidad: **buena** hasta 2/3 del umbral, **aceptable** hasta el umbral 
 | **HU-89 ML-01** Calcular MAE y RMSE tras cada entrenamiento | Ya se calculaba; se verifica con pruebas y se expone junto con `mae_relativo`, calidad e interpretación | `services/mlModeloService.js` |
 | **HU-90 FE-01** Mostrar métricas comprensibles y comparar versiones | Nuevo `MetricasPanel`: tarjetas MAE/RMSE/Calidad con explicación, barras de RMSE relativo con línea de umbral, tabla de comparación, selector de dos versiones e historial | `frontend/src/features/modelo-ml/MetricasPanel.tsx`, `api.ts`, `ModeloMLPage.tsx` |
 | **HU-91 BE-01** Marcar el modelo y registrar historial | `requiereRevision`, marcado del modelo activo al evaluar, historial por versión, endpoints de métricas y comparación | `services/mlModeloService.js`, `controllers/mlController.js`, `routes/ml.js` |
-| **HU-92 QA-01** Ejecutar TC-01..TC-07 | Ver sección 4 | `tests/unit/ml-metricas-hu88.test.js`, `tests/api/ml-entrenamiento.test.js`, `MetricasPanel.test.tsx` |
+| **HU-92 QA-01** Ejecutar TC-01..TC-07 | Ver sección 4 | `tests/unit/ml-metricas-hu88.test.js`, `tests/unit/ml-entrenamiento.test.js`, `frontend/src/features/modelo-ml/MetricasPanel.test.tsx` |
 
 ## 3. API (requiere sesión y permiso `ver_kpis`)
 

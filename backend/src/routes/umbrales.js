@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
-const { listar, obtener, crear, actualizar, eliminar, resumenStockMinimo, guardarMinimoProducto, quitarMinimoProducto, evaluarTodosStockMinimo } = require('../controllers/umbralController');
+const { listar, obtener, crear, actualizar, eliminar, resumenStockMinimo, guardarMinimoProducto, quitarMinimoProducto, evaluarTodosStockMinimo, obtenerVencimiento, guardarVencimiento, restablecerVencimientoCategoria, riesgoVencimiento, evaluarVencimiento } = require('../controllers/umbralController');
 const router = Router();
 router.use(autenticar);
 
@@ -116,6 +116,85 @@ router.get('/stock-minimo/resumen', verificarPermiso('configurar_umbrales'), res
 router.put('/stock-minimo/productos/:productoId', verificarPermiso('configurar_umbrales'), guardarMinimoProducto);
 router.delete('/stock-minimo/productos/:productoId', verificarPermiso('configurar_umbrales'), quitarMinimoProducto);
 router.post('/stock-minimo/evaluar', verificarPermiso('configurar_umbrales'), evaluarTodosStockMinimo);
+
+/**
+ * @openapi
+ * /api/umbrales/vencimiento:
+ *   get:
+ *     summary: Consultar el umbral general y los umbrales por categoría
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Configuración vigente de vencimiento
+ *   put:
+ *     summary: Definir el umbral general de días de anticipación
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [dias]
+ *             properties:
+ *               dias: { type: integer, minimum: 1, maximum: 3650 }
+ *     responses:
+ *       '200':
+ *         description: Umbral guardado con confirmación
+ *       '400':
+ *         description: Valor inválido
+ * /api/umbrales/vencimiento/categorias/{categoriaId}:
+ *   put:
+ *     summary: Definir el umbral de una categoría
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - { name: categoriaId, in: path, required: true, schema: { type: integer } }
+ *     responses:
+ *       '200':
+ *         description: Umbral de categoría guardado
+ *       '404':
+ *         description: Categoría no encontrada
+ *   delete:
+ *     summary: Restablecer el umbral de una categoría al valor general
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - { name: categoriaId, in: path, required: true, schema: { type: integer } }
+ *     responses:
+ *       '200':
+ *         description: Umbral de categoría restablecido
+ * /api/umbrales/vencimiento/riesgo:
+ *   get:
+ *     summary: Consultar lotes vencidos o en riesgo
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lotes con el umbral aplicado por categoría
+ * /api/umbrales/vencimiento/evaluar:
+ *   post:
+ *     summary: Recalcular y generar alertas de vencimiento
+ *     tags: [Umbrales]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Alertas creadas, actualizadas y resueltas
+ */
+router.get('/vencimiento', verificarPermiso('configurar_umbrales'), obtenerVencimiento);
+router.put('/vencimiento', verificarPermiso('configurar_umbrales'), guardarVencimiento);
+router.get('/vencimiento/riesgo', verificarPermiso('configurar_umbrales'), riesgoVencimiento);
+router.post('/vencimiento/evaluar', verificarPermiso('configurar_umbrales'), evaluarVencimiento);
+router.put('/vencimiento/categorias/:categoriaId', verificarPermiso('configurar_umbrales'), guardarVencimiento);
+router.delete('/vencimiento/categorias/:categoriaId', verificarPermiso('configurar_umbrales'), restablecerVencimientoCategoria);
 
 router.get('/', verificarPermiso('configurar_umbrales'), listar);
 router.get('/:id', verificarPermiso('configurar_umbrales'), obtener);

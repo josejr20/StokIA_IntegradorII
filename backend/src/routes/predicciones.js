@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
-const { demanda } = require('../controllers/prediccionController');
+const { demanda, historial } = require('../controllers/prediccionController');
 const router = Router();
 router.use(autenticar);
 
@@ -36,5 +36,28 @@ router.use(autenticar);
  *         description: Parámetros inválidos
  */
 router.get('/demanda', verificarPermiso('ver_kpis'), demanda);
+
+/**
+ * @openapi
+ * /api/predicciones/historico:
+ *   get:
+ *     summary: Comparar la predicción de demanda con las ventas reales por producto y periodo
+ *     tags: [Predicciones]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - { name: producto_id, in: query, schema: { type: integer } }
+ *       - { name: desde, in: query, schema: { type: string, format: date } }
+ *       - { name: hasta, in: query, schema: { type: string, format: date } }
+ *       - { name: periodo_dias, in: query, schema: { type: integer, enum: [1, 7, 14, 30], default: 7 } }
+ *     responses:
+ *       '200':
+ *         description: Comparación y resumen de precisión
+ *       '400':
+ *         description: Filtros inválidos
+ *       '404':
+ *         description: El producto no existe
+ */
+router.get('/historico', verificarPermiso('ver_kpis'), historial);
 
 module.exports = router;

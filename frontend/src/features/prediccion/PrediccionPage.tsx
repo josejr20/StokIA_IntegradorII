@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/table'
 import { useProductos } from '@/features/productos/api'
 import { usePredecirDemanda } from './api'
+import PriorizacionInventario from './PriorizacionInventario'
 import type {
   Confianza,
   PrediccionInsuficiente,
@@ -298,6 +299,7 @@ function mostrarNumero(valor: string | number) {
 }
 
 export default function PrediccionPage() {
+  const [vista, setVista] = useState<'demanda' | 'priorizacion'>('demanda')
   const [buscar, setBuscar] = useState('')
   const [elegidos, setElegidos] = useState<ProductoElegido[]>([])
   const [horizonte, setHorizonte] = useState(7)
@@ -423,8 +425,40 @@ export default function PrediccionPage() {
       ? prediccion.error.message
       : 'No se pudo generar la predicción.'
 
+  if (vista === 'priorizacion') {
+    return (
+      <div className="space-y-4">
+        <nav className="flex flex-wrap gap-2" aria-label="Secciones de predicciones">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setVista('demanda')}
+          >
+            Predicción de demanda
+          </Button>
+          <Button type="button" aria-current="page">
+            Priorización de inventario
+          </Button>
+        </nav>
+        <PriorizacionInventario />
+      </div>
+    )
+  }
+
   return (
     <main className="space-y-6">
+      <nav className="flex flex-wrap gap-2" aria-label="Secciones de predicciones">
+        <Button type="button" aria-current="page">
+          Predicción de demanda
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setVista('priorizacion')}
+        >
+          Priorización de inventario
+        </Button>
+      </nav>
       <div>
         <h1 className="flex items-center gap-2 text-2xl font-semibold">
           <TrendingUp /> Predicción de demanda

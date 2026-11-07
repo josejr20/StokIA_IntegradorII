@@ -109,6 +109,7 @@ module.exports = {
   DIAS_ALERTA_VENCIMIENTO,
   ErrorLote,
   diasHastaVencimiento,
+  fechaEnLima,
   generarCodigoLote,
   validarLoteParaCreacion,
   calcularEstadoLote,

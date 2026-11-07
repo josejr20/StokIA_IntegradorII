@@ -2,6 +2,8 @@
 
 const servicio = require('../services/prediccionDemandaService');
 const { validarHorizonte } = require('../services/prediccionDemandaModelo');
+const historicoModelo = require('../services/historicoPrediccionModelo');
+const historicoServicio = require('../services/historicoPrediccionService');
 
 const MAX_PRODUCTOS = 10;
 
@@ -42,4 +44,15 @@ const demanda = async (req, res, next) => {
   }
 };
 
-module.exports = { demanda, leerParametros, ParametrosInvalidos, MAX_PRODUCTOS };
+const historial = async (req, res, next) => {
+  try {
+    const consulta = historicoModelo.validarFiltros(req.query);
+    const data = await historicoServicio.compararPrediccionVsVentas(consulta);
+    res.json({ data });
+  } catch (error) {
+    if (error instanceof historicoModelo.ErrorHistorico) return res.status(error.status).json({ error: error.message });
+    return next(error);
+  }
+};
+
+module.exports = { demanda, historial, leerParametros, ParametrosInvalidos, MAX_PRODUCTOS };

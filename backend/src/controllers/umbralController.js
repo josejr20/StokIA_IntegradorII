@@ -5,6 +5,8 @@ const { UmbralConfiguracion } = require('../models');
 const { UmbralDto } = require('../dtos/umbralDto');
 const logger = require('../utils/logger');
 const { validarStockMinimo, ErrorStockMinimo } = require('../services/reglasStockMinimo');
+const { validarDiasVencimiento, ErrorUmbralVencimiento } = require('../services/reglasUmbralVencimiento');
+const vencimiento = require('../services/umbralVencimientoService');
 const {
   obtenerResumenStockMinimo,
   guardarStockMinimo,
@@ -13,7 +15,9 @@ const {
 } = require('../services/stockMinimoService');
 
 function responderError(res, next, error) {
-  if (error instanceof ErrorStockMinimo) return res.status(error.status).json({ error: error.message });
+  if (error instanceof ErrorStockMinimo || error instanceof ErrorUmbralVencimiento) {
+    return res.status(error.status).json({ error: error.message });
+  }
   return next(error);
 }
 
@@ -42,6 +46,7 @@ const crear = async (req, res, next) => {
     if (!errores.isEmpty()) return res.status(400).json({ error: 'Datos invalidos', details: errores.array() });
     const data = UmbralDto.fromCreate(req.body);
     if (data.tipo === 'stock_minimo') data.valor = validarStockMinimo(data.valor);
+    if (data.tipo === 'dias_vencimiento') data.valor = validarDiasVencimiento(data.valor);
     const umbral = await UmbralConfiguracion.create(data);
     res.status(201).json({ data: UmbralDto.fromModel(umbral) });
   } catch (error) { responderError(res, next, error); }
@@ -54,6 +59,9 @@ const actualizar = async (req, res, next) => {
     const data = UmbralDto.fromUpdate(req.body);
     if ((data.tipo || umbral.tipo) === 'stock_minimo') {
       data.valor = validarStockMinimo(data.valor === undefined ? umbral.valor : data.valor);
+    }
+    if ((data.tipo || umbral.tipo) === 'dias_vencimiento') {
+      data.valor = validarDiasVencimiento(data.valor === undefined ? umbral.valor : data.valor);
     }
     data.fecha_actualizacion = new Date();
     await umbral.update(data);
@@ -114,7 +122,64 @@ const evaluarTodosStockMinimo = async (req, res, next) => {
   } catch (error) { responderError(res, next, error); }
 };
 
+async function recalcularAlertasVencimiento() {
+  try {
+    return { evaluacion: await vencimiento.generarAlertasVencimiento(), aviso: null };
+  } catch (error) {
+    logger.warn(`No se pudieron recalcular las alertas de vencimiento: ${error.message}`);
+    return {
+      evaluacion: null,
+      aviso: 'La configuración se guardó, pero no se pudieron actualizar las alertas. Intente evaluar nuevamente.'
+    };
+  }
+}
+
+function leerDias(body) {
+  if (body && Object.prototype.hasOwnProperty.call(body, 'dias')) return body.dias;
+  if (body && Object.prototype.hasOwnProperty.call(body, 'valor')) return body.valor;
+  throw new ErrorUmbralVencimiento('Ingrese el número de días de anticipación.');
+}
+
+const obtenerVencimiento = async (req, res, next) => {
+  try { res.json({ data: await vencimiento.obtenerConfiguracion() }); }
+  catch (error) { responderError(res, next, error); }
+};
+
+const guardarVencimiento = async (req, res, next) => {
+  try {
+    const categoriaId = req.params.categoriaId ?? null;
+    const data = await vencimiento.guardarUmbral({ categoriaId, dias: leerDias(req.body) });
+    const resultado = await recalcularAlertasVencimiento();
+    res.json({ data, message: vencimiento.mensajeConfirmacion(data), ...resultado });
+  } catch (error) { responderError(res, next, error); }
+};
+
+const restablecerVencimientoCategoria = async (req, res, next) => {
+  try {
+    const data = await vencimiento.restablecerUmbralCategoria(req.params.categoriaId);
+    const resultado = await recalcularAlertasVencimiento();
+    res.json({
+      data,
+      message: `La categoría «${data.categoria_nombre}» vuelve a usar el umbral general (${data.dias} días).`,
+      ...resultado
+    });
+  } catch (error) { responderError(res, next, error); }
+};
+
+const riesgoVencimiento = async (req, res, next) => {
+  try { res.json(await vencimiento.evaluarRiesgoVencimiento()); }
+  catch (error) { responderError(res, next, error); }
+};
+
+const evaluarVencimiento = async (req, res, next) => {
+  try {
+    const data = await vencimiento.generarAlertasVencimiento();
+    res.json({ data, message: 'Evaluación de riesgo de vencimiento completada.' });
+  } catch (error) { responderError(res, next, error); }
+};
+
 module.exports = {
   listar, obtener, crear, actualizar, eliminar,
-  resumenStockMinimo, guardarMinimoProducto, quitarMinimoProducto, evaluarTodosStockMinimo
+  resumenStockMinimo, guardarMinimoProducto, quitarMinimoProducto, evaluarTodosStockMinimo,
+  obtenerVencimiento, guardarVencimiento, restablecerVencimientoCategoria, riesgoVencimiento, evaluarVencimiento, leerDias
 };
