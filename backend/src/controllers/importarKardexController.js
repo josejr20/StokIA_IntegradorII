@@ -2,21 +2,26 @@
  * Import kardex operations from Excel file
  */
 const XLSX = require('xlsx');
-const { validationResult } = require('express-validator');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-const Decimal = require('decimal.js');
 
 const { sequelize } = require('../models');
-const { Cliente, Usuario, Operacion, OperacionDetalle, Producto, Venta, Lote, MovimientoInventario } = require('../models');
+const { Cliente, Usuario, Operacion, OperacionDetalle, Producto, Venta, Lote } = require('../models');
 const { EMPLOYEE_MAP, PRESENTATION_TO_PRODUCT } = require('../config/kardexMappings');
 const {
   crearOperacion,
   buscarVentaOrigenDevolucion,
 } = require('../services/operacionService');
 const { registrarMovimiento } = require('../services/kardexService');
+const {
+  clasificarMotivo,
+  crearIndiceProductos,
+  limitarMotivo,
+  obtenerProductoId,
+  prioridadMotivo,
+} = require('../utils/importarKardex');
 const logger = require('../utils/logger');
 
 const upload = multer({ 
@@ -63,15 +68,28 @@ async function resolveEmployee(nombre, transaction, usuarioImportadorId) {
   return usuarioImportador;
 }
 
-function tipoMotivo(row) {
-  const motivo = String(row[6] || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  if (motivo.includes('devolucion') && motivo.includes('ingreso')) return 1;
-  return 0;
+async function cargarIndiceProductos() {
+  const productos = await Producto.findAll({
+    attributes: ['id', 'nombre', 'descripcion'],
+  });
+  return crearIndiceProductos(productos, PRESENTATION_TO_PRODUCT);
 }
+
+async function actualizarAlertasStock(productoIds) {
+  const { evaluarAlertasStockMinimo } = require('../services/stockMinimoService');
+  for (const productoId of productoIds) {
+    try {
+      await evaluarAlertasStockMinimo(productoId);
+    } catch (error) {
+      logger.warn(`No se pudo actualizar la alerta de stock del producto ${productoId}: ${error.message}`);
+    }
+  }
+}
+
 const sortRows = (a, b) => {
   const diff = fechaDesdeExcel(a[1]).getTime() - fechaDesdeExcel(b[1]).getTime();
   if (diff !== 0) return diff;
-  return tipoMotivo(a) - tipoMotivo(b);
+  return prioridadMotivo(a[6]) - prioridadMotivo(b[6]);
 };
 
 function fechaDesdeExcel(valor) {
@@ -83,10 +101,14 @@ function fechaDesdeExcel(valor) {
   return new Date(valor);
 }
 
-async function processRow(row, transaction, usuarioImportadorId) {
+async function processRow(row, transaction, usuarioImportadorId, indiceProductos) {
   const [, fcreacion, empleado, clienteNombre, presentacion, observaciones, motivo, cantidad] = row;
-  const productoId = PRESENTATION_TO_PRODUCT[presentacion];
+  const resultadoProducto = obtenerProductoId(presentacion, indiceProductos);
+  const productoId = resultadoProducto.productoId;
   if (productoId === null || productoId === undefined) {
+    if (resultadoProducto.ambiguo) {
+      throw new Error(`La presentación "${presentacion}" coincide con más de un producto`);
+    }
     return { skipped: true, reason: 'no_product_mapping', presentacion };
   }
 
@@ -96,100 +118,53 @@ async function processRow(row, transaction, usuarioImportadorId) {
   if (!Number.isFinite(cantidadOperacion) || cantidadOperacion <= 0) {
     throw new Error('La cantidad de la fila debe ser mayor a 0');
   }
-  const motivoNormalizado = String(motivo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  if (motivoNormalizado.includes('disponible')) {
-    return { skipped: true, reason: 'stock_intake_not_supported', presentacion };
-  }
-  const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
-  const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
-  const esCompra = motivoNormalizado.includes('compra');
-  if (!esDevolucion && !esVenta && !esCompra) {
+  const tipoMovimiento = clasificarMotivo(motivo);
+  if (!tipoMovimiento) {
     throw new Error('El motivo de la fila no identifica una salida de venta, un ingreso por devolución ni un ingreso por compra');
   }
+  const esDevolucion = tipoMovimiento === 'devolucion';
+  const esCompra = tipoMovimiento === 'compra';
 
-  const motivoOperacion = [
+  const motivoOperacion = limitarMotivo([
     String(observaciones || motivo || 'Importación histórica').trim(),
     empleado ? `Empleado histórico: ${String(empleado).trim()}` : '',
-  ].filter(Boolean).join(' | ');
-  const idempotencyKey = `KX-${crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex').slice(0, 61)}`;
+  ].filter(Boolean).join(' | '));
+  const hashFila = crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex');
+  const idempotencyKey = `KX-${hashFila.slice(0, 61)}`;
 
   if (esCompra) {
-    // Ingreso por compra: registrar movimiento de kardex con origen 'compra'
     const producto = await Producto.findByPk(productoId, { transaction, lock: transaction.LOCK.UPDATE });
     if (!producto) throw new Error(`No se encontró el producto ${productoId} para registrar la compra`);
     const precioUnitario = Number(producto.precio_venta) || 0;
 
-    const fechaInicio = new Date(fecha); fechaInicio.setHours(0, 0, 0, 0);
-    const fechaFin = new Date(fecha); fechaFin.setHours(23, 59, 59, 999);
-    const existente = await MovimientoInventario.findOne({
-      where: {
-        origen: 'compra',
-        fecha: { [Op.between]: [fechaInicio, fechaFin] },
-        cantidad: cantidadOperacion,
-      },
-      include: [{ model: Lote, as: 'lote', where: { producto_id: productoId } }],
+    const numeroLote = `KX-${hashFila.slice(0, 56)}`;
+    const loteExistente = await Lote.findOne({
+      where: { producto_id: productoId, numero_lote: numeroLote },
       transaction,
     });
-    if (existente) return { repetida: true };
+    if (loteExistente) return { repetida: true };
 
     const usuario = await resolveEmployee(empleado, transaction, usuarioImportadorId);
-
-    const ultimoId = await Lote.max('id', { where: { producto_id: productoId }, transaction }) || 0;
     const lote = await Lote.create({
       producto_id: productoId,
-      numero_lote: `CO-${String(ultimoId + 1).padStart(6, '0')}`,
+      numero_lote: numeroLote,
       cantidad_inicial: cantidadOperacion,
-      cantidad_actual: cantidadOperacion,
+      cantidad_actual: 0,
       fecha_ingreso: fecha,
       fecha_vencimiento: null,
     }, { transaction });
 
-    // Calcular saldo acumulado a partir del último movimiento del producto para no
-    // depender del recálculo estricto de registrarMovimiento (que rechaza saldo histórico negativo
-    // cuando hay ventas previas del producto y la compra se inserta con fecha anterior/intermedia).
-    const ultimoMovimiento = await MovimientoInventario.findOne({
-      include: [{
-        model: Lote,
-        as: 'lote',
-        attributes: [],
-        where: { producto_id: productoId },
-      }],
-      order: [['fecha', 'DESC'], ['id', 'DESC']],
+    await registrarMovimiento(
+      lote.id,
+      'ingreso',
+      cantidadOperacion,
+      'compra',
+      motivoOperacion,
+      precioUnitario,
+      usuario.id,
       transaction,
-    });
-
-    let saldoCantidadAnterior = new Decimal('0');
-    let saldoValorizadoAnterior = new Decimal('0');
-    if (ultimoMovimiento) {
-      saldoCantidadAnterior = new Decimal(String(ultimoMovimiento.saldo_cantidad ?? 0));
-      saldoValorizadoAnterior = new Decimal(String(ultimoMovimiento.saldo_valorizado ?? 0));
-    }
-
-    const precioParaValorizacion = precioUnitario > 0
-      ? new Decimal(String(precioUnitario))
-      : (saldoCantidadAnterior.gt(0) ? saldoValorizadoAnterior.dividedBy(saldoCantidadAnterior).toDecimalPlaces(2) : new Decimal('0'));
-
-    const nuevoSaldoCantidad = saldoCantidadAnterior.plus(cantidadOperacion);
-    const nuevoSaldoValorizado = saldoValorizadoAnterior.plus(cantidadOperacion.times(precioParaValorizacion).toDecimalPlaces(2));
-    const nuevoSaldoPrecioUnitario = nuevoSaldoCantidad.gt(0)
-      ? nuevoSaldoValorizado.dividedBy(nuevoSaldoCantidad).toDecimalPlaces(2)
-      : new Decimal('0');
-
-    await MovimientoInventario.create({
-      lote_id: lote.id,
-      tipo: 'ingreso',
-      origen: 'compra',
-      cantidad: cantidadOperacion,
-      precio_unitario: precioUnitario,
-      costo_unitario_manual: precioUnitario !== null,
-      precio_total: cantidadOperacion.times(precioUnitario).toDecimalPlaces(2).toNumber(),
-      saldo_cantidad: nuevoSaldoCantidad.toDecimalPlaces(2).toNumber(),
-      saldo_precio_unitario: nuevoSaldoPrecioUnitario.toDecimalPlaces(2).toNumber(),
-      saldo_valorizado: nuevoSaldoValorizado.toDecimalPlaces(2).toNumber(),
-      motivo: motivoOperacion,
-      usuario_id: usuario.id,
-      fecha: fecha,
-    }, { transaction });
+      fecha,
+    );
     return {};
   }
 
@@ -278,6 +253,7 @@ const previsualizarKardex = async (req, res, next) => {
   const dataRows = rows.slice(1).filter(r => r[0]);
   dataRows.sort(sortRows);
 
+  const indiceProductos = await cargarIndiceProductos();
   const previewRows = [];
   const clientesSet = new Set();
   const productosNoMapeados = new Set();
@@ -314,26 +290,27 @@ const previsualizarKardex = async (req, res, next) => {
         throw new Error('La cantidad de la fila debe ser mayor a 0');
       }
 
-      const productoId = PRESENTATION_TO_PRODUCT[presentacion];
-      if (productoId === null || productoId === undefined) {
+      const resultadoProducto = obtenerProductoId(presentacion, indiceProductos);
+      if (resultadoProducto.productoId === null || resultadoProducto.productoId === undefined) {
         productosNoMapeados.add(String(presentacion).trim());
-        throw new Error('Presentación no mapeada a ningún producto');
+        throw new Error(resultadoProducto.ambiguo
+          ? 'La presentación coincide con más de un producto'
+          : 'Presentación no mapeada a ningún producto');
       }
-      item.productoId = productoId;
+      item.productoId = resultadoProducto.productoId;
 
-      const motivoNormalizado = String(motivo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-      const esDevolucion = motivoNormalizado.includes('devolucion') && motivoNormalizado.includes('ingreso');
-      const esVenta = motivoNormalizado.includes('venta') && motivoNormalizado.includes('salida');
-      const esCompra = motivoNormalizado.includes('compra');
-      if (!esDevolucion && !esVenta && !esCompra) {
+      const tipo = clasificarMotivo(motivo);
+      if (!tipo) {
         throw new Error('El motivo de la fila no identifica una salida de venta, un ingreso por devolución ni un ingreso por compra');
       }
-      item.tipo = esDevolucion ? 'devolucion' : esVenta ? 'venta' : 'compra';
+      item.tipo = tipo;
 
-      if (item.cliente) {
-        clientesSet.add(item.cliente);
-      } else {
-        throw new Error('Cliente es obligatorio');
+      if (item.tipo !== 'compra') {
+        if (item.cliente) {
+          clientesSet.add(item.cliente);
+        } else {
+          throw new Error('Cliente es obligatorio para ventas y devoluciones');
+        }
       }
     } catch (error) {
       item.estado = 'ERROR';
@@ -416,13 +393,15 @@ const confirmarKardex = async (req, res, next) => {
   }
 
   const dataRows = previewData.rows || [];
+  const indiceProductos = await cargarIndiceProductos();
+  const productosModificados = new Set();
   let created = 0, skipped = 0, errors = 0;
   const errorDetails = [];
 
   for (const row of dataRows) {
     const transaction = await sequelize.transaction();
     try {
-      const result = await processRow(row, transaction, req.user.id);
+      const result = await processRow(row, transaction, req.user.id, indiceProductos);
       await transaction.commit();
 
       if (result.skipped) {
@@ -433,6 +412,10 @@ const confirmarKardex = async (req, res, next) => {
         errorDetails.push({ row: row[0], reason: 'already_imported' });
       } else {
         created++;
+        const producto = obtenerProductoId(row[4], indiceProductos);
+        if (producto.productoId !== null && producto.productoId !== undefined) {
+          productosModificados.add(producto.productoId);
+        }
       }
     } catch (error) {
       await transaction.rollback();
@@ -441,6 +424,8 @@ const confirmarKardex = async (req, res, next) => {
       logger.error(`Row ${row[0]} ERROR: ${error.message}`);
     }
   }
+
+  await actualizarAlertasStock(productosModificados);
 
   try {
     fs.unlinkSync(previewPath);
@@ -487,6 +472,8 @@ const importarKardex = async (req, res, next) => {
   // Process by effective date so opening stock and returns follow ledger chronology.
   const dataRows = rows.slice(1).filter(r => r[0]);
   dataRows.sort(sortRows);
+  const indiceProductos = await cargarIndiceProductos();
+  const productosModificados = new Set();
   
   let created = 0, skipped = 0, errors = 0;
   const errorDetails = [];
@@ -494,7 +481,7 @@ const importarKardex = async (req, res, next) => {
   for (const row of dataRows) {
     const transaction = await sequelize.transaction();
     try {
-      const result = await processRow(row, transaction, req.user.id);
+      const result = await processRow(row, transaction, req.user.id, indiceProductos);
       await transaction.commit();
       
       if (result.skipped) {
@@ -505,6 +492,10 @@ const importarKardex = async (req, res, next) => {
         errorDetails.push({ row: row[0], reason: 'already_imported' });
       } else {
         created++;
+        const producto = obtenerProductoId(row[4], indiceProductos);
+        if (producto.productoId !== null && producto.productoId !== undefined) {
+          productosModificados.add(producto.productoId);
+        }
       }
     } catch (error) {
       await transaction.rollback();
@@ -513,6 +504,8 @@ const importarKardex = async (req, res, next) => {
       logger.error(`Row ${row[0]} ERROR: ${error.message}`);
     }
   }
+
+  await actualizarAlertasStock(productosModificados);
   
   res.json({
     data: {

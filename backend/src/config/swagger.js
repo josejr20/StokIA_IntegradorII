@@ -326,7 +326,7 @@ const options = {
             alerta_id: { type: 'integer', nullable: true, example: 1 },
             destinatario: { type: 'string', format: 'email', example: 'admin@stockia.local' },
             estado: { type: 'string', enum: ['pendiente', 'enviado', 'fallido'], example: 'enviado' },
-            proveedor: { type: 'string', example: 'brevo' },
+            proveedor: { type: 'string', example: 'smtp' },
             fecha_envio: { type: 'string', format: 'date-time', nullable: true }
           }
         },

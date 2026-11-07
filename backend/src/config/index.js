@@ -18,7 +18,7 @@ module.exports = {
   SMTP_PORT: parseInt(process.env.SMTP_PORT, 10) || 587,
   SMTP_USER: process.env.SMTP_USER || '',
   SMTP_PASSWORD: process.env.SMTP_PASSWORD || '',
-  EMAIL_FROM: process.env.EMAIL_FROM || process.env.SMTP_USER || process.env.BREVO_SENDER_EMAIL || 'no-reply@stockia.local',
+  EMAIL_FROM: process.env.EMAIL_FROM || process.env.SMTP_USER || 'no-reply@stockia.local',
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
   USER_CREATION_SECRET: process.env.USER_CREATION_SECRET || '',
@@ -28,8 +28,6 @@ module.exports = {
   AUTH_RATE_LIMIT_MAX: parseInt(process.env.AUTH_RATE_LIMIT_MAX, 10) || 10,
   ML_SERVICE_URL: process.env.ML_SERVICE_URL || 'http://localhost:8001',
   ML_SERVICE_TOKEN: process.env.ML_SERVICE_TOKEN || '',
-  BREVO_API_KEY: process.env.BREVO_API_KEY || '',
-  BREVO_SENDER_EMAIL: process.env.BREVO_SENDER_EMAIL || 'alertas@stockia.local',
   PORT: parseInt(process.env.PORT, 10) || 3000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   LOG_LEVEL: process.env.LOG_LEVEL || 'info'

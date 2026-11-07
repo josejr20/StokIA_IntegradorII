@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useAuth } from '@/auth/AuthContext'
 import { api } from '@/lib/api'
 
 type Origen = 'producto' | 'global' | 'predeterminado'
@@ -31,6 +32,32 @@ interface RespuestaOperacion {
   evaluacion?: { creadas: number; actualizadas: number; resueltas: number }
 }
 
+interface EvaluacionStock {
+  creadas: number
+  actualizadas: number
+  resueltas: number
+  correo: {
+    intentos: number
+    enviados: number
+    fallidos: number
+    omitidos_preferencia: number
+    ya_enviados: number
+  }
+}
+
+interface PreferenciaEmail {
+  id: number
+  clave: string
+  valor: {
+    activo?: boolean
+    email?: string
+    bajo_stock?: boolean
+    riesgo_vencimiento?: boolean
+  }
+}
+
+type PreferenciaEmailValor = PreferenciaEmail['valor']
+
 function mensajeError(error: unknown) {
   return error instanceof Error ? error.message : 'No se pudo completar la operacion.'
 }
@@ -41,7 +68,97 @@ const etiquetaOrigen: Record<Origen, string> = {
   predeterminado: 'Predeterminado',
 }
 
+function PreferenciasCorreoForm({
+  initial,
+  emailFallback,
+  onSaved,
+}: {
+  initial?: PreferenciaEmailValor
+  emailFallback: string
+  onSaved: () => Promise<unknown>
+}) {
+  const [correo, setCorreo] = useState(initial?.email ?? emailFallback)
+  const [activo, setActivo] = useState(initial?.activo ?? false)
+  const [bajoStock, setBajoStock] = useState(initial?.bajo_stock ?? true)
+  const [vencimientos, setVencimientos] = useState(initial?.riesgo_vencimiento ?? true)
+  const [guardando, setGuardando] = useState(false)
+  const [mensaje, setMensaje] = useState('')
+  const [errorCorreo, setErrorCorreo] = useState('')
+
+  async function guardar(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setMensaje('')
+    setErrorCorreo('')
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())) {
+      setErrorCorreo('Ingrese un correo electrónico válido.')
+      return
+    }
+
+    setGuardando(true)
+    try {
+      await api.post('/preferencias', {
+        clave: 'email_alertas_inventario',
+        valor: {
+          activo,
+          email: correo.trim().toLowerCase(),
+          bajo_stock: bajoStock,
+          riesgo_vencimiento: vencimientos,
+        },
+      })
+      await onSaved()
+      setMensaje('Preferencias de correo guardadas.')
+    } catch (error) {
+      setErrorCorreo(mensajeError(error))
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  return (
+    <form onSubmit={(event) => void guardar(event)} className="space-y-4 rounded-xl border bg-card p-5">
+      <div>
+        <h2 className="text-lg font-semibold">Notificaciones de inventario por correo</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Reciba un correo cuando se genere una alerta nueva. Los avisos en pantalla siguen funcionando independientemente de esta opción.
+        </p>
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={activo} onChange={(event) => setActivo(event.target.checked)} />
+        Activar notificaciones por correo
+      </label>
+      <label className="flex max-w-xl flex-col gap-2 text-sm font-medium">
+        Correo destinatario
+        <input
+          type="email"
+          required
+          maxLength={254}
+          className="w-full rounded-md border bg-background p-3"
+          value={correo}
+          onChange={(event) => setCorreo(event.target.value)}
+        />
+      </label>
+      <div className="space-y-2">
+        <p className="text-sm font-medium">Tipos de alerta</p>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={bajoStock} onChange={(event) => setBajoStock(event.target.checked)} />
+          Stock por debajo del mínimo
+        </label>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={vencimientos} onChange={(event) => setVencimientos(event.target.checked)} />
+          Riesgo alto o medio de vencimiento
+        </label>
+      </div>
+      {errorCorreo && <p role="alert" className="text-sm text-red-700">{errorCorreo}</p>}
+      {mensaje && <p role="status" className="text-sm text-green-700">{mensaje}</p>}
+      <button type="submit" disabled={guardando} className="rounded-md bg-green-800 px-4 py-2 font-medium text-white disabled:opacity-50">
+        {guardando ? 'Guardando...' : 'Guardar preferencias de correo'}
+      </button>
+    </form>
+  )
+}
+
 export default function ConfiguracionPage() {
+  const { usuario } = useAuth()
   const [busqueda, setBusqueda] = useState('')
   const [seleccionado, setSeleccionado] = useState('')
   const [minimo, setMinimo] = useState('')
@@ -54,6 +171,20 @@ export default function ConfiguracionPage() {
     queryKey: ['us24-stock-minimo-resumen'],
     queryFn: () => api.get<ResumenStock>('/umbrales/stock-minimo/resumen'),
   })
+  const {
+    data: preferenciasEmail,
+    isLoading: cargandoPreferencias,
+    isError: errorCargaPreferencias,
+    error: errorPreferencias,
+    refetch: refetchPreferencias,
+  } = useQuery({
+    queryKey: ['preferencia-email-alertas-inventario', usuario?.id],
+    queryFn: () => api.get<{ data: PreferenciaEmail[] }>('/preferencias'),
+  })
+
+  const preferenciaEmail = preferenciasEmail?.data.find(
+    (preferencia) => preferencia.clave === 'email_alertas_inventario',
+  )
 
   const productosFiltrados = useMemo(() => {
     const texto = busqueda.trim().toLocaleLowerCase('es')
@@ -125,11 +256,21 @@ export default function ConfiguracionPage() {
     setExito('')
     setErrorFormulario('')
     try {
-      const respuesta = await api.post<{ data: { creadas: number; actualizadas: number; resueltas: number } }>(
+      const respuesta = await api.post<{ data: EvaluacionStock }>(
         '/umbrales/stock-minimo/evaluar', {},
       )
       await refetch()
-      setExito(`Evaluacion terminada: ${respuesta.data.creadas} alertas creadas, ${respuesta.data.actualizadas} actualizadas y ${respuesta.data.resueltas} resueltas.`)
+      const { creadas, actualizadas, resueltas, correo } = respuesta.data
+      const resultadoCorreo = correo.enviados > 0
+        ? ` Se enviaron ${correo.enviados} correos a tu dirección configurada.`
+        : correo.fallidos > 0
+          ? ' No se pudo enviar el correo por SMTP; revisa la configuración y los registros del servidor.'
+          : correo.omitidos_preferencia > 0
+            ? ' No se envió correo: activa las notificaciones de stock bajo en tus preferencias.'
+            : correo.ya_enviados > 0
+              ? ' Las alertas activas ya habían sido enviadas anteriormente a tu correo.'
+            : ' No se encontraron alertas activas que notificar.'
+      setExito(`Evaluacion terminada: ${creadas} alertas creadas, ${actualizadas} actualizadas y ${resueltas} resueltas.${resultadoCorreo}`)
     } catch (error) {
       setErrorFormulario(mensajeError(error))
     } finally {
@@ -230,6 +371,23 @@ export default function ConfiguracionPage() {
           </section>
         </>
       )}
+
+      <section className="space-y-4">
+        {cargandoPreferencias ? (
+          <p role="status" className="text-sm text-muted-foreground">Cargando preferencias...</p>
+        ) : errorCargaPreferencias ? (
+          <div role="alert" className="space-y-2 text-sm text-red-700">
+            <p>No se pudieron cargar las preferencias: {mensajeError(errorPreferencias)}</p>
+            <button type="button" className="underline" onClick={() => void refetchPreferencias()}>Reintentar</button>
+          </div>
+        ) : (
+          <PreferenciasCorreoForm
+            initial={preferenciaEmail?.valor}
+            emailFallback={usuario?.email ?? ''}
+            onSaved={refetchPreferencias}
+          />
+        )}
+      </section>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 'use strict';
 
 const servicio = require('../services/riesgoVencimientoService');
+const { sincronizarAlertasRiesgo } = require('../services/notificacionAlertaService');
+const logger = require('../utils/logger');
 
 const MAX_PRODUCTOS = 100;
 
@@ -33,7 +35,16 @@ function leerParametros(query = {}) {
 const listar = async (req, res, next) => {
   try {
     const { ids, nivel } = leerParametros(req.query);
-    const data = await servicio.analizarRiesgo({ productoIds: ids, nivel });
+    const data = await servicio.analizarRiesgo({ productoIds: ids });
+    try {
+      await sincronizarAlertasRiesgo(data.productos, {
+        alcanceProductoIds: ids,
+        usuarioId: req.user.id,
+      });
+    } catch (error) {
+      logger.error(`No se pudieron sincronizar las alertas de vencimiento: ${error.message}`);
+    }
+    if (nivel) data.productos = data.productos.filter((producto) => producto.nivel === nivel);
     res.json({ data });
   } catch (error) {
     if (error instanceof ParametrosInvalidos) return res.status(400).json({ error: error.message });

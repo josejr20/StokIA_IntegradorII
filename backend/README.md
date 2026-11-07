@@ -26,7 +26,8 @@ Copiar `.env.example` a `.env` y ajustar:
 | `SMTP_HOST` | Servidor SMTP | `smtp.gmail.com` |
 | `SMTP_PORT` | Puerto SMTP | `587` |
 | `SMTP_USER` | Usuario SMTP | `correo@dominio.com` |
-| `SMTP_PASS` | Contraseña SMTP | `app-password` |
+| `SMTP_PASSWORD` | Contraseña SMTP o contraseña de aplicación | No publicar |
+| `EMAIL_FROM` | Remitente de notificaciones | `correo@dominio.com` |
 | `FRONTEND_URL` | URL del frontend para CORS | `http://localhost:5173` |
 
 ## Instalación
@@ -88,6 +89,12 @@ Documentación completa en Swagger UI: `http://localhost:3000/api-docs`
 - JWT en cookie HttpOnly (`access_token`) + refresh token rotativo (`refresh_token`)
 - Middleware `permission('codigo_permiso')` protege rutas según rol
 - Roles y permisos se gestionan en `/api/roles` y `/api/permisos`
+
+## Alertas por correo
+
+El envío usa las variables SMTP configuradas en `.env`; no se guardan credenciales SMTP en la base de datos. Cada usuario con acceso a Configuración puede activar su destinatario y elegir alertas de stock bajo y riesgo de vencimiento. La preferencia se guarda en `preferencias_usuario` bajo la clave `email_alertas_inventario`.
+
+La evaluación de stock mínimo envía un único correo de resumen al usuario autenticado que inició la acción, con todos los productos bajo el umbral en una tabla; nunca se consultan preferencias de otros usuarios. Puede incluir alertas activas existentes si el usuario aún no recibió el resumen correspondiente. Los envíos y fallos se registran en `notificaciones_correo` para evitar reenvíos. Las alertas de vencimiento se sincronizan al consultar `/api/riesgo-vencimiento` y, si se generan, se notifican solo al usuario autenticado.
 
 ## Estructura del proyecto
 

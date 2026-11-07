@@ -14,6 +14,7 @@ const {
 } = require('../models');
 const { ErrorKardex, registrarMovimiento } = require('./kardexService');
 const { seleccionarLotesFEFO, diasHastaVencimiento } = require('./loteService');
+const logger = require('../utils/logger');
 
 /**
  * Errores de negocio: el controlador los devuelve como 400.
@@ -788,7 +789,17 @@ async function crearOperacion({
       },
     }, { transaction });
 
-    if (propiaTransaccion) await transaction.commit();
+    if (propiaTransaccion) {
+      await transaction.commit();
+      const productoIds = [...new Set(asignaciones.map((asignacion) => asignacion.linea.producto_id))];
+      for (const productoId of productoIds) {
+        try {
+          await require('./stockMinimoService').evaluarAlertasStockMinimo(productoId);
+        } catch (errorAlerta) {
+          logger.warn(`No se pudo actualizar la alerta de stock del producto ${productoId}: ${errorAlerta.message}`);
+        }
+      }
+    }
 
     const cargada = await obtenerOperacion(operacion.id, propiaTransaccion ? null : transaction);
     return { operacion: cargada, comprobante, repetida: false };
