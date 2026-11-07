@@ -1,3 +1,4 @@
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
@@ -5,7 +6,6 @@ import type { Producto, Categorie, UnidadMedida, Presentacion, CatalogoMarca, Ca
 
 export type { Producto, MotivoDesactivacion } from '@/types'
 
-// HU02: Motivos de desactivación que el backend exige (productoController.desactivar).
 export const MOTIVOS_DESACTIVACION: { value: MotivoDesactivacion; label: string }[] = [
   { value: 'agotado', label: 'Agotado' },
   { value: 'caducado', label: 'Caducado / vencido' },
@@ -14,8 +14,6 @@ export const MOTIVOS_DESACTIVACION: { value: MotivoDesactivacion; label: string 
   { value: 'otro', label: 'Otro motivo' },
 ]
 
-// El backend Express devuelve { data: [...] } para listas y { data: {...} } para un
-// solo registro. Para las listas de catálogo usamos un helper que extrae el array.
 function useDatos<T>(path: string, queryKey: string, params?: URLSearchParams) {
   const qs = params?.toString()
   return useQuery({
@@ -27,12 +25,14 @@ function useDatos<T>(path: string, queryKey: string, params?: URLSearchParams) {
   })
 }
 
-export function useProductos(filtros: { search?: string; categoria?: string; marca?: string; page?: number; pageSize?: number }) {
+export function useProductos(filtros: { search?: string; categoria?: string; marca?: string; page?: number; pageSize?: number; allPages?: boolean }) {
   const params = new URLSearchParams()
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.categoria) params.set('categoria_id', filtros.categoria)
   if (filtros.marca) params.set('marca_id', filtros.marca)
+
   const usarPaginacion = filtros.page !== undefined
+
   if (usarPaginacion) {
     params.set('page', String(filtros.page))
     params.set('page_size', String(filtros.pageSize || 10))
@@ -41,10 +41,39 @@ export function useProductos(filtros: { search?: string; categoria?: string; mar
   }
 
   return useQuery({
-    queryKey: ['productos', filtros.search, filtros.categoria, filtros.marca, filtros.page, filtros.pageSize],
+    queryKey: ['productos', filtros.search, filtros.categoria, filtros.marca, filtros.page, filtros.pageSize, filtros.allPages],
     queryFn: async () => {
+
+      if (filtros.allPages) {
+        const resultados: Producto[] = []
+        let pagina = filtros.page || 1
+        let hayMas = true
+
+        while (hayMas) {
+          const parametrosPagina = new URLSearchParams(params)
+          parametrosPagina.set('page', String(pagina))
+          parametrosPagina.set('page_size', String(filtros.pageSize || 100))
+
+          const respuesta = await api.get<{ data: Producto[] } & Partial<Paginado<Producto>>>(
+            `/productos/?${parametrosPagina.toString()}`,
+          )
+
+          resultados.push(...respuesta.data)
+          hayMas = respuesta.next ?? false
+          pagina += 1
+        }
+
+        return {
+          results: resultados,
+          count: resultados.length,
+          previous: false,
+          next: false,
+        }
+      }
+
       const qs = params.toString()
       const respuesta = await api.get<{ data: Producto[] } & Partial<Paginado<Producto>>>(`/productos/?${qs}`)
+
       if (usarPaginacion) {
         return {
           results: respuesta.data,
@@ -53,6 +82,7 @@ export function useProductos(filtros: { search?: string; categoria?: string; mar
           next: respuesta.next ?? false,
         }
       }
+
       return { results: respuesta.data }
     },
   })
@@ -84,7 +114,6 @@ export function useCatalogoValores() {
   return useDatos<CatalogoValor>('/catalogo-valores', 'catalogo-valores')
 }
 
-// HU02: datos del formulario de alta - solo la ficha del producto
 export interface NuevoProductoInput {
   nombre: string
   categoria: string
@@ -102,7 +131,6 @@ export interface NuevoProductoInput {
   imagen?: File | null
 }
 
-// HU03: solo las características editables de la ficha (no el estado)
 export interface EditarProductoInput {
   nombre: string
   categoria: string
@@ -135,16 +163,19 @@ function aProductoJson(datos: NuevoProductoInput | EditarProductoInput) {
 function aProductoFormData(datos: NuevoProductoInput | EditarProductoInput) {
   const json = aProductoJson(datos)
   const formData = new FormData()
+
   for (const [clave, valor] of Object.entries(json)) {
     if (valor === undefined || valor === null || valor === '') continue
     formData.append(clave, typeof valor === 'object' ? JSON.stringify(valor) : String(valor))
   }
+
   if (datos.imagen) formData.append('imagen', datos.imagen)
   return formData
 }
 
 export function useCreacionProducto() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: (datos: NuevoProductoInput) =>
       api.postForm<{ data: Producto }>('/productos', aProductoFormData(datos)),
@@ -152,11 +183,6 @@ export function useCreacionProducto() {
   })
 }
 
-/**
- * Carga masiva desde CSV/Excel. Las filas llegan ya validadas y con los ids de
- * catálogo resueltos (ver importacion/validacion.ts); el backend vuelve a
- * validarlas y las inserta todas en una sola transacción.
- */
 export interface ProductoImportable {
   fila: number
   nombre: string
@@ -178,6 +204,7 @@ export interface ResultadoImportacion {
 
 export function useImportarProductos() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: (productos: ProductoImportable[]) =>
       api.post<{ data: ResultadoImportacion }>('/productos/importar', { productos }),
@@ -187,6 +214,7 @@ export function useImportarProductos() {
 
 export function useActualizaProducto() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ id, datos }: { id: number; datos: EditarProductoInput }) =>
       api.putForm<{ data: Producto }>(`/productos/${id}`, aProductoFormData(datos)),
@@ -194,16 +222,15 @@ export function useActualizaProducto() {
   })
 }
 
-// Reactivar un producto desactivado
 export function useActivarProducto() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: (id: number) => api.patch<{ data: Producto }>(`/productos/${id}/activar`),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['productos'] }),
   })
 }
 
-// Ingreso de stock para un producto ya existente - el que refleja en el kardex
 export interface IngresoInput {
   id: number
   cantidad: string
@@ -213,6 +240,7 @@ export interface IngresoInput {
 
 export function useIngresoProducto() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ id, ...datos }: IngresoInput) => api.post(`/productos/${id}/ingreso`, datos),
     onSuccess: () => {
@@ -222,9 +250,9 @@ export function useIngresoProducto() {
   })
 }
 
-// HU05: motivo obligatorio, el backend exige uno de MOTIVOS_DESACTIVACION
 export function useDesactivarProducto() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ id, motivo, detalle, confirmarStock }: {
       id: number

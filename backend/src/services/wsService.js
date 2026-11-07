@@ -1,4 +1,4 @@
-const { getIO } = require('../config/socket');
+﻿const { getIO } = require('../config/socket');
 
 /**
  * Eventos de WebSocket soportados:
@@ -27,6 +27,26 @@ function emitir(evento, datos) {
   }
 }
 
+/**
+ * Notifica a los encargados de inventario conectados.
+ * HU-133 / US-26 - TC-06.
+ */
+function notificarEncargadosInventario(datos) {
+  try {
+    const io = getIO();
+
+    io.to('encargados_inventario').emit(
+      'reabastecimiento:orden_generada',
+      datos
+    );
+  } catch (error) {
+    console.error(
+      'Error notificando orden de reabastecimiento:',
+      error.message
+    );
+  }
+}
+
 /** Emite un evento de operación y refresca las queries relacionadas. */
 function emitirOperacion(evento, operacion) {
   if (!operacion) return;
@@ -40,4 +60,8 @@ function emitirOperacion(evento, operacion) {
   });
 }
 
-module.exports = { emitir, emitirOperacion };
+module.exports = {
+  emitir,
+  notificarEncargadosInventario,
+  emitirOperacion
+};

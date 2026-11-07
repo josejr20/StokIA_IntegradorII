@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
     alerta_id: { type: DataTypes.INTEGER, allowNull: true, references: { model: 'alertas', key: 'id' } },
     destinatario: { type: DataTypes.STRING(254), allowNull: false },
     estado: { type: DataTypes.STRING(20), allowNull: false, defaultValue: 'pendiente', validate: { isIn: [['pendiente', 'enviado', 'fallido']] } },
-    proveedor: { type: DataTypes.STRING(30), allowNull: false, defaultValue: 'brevo' },
+    proveedor: { type: DataTypes.STRING(30), allowNull: false, defaultValue: 'smtp' },
     fecha_envio: { type: DataTypes.DATE, allowNull: true }
   }, {
     tableName: 'notificaciones_correo',

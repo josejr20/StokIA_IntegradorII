@@ -76,9 +76,9 @@ const resumenStockMinimo = async (req, res, next) => {
   catch (error) { responderError(res, next, error); }
 };
 
-async function intentarEvaluarProducto(productoId) {
+async function intentarEvaluarProducto(productoId, usuarioId) {
   try {
-    return { evaluacion: await evaluarAlertasStockMinimo(productoId), aviso: null };
+    return { evaluacion: await evaluarAlertasStockMinimo(productoId, { usuarioId }), aviso: null };
   } catch (error) {
     logger.warn(`No se pudo actualizar la alerta de stock del producto ${productoId}: ${error.message}`);
     return {
@@ -94,7 +94,7 @@ const guardarMinimoProducto = async (req, res, next) => {
       throw new ErrorStockMinimo('Indique el stock minimo.');
     }
     const registro = await guardarStockMinimo(req.params.productoId, req.body.valor);
-    const resultado = await intentarEvaluarProducto(registro.producto_id);
+    const resultado = await intentarEvaluarProducto(registro.producto_id, req.user.id);
     res.json({ data: UmbralDto.fromModel(registro), message: 'Stock minimo guardado correctamente.', ...resultado });
   } catch (error) { responderError(res, next, error); }
 };
@@ -102,14 +102,14 @@ const guardarMinimoProducto = async (req, res, next) => {
 const quitarMinimoProducto = async (req, res, next) => {
   try {
     await restablecerStockMinimo(req.params.productoId);
-    const resultado = await intentarEvaluarProducto(req.params.productoId);
+    const resultado = await intentarEvaluarProducto(req.params.productoId, req.user.id);
     res.json({ message: 'Se restablecio el stock minimo por defecto.', ...resultado });
   } catch (error) { responderError(res, next, error); }
 };
 
 const evaluarTodosStockMinimo = async (req, res, next) => {
   try {
-    const data = await evaluarAlertasStockMinimo();
+    const data = await evaluarAlertasStockMinimo(null, { usuarioId: req.user.id });
     res.json({ data, message: 'Evaluacion de stock minimo completada.' });
   } catch (error) { responderError(res, next, error); }
 };

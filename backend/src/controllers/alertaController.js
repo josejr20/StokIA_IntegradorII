@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const { Alerta } = require('../models');
+const { NotificacionCorreo } = require('../models');
 const { AlertaDto } = require('../dtos/alertaDto');
 const alertaService = require('../services/alertaService');
 const logger = require('../utils/logger');
@@ -43,18 +44,19 @@ const notificar = async (req, res, next) => {
   try {
     const alerta = await Alerta.findByPk(req.params.id);
     if (!alerta) return res.status(404).json({ error: 'Alerta no encontrada' });
-    const { correoService } = require('../services/correoService');
+    const { enviarCorreo } = require('../services/correoService');
     const destinatarios = req.body.destinatarios || [];
     for (const correo of destinatarios) {
-      const enviado = await correoService.enviarCorreo(
+      await enviarCorreo(
         correo,
         `Alerta ${alerta.severidad}: ${alerta.producto_id}`,
         alerta.mensaje
       );
-      await require('../models').NotificacionCorreo.create({
+      await NotificacionCorreo.create({
         alerta_id: alerta.id, destinatario: correo,
-        estado: enviado ? 'enviado' : 'fallido',
-        fecha_envio: enviado ? new Date() : null
+        estado: 'enviado',
+        fecha_envio: new Date(),
+        proveedor: 'smtp',
       });
     }
     res.json({ message: 'Notificaciones procesadas' });

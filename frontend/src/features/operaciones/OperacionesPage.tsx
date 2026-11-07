@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  PackagePlus, Plus, ReceiptText, Search, Trash2, Undo2, Wallet, Upload,
+  ChevronLeft, ChevronRight, PackagePlus, Plus, ReceiptText, Search, Trash2, Undo2, Wallet, Upload,
 } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -538,7 +538,8 @@ function BuscadorVentas({ onSeleccionar }: { onSeleccionar: (v: Operacion) => vo
     return () => clearTimeout(t)
   }, [buscar])
 
-  const { data, isLoading } = useOperaciones({ tipo: 'venta', buscar: debounce })
+  const { data: respuesta, isLoading } = useOperaciones({ tipo: 'venta', buscar: debounce, pageSize: 20 })
+  const data = respuesta?.results
 
   return (
     <>
@@ -609,6 +610,8 @@ function HistorialOperaciones() {
   const [detalleId, setDetalleId] = useState<number | null>(null)
   const [comprobanteId, setComprobanteId] = useState<number | null>(null)
   const [anularId, setAnularId] = useState<number | null>(null)
+  const [pagina, setPagina] = useState(1)
+  const pageSize = 10
   const [ahora, setAhora] = useState(() => Date.now())
 
   useEffect(() => {
@@ -621,12 +624,15 @@ function HistorialOperaciones() {
     return () => clearInterval(intervalo)
   }, [])
 
-  const { data: operaciones, isLoading } = useOperaciones({
+  const { data: respuesta, isLoading } = useOperaciones({
     tipo: filtros.tipo,
     buscar: debounce,
     fecha_desde: filtros.fecha_desde,
     fecha_hasta: filtros.fecha_hasta,
+    page: pagina,
+    pageSize,
   })
+  const operaciones = respuesta?.results
   const { data: detalle } = useOperacion(detalleId)
   const {
     data: comprobante,
@@ -767,6 +773,23 @@ function HistorialOperaciones() {
           </tbody>
         </table>
       </div>
+
+      {respuesta && respuesta.count > 0 && (
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <span>
+            {respuesta.count} operaci{respuesta.count === 1 ? 'ón' : 'ones'}
+            {' · '}Página {pagina} de {respuesta.totalPages}
+          </span>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" disabled={!respuesta.previous} onClick={() => setPagina((p) => p - 1)}>
+              <ChevronLeft className="size-4" /> Anterior
+            </Button>
+            <Button variant="outline" size="sm" disabled={!respuesta.next} onClick={() => setPagina((p) => p + 1)}>
+              Siguiente <ChevronRight className="size-4" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Detalle */}
       <Sheet open={detalleId !== null} onOpenChange={(abierto) => !abierto && setDetalleId(null)}>

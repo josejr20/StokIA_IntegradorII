@@ -1,10 +1,9 @@
-﻿import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+﻿
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import type { Paginado } from '@/types'
 
-// Tipos y constantes compartidas con el módulo de kardex (una sola fuente de verdad).
-// HU8.1: los ajustes se expresan como ingreso/salida con origen='ajuste'.
 export type TipoMovimiento = 'ingreso' | 'salida'
 export type OrigenMovimiento = 'compra' | 'venta' | 'inicial' | 'ajuste' | 'devolucion' | 'anulacion' | 'otro'
 
@@ -93,6 +92,7 @@ export interface FiltrosMovimientos {
   desdeUltimoIngreso?: boolean
   page?: number
   pageSize?: number
+  allPages?: boolean
 }
 
 export function useLotes(filtros: FiltrosLotes = {}) {
@@ -141,6 +141,7 @@ export function useLote(id: number) {
 
 export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
   const params = new URLSearchParams()
+
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.producto) params.set('producto', filtros.producto)
   if (filtros.tipo) params.set('tipo', filtros.tipo)
@@ -154,12 +155,35 @@ export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
   return useQuery({
     queryKey: ['movimientos-inventario', filtros],
     queryFn: async () => {
-      const respuesta = await api.get<Paginado<MovimientoInventario>>(`/movimientos/?${params.toString()}`)
+      const pageSize = filtros.pageSize || 100
+      const resultados: MovimientoInventario[] = []
+      let pagina = filtros.page || 1
+      let hayMas = true
+
+      while (hayMas) {
+        const parametrosPagina = new URLSearchParams(params)
+
+        parametrosPagina.set('page', String(pagina))
+        parametrosPagina.set('page_size', String(pageSize))
+
+        const respuesta = await api.get<Paginado<MovimientoInventario>>(
+          `/movimientos/?${parametrosPagina.toString()}`,
+        )
+
+        resultados.push(...respuesta.data)
+
+        hayMas =
+          filtros.allPages === true &&
+          (respuesta.next ?? false)
+
+        pagina += 1
+      }
+
       return {
-        results: respuesta.data,
-        count: respuesta.count ?? respuesta.data.length,
-        previous: respuesta.previous ?? false,
-        next: respuesta.next ?? false,
+        results: resultados,
+        count: resultados.length,
+        previous: false,
+        next: false,
       }
     },
   })
@@ -168,6 +192,7 @@ export function useMovimientosInventario(filtros: FiltrosMovimientos = {}) {
 export function useHistorialProductos(productoIds: number[]) {
   const ids = [...new Set(productoIds)].sort((a, b) => a - b)
   const idsQuery = ids.join(',')
+
   return useQuery({
     queryKey: ['lotes', 'historial-productos', idsQuery],
     queryFn: async () => {
@@ -189,6 +214,7 @@ export interface CrearLoteInput {
 
 export function useCreatorLote() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: (datos: CrearLoteInput) => api.post<{ data: Lote }>('/lotes/', {
       ...datos,
@@ -208,6 +234,7 @@ export interface ActualizarLoteInput {
 
 export function useActualizaLote() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ id, datos }: { id: number; datos: ActualizarLoteInput }) =>
       api.patch<{ data: Lote }>(`/lotes/${id}/`, datos),
@@ -226,6 +253,7 @@ export interface RegistrarMovimientoInput {
 
 export function useRegistrarMovimiento() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ loteId, ...datos }: RegistrarMovimientoInput) =>
       api.post<{ data: MovimientoInventario }>(`/lotes/${loteId}/registrar-movimiento`, datos),
@@ -256,22 +284,34 @@ export interface FiltrosLotesAgrupados {
 
 export function useLotesAgrupados(filtros: FiltrosLotesAgrupados = {}) {
   const params = new URLSearchParams()
+
   if (filtros.search) params.set('search', filtros.search)
   if (filtros.producto_clave) params.set('producto_clave', filtros.producto_clave)
   if (filtros.fecha_desde) params.set('fecha_desde', filtros.fecha_desde)
   if (filtros.fecha_hasta) params.set('fecha_hasta', filtros.fecha_hasta)
   if (filtros.estado) params.set('estado', filtros.estado)
+
   params.set('page', String(filtros.page ?? 1))
   params.set('page_size', String(filtros.pageSize ?? 10))
 
   return useQuery({
-    // Empieza con 'lotes', así las invalidaciones existentes también la refrescan.
     queryKey: ['lotes', 'agrupados', filtros],
     queryFn: async () => {
       const r = await api.get<{
-        data: GrupoLotes[]; count: number; total_pages: number; previous: boolean; next: boolean
+        data: GrupoLotes[]
+        count: number
+        total_pages: number
+        previous: boolean
+        next: boolean
       }>(`/lotes/agrupados?${params.toString()}`)
-      return { results: r.data, count: r.count, totalPages: r.total_pages, previous: r.previous, next: r.next }
+
+      return {
+        results: r.data,
+        count: r.count,
+        totalPages: r.total_pages,
+        previous: r.previous,
+        next: r.next,
+      }
     },
     placeholderData: keepPreviousData,
   })
@@ -279,6 +319,7 @@ export function useLotesAgrupados(filtros: FiltrosLotesAgrupados = {}) {
 
 export function useActualizarFechasVencimiento() {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: () => api.post<{ message: string; actualizados: number }>('/lotes/actualizar-fechas-vencimiento'),
     onSuccess: () => {

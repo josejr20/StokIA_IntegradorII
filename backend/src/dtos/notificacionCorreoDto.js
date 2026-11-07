@@ -13,7 +13,7 @@ class NotificacionCorreoDto {
       alerta_id: data.alerta_id || null,
       destinatario: data.destinatario,
       estado: data.estado || 'pendiente',
-      proveedor: data.proveedor || 'brevo',
+      proveedor: data.proveedor || 'smtp',
       fecha_envio: data.fecha_envio || null
     };
   }

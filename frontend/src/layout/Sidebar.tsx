@@ -1,8 +1,7 @@
 import { NavLink } from 'react-router'
 import {
   Home, LayoutDashboard, Package, Boxes, ShoppingCart,
-  TrendingUp, Brain, Settings, Users, ScrollText, History,
-  ReceiptText, Contact,
+  TrendingUp, Brain, Settings, Users, ScrollText, History, AlertTriangle, ReceiptText, Contact, ClipboardList
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -16,16 +15,18 @@ const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permis
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, permiso: 'ver_kpis' },
   { to: '/productos', label: 'Productos', icon: Package, permiso: 'gestionar_productos' },
   { to: '/inventario', label: 'Lotes e inventario', icon: Boxes, permiso: 'gestionar_inventario' },
+  { to: '/reabastecimiento', label: 'Reabastecimiento', icon: ClipboardList, permiso: 'gestionar_reabastecimiento' },
   { to: '/kardex', label: 'Kardex', icon: History, permiso: 'gestionar_inventario' },
   { to: '/ventas', label: 'Ventas', icon: ShoppingCart, permiso: 'gestionar_ventas' },
   { to: '/operaciones', label: 'Operaciones', icon: ReceiptText, permiso: 'gestionar_ventas' },
   { to: '/comprobantes', label: 'Comprobantes', icon: ReceiptText, permiso: 'gestionar_ventas' },
   { to: '/clientes', label: 'Clientes', icon: Contact, permiso: 'gestionar_ventas' },
-  { to: '/prediccion', label: 'PredicciÃ³n y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+  { to: '/prediccion', label: 'Predicción y riesgo', icon: TrendingUp, permiso: 'ver_kpis' },
+  { to: '/riesgo-vencimiento', label: 'Riesgo de vencimiento', icon: AlertTriangle, permiso: 'ver_alertas' },
   { to: '/modelo-ml', label: 'Modelo ML', icon: Brain, permiso: 'ver_kpis' },
-  { to: '/configuracion', label: 'ConfiguraciÃ³n', icon: Settings, permiso: 'configurar_umbrales' },
+  { to: '/configuracion', label: 'Configuración', icon: Settings, permiso: 'configurar_umbrales' },
   { to: '/usuarios', label: 'Usuarios', icon: Users, permiso: 'gestionar_usuarios' },
-  { to: '/auditoria', label: 'AuditorÃ­a', icon: ScrollText, permiso: 'ver_auditoria' },
+  { to: '/auditoria', label: 'Auditoría', icon: ScrollText, permiso: 'ver_auditoria' },
 ]
 
 export function Sidebar() {

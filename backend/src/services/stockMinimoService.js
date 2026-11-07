@@ -3,6 +3,7 @@
 const { Op, fn, col } = require('sequelize');
 const { Producto, Lote, UmbralConfiguracion, Alerta } = require('../models');
 const logger = require('../utils/logger');
+const { notificarAlertasStock } = require('./notificacionAlertaService');
 const {
   ErrorStockMinimo,
   validarStockMinimo,
@@ -129,11 +130,19 @@ async function restablecerStockMinimo(productoId) {
   return eliminados;
 }
 
-async function evaluarAlertasStockMinimo(productoId = null) {
+async function evaluarAlertasStockMinimo(productoId = null, { usuarioId } = {}) {
   const resumen = await obtenerResumenStockMinimo(productoId);
   let creadas = 0;
   let actualizadas = 0;
   let resueltas = 0;
+  const correo = {
+    intentos: 0,
+    enviados: 0,
+    fallidos: 0,
+    omitidos_preferencia: 0,
+    ya_enviados: 0,
+  };
+  const alertasParaNotificar = [];
   for (const producto of resumen.data) {
     const alertas = await Alerta.findAll({
       where: {
@@ -143,15 +152,18 @@ async function evaluarAlertasStockMinimo(productoId = null) {
       },
       order: [['fecha_creacion', 'DESC']]
     });
-    const alerta = alertas.find((a) => a.datos_origen?.origen === 'stock_minimo');
+    let alerta = alertas.find((a) => a.datos_origen?.origen === 'stock_minimo');
     if (producto.bajo_stock) {
       const mensaje = `Stock bajo de ${producto.nombre}: quedan ${producto.stock_disponible} unidades; minimo ${producto.stock_minimo}.` +
         (producto.configurado ? '' : ' Se aplico el minimo por defecto.');
       const severidad = producto.stock_disponible === 0 ? 'alta' : 'media';
       const datos_origen = {
         origen: 'stock_minimo',
+        codigo: producto.codigo,
+        nombre: producto.nombre,
         stock_disponible: producto.stock_disponible,
         stock_minimo: producto.stock_minimo,
+        faltante: producto.faltante,
         origen_umbral: producto.origen_umbral,
         configuracion_por_defecto: !producto.configurado
       };
@@ -159,19 +171,42 @@ async function evaluarAlertasStockMinimo(productoId = null) {
         await alerta.update({ mensaje, severidad, datos_origen });
         actualizadas++;
       } else {
-        await Alerta.create({
+        const nuevaAlerta = await Alerta.create({
           tipo: 'bajo_stock', producto_id: producto.producto_id, mensaje,
           severidad, datos_origen, estado: 'nueva'
         });
         creadas++;
+        if (!alerta) alerta = nuevaAlerta;
       }
+
+      alertasParaNotificar.push(alerta);
     } else if (alerta) {
       await alerta.update({ estado: 'atendida', fecha_atendida: new Date() });
       resueltas++;
     }
+    if (usuarioId && alertasParaNotificar.length) {
+      correo.intentos = 1;
+      try {
+        const resultado = await notificarAlertasStock(alertasParaNotificar, usuarioId);
+        correo.enviados = resultado.enviados;
+        correo.fallidos = resultado.fallidos;
+        if (resultado.motivo === 'preferencia_no_activa') correo.omitidos_preferencia = alertasParaNotificar.length;
+        if (resultado.motivo === 'ya_enviado') correo.ya_enviados = alertasParaNotificar.length;
+      } catch (error) {
+        correo.fallidos = 1;
+        logger.error(`No se pudo enviar el resumen de stock bajo: ${error.message}`);
+      }
+    }
   }
   logger.info(`Evaluacion de stock minimo: ${creadas} nuevas, ${actualizadas} actualizadas, ${resueltas} resueltas`);
-  return { creadas, actualizadas, resueltas, productos_evaluados: resumen.data.length, sin_configuracion: resumen.data.filter((p) => !p.configurado).length };
+  return {
+    creadas,
+    actualizadas,
+    resueltas,
+    productos_evaluados: resumen.data.length,
+    sin_configuracion: resumen.data.filter((p) => !p.configurado).length,
+    correo,
+  };
 }
 
 module.exports = {
