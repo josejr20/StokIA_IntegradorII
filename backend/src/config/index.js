@@ -7,6 +7,7 @@ module.exports = {
   DB_USER: process.env.DB_USER || 'postgres',
   DB_PASSWORD: process.env.DB_PASSWORD || '',
   DB_DIALECT: process.env.DB_DIALECT || 'postgres',
+  DB_SSL: process.env.DB_SSL === 'true',
   JWT_SECRET: process.env.JWT_SECRET || 'change-me',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '8h',
   JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
