@@ -1,4 +1,3 @@
-
 const { validationResult } = require('express-validator');
 const { ReporteGenerado } = require('../models');
 const { ReporteDto } = require('../dtos/reporteDto');
@@ -81,12 +80,21 @@ const kpis = async (req, res, next) => {
       where: { estado: 'pendiente' }
     });
 
+    // HU-157: productos con alerta de bajo stock activa (nueva o vista).
+    const stockBajo = await Alerta.count({
+      where: {
+        tipo: 'bajo_stock',
+        estado: { [Op.in]: ['nueva', 'vista'] }
+      }
+    });
+
     res.json({
       data: {
         productos_activos: productosActivos,
         ventas_mes_actual: ventasMes,
         alertas_activas: alertasActivas,
         alertas_criticas: alertasCriticas,
+        stock_bajo: stockBajo,
         ordenes_pendientes: ordenesPendientes
       }
     });
