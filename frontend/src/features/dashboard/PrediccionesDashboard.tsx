@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useProductos } from '@/features/productos/api'
 import { usePredecirDemanda } from '@/features/prediccion/api'
 import {
@@ -21,23 +20,30 @@ export default function PrediccionesDashboard() {
     })
 
     const prediccion = usePredecirDemanda()
+    const consultandoRef = useRef(false)
     const productos = data?.results ?? []
     const resultados = prediccion.data?.resultados ?? []
 
     useEffect(() => {
         if (!productoId) return
 
-        const intervalo = setInterval(() => {
-            if (!prediccion.isPending) {
-                prediccion.mutate({
+        const intervalo = setInterval(async () => {
+            if (consultandoRef.current) return
+
+            consultandoRef.current = true
+
+            try {
+                await prediccion.mutateAsync({
                     productoIds: [Number(productoId)],
                     horizonteDias,
                 })
+            } finally {
+                consultandoRef.current = false
             }
         }, 30000)
 
         return () => clearInterval(intervalo)
-    }, [productoId, horizonteDias])
+    }, [productoId, horizonteDias, prediccion.mutateAsync])
 
     function generarPrediccion() {
         if (!productoId) return
