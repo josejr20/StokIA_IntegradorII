@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+﻿import { useQuery } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 
@@ -18,13 +18,16 @@ export interface ResumenInicio {
     mensaje: string
     estado: string
     fecha_creacion: string
+    datos_origen?: { nombre?: string }
   }>
   kpis: Kpis
 }
 
-export function useKpis() {
+export function useKpis(habilitado = true) {
   return useQuery({
     queryKey: ['reportes', 'kpis'],
+    enabled: habilitado,
+    refetchInterval: 30000,
     queryFn: async () => {
       const respuesta = await api.get<{ data: Kpis }>('/reportes/kpis')
       return respuesta.data
@@ -32,12 +35,15 @@ export function useKpis() {
   })
 }
 
-export function useResumenInicio() {
+export function useResumenInicio(habilitado = true) {
   return useQuery({
     queryKey: ['reportes', 'inicio'],
+    enabled: habilitado,
+    refetchInterval: 30000,
     queryFn: async () => {
       const respuesta = await api.get<{ data: ResumenInicio }>('/reportes/inicio')
       return respuesta.data
     },
   })
 }
+

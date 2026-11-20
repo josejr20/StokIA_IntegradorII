@@ -105,6 +105,7 @@ export function useLotes(filtros: FiltrosLotes = {}) {
 
   return useQuery({
     queryKey: ['lotes', filtros],
+    refetchInterval: 30000,
     queryFn: async () => {
       const pageSize = filtros.pageSize || 100
       const resultados: Lote[] = []

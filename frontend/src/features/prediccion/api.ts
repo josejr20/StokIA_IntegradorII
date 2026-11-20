@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+﻿import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 
@@ -35,8 +35,8 @@ export function useRecomendaciones() {
   return useQuery({
     queryKey: ['recomendaciones'],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: RespuestaRecomendaciones }>('/recomendaciones')
-      return respuesta.data
+      const respuesta = await api.get<RespuestaRecomendaciones>('/recomendaciones')
+      return respuesta
     },
     staleTime: 0,
     refetchOnMount: 'always',
@@ -110,7 +110,7 @@ export interface ParametrosPrediccion {
   horizonteDias: number
 }
 
-// Se usa useMutation porque la predicción se pide al pulsar el botón, no al abrir la pantalla.
+// Se usa useMutation porque la predicciÃ³n se pide al pulsar el botÃ³n, no al abrir la pantalla.
 export function usePredecirDemanda() {
   return useMutation({
     mutationFn: async ({ productoIds, horizonteDias }: ParametrosPrediccion) => {
@@ -123,3 +123,5 @@ export function usePredecirDemanda() {
     },
   })
 }
+
+
