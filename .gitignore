@@ -11,3 +11,8 @@ logs/
 # IDEs y editores
 .vscode/
 .idea/
+# Dependencias de Node.js
+node_modules/
+
+# Dependencias de Node.js
+node_modules/

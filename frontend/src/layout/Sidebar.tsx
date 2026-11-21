@@ -41,7 +41,11 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-0.5 px-3">
-        {NAV.filter(({ permiso }) => !permiso || tienePermiso(permiso)).map(({ to, label, icon: Icon, fin }) => (
+        {NAV.filter(({ to, permiso }) =>
+          to === '/dashboard'
+            ? tienePermiso('ver_kpis') || tienePermiso('ver_alertas')
+            : !permiso || tienePermiso(permiso)
+        ).map(({ to, label, icon: Icon, fin }) => (
           <NavLink
             key={to}
             to={to}
