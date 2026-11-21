@@ -26,6 +26,22 @@ export function RutaConPermiso({ permiso }: { permiso: PermisoCodigo }) {
   return <Outlet />
 }
 
+export function RutaDashboard() {
+  const { usuario, cargando, tienePermiso } = useAuth()
+
+  if (cargando) {
+    return <div className="grid h-screen place-items-center text-muted-foreground">Cargando...</div>
+  }
+
+  if (!usuario) return <Navigate to="/login" replace />
+
+  if (!tienePermiso('ver_kpis') && !tienePermiso('ver_alertas')) {
+    return <Navigate to="/" replace />
+  }
+
+  return <Outlet />
+}
+
 export function RutaSoloAdministrador() {
   const { usuario, cargando } = useAuth()
 
