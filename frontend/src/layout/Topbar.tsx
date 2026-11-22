@@ -1,5 +1,5 @@
-// import { Bell, Search, LogOut } from 'lucide-react'
-import { Search, LogOut } from 'lucide-react'
+import { KeyRound, Search, LogOut } from 'lucide-react'
+import { Link } from 'react-router'
 
 import { NotificacionesMenu } from './NotificacionesMenu'
 import { Input } from '@/components/ui/input'
@@ -40,6 +40,10 @@ export function Topbar({ titulo }: { titulo: string }) {
               <p className="text-sm font-medium">{usuario?.nombres} {usuario?.apellidos}</p>
               <p className="text-xs text-muted-foreground">{usuario?.email}</p>
             </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to="/cambiar-contrasena"><KeyRound /> Cambiar contraseña</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive" onClick={cerrarSesion}>
               <LogOut /> Cerrar sesión

@@ -22,6 +22,7 @@ const TITULOS: Record<string, string> = {
   '/configuracion': 'Configuración',
   '/usuarios': 'Usuarios',
   '/auditoria': 'Auditoría',
+  '/cambiar-contrasena': 'Cambiar contraseña',
 }
 
 export function AppShell() {

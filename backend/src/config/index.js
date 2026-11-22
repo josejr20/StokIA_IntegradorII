@@ -23,8 +23,6 @@ module.exports = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
   USER_CREATION_SECRET: process.env.USER_CREATION_SECRET || '',
-  RESET_CODE_TTL_MINUTES: parseInt(process.env.RESET_CODE_TTL_MINUTES, 10) || 10,
-  RESET_CODE_MAX_ATTEMPTS: parseInt(process.env.RESET_CODE_MAX_ATTEMPTS, 10) || 5,
   AUTH_RATE_LIMIT_WINDOW_MS: parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS, 10) || 15 * 60 * 1000,
   AUTH_RATE_LIMIT_MAX: parseInt(process.env.AUTH_RATE_LIMIT_MAX, 10) || 10,
   ML_SERVICE_URL: process.env.ML_SERVICE_URL || 'http://localhost:8001',

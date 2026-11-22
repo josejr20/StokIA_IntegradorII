@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router'
 import { RutaConPermiso, RutaInicial, RutaProtegida, RutaSoloAdministrador } from '@/auth/RutaProtegida'
 import LoginPage from '@/auth/LoginPage'
 import RecuperarPasswordPage from '@/auth/RecuperarPasswordPage'
-import VerificarCodigoPage from '@/auth/VerificarCodigoPage'
 import RestablecerPasswordPage from '@/auth/RestablecerPasswordPage'
+import CambiarPasswordPage from '@/auth/CambiarPasswordPage'
 import { AppShell } from '@/layout/AppShell'
 import InicioPage from '@/features/inicio/InicioPage'
 import DashboardPage from '@/features/dashboard/DashboardPage'
@@ -28,10 +28,10 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/recuperar" element={<RecuperarPasswordPage />} />
-      <Route path="/verificar-codigo" element={<VerificarCodigoPage />} />
       <Route path="/restablecer" element={<RestablecerPasswordPage />} />
       <Route element={<RutaProtegida />}>
         <Route element={<AppShell />}>
+          <Route path="cambiar-contrasena" element={<CambiarPasswordPage />} />
           <Route index element={<RutaInicial><InicioPage /></RutaInicial>} />
           <Route element={<RutaConPermiso permiso="ver_kpis" />}><Route path="dashboard" element={<DashboardPage />} /></Route>
           <Route element={<RutaConPermiso permiso="gestionar_productos" />}><Route path="productos" element={<ProductosPage />} /></Route>

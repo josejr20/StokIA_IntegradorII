@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { login, logout, refresh, me, forgotPassword, verifyResetCode, resetPassword } = require('../controllers/authController');
+const { login, logout, refresh, me, forgotPassword, resetPassword, changePassword } = require('../controllers/authController');
 const { autenticar } = require('../middleware/authJwt');
 const { authRateLimit } = require('../middleware/rateLimit');
 const router = Router();
@@ -72,8 +72,8 @@ const router = Router();
  */
 router.post('/login', authRateLimit, login);
 router.post('/forgot-password', authRateLimit, forgotPassword);
-router.post('/verify-reset-code', authRateLimit, verifyResetCode);
 router.post('/reset-password', authRateLimit, resetPassword);
+router.post('/change-password', authRateLimit, autenticar, changePassword);
 router.post('/refresh', refresh);
 router.post('/refresh-token', autenticar, refresh);
 router.get('/me', autenticar, me);

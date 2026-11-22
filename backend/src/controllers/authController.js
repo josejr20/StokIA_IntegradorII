@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
 const { validationResult } = require('express-validator');
 const { Usuario, Rol, Permiso, TokenRecuperacion } = require('../models');
 const { LoginDto } = require('../dtos/authDto');
@@ -12,8 +13,9 @@ const { setAuthCookies, clearAuthCookies, readCookie } = require('../utils/authC
 const { enviarCorreo } = require('../services/correoService');
 const { cumplePoliticaPassword } = require('../utils/passwordPolicy');
 
-const codigoHash = (codigo) => crypto.createHash('sha256').update(codigo).digest('hex');
+const tokenHash = (token) => crypto.createHash('sha256').update(token).digest('hex');
 const correoNormalizado = (email) => email.trim().toLowerCase();
+const RESET_TOKEN_TTL_MINUTES = 10;
 
 function obtenerIP(req) {
   const forwarded = req.headers['x-forwarded-for'];
@@ -100,57 +102,96 @@ const forgotPassword = async (req, res) => {
   const email = typeof req.body.email === 'string' ? correoNormalizado(req.body.email) : '';
   const usuario = email ? await Usuario.findOne({ where: { email, activo: true } }) : null;
   if (usuario) {
+    await TokenRecuperacion.update({ usado: true }, { where: { usuario_id: usuario.id, usado: false } });
+    const token = crypto.randomBytes(32).toString('hex');
+    const tokenRecuperacion = await TokenRecuperacion.create({
+      usuario_id: usuario.id,
+      token: tokenHash(token),
+      expira_en: new Date(Date.now() + RESET_TOKEN_TTL_MINUTES * 60 * 1000),
+      intentos: 0,
+      usado: false,
+    });
+    const enlace = new URL('/restablecer', config.FRONTEND_URL);
+    enlace.searchParams.set('token', token);
+
     try {
-      const codigo = String(crypto.randomInt(100000, 1000000));
-      await enviarCorreo(email, 'Solicitud de recuperación de contraseña', `<p>Tu código de recuperación es: <strong>${codigo}</strong></p><p>Este código expirará en ${config.RESET_CODE_TTL_MINUTES} minutos.</p>`);
-      await TokenRecuperacion.update({ usado: true }, { where: { usuario_id: usuario.id, usado: false } });
-      await TokenRecuperacion.create({
-        usuario_id: usuario.id, code_hash: codigoHash(codigo),
-        expira_en: new Date(Date.now() + config.RESET_CODE_TTL_MINUTES * 60 * 1000),
-        intentos: 0, usado: false,
-      });
+      await enviarCorreo(
+        email,
+        'Restablecimiento de contraseña',
+        `<p>Recibimos una solicitud para cambiar la contraseña de tu cuenta.</p><p><a href="${enlace.toString()}">Restablecer contraseña</a></p><p>Este enlace expirará en ${RESET_TOKEN_TTL_MINUTES} minutos y solo puede utilizarse una vez.</p>`,
+      );
     } catch (error) {
-      logger.error(`No se pudo enviar el código de recuperación: ${error.message}`);
+      await tokenRecuperacion.update({ usado: true });
+      logger.error(`No se pudo enviar el enlace de recuperación: ${error.message}`);
       const mensaje = error.code === 'EAUTH'
         ? 'El servidor SMTP rechazó las credenciales. Usa una contraseña de aplicación.'
         : 'El servicio de correo no está disponible.';
       return res.status(503).json({ error: mensaje });
     }
   }
-  return res.json({ message: 'Si el correo está registrado, recibirás un código de recuperación.' });
-};
-
-const buscarCodigoValido = async (email, codigo, consumirIntento = true) => {
-  const usuario = await Usuario.findOne({ where: { email, activo: true } });
-  if (!usuario) return { usuario: null, token: null };
-  const token = await TokenRecuperacion.findOne({ where: { usuario_id: usuario.id, usado: false }, order: [['fecha_creacion', 'DESC']] });
-  if (!token || !token.code_hash || token.expira_en <= new Date() || token.intentos >= config.RESET_CODE_MAX_ATTEMPTS) return { usuario, token: null };
-  if (consumirIntento) {
-    await token.increment('intentos');
-    await token.reload();
-  }
-  if (!crypto.timingSafeEqual(Buffer.from(token.code_hash), Buffer.from(codigoHash(codigo)))) return { usuario, token: null };
-  return { usuario, token };
-};
-
-const verifyResetCode = async (req, res) => {
-  const email = typeof req.body.email === 'string' ? correoNormalizado(req.body.email) : '';
-  const resultado = await buscarCodigoValido(email, String(req.body.code || ''));
-  if (!resultado.token) return res.status(400).json({ error: 'Código inválido o expirado' });
-  return res.json({ valid: true });
+  return res.json({ message: 'Si el correo está registrado, recibirás un enlace de recuperación.' });
 };
 
 const resetPassword = async (req, res) => {
-  const email = typeof req.body.email === 'string' ? correoNormalizado(req.body.email) : '';
-  const { usuario, token } = await buscarCodigoValido(email, String(req.body.code || ''), false);
-  if (!token) return res.status(400).json({ error: 'Código inválido o expirado' });
+  const tokenBruto = typeof req.body.token === 'string' ? req.body.token : '';
+  if (!/^[a-f0-9]{64}$/i.test(tokenBruto)) {
+    return res.status(400).json({ error: 'El enlace de restablecimiento es inválido o expiró.' });
+  }
+  const token = await TokenRecuperacion.findOne({
+    where: { token: tokenHash(tokenBruto), usado: false },
+  });
+  if (!token || token.expira_en <= new Date()) {
+    return res.status(400).json({ error: 'El enlace de restablecimiento es inválido o expiró.' });
+  }
+  const usuario = await Usuario.findByPk(token.usuario_id);
+  if (!usuario || !usuario.activo) {
+    return res.status(400).json({ error: 'El enlace de restablecimiento es inválido o expiró.' });
+  }
+  const currentPassword = typeof req.body.currentPassword === 'string' ? req.body.currentPassword : '';
+  if (!currentPassword || !usuario.password_hash || !(await bcrypt.compare(currentPassword, usuario.password_hash))) {
+    return res.status(400).json({ error: 'La contraseña actual es incorrecta.' });
+  }
   if (!cumplePoliticaPassword(req.body.password)) {
     return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.' });
   }
+  if (await bcrypt.compare(req.body.password, usuario.password_hash)) {
+    return res.status(400).json({ error: 'La nueva contraseña debe ser diferente a la contraseña actual.' });
+  }
+  const filasActualizadas = await TokenRecuperacion.update(
+    { usado: true },
+    { where: { id: token.id, token: token.token, usado: false, expira_en: { [Op.gt]: new Date() } } },
+  );
+  if (filasActualizadas[0] !== 1) {
+    return res.status(400).json({ error: 'El enlace de restablecimiento es inválido o expiró.' });
+  }
   await usuario.update({ password_hash: await bcrypt.hash(req.body.password, 10) });
-  await token.update({ usado: true });
   clearAuthCookies(res);
   return res.json({ message: 'Contraseña actualizada correctamente.' });
 };
 
-module.exports = { login, logout, refresh, me, forgotPassword, verifyResetCode, resetPassword };
+const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  if (typeof currentPassword !== 'string' || !currentPassword
+    || typeof newPassword !== 'string' || !newPassword) {
+    return res.status(400).json({ error: 'Ingresa la contraseña actual y la nueva contraseña.' });
+  }
+
+  const usuario = await Usuario.findByPk(req.user.id);
+  if (!usuario || !usuario.activo) {
+    return res.status(401).json({ error: 'Usuario no válido' });
+  }
+  if (!usuario.password_hash || !(await bcrypt.compare(currentPassword, usuario.password_hash))) {
+    return res.status(400).json({ error: 'La contraseña actual es incorrecta.' });
+  }
+  if (!cumplePoliticaPassword(newPassword)) {
+    return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.' });
+  }
+  if (await bcrypt.compare(newPassword, usuario.password_hash)) {
+    return res.status(400).json({ error: 'La nueva contraseña debe ser diferente a la contraseña actual.' });
+  }
+
+  await usuario.update({ password_hash: await bcrypt.hash(newPassword, 10) });
+  return res.json({ message: 'Contraseña actualizada correctamente.' });
+};
+
+module.exports = { login, logout, refresh, me, forgotPassword, resetPassword, changePassword };

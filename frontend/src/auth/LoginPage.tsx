@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ApiError } from "@/lib/api";
-import { obtenerIP } from "@/lib/ip";
 import { useAuth } from "./AuthContext";
 
 // HU12: inicio de sesión
@@ -37,10 +36,6 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({ resolver: zodResolver(esquema) });
-
-  useEffect(() => {
-    void obtenerIP();
-  }, []);
 
   useEffect(() => {
     if (bloqueoHasta === null) return;

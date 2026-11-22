@@ -63,16 +63,16 @@ test('create user endpoint responds', async () => {
   server.close();
 });
 
-// Prueba el restablecimiento de contraseña.
-test('change password flow responds', async () => {
+// Prueba el restablecimiento con un token de enlace.
+test('password reset endpoint rejects an invalid reset token', async () => {
   const server = http.createServer(app);
   await new Promise((r) => server.listen(0, r));
   const port = server.address().port;
   const res = await fetch(`http://127.0.0.1:${port}/api/auth/reset-password`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ correo: 'x@x.com', codigo: '123456', nuevaContrasena: 'NewPass123!' }),
+    body: JSON.stringify({ token: 'invalid-token', password: 'NewPass123!' }),
   });
-  assert.ok([200,400,401,403,404,500].includes(res.status));
+  assert.equal(res.status, 400);
   server.close();
 });

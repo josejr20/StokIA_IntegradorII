@@ -73,6 +73,9 @@ Para una base nueva, usar este orden real de carga:
 
 - `POST /api/auth/login` - Login, devuelve access + refresh token (cookies HttpOnly)
 - `POST /api/auth/refresh` - Renueva access token
+- `POST /api/auth/forgot-password` - Envía un enlace de recuperación al correo registrado; vence en 10 minutos
+- `POST /api/auth/reset-password` - Cambia la contraseña usando el token de un solo uso y verificando la contraseña actual
+- `POST /api/auth/change-password` - Cambia la contraseña de la sesión activa verificando la contraseña actual
 - `GET /api/productos` - Listar productos (paginado, filtros)
 - `POST /api/productos` - Crear producto
 - `GET /api/lotes` - Listar lotes con stock
