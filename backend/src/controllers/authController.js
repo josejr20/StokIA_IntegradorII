@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
+const { isIP } = require('node:net');
 const { validationResult } = require('express-validator');
 const { Usuario, Rol, Permiso, TokenRecuperacion } = require('../models');
 const { LoginDto } = require('../dtos/authDto');
@@ -17,14 +18,19 @@ const tokenHash = (token) => crypto.createHash('sha256').update(token).digest('h
 const correoNormalizado = (email) => email.trim().toLowerCase();
 const RESET_TOKEN_TTL_MINUTES = 10;
 
-function obtenerIP(req) {
-  const forwarded = req.headers['x-forwarded-for'];
-  if (forwarded) {
-    return forwarded.split(',')[0].trim();
+async function obtenerIPPublica() {
+  const respuesta = await fetch('https://api.ipify.org/?format=json', {
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!respuesta.ok) {
+    throw new Error(`ipify respondió con estado ${respuesta.status}`);
   }
-  let ip = req.ip || req.socket.remoteAddress || '';
-  if (ip === '::1') return '127.0.0.1';
-  if (ip.startsWith('::ffff:')) return ip.substring(7);
+
+  const datos = await respuesta.json();
+  const ip = typeof datos.ip === 'string' ? datos.ip.trim() : '';
+  if (!isIP(ip) || ip === '127.0.0.1' || ip === '::1') {
+    throw new Error('ipify no devolvió una IP pública válida');
+  }
   return ip;
 }
 
@@ -35,7 +41,13 @@ const login = async (req, res) => {
   }
 
   const { identifier, password } = LoginDto.fromBody(req.body);
-  const ip = (req.body && typeof req.body.ip_address === 'string' && req.body.ip_address) || obtenerIP(req);
+  let ip = null;
+  try {
+    ip = await obtenerIPPublica();
+  } catch (error) {
+    logger.warn(`No se pudo obtener la IP pública desde ipify; el login continuará sin IP: ${error.message}`);
+  }
+
   try {
     const { usuario, token, refreshToken } = await authService.login(identifier, password, ip);
     setAuthCookies(res, token, refreshToken);
