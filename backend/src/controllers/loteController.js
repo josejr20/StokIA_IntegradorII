@@ -9,6 +9,17 @@ const { UniqueConstraintError } = require('sequelize');
 const ws = require('../services/wsService');
 const { obtenerResolvedor } = require('../services/umbralVencimientoService');
 
+// HU-157 (BUG-01 / BUG-02): revisa el stock mínimo después de confirmar un movimiento.
+// Si la evaluación falla, el movimiento ya confirmado NO se revierte: solo se registra el aviso.
+async function evaluarStockTrasMovimiento(productoId) {
+  try {
+    const { evaluarAlertasStockMinimo } = require('../services/stockMinimoService');
+    await evaluarAlertasStockMinimo(productoId);
+  } catch (errorAlerta) {
+    logger.warn(`No se pudo evaluar el stock mínimo del producto ${productoId}: ${errorAlerta.message}`);
+  }
+}
+
 async function resolvedorUmbralVencimiento() {
   try {
     return await obtenerResolvedor();
@@ -115,6 +126,7 @@ const crear = async (req, res, next) => {
       transaction
     );
     await transaction.commit();
+    await evaluarStockTrasMovimiento(lote.producto_id);
     await lote.reload();
     res.status(201).json({ data: LoteDto.fromModel(lote) });
   } catch (error) {
@@ -234,6 +246,7 @@ const registrarMovimientoCtrl = async (req, res, next) => {
       transaction
     );
     await transaction.commit();
+    await evaluarStockTrasMovimiento(lote.producto_id);
     res.json({ data: movimiento });
   } catch (error) {
     if (transaction) await transaction.rollback();
