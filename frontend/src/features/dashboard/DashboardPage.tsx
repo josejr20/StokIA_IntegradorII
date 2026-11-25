@@ -1,319 +1,309 @@
+
 import { useEffect, useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
-import { useKpis } from './api'
-import {
-  usePreferenciasDashboard,
-  guardarPreferenciasDashboard,
-  PREFERENCIAS_POR_DEFECTO,
-  type PreferenciasDashboard,
-  type Kpis,
-} from './api'
+import { useAuth } from '@/auth/AuthContext'
+import { api } from '@/lib/api'
+import { useKpis, type Kpis } from './api'
 
-const ETIQUETAS_KPI: Record<keyof Kpis, string> = {
-  productos_activos: 'Productos activos',
-  ventas_mes_actual: 'Ventas del mes',
-  alertas_activas: 'Alertas activas',
-  alertas_criticas: 'Alertas críticas',
-  ordenes_pendientes: 'Órdenes pendientes',
-}
-
-const DESCRIPCIONES_KPI: Record<keyof Kpis, string> = {
-  productos_activos: 'Cantidad de productos registrados y activos.',
-  ventas_mes_actual: 'Cantidad vendida durante el mes actual.',
-  alertas_activas: 'Alertas nuevas o pendientes de revisión.',
-  alertas_criticas: 'Alertas activas clasificadas como críticas.',
-  ordenes_pendientes: 'Órdenes de reabastecimiento pendientes.',
-}
-
-const ORDEN_INDICADORES: Array<keyof Kpis> = [
-  'productos_activos',
-  'ventas_mes_actual',
-  'alertas_activas',
-  'alertas_criticas',
-  'ordenes_pendientes',
+const INDICADORES: { clave: keyof Kpis; etiqueta: string }[] = [
+  { clave: 'productos_activos', etiqueta: 'Productos activos' },
+  { clave: 'ventas_mes_actual', etiqueta: 'Ventas del mes' },
+  { clave: 'alertas_activas', etiqueta: 'Alertas activas' },
+  { clave: 'alertas_criticas', etiqueta: 'Alertas críticas' },
+  { clave: 'ordenes_pendientes', etiqueta: 'Órdenes pendientes' },
 ]
 
+const INDICADORES_PREDETERMINADOS = INDICADORES.map(
+  (indicador) => indicador.clave
+)
+
+const CLAVE_PREFERENCIA = 'dashboard_kpis'
+
+interface PreferenciaDashboard {
+  id: number
+  usuario_id: number
+  clave: string
+  valor: {
+    indicadores: string[]
+  }
+  fecha_actualizacion: string
+}
+
 export default function DashboardPage() {
-  const queryClient = useQueryClient()
+  const { usuario } = useAuth()
 
-  // Consultar indicadores
-  const {
-    data,
-    isLoading: cargandoKpis,
-    isError: errorKpis,
-  } = useKpis()
+  const { data, isLoading, isError } = useKpis()
 
   const {
-    data: preferenciasGuardadas,
+    data: preferencias,
     isLoading: cargandoPreferencias,
     isError: errorPreferencias,
-    refetch: recargarPreferencias,
-  } = usePreferenciasDashboard()
+    refetch,
+  } = useQuery({
+    queryKey: ['preferencias-dashboard', usuario?.id],
+    enabled: Boolean(usuario?.id),
+    queryFn: async () => {
+      const respuesta = await api.get<{
+        data: PreferenciaDashboard[]
+      }>('/preferencias')
 
-  const [preferencias, setPreferencias] =
-    useState<PreferenciasDashboard>(PREFERENCIAS_POR_DEFECTO)
+      return respuesta.data.find(
+        (preferencia) => preferencia.clave === CLAVE_PREFERENCIA
+      )
+    },
+  })
 
-  const [mostrarConfiguracion, setMostrarConfiguracion] = useState(false)
+  const [indicadoresSeleccionados, setIndicadoresSeleccionados] =
+    useState<(keyof Kpis)[]>(INDICADORES_PREDETERMINADOS)
+
+  const [guardando, setGuardando] = useState(false)
   const [mensaje, setMensaje] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (preferenciasGuardadas) {
-      setPreferencias(preferenciasGuardadas)
+    if (preferencias?.valor?.indicadores) {
+      const indicadoresValidos = preferencias.valor.indicadores.filter(
+        (clave): clave is keyof Kpis =>
+          INDICADORES.some((indicador) => indicador.clave === clave)
+      )
+
+      setIndicadoresSeleccionados(
+        indicadoresValidos.length > 0
+          ? indicadoresValidos
+          : INDICADORES_PREDETERMINADOS
+      )
+    } else if (!cargandoPreferencias) {
+      setIndicadoresSeleccionados(INDICADORES_PREDETERMINADOS)
     }
-  }, [preferenciasGuardadas])
-
-  const guardarMutation = useMutation({
-    mutationFn: guardarPreferenciasDashboard,
-
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['preferencias', 'dashboard'],
-      })
-
-      await recargarPreferencias()
-
-      setMensaje('Preferencias guardadas correctamente.')
-      setError('')
-      setMostrarConfiguracion(false)
-    },
-
-    onError: () => {
-      setError('No se pudieron guardar las preferencias.')
-      setMensaje('')
-    },
-  })
+  }, [preferencias, cargandoPreferencias])
 
   function cambiarIndicador(clave: keyof Kpis) {
-    setPreferencias((actual) => ({
-      ...actual,
-      indicadores: {
-        ...actual.indicadores,
-        [clave]: !actual.indicadores[clave],
-      },
-    }))
+    setIndicadoresSeleccionados((actuales) =>
+      actuales.includes(clave)
+        ? actuales.filter((indicador) => indicador !== clave)
+        : [...actuales, clave]
+    )
 
     setMensaje('')
     setError('')
   }
 
-  function guardar() {
+  async function guardarPreferencias() {
+    if (indicadoresSeleccionados.length === 0) {
+      setError('Debe seleccionar al menos un indicador.')
+      return
+    }
+
+    setGuardando(true)
     setMensaje('')
     setError('')
-    guardarMutation.mutate(preferencias)
-  }
 
-  function restablecer() {
-    setMensaje('')
-    setError('')
-    guardarMutation.mutate(PREFERENCIAS_POR_DEFECTO)
-  }
+    try {
+      await api.post('/preferencias', {
+        clave: CLAVE_PREFERENCIA,
+        valor: {
+          indicadores: indicadoresSeleccionados,
+        },
+      })
 
-  const indicadoresVisibles = data
-    ? ORDEN_INDICADORES.filter(
-        (clave) => preferencias.indicadores[clave],
+      await refetch()
+
+      setMensaje('Preferencias guardadas correctamente.')
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'No se pudieron guardar las preferencias.'
       )
-    : []
-
-  if (cargandoKpis || cargandoPreferencias) {
-    return (
-      <div className="space-y-2">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">
-          Cargando indicadores y preferencias...
-        </p>
-      </div>
-    )
+    } finally {
+      setGuardando(false)
+    }
   }
 
-  if (errorKpis || errorPreferencias || !data) {
-    return (
-      <div className="space-y-3">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-destructive">
-          No se pudo cargar el dashboard.
-        </p>
-        <button
-          type="button"
-          onClick={() => {
-            void queryClient.invalidateQueries({
-              queryKey: ['reportes', 'kpis'],
-            })
-            void recargarPreferencias()
-          }}
-          className="rounded-lg border px-4 py-2 text-sm"
-        >
-          Reintentar
-        </button>
-      </div>
-    )
+  async function restablecerPreferencias() {
+    setGuardando(true)
+    setMensaje('')
+    setError('')
+
+    try {
+      if (preferencias) {
+        await api.del(`/preferencias/${CLAVE_PREFERENCIA}`)
+      }
+
+      setIndicadoresSeleccionados(INDICADORES_PREDETERMINADOS)
+
+      await refetch()
+
+      setMensaje('Se restablecieron los indicadores predeterminados.')
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo restablecer la configuración.'
+      )
+    } finally {
+      setGuardando(false)
+    }
   }
 
   return (
     <div className="space-y-6">
 
       {/* Encabezado del dashboard */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h1 className="text-2xl font-semibold">
+          Dashboard
+        </h1>
+
+        <p className="mt-1 text-sm text-muted-foreground">
+          Indicadores operativos del inventario.
+        </p>
+      </div>
+
+      {/* Configuración de preferencias */}
+      <section className="space-y-4 rounded-xl border bg-white p-5">
+
         <div>
-          <h1 className="text-2xl font-semibold">Dashboard</h1>
+          <h2 className="text-lg font-semibold">
+            Preferencias de visualización
+          </h2>
+
           <p className="mt-1 text-sm text-muted-foreground">
-            Indicadores operativos del inventario.
+            Seleccione los indicadores que desea visualizar
+            en su dashboard.
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            setMostrarConfiguracion(!mostrarConfiguracion)
-            setMensaje('')
-            setError('')
-          }}
-          className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted"
-        >
-          {mostrarConfiguracion
-            ? 'Cerrar configuración'
-            : '⚙ Configurar dashboard'}
-        </button>
-      </div>
+        {cargandoPreferencias ? (
+          <p className="text-sm text-muted-foreground">
+            Cargando preferencias...
+          </p>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
-      {/* Mensaje de confirmación */}
-      {mensaje && (
-        <div
-          role="status"
-          className="rounded-lg border border-green-300 bg-green-50 p-3 text-sm text-green-800"
-        >
-          {mensaje}
-        </div>
-      )}
-
-      {/* Mensaje de error */}
-      {error && (
-        <div
-          role="alert"
-          className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700"
-        >
-          {error}
-        </div>
-      )}
-
-      {/* Panel de configuración */}
-      {mostrarConfiguracion && (
-        <section className="space-y-4 rounded-xl border bg-card p-5">
-
-          <div>
-            <h2 className="text-lg font-semibold">
-              Preferencias de visualización
-            </h2>
-
-            <p className="mt-1 text-sm text-muted-foreground">
-              Selecciona los indicadores que deseas visualizar
-              en tu dashboard.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-
-            {ORDEN_INDICADORES.map((clave) => (
+            {INDICADORES.map((indicador) => (
               <label
-                key={clave}
-                className="flex cursor-pointer items-start gap-3 rounded-lg border p-4 hover:bg-muted/50"
+                key={indicador.clave}
+                className="flex cursor-pointer items-center gap-3 rounded-lg border p-3 hover:bg-gray-50"
               >
                 <input
                   type="checkbox"
-                  checked={preferencias.indicadores[clave]}
-                  onChange={() => cambiarIndicador(clave)}
-                  className="mt-1 h-4 w-4 accent-primary"
+                  checked={indicadoresSeleccionados.includes(
+                    indicador.clave
+                  )}
+                  onChange={() => cambiarIndicador(indicador.clave)}
+                  disabled={guardando}
+                  className="h-4 w-4 accent-green-700"
                 />
 
-                <span>
-                  <span className="block text-sm font-medium">
-                    {ETIQUETAS_KPI[clave]}
-                  </span>
-
-                  <span className="mt-1 block text-xs text-muted-foreground">
-                    {DESCRIPCIONES_KPI[clave]}
-                  </span>
+                <span className="text-sm font-medium">
+                  {indicador.etiqueta}
                 </span>
               </label>
             ))}
 
           </div>
+        )}
 
-          <div className="flex flex-wrap gap-3">
+        {/* Acciones de configuración */}
+        <div className="flex flex-wrap gap-3">
 
-            <button
-              type="button"
-              onClick={guardar}
-              disabled={guardarMutation.isPending}
-              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
-            >
-              {guardarMutation.isPending
-                ? 'Guardando...'
-                : 'Guardar preferencias'}
-            </button>
+          <button
+            type="button"
+            onClick={() => void guardarPreferencias()}
+            disabled={
+              guardando ||
+              cargandoPreferencias ||
+              indicadoresSeleccionados.length === 0
+            }
+            className="rounded-md bg-green-800 px-4 py-2 text-sm font-medium text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {guardando ? 'Procesando...' : 'Guardar preferencias'}
+          </button>
 
-            <button
-              type="button"
-              onClick={restablecer}
-              disabled={guardarMutation.isPending}
-              className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
-            >
-              Restablecer valores por defecto
-            </button>
+          <button
+            type="button"
+            onClick={() => void restablecerPreferencias()}
+            disabled={guardando || cargandoPreferencias}
+            className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Restablecer valores por defecto
+          </button>
 
-          </div>
-
-        </section>
-      )}
-
-      {/* Indicadores del dashboard */}
-      <section>
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">
-            Indicadores generales
-          </h2>
         </div>
 
-        {indicadoresVisibles.length > 0 ? (
+        {/* Confirmación de operaciones */}
+        {mensaje && (
+          <p role="status" className="text-sm text-green-700">
+            ✓ {mensaje}
+          </p>
+        )}
+
+        {error && (
+          <p role="alert" className="text-sm text-red-600">
+            {error}
+          </p>
+        )}
+
+        {errorPreferencias && (
+          <p role="alert" className="text-sm text-red-600">
+            No se pudieron recuperar las preferencias guardadas.
+          </p>
+        )}
+
+      </section>
+
+      {/* Indicadores operativos */}
+      <section className="space-y-4">
+
+        <h2 className="text-lg font-semibold">
+          Indicadores operativos
+        </h2>
+
+        {isLoading && (
+          <p className="text-sm text-muted-foreground">
+            Cargando indicadores...
+          </p>
+        )}
+
+        {isError && (
+          <p className="text-sm text-red-600">
+            No se pudieron cargar los indicadores.
+          </p>
+        )}
+
+        {data && !cargandoPreferencias && (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
 
-            {indicadoresVisibles.map((clave) => (
+            {INDICADORES.filter((indicador) =>
+              indicadoresSeleccionados.includes(indicador.clave)
+            ).map((indicador) => (
               <div
-                key={clave}
-                className="rounded-xl border bg-card p-4"
+                key={indicador.clave}
+                className="rounded-xl border bg-white p-4"
               >
                 <p className="text-sm text-muted-foreground">
-                  {ETIQUETAS_KPI[clave]}
+                  {indicador.etiqueta}
                 </p>
 
                 <p className="mt-2 text-2xl font-semibold">
-                  {data[clave]}
+                  {data[indicador.clave]}
                 </p>
               </div>
             ))}
 
           </div>
-        ) : (
-          <div className="rounded-xl border border-dashed p-8 text-center">
-            <p className="font-medium">
+        )}
+
+        {!cargandoPreferencias &&
+          !isLoading &&
+          indicadoresSeleccionados.length === 0 && (
+            <p className="text-sm text-muted-foreground">
               No hay indicadores seleccionados.
             </p>
+          )}
 
-            <p className="mt-1 text-sm text-muted-foreground">
-              Configura tus preferencias para visualizar
-              los indicadores del dashboard.
-            </p>
-
-            <button
-              type="button"
-              onClick={() => setMostrarConfiguracion(true)}
-              className="mt-4 rounded-lg border px-4 py-2 text-sm"
-            >
-              Configurar indicadores
-            </button>
-          </div>
-        )}
       </section>
 
     </div>

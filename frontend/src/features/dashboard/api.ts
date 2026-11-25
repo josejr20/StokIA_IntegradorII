@@ -1,4 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
+
 import { api } from '@/lib/api'
 
 export interface Kpis {
@@ -21,35 +26,41 @@ export interface ResumenInicio {
   kpis: Kpis
 }
 
-export interface PreferenciasDashboard {
-  indicadores: Record<keyof Kpis, boolean>
+export const CLAVE_PREFERENCIA_DASHBOARD = 'dashboard_kpis'
+
+export interface ValorPreferenciaDashboard {
+  indicadores: (keyof Kpis)[]
 }
 
-export interface PreferenciaUsuario {
+export interface PreferenciaDashboard {
   id: number
   usuario_id: number
   clave: string
-  valor: PreferenciasDashboard
+  valor: ValorPreferenciaDashboard
   fecha_actualizacion: string
 }
 
-export const CLAVE_PREFERENCIAS_DASHBOARD = 'dashboard_preferencias'
+interface RespuestaPreferencias {
+  data: PreferenciaDashboard[]
+}
 
-export const PREFERENCIAS_POR_DEFECTO: PreferenciasDashboard = {
-  indicadores: {
-    productos_activos: true,
-    ventas_mes_actual: true,
-    alertas_activas: true,
-    alertas_criticas: true,
-    ordenes_pendientes: true,
-  },
+interface RespuestaPreferencia {
+  message?: string
+  data: PreferenciaDashboard
+}
+
+interface RespuestaOperacion {
+  message: string
 }
 
 export function useKpis() {
   return useQuery({
     queryKey: ['reportes', 'kpis'],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: Kpis }>('/reportes/kpis')
+      const respuesta = await api.get<{ data: Kpis }>(
+        '/reportes/kpis'
+      )
+
       return respuesta.data
     },
   })
@@ -59,32 +70,83 @@ export function useResumenInicio() {
   return useQuery({
     queryKey: ['reportes', 'inicio'],
     queryFn: async () => {
-      const respuesta = await api.get<{ data: ResumenInicio }>('/reportes/inicio')
+      const respuesta = await api.get<{ data: ResumenInicio }>(
+        '/reportes/inicio'
+      )
+
       return respuesta.data
     },
   })
 }
 
-export function usePreferenciasDashboard() {
+export async function obtenerPreferenciasDashboard() {
+  const respuesta = await api.get<RespuestaPreferencias>(
+    '/preferencias'
+  )
+
+  return respuesta.data.find(
+    (preferencia) =>
+      preferencia.clave === CLAVE_PREFERENCIA_DASHBOARD
+  )
+}
+
+export function usePreferenciasDashboard(usuarioId?: number) {
   return useQuery({
-    queryKey: ['preferencias', 'dashboard'],
-    queryFn: async () => {
-      const respuesta = await api.get<{ data: PreferenciaUsuario[] }>('/preferencias')
+    queryKey: ['preferencias-dashboard', usuarioId],
+    enabled: Boolean(usuarioId),
 
-      const preferencia = respuesta.data.find(
-        (item) => item.clave === CLAVE_PREFERENCIAS_DASHBOARD,
-      )
-
-      return preferencia?.valor ?? PREFERENCIAS_POR_DEFECTO
-    },
+    queryFn: obtenerPreferenciasDashboard,
   })
 }
 
 export async function guardarPreferenciasDashboard(
-  preferencias: PreferenciasDashboard,
+  indicadores: (keyof Kpis)[]
 ) {
-  return api.post('/preferencias', {
-    clave: CLAVE_PREFERENCIAS_DASHBOARD,
-    valor: preferencias,
+  const respuesta = await api.post<RespuestaPreferencia>(
+    '/preferencias',
+    {
+      clave: CLAVE_PREFERENCIA_DASHBOARD,
+      valor: {
+        indicadores,
+      },
+    }
+  )
+
+  return respuesta.data
+}
+
+export function useGuardarPreferenciasDashboard() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: guardarPreferenciasDashboard,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['preferencias-dashboard'],
+      })
+    },
+  })
+}
+
+export async function restablecerPreferenciasDashboard() {
+  const respuesta = await api.del<RespuestaOperacion>(
+    `/preferencias/${CLAVE_PREFERENCIA_DASHBOARD}`
+  )
+
+  return respuesta
+}
+
+export function useRestablecerPreferenciasDashboard() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: restablecerPreferenciasDashboard,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['preferencias-dashboard'],
+      })
+    },
   })
 }

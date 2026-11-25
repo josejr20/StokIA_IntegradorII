@@ -9,16 +9,28 @@ class PreferenciaDto {
 
   static fromModel(preferencia) {
     if (!preferencia) return null;
-    return new PreferenciaDto(preferencia.toJSON ? preferencia.toJSON() : preferencia);
+
+    const data = preferencia.toJSON
+      ? preferencia.toJSON()
+      : preferencia;
+
+    return new PreferenciaDto(data);
   }
 
   static fromCreate(body) {
-    return { usuario_id: body.usuario_id, clave: body.clave, valor: body.valor };
+    return {
+      clave: body.clave.trim(),
+      valor: body.valor
+    };
   }
 
   static fromUpdate(body) {
     const data = {};
-    if (body.valor !== undefined) data.valor = body.valor;
+
+    if (body.valor !== undefined) {
+      data.valor = body.valor;
+    }
+
     return data;
   }
 }
