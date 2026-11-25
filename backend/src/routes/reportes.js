@@ -73,5 +73,6 @@ router.use(autenticar);
  */
 router.get('/inventario', verificarPermiso('generar_reportes'), exportarInventario);
 router.get('/kpis', verificarPermiso('ver_kpis'), kpis);
-router.get('/inicio', verificarPermiso('generar_reportes'), resumenInicio);
+// HU-188: el resumen de inicio lo ve cualquier usuario autenticado; el contenido se adapta a sus permisos.
+router.get('/inicio', resumenInicio);
 module.exports = router;

@@ -10,8 +10,8 @@ import { useAuth, type PermisoCodigo } from '@/auth/AuthContext'
 // Coincide 1 a 1 con las 11 pantallas del prototipo de Figma (ProyectoHU),
 // mÃ¡s Kardex, que no estaba en el prototipo original pero se sumÃ³ como
 // pantalla propia a pedido de Alfredo.
-const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permiso?: PermisoCodigo }[] = [
-  { to: '/', label: 'Inicio', icon: Home, fin: true, permiso: 'generar_reportes' },
+export const NAV: { to: string; label: string; icon: typeof Home; fin?: boolean; permiso?: PermisoCodigo }[] = [
+  { to: '/', label: 'Inicio', icon: Home, fin: true },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, permiso: 'ver_kpis' },
   { to: '/productos', label: 'Productos', icon: Package, permiso: 'gestionar_productos' },
   { to: '/inventario', label: 'Lotes e inventario', icon: Boxes, permiso: 'gestionar_inventario' },
