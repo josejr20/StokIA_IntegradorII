@@ -74,6 +74,7 @@ test('password recovery and authenticated password change enforce their rules', 
     const respuestaCorreoInexistente = crearRespuesta();
     await forgotPassword({ body: { email: 'no-existe@example.com' } }, respuestaCorreoInexistente);
     assert.equal(respuestaCorreoInexistente.statusCode, 200);
+    assert.equal(respuestaCorreoInexistente.body.message, 'El correo no está asociado a ninguna cuenta.');
     assert.equal(correosEnviados.length, 0);
 
     usuarioExiste = true;
@@ -101,27 +102,28 @@ test('password recovery and authenticated password change enforce their rules', 
     assert.equal(usuario.actualizaciones.length, usuarioActualizacionesIniciales);
 
     tokenGuardado.expira_en = new Date(Date.now() + 60_000);
-    const respuestaPasswordIncorrectaReset = crearRespuesta();
-    await resetPassword({ body: { token, currentPassword: 'Incorrecta123!', password: 'x' } }, respuestaPasswordIncorrectaReset);
-    assert.equal(respuestaPasswordIncorrectaReset.statusCode, 400);
-    assert.match(respuestaPasswordIncorrectaReset.body.error, /contraseña actual es incorrecta/);
+    const respuestaPasswordDebil = crearRespuesta();
+    await resetPassword({ body: { token, password: 'debil' } }, respuestaPasswordDebil);
+    assert.equal(respuestaPasswordDebil.statusCode, 400);
+    assert.match(respuestaPasswordDebil.body.error, /al menos 8 caracteres/);
+    assert.equal(tokenGuardado.usado, false);
     assert.equal(usuario.actualizaciones.length, usuarioActualizacionesIniciales);
 
     const respuestaMismaPasswordReset = crearRespuesta();
-    await resetPassword({ body: { token, currentPassword: 'OldPass123!', password: 'OldPass123!' } }, respuestaMismaPasswordReset);
+    await resetPassword({ body: { token, password: 'OldPass123!' } }, respuestaMismaPasswordReset);
     assert.equal(respuestaMismaPasswordReset.statusCode, 400);
     assert.match(respuestaMismaPasswordReset.body.error, /debe ser diferente/);
     assert.equal(usuario.actualizaciones.length, usuarioActualizacionesIniciales);
 
     const respuestaRestablecimiento = crearRespuesta();
-    await resetPassword({ body: { token, currentPassword: 'OldPass123!', password: 'NewPass123!' } }, respuestaRestablecimiento);
+    await resetPassword({ body: { token, password: 'NewPass123!' } }, respuestaRestablecimiento);
     assert.equal(respuestaRestablecimiento.statusCode, 200);
     assert.equal(respuestaRestablecimiento.body.message, 'Contraseña actualizada correctamente.');
     assert.equal(usuario.actualizaciones.length, usuarioActualizacionesIniciales + 1);
     assert.equal(tokenGuardado.usado, true);
 
     const respuestaReutilizado = crearRespuesta();
-    await resetPassword({ body: { token, currentPassword: 'NewPass123!', password: 'OtherPass456!' } }, respuestaReutilizado);
+    await resetPassword({ body: { token, password: 'OtherPass456!' } }, respuestaReutilizado);
     assert.equal(respuestaReutilizado.statusCode, 400);
     assert.equal(usuario.actualizaciones.length, usuarioActualizacionesIniciales + 1);
 

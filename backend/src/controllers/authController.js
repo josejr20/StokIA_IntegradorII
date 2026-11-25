@@ -113,33 +113,35 @@ const me = async (req, res, next) => {
 const forgotPassword = async (req, res) => {
   const email = typeof req.body.email === 'string' ? correoNormalizado(req.body.email) : '';
   const usuario = email ? await Usuario.findOne({ where: { email, activo: true } }) : null;
-  if (usuario) {
-    await TokenRecuperacion.update({ usado: true }, { where: { usuario_id: usuario.id, usado: false } });
-    const token = crypto.randomBytes(32).toString('hex');
-    const tokenRecuperacion = await TokenRecuperacion.create({
-      usuario_id: usuario.id,
-      token: tokenHash(token),
-      expira_en: new Date(Date.now() + RESET_TOKEN_TTL_MINUTES * 60 * 1000),
-      intentos: 0,
-      usado: false,
-    });
-    const enlace = new URL('/restablecer', config.FRONTEND_URL);
-    enlace.searchParams.set('token', token);
+  if (!usuario) {
+    return res.json({ message: 'El correo no está asociado a ninguna cuenta.' });
+  }
 
-    try {
-      await enviarCorreo(
-        email,
-        'Restablecimiento de contraseña',
-        `<p>Recibimos una solicitud para cambiar la contraseña de tu cuenta.</p><p><a href="${enlace.toString()}">Restablecer contraseña</a></p><p>Este enlace expirará en ${RESET_TOKEN_TTL_MINUTES} minutos y solo puede utilizarse una vez.</p>`,
-      );
-    } catch (error) {
-      await tokenRecuperacion.update({ usado: true });
-      logger.error(`No se pudo enviar el enlace de recuperación: ${error.message}`);
-      const mensaje = error.code === 'EAUTH'
-        ? 'El servidor SMTP rechazó las credenciales. Usa una contraseña de aplicación.'
-        : 'El servicio de correo no está disponible.';
-      return res.status(503).json({ error: mensaje });
-    }
+  await TokenRecuperacion.update({ usado: true }, { where: { usuario_id: usuario.id, usado: false } });
+  const token = crypto.randomBytes(32).toString('hex');
+  const tokenRecuperacion = await TokenRecuperacion.create({
+    usuario_id: usuario.id,
+    token: tokenHash(token),
+    expira_en: new Date(Date.now() + RESET_TOKEN_TTL_MINUTES * 60 * 1000),
+    intentos: 0,
+    usado: false,
+  });
+  const enlace = new URL('/restablecer', config.FRONTEND_URL);
+  enlace.searchParams.set('token', token);
+
+  try {
+    await enviarCorreo(
+      email,
+      'Restablecimiento de contraseña',
+      `<p>Recibimos una solicitud para cambiar la contraseña de tu cuenta.</p><p><a href="${enlace.toString()}">Restablecer contraseña</a></p><p>Este enlace expirará en ${RESET_TOKEN_TTL_MINUTES} minutos y solo puede utilizarse una vez.</p>`,
+    );
+  } catch (error) {
+    await tokenRecuperacion.update({ usado: true });
+    logger.error(`No se pudo enviar el enlace de recuperación: ${error.message}`);
+    const mensaje = error.code === 'EAUTH'
+      ? 'El servidor SMTP rechazó las credenciales. Usa una contraseña de aplicación.'
+      : 'El servicio de correo no está disponible.';
+    return res.status(503).json({ error: mensaje });
   }
   return res.json({ message: 'Si el correo está registrado, recibirás un enlace de recuperación.' });
 };
@@ -159,14 +161,10 @@ const resetPassword = async (req, res) => {
   if (!usuario || !usuario.activo) {
     return res.status(400).json({ error: 'El enlace de restablecimiento es inválido o expiró.' });
   }
-  const currentPassword = typeof req.body.currentPassword === 'string' ? req.body.currentPassword : '';
-  if (!currentPassword || !usuario.password_hash || !(await bcrypt.compare(currentPassword, usuario.password_hash))) {
-    return res.status(400).json({ error: 'La contraseña actual es incorrecta.' });
-  }
   if (!cumplePoliticaPassword(req.body.password)) {
     return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.' });
   }
-  if (await bcrypt.compare(req.body.password, usuario.password_hash)) {
+  if (usuario.password_hash && await bcrypt.compare(req.body.password, usuario.password_hash)) {
     return res.status(400).json({ error: 'La nueva contraseña debe ser diferente a la contraseña actual.' });
   }
   const filasActualizadas = await TokenRecuperacion.update(

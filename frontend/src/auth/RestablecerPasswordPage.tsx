@@ -12,7 +12,6 @@ import { Label } from '@/components/ui/label'
 import { ApiError, api } from '@/lib/api'
 
 const esquema = z.object({
-  currentPassword: z.string().min(1, 'Ingresa tu contraseña actual'),
   password: z.string()
     .min(8, 'La contraseña debe tener al menos 8 caracteres')
     .regex(/\p{Lu}/u, 'Incluye al menos una letra mayúscula')
@@ -20,9 +19,6 @@ const esquema = z.object({
     .regex(/\p{N}/u, 'Incluye al menos un número')
     .regex(/[^\p{L}\p{N}\s]/u, 'Incluye al menos un carácter especial'),
   confirmacion: z.string().min(1, 'Confirma tu contraseña'),
-}).refine((valores) => valores.password !== valores.currentPassword, {
-  message: 'La nueva contraseña debe ser diferente a la contraseña actual',
-  path: ['password'],
 }).refine((valores) => valores.password === valores.confirmacion, { message: 'Las contraseñas no coinciden', path: ['confirmacion'] })
 
 export default function RestablecerPasswordPage() {
@@ -31,19 +27,18 @@ export default function RestablecerPasswordPage() {
   const token = params.get('token') || ''
   const [enviando, setEnviando] = useState(false)
   const [mostrarPasswords, setMostrarPasswords] = useState({
-    currentPassword: false,
     password: false,
     confirmacion: false,
   })
-  const { register, handleSubmit, formState: { errors } } = useForm<{ currentPassword: string; password: string; confirmacion: string }>({ resolver: zodResolver(esquema) })
+  const { register, handleSubmit, formState: { errors } } = useForm<{ password: string; confirmacion: string }>({ resolver: zodResolver(esquema) })
 
   function alternarVisibilidad(campo: keyof typeof mostrarPasswords) {
     setMostrarPasswords((actual) => ({ ...actual, [campo]: !actual[campo] }))
   }
 
-  async function onSubmit({ currentPassword, password }: { currentPassword: string; password: string; confirmacion: string }) {
+  async function onSubmit({ password }: { password: string; confirmacion: string }) {
     setEnviando(true)
-    try { await api.post('/auth/reset-password', { token, currentPassword, password }); toast.success('Contraseña actualizada correctamente'); navigate('/login') }
+    try { await api.post('/auth/reset-password', { token, password }); toast.success('Contraseña actualizada correctamente'); navigate('/login') }
     catch (error) { toast.error(error instanceof ApiError ? error.message : 'No se pudo cambiar la contraseña') }
     finally { setEnviando(false) }
   }
@@ -56,24 +51,9 @@ export default function RestablecerPasswordPage() {
         </Link>
         <h1 className="text-xl font-semibold">Cambiar contraseña</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          El enlace es de un solo uso y válido durante 10 minutos. Ingresa tu contraseña actual y una nueva diferente, con al menos 8 caracteres e incluyendo mayúscula, minúscula, número y carácter especial.
+          El enlace es de un solo uso y válido durante 10 minutos. Ingresa una nueva contraseña con al menos 8 caracteres e incluyendo mayúscula, minúscula, número y carácter especial.
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
-          <div className="space-y-1.5">
-            <Label htmlFor="currentPassword">Contraseña actual</Label>
-            <div className="relative">
-              <Input id="currentPassword" type={mostrarPasswords.currentPassword ? 'text' : 'password'} autoComplete="current-password" className="pr-10" {...register('currentPassword')} />
-              <button
-                type="button"
-                onClick={() => alternarVisibilidad('currentPassword')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-                aria-label={mostrarPasswords.currentPassword ? 'Ocultar contraseña actual' : 'Mostrar contraseña actual'}
-              >
-                {mostrarPasswords.currentPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-              </button>
-            </div>
-            {errors.currentPassword && <p className="text-xs text-destructive">{errors.currentPassword.message}</p>}
-          </div>
           <div className="space-y-1.5">
             <Label htmlFor="password">Nueva contraseña</Label>
             <div className="relative">
