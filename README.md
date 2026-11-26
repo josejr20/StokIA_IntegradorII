@@ -1,57 +1,163 @@
-# StockIA - VLAG Integrador II
+# StockIA Backend
 
-[![GitHub](https://img.shields.io/badge/GitHub-repositorio-181717?logo=github)](https://github.com/josejr20/StokIA_IntegradorII)
-[![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)](https://github.com/josejr20/VLAG_IntegradorII)
+API RESTful para gestión de inventario con arquitectura MVC + DTO, autenticación JWT, integración ML y documentación Swagger.
 
----
+## Requisitos
 
-## Backend
+- Node.js 18+
+- PostgreSQL 15+
+- npm 9+
 
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-5.x-lightgrey?logo=express)](https://expressjs.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)](https://www.postgresql.org/)
-[![Sequelize](https://img.shields.io/badge/Sequelize-6.x-0077b6?logo=sequelize)](https://sequelize.org/)
-[![JWT](https://img.shields.io/badge/Auth-JWT-red?logo=jsonwebtoken)](https://jwt.io/)
+## Variables de entorno
 
-API RESTful con arquitectura **MVC + DTO**, autenticación JWT, integración ML y 25+ endpoints documentados en Swagger.
+Copiar `.env.example` a `.env` y ajustar:
 
-[📖 Documentación backend →](backend/README.md)  |  [🔧 Swagger UI](http://localhost:3000/api-docs)
+| Variable | Descripción | Ejemplo |
+|----------|-------------|---------|
+| `PORT` | Puerto del servidor | `3000` |
+| `DB_HOST` | Host PostgreSQL | `localhost` |
+| `DB_PORT` | Puerto PostgreSQL | `5432` |
+| `DB_NAME` | Nombre de base de datos | `stockia` |
+| `DB_USER` | Usuario PostgreSQL | `postgres` |
+| `DB_PASSWORD` | Contraseña PostgreSQL | `secret` |
+| `JWT_SECRET` | Secreto para firmar tokens | `clave-secreta-larga` |
+| `JWT_EXPIRES_IN` | Expiración access token | `15m` |
+| `JWT_REFRESH_EXPIRES_IN` | Expiración refresh token | `7d` |
+| `SMTP_HOST` | Servidor SMTP | `smtp.gmail.com` |
+| `SMTP_PORT` | Puerto SMTP | `587` |
+| `SMTP_USER` | Usuario SMTP | `correo@dominio.com` |
+| `SMTP_PASSWORD` | Contraseña SMTP o contraseña de aplicación | No publicar |
+| `EMAIL_FROM` | Remitente de notificaciones | `correo@dominio.com` |
+| `FRONTEND_URL` | URL del frontend para CORS | `http://localhost:5173` |
 
----
-
-## Frontend
-
-[![React](https://img.shields.io/badge/React-19-61dafb?logo=react)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite)](https://vite.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
-[![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5-ff4154?logo=reactquery)](https://tanstack.com/query)
-
-SPA con **React 19 + Vite + TypeScript + Tailwind 4**, routing protegido, TanStack Query v5, Radix UI y formularios con Zod.
-
-[📖 Documentación frontend →](frontend/README.md)
-
----
-
-## Inicio rápido
+## Instalación
 
 ```bash
-# Backend
-cd backend && npm install && npm run seed && npm start
-# API: http://localhost:3000/api
-
-# Frontend (otra terminal)
-cd frontend && npm install && npm run dev
-# App: http://localhost:5173
+cd backend
+npm install
 ```
 
----
+## Base de datos
 
-## Recursos
+### Esquema automático (development)
 
-- [Prototipo Figma - ProyectoHU](https://www.figma.com/design/HpMUPCclEz1rkwwlTXlLeM/ProyectoHU)
-- [Repositorio GitHub](https://github.com/josejr20/StokIA_IntegradorII)
+```bash
+npm run seed
+```
 
----
+Ejecuta `src/utils/seed.js` que a su vez invoca `seedService.seedInicial()` para crear:
+- Permisos y roles base (Administrador, Encargado de Inventario, Encargado de Almacén, Jefe de Ventas)
+- Unidades de medida
+- Tipos de envase
 
-**Licencia:** ISC
+### Esquema SQL (producción / migraciones)
+
+Para una base nueva, usar este orden real de carga:
+
+1. `postgresql/BackupStokIAV3.sql` - esquema base y datos principales
+2. `postgresql/manual/05_importaciones_ventas.sql` - permisos y soporte de importación de ventas
+3. `npm run seed` - permisos, roles y catálogos base del sistema
+
+> **Nota:** Este orden es el que deja la base compatible con el código actual. Si se ejecuta solo el dump, faltarán columnas/permisos requeridos por `POST /api/ventas/importar` y por el bootstrap del módulo de ventas.
+
+## Scripts disponibles
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm start` | Inicia servidor en producción (`server.js`) |
+| `npm run dev` | Inicia servidor en desarrollo (`server.js`) |
+| `npm run seed` | Sembrar datos iniciales (roles, permisos, catálogos) |
+| `npm test` | Ejecuta suite de tests (`node --test tests/*.test.js`) |
+
+## Endpoints principales
+
+- `POST /api/auth/login` - Login, devuelve access + refresh token (cookies HttpOnly)
+- `POST /api/auth/refresh` - Renueva access token
+- `POST /api/auth/forgot-password` - Envía un enlace de recuperación al correo registrado; vence en 10 minutos
+- `POST /api/auth/reset-password` - Cambia la contraseña usando el token de un solo uso y verificando la contraseña actual
+- `POST /api/auth/change-password` - Cambia la contraseña de la sesión activa verificando la contraseña actual
+- `GET /api/productos` - Listar productos (paginado, filtros)
+- `POST /api/productos` - Crear producto
+- `GET /api/lotes` - Listar lotes con stock
+- `POST /api/operaciones` - Registrar operación (entrada/salida/ajuste/devolución)
+- `GET /api/kardex/:productoId` - Kardex de un producto
+- `POST /api/importar-kardex` - Importar kardex histórico desde Excel
+- `GET /api/reportes/*` - Reportes y KPIs
+- `GET /api/alertas` - Alertas de stock bajo / vencimiento
+
+Documentación completa en Swagger UI: `http://localhost:3000/api-docs`
+
+## Autenticación y permisos
+
+- JWT en cookie HttpOnly (`access_token`) + refresh token rotativo (`refresh_token`)
+- Middleware `permission('codigo_permiso')` protege rutas según rol
+- Roles y permisos se gestionan en `/api/roles` y `/api/permisos`
+
+## Alertas por correo
+
+El envío usa las variables SMTP configuradas en `.env`; no se guardan credenciales SMTP en la base de datos. Cada usuario con acceso a Configuración puede activar su destinatario y elegir alertas de stock bajo y riesgo de vencimiento. La preferencia se guarda en `preferencias_usuario` bajo la clave `email_alertas_inventario`.
+
+La evaluación de stock mínimo envía un único correo de resumen al usuario autenticado que inició la acción, con todos los productos bajo el umbral en una tabla; nunca se consultan preferencias de otros usuarios. Puede incluir alertas activas existentes si el usuario aún no recibió el resumen correspondiente. Los envíos y fallos se registran en `notificaciones_correo` para evitar reenvíos. Las alertas de vencimiento se sincronizan al consultar `/api/riesgo-vencimiento` y, si se generan, se notifican solo al usuario autenticado.
+
+## Alertas críticas por correo (US-32)
+
+Cuando el sistema **registra** una alerta crítica —quiebre de stock (`bajo_stock`, severidad `alta`) o vencimiento (`riesgo_vencimiento`, severidad `alta` o `critica`)— envía un correo a los usuarios activos de los **roles configurados** para ese tipo. El correo incluye producto (y lote), motivo y nivel de riesgo. Las alertas de severidad `media`/`baja` y las de otros tipos no generan correo.
+
+- **Destinatarios por rol** (`notificacion_destinatarios_rol`): `GET/PUT /api/notificaciones/configuracion` (solo administrador). Mientras no haya configuración guardada para un tipo, recibe el rol *Encargado de Almacén*.
+- **Historial** (`notificaciones_correo`): `GET /api/notificaciones/historial?estado=&alerta_id=&destinatario=&desde=&hasta=&pagina=&limite=` (permiso `ver_alertas`). Guarda destinatario, rol, asunto, estado, intentos, último error y próximo reintento.
+- **Reintentos**: si el SMTP falla, el envío queda `fallido` con `proximo_reintento` (espera creciente 5 → 10 → 20 → 40 → 60 min) y un cron (`*/5 * * * *`, hora de Lima) lo reintenta hasta `NOTIFICACIONES_MAX_INTENTOS`. `POST /api/notificaciones/reintentos` (administrador) lo fuerza al instante. Un fallo de correo nunca impide registrar la alerta.
+- Cada alerta se notifica **una sola vez por destinatario** (aunque se recalcule o se ejecuten dos procesos a la vez).
+
+**Antes de usarlo** ejecute una vez `sql/us32_notificaciones_alertas_criticas.sql` en el SQL Editor de Supabase (es idempotente): crea la tabla de destinatarios y amplía `notificaciones_correo`.
+
+| Variable | Descripción | Por defecto |
+|----------|-------------|-------------|
+| `NOTIFICACIONES_CRON_ENABLED` | Activa el reintento automático (`false` lo desactiva) | `true` |
+| `NOTIFICACIONES_CRON_EXPRESION` | Frecuencia del reintento (cron) | `*/5 * * * *` |
+| `NOTIFICACIONES_MAX_INTENTOS` | Intentos de envío por destinatario antes de rendirse | `5` |
+| `NOTIFICACIONES_REINTENTO_MINUTOS` | Espera base entre reintentos (se duplica en cada intento, tope 60) | `5` |
+| `NOTIFICACIONES_TIMEOUT_ENVIO_MS` | Tiempo máximo de espera al SMTP | `15000` |
+
+Pruebas: `node --test tests/notificacion-critica-us32.test.js` · Resultados QA: `docs/qa/HU-167_QA-01_US-32_notificacion-alertas-criticas.md`.
+
+## Estructura del proyecto
+
+```
+src/
+├── config/         # Configuración DB, Swagger
+├── controllers/    # Controladores (request/response)
+├── dtos/           # Data Transfer Objects + validación Zod
+├── middleware/     # Auth, permisos, rate-limit, auditoría, errores
+├── models/         # Modelos Sequelize + asociaciones
+├── routes/         # Definición de rutas Express
+├── services/       # Lógica de negocio
+├── utils/          # Logger, JWT, seed, helpers
+└── app.js          # App Express + middlewares globales
+```
+
+## Tests
+
+```bash
+npm test
+```
+
+Incluye:
+- Tests de autenticación y rate-limit
+- Tests de productos, lotes, operaciones, kardex
+- Test de humo `routes-smoke.test.js` que verifica que todas las rutas cargan sin dependencias faltantes
+
+## Notas de seguridad
+
+- `xlsx@0.18.5` tiene advisories conocidos (prototype pollution en parser). Los archivos los sube usuario autenticado con límite 10 MB; riesgo acotado. Evaluar migración a `exceljs` o uso de CDN oficial SheetJS en futuras versiones.
+- Contraseñas hasheadas con bcrypt (cost 10)
+- Tokens JWT con expiración corta + refresh rotativo
+- Rate-limit en `/auth/login` y endpoints sensibles
+- Auditoría automática en operaciones críticas
+
+## Despliegue
+
+1. Configurar variables de entorno en servidor
+2. Ejecutar scripts SQL en orden (ver sección Base de datos)
+3. `npm ci && npm run seed` (opcional si ya corrieron SQL)
+4. `npm start` (recomendado detrás de PM2 / systemd / Docker)
+5. Configurar reverse proxy (Nginx) + TLS
