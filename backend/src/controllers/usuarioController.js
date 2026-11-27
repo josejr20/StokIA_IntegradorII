@@ -5,6 +5,22 @@ const { Usuario, Rol } = require('../models');
 const { UsuarioDto } = require('../dtos/usuarioDto');
 const config = require('../config');
 const { cumplePoliticaPassword } = require('../utils/passwordPolicy');
+const { prepararEdicion, validarDesactivacion, ErrorUsuario } = require('../services/usuarioAdminService');
+
+// HU-178: consultas que usa el servicio de administración de usuarios.
+const incluirRol = [{ model: Usuario.sequelize.models.Rol, as: 'rol' }];
+
+function crearRepositorioUsuarios() {
+  return {
+    buscarPorEmail: (email) => Usuario.findOne({ where: { email }, attributes: ['id'] }),
+    buscarPorDni: (dni) => Usuario.findOne({ where: { dni }, attributes: ['id'] }),
+    buscarRol: async (id) => (Number.isInteger(id) ? Rol.findByPk(id) : null),
+    contarAdministradoresActivos: () => Usuario.count({
+      where: { activo: true },
+      include: [{ model: Rol, as: 'rol', required: true, where: { nombre: { [Op.iLike]: 'administrador' } } }],
+    }),
+  };
+}
 
 const listar = async (req, res, next) => {
   try {
@@ -75,28 +91,50 @@ const crear = async (req, res, next) => {
       activo: true,
     };
     const usuario = await Usuario.create(data);
-    res.status(201).json({ data: UsuarioDto.fromModel(usuario) });
+    res.status(201).json({ data: UsuarioDto.fromModel(usuario), message: 'Usuario creado correctamente' });
   } catch (error) { next(error); }
 };
 
 const actualizar = async (req, res, next) => {
   try {
-    const usuario = await Usuario.findByPk(req.params.id);
+    const usuario = await Usuario.findByPk(req.params.id, { include: incluirRol });
     if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-    const data = UsuarioDto.fromUpdate(req.body);
-    await usuario.update(data);
-    res.json({ data: UsuarioDto.fromModel(usuario) });
-  } catch (error) { next(error); }
+    const datos = await prepararEdicion({
+      cuerpo: req.body,
+      usuario,
+      solicitanteId: req.user.id,
+      repositorio: crearRepositorioUsuarios(),
+    });
+    if (Object.keys(datos).length === 0) {
+      return res.status(400).json({ error: 'No se enviaron cambios para actualizar' });
+    }
+    await usuario.update(datos);
+    const actualizado = await Usuario.findByPk(usuario.id, { include: incluirRol });
+    res.json({ data: UsuarioDto.fromModel(actualizado), message: 'Usuario actualizado correctamente' });
+  } catch (error) {
+    if (error instanceof ErrorUsuario) return res.status(error.status).json({ error: error.message });
+    next(error);
+  }
 };
 
 const desactivar = async (req, res, next) => {
   try {
-    const usuario = await Usuario.findByPk(req.params.id);
+    const usuario = await Usuario.findByPk(req.params.id, { include: incluirRol });
     if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
-    usuario.activo = false;
-    await usuario.save();
-    res.json({ data: UsuarioDto.fromModel(usuario), message: 'Usuario desactivado' });
-  } catch (error) { next(error); }
+    if (usuario.activo) {
+      await validarDesactivacion({
+        usuario,
+        solicitanteId: req.user.id,
+        repositorio: crearRepositorioUsuarios(),
+      });
+      usuario.activo = false;
+      await usuario.save();
+    }
+    res.json({ data: UsuarioDto.fromModel(usuario), message: 'Usuario desactivado correctamente' });
+  } catch (error) {
+    if (error instanceof ErrorUsuario) return res.status(error.status).json({ error: error.message });
+    next(error);
+  }
 };
 
 const yo = async (req, res, next) => {

@@ -68,3 +68,42 @@ export function useCrearUsuario() {
     },
   })
 }
+
+// HU-178: editar, desactivar y reactivar usuarios.
+export interface ActualizarUsuarioInput {
+  nombres?: string
+  apellidos?: string
+  dni?: string
+  email?: string
+  password?: string
+  rol_id?: number
+  activo?: boolean
+}
+
+export function useActualizarUsuario() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async ({ id, datos }: { id: number; datos: ActualizarUsuarioInput }) => {
+      const respuesta = await api.put<{ data: Usuario }>(`/usuarios/${id}`, datos)
+      return respuesta.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['usuarios'] })
+    },
+  })
+}
+
+export function useDesactivarUsuario() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      const respuesta = await api.patch<{ data: Usuario }>(`/usuarios/${id}/desactivar`)
+      return respuesta.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['usuarios'] })
+    },
+  })
+}
