@@ -1,9 +1,7 @@
-
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useProductos } from '@/features/productos/api'
 import type { RespuestaPrediccion } from '@/features/prediccion/api'
-import { api } from '@/lib/api'
+import { api, apiFetch } from '@/lib/api'
 
 import {
     CartesianGrid,
@@ -32,11 +30,20 @@ export default function PrediccionesDashboard() {
         data,
         isLoading,
         isError,
-    } = useProductos({
-        allPages: true,
+    } = useQuery({
+        queryKey: ['us28', 'productos'],
+        queryFn: () =>
+            apiFetch<{
+                data: Array<{
+                    id: number
+                    nombre: string
+                }>
+            }>('/predicciones/productos'),
+        staleTime: 30_000,
+        retry: false,
     })
 
-    const productos = data?.results ?? []
+    const productos = data?.data ?? []
 
     const productoId = productos.some(
         (producto) => String(producto.id) === productoElegido,
