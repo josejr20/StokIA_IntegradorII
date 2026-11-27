@@ -1,9 +1,56 @@
+
 const { Router } = require('express');
 const { autenticar } = require('../middleware/authJwt');
 const { verificarPermiso } = require('../middleware/permission');
 const { demanda, historial } = require('../controllers/prediccionController');
+const { Producto } = require('../models');
+
 const router = Router();
+
 router.use(autenticar);
+
+/**
+ * US-28: Consultar productos para el dashboard.
+ * Permite al Jefe de Ventas visualizar los productos
+ * sin otorgar permisos para modificarlos o eliminarlos.
+ *
+ * @openapi
+ * /api/predicciones/productos:
+ *   get:
+ *     summary: Listar productos activos para el dashboard de predicciones
+ *     tags: [Predicciones]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de productos activos
+ *       '403':
+ *         description: Usuario sin permiso
+ *       '500':
+ *         description: Error del servidor
+ */
+router.get(
+  '/productos',
+  verificarPermiso('ver_kpis'),
+  async (req, res, next) => {
+    try {
+      const productos = await Producto.findAll({
+        attributes: ['id', 'nombre'],
+        where: {
+          activo: true,
+        },
+        order: [['nombre', 'ASC']],
+        raw: true,
+      });
+
+      return res.status(200).json({
+        data: productos,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 /**
  * @openapi
@@ -35,7 +82,11 @@ router.use(autenticar);
  *       '400':
  *         description: Parámetros inválidos
  */
-router.get('/demanda', verificarPermiso('ver_kpis'), demanda);
+router.get(
+  '/demanda',
+  verificarPermiso('ver_kpis'),
+  demanda
+);
 
 /**
  * @openapi
@@ -58,6 +109,10 @@ router.get('/demanda', verificarPermiso('ver_kpis'), demanda);
  *       '404':
  *         description: El producto no existe
  */
-router.get('/historico', verificarPermiso('ver_kpis'), historial);
+router.get(
+  '/historico',
+  verificarPermiso('ver_kpis'),
+  historial
+);
 
 module.exports = router;
