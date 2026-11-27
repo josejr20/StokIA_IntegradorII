@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { UserPlus, ShieldCheck } from "lucide-react";
+import { UserPlus, ShieldCheck, Pencil, Ban, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -25,8 +25,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ApiError } from "@/lib/api";
+import { useAuth } from "@/auth/AuthContext";
 
-import { useCrearUsuario, useRoles, useUsuarios } from "./api";
+import { useCrearUsuario, useRoles, useUsuarios, type Usuario } from "./api";
+import CambiarEstadoDialog, { type AccionEstado } from "./CambiarEstadoDialog";
+import EditarUsuarioDialog from "./EditarUsuarioDialog";
 
 const esquema = z.object({
   nombres: z.string().trim().min(2, "Ingresa los nombres"),
@@ -70,8 +73,21 @@ function formatearUltimoAcceso(fecha: string | null) {
   return `${fechaCorta}, ${hora}`;
 }
 
+function formatearFechaRegistro(fecha: string | null) {
+  if (!fecha) return "-";
+  const registro = new Date(fecha);
+  if (Number.isNaN(registro.getTime())) return "-";
+  return new Intl.DateTimeFormat("es-PE").format(registro);
+}
+
 export default function UsuariosPage() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [usuarioEditando, setUsuarioEditando] = useState<Usuario | null>(null);
+  const [cambioEstado, setCambioEstado] = useState<{
+    usuario: Usuario;
+    accion: AccionEstado;
+  } | null>(null);
+  const { usuario: usuarioActual } = useAuth();
   const {
     data: usuarios,
     isLoading: cargandoUsuarios,
@@ -300,14 +316,16 @@ export default function UsuariosPage() {
               <TableHead>Correo</TableHead>
               <TableHead>Rol</TableHead>
               <TableHead>Estado</TableHead>
+              <TableHead>Registrado</TableHead>
               <TableHead>Último acceso</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {cargandoUsuarios && (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={8}
                   className="h-20 text-center text-muted-foreground"
                 >
                   Cargando usuarios…
@@ -317,7 +335,7 @@ export default function UsuariosPage() {
             {errorUsuarios && (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={8}
                   className="h-20 text-center text-destructive"
                 >
                   No se pudo cargar la lista de usuarios.
@@ -327,7 +345,7 @@ export default function UsuariosPage() {
             {!cargandoUsuarios && !errorUsuarios && usuarios?.length === 0 && (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={8}
                   className="h-20 text-center text-muted-foreground"
                 >
                   No hay usuarios registrados.
@@ -352,13 +370,69 @@ export default function UsuariosPage() {
                     </span>
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-muted-foreground">
+                    {formatearFechaRegistro(usuario.fecha_creacion)}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap text-muted-foreground">
                     {formatearUltimoAcceso(usuario.ultimo_acceso)}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex justify-end gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        title="Editar"
+                        onClick={() => setUsuarioEditando(usuario)}
+                      >
+                        <Pencil className="size-4" />
+                      </Button>
+                      {usuario.activo ? (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          title={
+                            usuario.id === usuarioActual?.id
+                              ? "No puedes desactivar tu propio usuario"
+                              : "Desactivar"
+                          }
+                          className="text-destructive hover:text-destructive"
+                          disabled={usuario.id === usuarioActual?.id}
+                          onClick={() =>
+                            setCambioEstado({ usuario, accion: "desactivar" })
+                          }
+                        >
+                          <Ban className="size-4" />
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          title="Reactivar"
+                          onClick={() =>
+                            setCambioEstado({ usuario, accion: "reactivar" })
+                          }
+                        >
+                          <RotateCcw className="size-4" />
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </div>
+
+      <EditarUsuarioDialog
+        usuario={usuarioEditando}
+        roles={roles}
+        cargandoRoles={cargandoRoles}
+        onCerrar={() => setUsuarioEditando(null)}
+      />
+      <CambiarEstadoDialog
+        usuario={cambioEstado?.usuario ?? null}
+        accion={cambioEstado?.accion ?? "desactivar"}
+        onCerrar={() => setCambioEstado(null)}
+      />
     </div>
   );
 }
