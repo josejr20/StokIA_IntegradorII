@@ -196,31 +196,23 @@ const actualizar = async (req, res, next) => {
 
 const eliminar = async (req, res, next) => {
   try {
-    const usuarioId = obtenerUsuarioId(req);
-
-    if (!usuarioId) {
-      return res.status(401).json({
-        error: 'Usuario no autenticado.'
-      });
-    }
-
     const preferencia = await PreferenciaUsuario.findOne({
       where: {
-        usuario_id: usuarioId,
+        usuario_id: req.user.id,
         clave: req.params.clave
       }
     });
 
     if (!preferencia) {
-      return res.status(404).json({
-        error: 'Preferencia no encontrada.'
+      return res.status(200).json({
+        message: 'No existen preferencias personalizadas. Se utilizarán los valores predeterminados.'
       });
     }
 
     await preferencia.destroy();
 
-    return res.json({
-      message: 'Preferencia eliminada correctamente.'
+    return res.status(200).json({
+      message: 'Preferencias restablecidas correctamente.'
     });
 
   } catch (error) {
